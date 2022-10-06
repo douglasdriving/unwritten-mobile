@@ -1,20 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { Welcome } from './components/welcome';
+import { Menu } from './components/menu';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Welcome to Unwritten!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Menu/>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
