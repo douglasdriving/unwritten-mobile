@@ -19,16 +19,28 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
+  h3: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+
   body: {
     fontSize: 16
   },
 
   listItem: {
     backgroundColor: 'white',
-    alignItems: 'center',
     width: 300,
-    margin: 5,
-    padding: 5
+    marginTop: 5,
+    padding: 10
+  },
+
+  inputFieldStyle: {
+    backgroundColor: 'white',
+    padding: 0,
+    height: (props.fieldHeight ? props.fieldHeight : 30),
+    justifyContent
   },
 
 });

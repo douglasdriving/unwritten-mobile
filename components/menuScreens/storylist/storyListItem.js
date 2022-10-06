@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
 import { styles } from '../../../style';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -14,13 +14,17 @@ export const ListItem = (props) => {
 
   const topRow = (
     <View style={topRowStyle}>
-      <Text style={styles.h2}>Story Title</Text>
-      <Icon name="arrow-down" size={20} />
+      <Text style={styles.h3}>Story Title</Text>
+      <Icon name={props.open ? "arrow-up" : "arrow-down"} size={20} />
     </View>
   );
 
   const toggleContent = (
-    <Text style={styles.body}>The best story every written</Text>
+    <View>
+      <Text style={styles.body}>The best story every written</Text>
+      <Text style={styles.body}>Created by Author</Text>
+      <Button title='Join ->'></Button>
+    </View>
   );
 
   return (
