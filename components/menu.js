@@ -10,6 +10,8 @@ const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: false,
   tabBarActiveBackgroundColor: 'lightblue',
+  tabBarInactiveBackgroundColor: 'darkgray',
+  headerShown: false,
 };
 
 export const Menu = () => {
