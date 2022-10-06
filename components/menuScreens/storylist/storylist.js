@@ -5,9 +5,9 @@ import { ListItem } from './storyListItem';
 export const StoryList = () => {
   return (
     <View>
-      <ListItem/>
-      <ListItem/>
-      <ListItem/>
+      <ListItem open={true}/>
+      <ListItem open={false}/>
+      <ListItem open={false}/>
     </View>
   );
 }

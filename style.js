@@ -5,8 +5,8 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'lightblue',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingTop: 50,
+    padding: 30,
   },
 
   h1: {
@@ -14,24 +14,21 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-  h2:
-    {
-      fontSize: 18,
-      fontWeight: 'bold',
-    },
+  h2: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
 
   body: {
-    fontSize: 16,
-    textAlign: 'center',
+    fontSize: 16
   },
 
   listItem: {
     backgroundColor: 'white',
     alignItems: 'center',
-    justifyContent: 'center',
-    height: 50,
     width: 300,
-    margin: 10,
+    margin: 5,
+    padding: 5
   },
 
 });
