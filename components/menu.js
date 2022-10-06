@@ -11,6 +11,7 @@ const screenOptions = {
   tabBarShowLabel: false,
   tabBarActiveBackgroundColor: 'lightblue',
   tabBarInactiveBackgroundColor: 'darkgray',
+  tabBarHideOnKeyboard: true,
   headerShown: false,
 };
 

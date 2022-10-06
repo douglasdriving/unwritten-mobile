@@ -24,23 +24,20 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 
-
   body: {
     fontSize: 16
+  },
+
+  alert: {
+    fontSize: 16,
+    backgroundColor: 'pink',
   },
 
   listItem: {
     backgroundColor: 'white',
     width: 300,
     marginTop: 5,
-    padding: 10
-  },
-
-  inputFieldStyle: {
-    backgroundColor: 'white',
-    padding: 0,
-    height: (props.fieldHeight ? props.fieldHeight : 30),
-    justifyContent
+    padding: 10,
   },
 
 });

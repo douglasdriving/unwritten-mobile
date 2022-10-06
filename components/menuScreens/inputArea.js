@@ -7,7 +7,8 @@ export const InputArea = (props) => {
     backgroundColor: 'white',
     padding: 0,
     height: (props.fieldHeight ? props.fieldHeight : 30),
-    alignItems: 'flex-start',
+    textAlignVertical: (props.fieldHeight ? 'top' : 'center'),
+    fontSize: 16,
   };
 
   return(
