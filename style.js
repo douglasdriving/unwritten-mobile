@@ -60,13 +60,22 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
+
   gameWindow: {
     flex: 1,
     backgroundColor: 'white',
     paddingTop: 120,
-    paddingBottom: 120,
     padding: 30,
+  },
+
+  writingField: {
+    padding: 10,
+    height: 300,
+    textAlignVertical: 'top',
+    fontSize: 16,
+    borderStyle: 'solid',
+    borderColor: 'gray',
+    borderWidth: 2,
   },
 
 });

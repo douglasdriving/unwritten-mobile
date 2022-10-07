@@ -1,6 +1,6 @@
 import { ScrollView, Text, View } from 'react-native';
 import { styles } from '../../style.js';
-import { StoryNav } from './storyNav.js';
+import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea.js';
 
 export const Game = () => {
