@@ -78,4 +78,13 @@ export const styles = StyleSheet.create({
     borderWidth: 2,
   },
 
+  roomMenu: {
+    backgroundColor: 'gray',
+    position: 'absolute',
+    margin: '5%',
+    marginTop: 40,
+    width: '90%',
+    padding: 10,
+  },
+
 });

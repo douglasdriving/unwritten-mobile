@@ -8,7 +8,7 @@ export const WaitingField = () => {
     <View>
       <Text style={styles.h1}>Waiting...</Text>
       <Text>It's Sebbes turn</Text>
-      <TurnCountDown/>
+      <TurnCountDown full={true}/>
     </View>
   );
 }

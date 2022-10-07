@@ -12,7 +12,7 @@ export const YourTurnField = () => {
       <Text style={styles.h1}>Your turn to write!</Text>
       <CharUpdateText />
       <Actions/>
-      <TurnCountDown/>
+      <TurnCountDown full={true}/>
     </View>
   );
 }
