@@ -40,4 +40,33 @@ export const styles = StyleSheet.create({
     padding: 10,
   },
 
+  storyNav: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    position: 'absolute',
+    zIndex: 1,
+    width: '100%',
+    paddingTop: 30,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+
+  storyNavButton: {
+    opacity: 0.3,
+    borderRadius: 35,
+    backgroundColor: 'black',
+    width: 70,
+    height: 70,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  
+  gameWindow: {
+    flex: 1,
+    backgroundColor: 'white',
+    paddingTop: 120,
+    paddingBottom: 120,
+    padding: 30,
+  },
+
 });
