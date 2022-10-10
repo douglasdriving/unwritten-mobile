@@ -4,12 +4,12 @@ import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 
-export const Game = () => {
+export const Game = (props) => {
   return (
-    <View style={{flex: 1}}>
-      <GameArea></GameArea>
-      <StoryNav></StoryNav>
-      <RoomMenu/>
+    <View>
+      <GameArea readOnly={props.readOnly}/>
+      <StoryNav readOnly={props.readOnly}/>
+      {/* <RoomMenu/> */}
     </View>
   );
 }

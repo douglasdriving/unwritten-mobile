@@ -22,6 +22,7 @@ export const styles = StyleSheet.create({
   h3: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'darkgray',
   },
 
   body: {
@@ -59,10 +60,10 @@ export const styles = StyleSheet.create({
     height: 70,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
 
   gameWindow: {
-    flex: 1,
     backgroundColor: 'white',
     paddingTop: 120,
     padding: 30,
@@ -85,6 +86,7 @@ export const styles = StyleSheet.create({
     marginTop: 40,
     width: '90%',
     padding: 10,
+    zIndex: 2,
   },
 
 });

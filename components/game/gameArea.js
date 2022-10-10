@@ -7,11 +7,14 @@ import { PlayerSearchField } from './actionArea/playerSearchField/playerSearchFi
 import { WaitingField } from './actionArea/waitingField/waitingField.js';
 import { Spacer } from '../visuals.js';
 
-export const GameArea = () => {
+export const GameArea = (props) => {
+
+  const readOnly = props.readOnly;
+
   return (
     <ScrollView style={styles.gameWindow}>
-      <StoryContent/>
-      <WaitingField/>
+      <StoryContent readOnly={readOnly}/>
+      {!readOnly && <WaitingField/>}
       <Spacer/>
     </ScrollView>
   );
