@@ -3,6 +3,9 @@ import { CloseButton } from "./closeButton";
 import { styles } from "../style";
 
 export const Popup = (props) => {
+
+  const test = ['hello1', 'hello2'];
+
   return (
     <Modal
       animationType="none"
@@ -14,14 +17,16 @@ export const Popup = (props) => {
       }}
     >
       <View style={popupStyles.view}>
+        <View style={popupStyles.background}/>
         <View style={popupStyles.box}>
           <CloseButton/>
           <View style={popupStyles.content}>
-            <Text style={styles.h2}>{props.title}</Text>
-            <Text>{props.description}</Text>
+            <Text style={styles.h2}>{props.popup.title}</Text>
+            <Text>{props.popup.text}</Text>
             <View style={popupStyles.buttonRow}>
-              <Button title={'button1'}/>
-              <Button title={'button2'}/>
+              {props.popup.buttons.map(button => (
+                <Button title={button.title}/>
+              ))}
             </View>
           </View>
         </View>
@@ -37,8 +42,15 @@ const popupStyles = StyleSheet.create({
     alignItems: "center",
     marginTop: 22,
   },
+  background: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    backgroundColor: 'black',
+    opacity: 0.3,
+  },  
   box: {
-    backgroundColor: 'gray',
+    backgroundColor: 'white',
     margin: 30,
   },
   content:{
