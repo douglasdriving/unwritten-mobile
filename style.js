@@ -22,7 +22,6 @@ export const styles = StyleSheet.create({
   h3: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'darkgray',
   },
 
   body: {

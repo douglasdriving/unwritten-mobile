@@ -3,11 +3,13 @@ import { styles } from '../../../style';
 import { ListItem } from './storyListItem';
 
 export const StoryList = (props) => {
+
+  //renders a listitem for each room
   return (
     <View>
-      <ListItem open={true} type={props.type}/>
-      <ListItem open={false} type={props.type} alert={'Your Turn!'}/>
-      <ListItem open={false} type={props.type}/>
+      {props.rooms.map(room => (
+        <ListItem type={props.type} room={room} key={room.title}/>
+      ))}
     </View>
   );
 }

@@ -1,6 +1,6 @@
 import { Text, View, Button, StyleSheet } from 'react-native';
 import {styles} from '../style.js';
-import { GetUser } from '../backendCalls/fakeBackend.js';
+import { GetUser } from '../backendCalls/backendCalls.js';
 
 export const Welcome = (props) => {
 
