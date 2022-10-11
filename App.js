@@ -4,15 +4,15 @@ import { Join } from './components/join';
 import { Game } from './components/game/game';
 import { Popup } from './components/popup';
 import { View, Text, Modal, StyleSheet } from 'react-native';
+import { useState } from 'react';
 
 export default function App() {
+
+  const [popup, setPopup] = useState(null);
+
   return (
-      // <Welcome/>
-      <Menu />
-      //<Game readOnly={true} />
-      //<Popup
-      //   title={'popup'}
-      //   description={'this is an awesome popup'}
-      // />
+      <View>
+        <Menu />
+      </View>
   );
 }
