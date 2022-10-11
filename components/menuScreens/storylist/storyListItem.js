@@ -47,6 +47,7 @@ export const ListItem = (props) => {
     case 'finished':
       content = (
         <View>
+          <Text>A great story about a bunch of great events</Text>
           <Text style={styles.body}>By GoatPoet, Sebbe, Smogg, and DarkHorseForever</Text>
           <Button title='Read Story ->'></Button>
         </View>

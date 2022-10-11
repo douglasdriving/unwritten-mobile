@@ -7,12 +7,12 @@ import { View, Text, Modal, StyleSheet } from 'react-native';
 
 export default function App() {
   return (
-    <View>
-      <Game readOnly={true} />
-      <Popup
-        title={'popup'}
-        description={'this is an awesome popup'}
-      />
-    </View>
+      // <Welcome/>
+      <Menu />
+      //<Game readOnly={true} />
+      //<Popup
+      //   title={'popup'}
+      //   description={'this is an awesome popup'}
+      // />
   );
 }
