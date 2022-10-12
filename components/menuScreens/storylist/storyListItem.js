@@ -27,7 +27,7 @@ export const ListItem = (props) => {
   const [open, setOpen] = useState(false);
 
   let alert;
-  if (props.listItemInfo.authorsTurn) {
+  if (props.listItemInfo.playersTurn) {
     alert = <Text style={styles.alert}>Your Turn!</Text>
   }
 
@@ -50,14 +50,14 @@ export const ListItem = (props) => {
     }
     return authorText;
   }
-  
+
   return (
     <TouchableWithoutFeedback onPress={Toggle}>
       <View style={styles.listItem}>
 
         <View style={topRowStyle}>
           {props.listItemInfo.title && <Text style={styles.h3}>{props.listItemInfo.title}</Text>}
-          {props.listItemInfo.authorsTurn && alert}
+          {props.listItemInfo.playersTurn && alert}
           <Icon name={open ? "arrow-up" : "arrow-down"} size={20} />
         </View>
 

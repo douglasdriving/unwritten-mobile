@@ -14,7 +14,7 @@ const exampleStoryFull = {
   creator: 'creatorUsername',
   authors: ['author1', 'author2', 'author3'],
   turn: 34,
-  authorsTurn: true,
+  playersTurn: true,
   id: GenerateRandomString(),
 }
 

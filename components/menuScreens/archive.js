@@ -21,7 +21,7 @@ export const Archive = () => {
         authors: story.authors,
         //authorCount: 3,
         //turn: room.turn,
-        //authorsTurn: room.authorsTurn,
+        //playersTurn: room.playersTurn,
         storyId: story.id,
         buttonText: 'Read ->'
       }

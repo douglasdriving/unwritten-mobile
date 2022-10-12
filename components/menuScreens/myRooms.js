@@ -21,7 +21,7 @@ export const MyRooms = () => {
         authors: room.authors,
         //authorCount: 3,
         turn: room.turn,
-        authorsTurn: room.authorsTurn,
+        playersTurn: room.playersTurn,
         storyId: room.id,
         buttonText: 'Enter ->'
       }
@@ -36,7 +36,7 @@ export const MyRooms = () => {
         authors: room.authors,
         //authorCount: room.authors.length + 1,
         //turn: room.turn,
-        // authorsTurn: room.authorsTurn,
+        // playersTurn: room.playersTurn,
         storyId: room.id,
         buttonText: 'Read ->'
       }
