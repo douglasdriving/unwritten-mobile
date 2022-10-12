@@ -18,7 +18,23 @@ export const ListItem = (props) => {
     alert = <Text style={styles.alert}>{props.alert}</Text>
   }
 
-  let content = (<Text>This is the content</Text>);
+  const onToggle = () => {
+    setOpen(!open);
+    return;
+  }
+
+  console.log('props are: ', props);
+  let authorText = null;
+  if (props.room.authors && props.room.authors.length > 0) {
+    let authorText = 'Authors:'
+    props.room.authors.forEach(author => {
+      authorText += ' ' + author + ','
+    });
+    console.log('returning ', authorText);
+  }
+
+  //old code for swapping between content depending on type
+  // let content = (<Text>This is the content</Text>);
 
   // switch (props.type) {
   //   case 'joinable':
@@ -53,13 +69,26 @@ export const ListItem = (props) => {
   return (
     <View style={styles.listItem}>
 
-      <View style={topRowStyle}>
+      <View style={topRowStyle} >
         <Text style={styles.h3}>{props.room.title}</Text>
         {props.alert && alert}
-        <Icon name={open ? "arrow-up" : "arrow-down"} size={20} />
+        <Icon
+          name={open ? "arrow-up" : "arrow-down"}
+          size={20}
+          onPress={onToggle}
+        />
       </View>
 
-      {open && content}
+      {open &&
+        (
+          <View>
+            <Text>{props.room.description}</Text>
+            <Text>Created by: {props.room.creator}</Text>
+            <Text>{authorText}</Text>
+            <Button title='Read Story ->' />
+          </View>
+        )
+      }
 
     </View>
   );
