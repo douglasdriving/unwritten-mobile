@@ -6,12 +6,48 @@ import { useState, useEffect } from 'react';
 
 export const MyRooms = () => {
 
-  const [myRooms, setMyRooms] = useState();
+  const [myRoomsList, setMyRoomsList] = useState();
 
   const LoadRooms = async () => {
+
     const rooms = await GetMyRooms();
-    setMyRooms(rooms);
-    return;
+
+    const openRoomsList = rooms.open.map(room => {
+      return {
+        //alert: false,
+        title: room.title,
+        //description: room.description,
+        creator: room.creator,
+        authors: room.authors,
+        //authorCount: 3,
+        turn: room.turn,
+        authorsTurn: room.authorsTurn,
+        storyId: room.id,
+        buttonText: 'Enter ->'
+      }
+    });
+
+    const closedRoomsList = rooms.closed.map(room => {
+      return {
+        //alert: false,
+        title: room.title,
+        //description: room.description,
+        creator: room.creator,
+        authors: room.authors,
+        //authorCount: room.authors.length + 1,
+        //turn: room.turn,
+        // authorsTurn: room.authorsTurn,
+        storyId: room.id,
+        buttonText: 'Read ->'
+      }
+    });
+
+    const newMyRoomList = {
+      open: openRoomsList,
+      closed: closedRoomsList
+    };
+
+    setMyRoomsList(newMyRoomList);
   }
 
   useEffect(() => { LoadRooms() }, []);
@@ -25,12 +61,12 @@ export const MyRooms = () => {
       <Text style={styles.h2}>Open</Text>
       <Text style={styles.body}>Ongoing story writing</Text>
 
-      { (myRooms && myRooms.open) && <StoryList rooms={myRooms.open}/> }
+      {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} />}
 
       <Text style={styles.h2}>Closed</Text>
       <Text style={styles.body}>Finished Stories</Text>
 
-      { (myRooms && myRooms.closed) && <StoryList rooms={myRooms.closed}/> }
+      {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} />}
 
     </ScrollView>
   );

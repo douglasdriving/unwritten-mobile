@@ -1,7 +1,7 @@
-import { Button, Text, View } from 'react-native';
+import { Button, Text, View, TouchableWithoutFeedback } from 'react-native';
 import { styles } from '../../../style';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const topRowStyle = {
   flexDirection: 'row',
@@ -9,91 +9,73 @@ const topRowStyle = {
   width: '100%',
 };
 
+//to generate a list item, include a prop in the following format:
+// listItemInfo = {
+//   alert: true,
+//   title: 'story title',
+//   description: 'story description',
+//   creator: 'story creator',
+//   authors: ['author1', 'author2', 'author3'],
+//   authorCount: 3,
+//   turn: 23,
+//   buttonText: 'press me'
+//    id: 'oj80jd2398j;
+// };
+
 export const ListItem = (props) => {
 
   const [open, setOpen] = useState(false);
 
   let alert;
-  if (props.alert && props.type == 'ongoing') {
-    alert = <Text style={styles.alert}>{props.alert}</Text>
+  if (props.listItemInfo.authorsTurn) {
+    alert = <Text style={styles.alert}>Your Turn!</Text>
   }
 
-  const onToggle = () => {
+  const Toggle = () => {
     setOpen(!open);
     return;
   }
 
   const HandleButtonPress = () => {
-    //open a specific room!
-    console.log('opening room with id: ', props.room.id);
+    console.log('opening room with id: ', props.listItemInfo.roomId);
   }
 
-  //Generate Author Text
-  let authorText = null;
-  if (props.room.authors && props.room.authors.length > 0) {
-    let authorText = 'Authors:'
-    props.room.authors.forEach(author => {
-      authorText += ' ' + author + ','
-    });
+  const GenerateAuthorText = () => {
+    let authorText = null;
+    if (props.listItemInfo.authors.length > 0) {
+      authorText = 'Authors:'
+      props.listItemInfo.authors.forEach(author => {
+        authorText += ' ' + author + ','
+      });
+    }
+    return authorText;
   }
-
-  //old code for swapping between content depending on type
-  // let content = (<Text>This is the content</Text>);
-
-  // switch (props.type) {
-  //   case 'joinable':
-  //     content = (
-  //       <View>
-  //         <Text style={styles.body}>The best story every written</Text>
-  //         <Text style={styles.body}>Created by Author</Text>
-  //         <Button title='Join ->'></Button>
-  //       </View>
-  //     );
-  //     break;
-  //   case 'ongoing':
-  //     content = (
-  //       <View>
-  //         <Text style={styles.body}>With Smogg (creator), Sebbe, and Noobalot</Text>
-  //         <Text style={styles.body}>🎲 Waiting for Sebbe to play turn 23 of 40</Text>
-  //         <Button title='Enter ->'></Button>
-  //       </View>
-  //     );
-  //     break;
-  //   case 'finished':
-  //     content = (
-  //       <View>
-  //         <Text>A great story about a bunch of great events</Text>
-  //         <Text style={styles.body}>By GoatPoet, Sebbe, Smogg, and DarkHorseForever</Text>
-  //         <Button title='Read Story ->'></Button>
-  //       </View>
-  //     );
-  //     break;
-  // };
-
+  
   return (
-    <View style={styles.listItem}>
+    <TouchableWithoutFeedback onPress={Toggle}>
+      <View style={styles.listItem}>
 
-      <View style={topRowStyle} >
-        <Text style={styles.h3}>{props.room.title}</Text>
-        {props.alert && alert}
-        <Icon
-          name={open ? "arrow-up" : "arrow-down"}
-          size={20}
-          onPress={onToggle}
-        />
+        <View style={topRowStyle}>
+          {props.listItemInfo.title && <Text style={styles.h3}>{props.listItemInfo.title}</Text>}
+          {props.listItemInfo.authorsTurn && alert}
+          <Icon name={open ? "arrow-up" : "arrow-down"} size={20} />
+        </View>
+
+        {open &&
+          (
+            <View>
+              {props.listItemInfo.description && <Text>{props.listItemInfo.description}</Text>}
+              {props.listItemInfo.creator && <Text>Creator: {props.listItemInfo.creator}</Text>}
+              {props.listItemInfo.authors && <Text>{GenerateAuthorText()}</Text>}
+              {props.listItemInfo.authorCount && <Text>🧔 {props.listItemInfo.authorCount}/4 writers</Text>}
+              {props.listItemInfo.turn && <Text>🎲 Turn {props.listItemInfo.turn}/40</Text>}
+              {props.listItemInfo.buttonText && <Button title={props.listItemInfo.buttonText} onPress={HandleButtonPress} />}
+            </View>
+          )
+        }
+
       </View>
+    </TouchableWithoutFeedback>
 
-      {open &&
-        (
-          <View>
-            <Text>{props.room.description}</Text>
-            <Text>Created by: {props.room.creator}</Text>
-            <Text>{authorText}</Text>
-            <Button title={'Enter ->'} onPress={HandleButtonPress} />
-          </View>
-        )
-      }
-
-    </View>
   );
 }

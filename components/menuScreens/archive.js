@@ -8,11 +8,25 @@ export const Archive = () => {
 
   const storyCount = 11; //fake var, will be calculated from backend load stories
 
-  const [finishedStories, setFinishedStories] = useState();
+  const [storiesList, setStoriesList] = useState();
 
   const LoadStories = async () => {
     const stories = await GetFinishedStories();
-    setFinishedStories(stories);
+    const storiesInfo = stories.map(story => {
+      return {
+        //alert: false,
+        title: story.title,
+        description: story.description,
+        creator: story.creator,
+        authors: story.authors,
+        //authorCount: 3,
+        //turn: room.turn,
+        //authorsTurn: room.authorsTurn,
+        storyId: story.id,
+        buttonText: 'Read ->'
+      }
+    })
+    setStoriesList(storiesInfo);
   }
 
   useEffect(() => {
@@ -23,7 +37,7 @@ export const Archive = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.h1}>Archive</Text>
       <Text style={styles.body}>A collection of all {storyCount} stories finished so far in Unwritten</Text>
-      <StoryList type={'finished'} rooms={finishedStories}></StoryList>
+      <StoryList type={'finished'} listItemInfo={storiesList}></StoryList>
     </ScrollView>
   );
 }

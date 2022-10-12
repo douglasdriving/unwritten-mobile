@@ -1,15 +1,16 @@
 import { Text, View } from 'react-native';
 import { styles } from '../../../style';
 import { ListItem } from './storyListItem';
+import { GenerateRandomString } from '../../../helperFunctions/helpers';
 
 export const StoryList = (props) => {
 
-  //renders a listitem for each room
   return (
     <View>
-      {props.rooms && props.rooms.map(room => (
-        <ListItem type={props.type} room={room} key={room.title}/>
+      {props.listItemInfo && props.listItemInfo.map(listItemInfo => (
+        <ListItem listItemInfo={listItemInfo} key={GenerateRandomString()} />
       ))}
     </View>
   );
+
 }
