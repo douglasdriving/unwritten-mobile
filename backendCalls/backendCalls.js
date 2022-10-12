@@ -1,3 +1,5 @@
+import { GenerateRandomString } from "../helperFunctions/helpers"
+
 export const GetUser = async () => {
   return {
     name: 'Smogg',
@@ -17,29 +19,34 @@ export const GetAvailableRooms = async () => {
       {
         title: 'Little Red Riding Hood',
         description: 'A dark tale about a little girl venturing into a forest',
-        author: 'noobalot',
+        creator: 'noobalot',
+        id: GenerateRandomString(),
       },
       {
         title: 'Lost in Space',
         description: 'A spaceship goes afloat into the void',
-        author: 'carlsagan',
+        creator: 'carlsagan',
+        id: GenerateRandomString(),
       },
       {
         title: 'Prevail',
         description: 'A lousy tale of a bunch of random stuff',
-        author: 'hickory73',
+        creator: 'hickory73',
+        id: GenerateRandomString(),
       }
     ],
     ongoing: [
       {
         title: 'Far From Home',
         description: 'Charles rides his horse of the beaten path',
-        author: 'mrAway',
+        creator: 'mrAway',
+        id: GenerateRandomString(),
       },
       {
         title: 'Cruel World',
         description: 'A tale of suecidal thoughts',
-        author: 'dreamer',
+        creator: 'dreamer',
+        id: GenerateRandomString(),
       }
     ]
   }
@@ -52,31 +59,36 @@ export const GetMyRooms = async () => {
       {
         title: 'Shitty Day',
         description: 'A spaceship goes afloat into the void',
-        author: 'carlsagan',
+        creator: 'carlsagan',
         turn: false,
+        id: GenerateRandomString(),
       },
       {
         title: 'Without Hesitation',
         description: 'A lousy tale of a bunch of random stuff',
-        author: 'hickory73',
+        creator: 'hickory73',
         turn: true,
+        id: GenerateRandomString(),
       }
     ],
     closed: [
       {
         title: 'Far From Home',
         description: 'Charles rides his horse of the beaten path',
-        author: 'mrAway',
+        creator: 'mrAway',
+        id: GenerateRandomString(),
       },
       {
         title: 'Cruel World',
         description: 'A tale of suecidal thoughts',
-        author: 'dreamer',
+        creator: 'dreamer',
+        id: GenerateRandomString(),
       },
       {
         title: 'Green Fruits',
         description: 'Charles rides his horse of the beaten path',
-        author: 'mrAway',
+        creator: 'mrAway',
+        id: GenerateRandomString(),
       },
     ]
   }
@@ -90,18 +102,21 @@ export const GetFinishedStories = async () => {
       description: 'A story about a startup',
       creator: 'Smogg',
       authors: ['Seb', 'Goobstaf', 'Killer32'],
+      id: GenerateRandomString(),
     },
     {
       title: 'The Red Car',
       description: 'Jonas buys a brand new car, only to have it stolen!',
       creator: 'BurnDownTheDisco',
       authors: ['GoatPoet', 'Amadeus', 'StevenKing'],
+      id: GenerateRandomString(),
     },
     {
       title: 'Forgotten Planes',
       description: 'A desserted svanna with no animals',
       creator: 'hunter69',
       authors: ['Seb', 'Amadeus', 'Smogg'],
+      id: GenerateRandomString(),
     },
   ]
 }
@@ -112,6 +127,7 @@ const exampleStoryFull = {
   creator: 'creatorUsername',
   authors: ['author1', 'author2', 'author3'],
   turn: false,
+  id: GenerateRandomString(),
 }
 
 export const GetStoryKeys = async () => {

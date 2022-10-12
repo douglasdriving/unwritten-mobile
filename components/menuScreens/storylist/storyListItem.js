@@ -23,14 +23,18 @@ export const ListItem = (props) => {
     return;
   }
 
-  console.log('props are: ', props);
+  const HandleButtonPress = () => {
+    //open a specific room!
+    console.log('opening room with id: ', props.room.id);
+  }
+
+  //Generate Author Text
   let authorText = null;
   if (props.room.authors && props.room.authors.length > 0) {
     let authorText = 'Authors:'
     props.room.authors.forEach(author => {
       authorText += ' ' + author + ','
     });
-    console.log('returning ', authorText);
   }
 
   //old code for swapping between content depending on type
@@ -85,7 +89,7 @@ export const ListItem = (props) => {
             <Text>{props.room.description}</Text>
             <Text>Created by: {props.room.creator}</Text>
             <Text>{authorText}</Text>
-            <Button title='Read Story ->' />
+            <Button title={'Enter ->'} onPress={HandleButtonPress} />
           </View>
         )
       }
