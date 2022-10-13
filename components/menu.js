@@ -15,39 +15,51 @@ const screenOptions = {
   headerShown: false,
 };
 
-export const Menu = () => {
+export const Menu = (menuProps) => {
+
   return (
-    <NavigationContainer >
-      <Tab.Navigator screenOptions={screenOptions}>
-        <Tab.Screen
-          name='Join Room'
-          component={JoinRoom}
-          options={{
-            tabBarIcon: () => (<Icon name="add-circle-outline" size={26}/>)
-          }}
-        />
-        <Tab.Screen
-          name='Open New Room'
-          component={OpenRoom}
-          options={{
-            tabBarIcon: () => (<Icon name="key" size={26}/>)
-          }}
-        />
-        <Tab.Screen
-          name='My Rooms'
-          component={MyRooms}
-          options={{
-            tabBarIcon: () => (<Icon name="home" size={26}/>)
-          }}
-        />
-        <Tab.Screen
-          name='Archive'
-          component={Archive}
-          options={{
-            tabBarIcon: () => (<Icon name="folder" size={26}/>)
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator screenOptions={screenOptions}>
+
+      <Tab.Screen
+        name='Join Room'
+        options={{
+          tabBarIcon: () => (<Icon name="add-circle-outline" size={26} />)
+        }}
+      >
+        {() => <JoinRoom appNavigation={menuProps.navigation} user={menuProps.user}/>}
+      </Tab.Screen>
+
+      <Tab.Screen
+        name='Open New Room'
+        options={{
+          tabBarIcon: () => (<Icon name="key" size={26} />)
+        }}
+      >
+        {(props) => <OpenRoom
+          {...props}
+          premiumUser={menuProps.user.premium}
+          appNavigation={menuProps.navigation}
+        />}
+      </Tab.Screen>
+
+      <Tab.Screen
+        name='My Rooms'
+        options={{
+          tabBarIcon: () => (<Icon name="home" size={26} />)
+        }}
+      >
+        {() => <MyRooms appNavigation={menuProps.navigation}/>}
+      </Tab.Screen>
+
+      <Tab.Screen
+        name='Archive'
+        options={{
+          tabBarIcon: () => (<Icon name="folder" size={26} />)
+        }}
+      >
+        {() => <Archive appNavigation={menuProps.navigation}/>}
+      </Tab.Screen>
+
+    </Tab.Navigator>
   );
 }

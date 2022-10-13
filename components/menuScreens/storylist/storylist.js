@@ -8,7 +8,7 @@ export const StoryList = (props) => {
   return (
     <View>
       {props.listItemInfo && props.listItemInfo.map(listItemInfo => (
-        <ListItem listItemInfo={listItemInfo} key={GenerateRandomString()} />
+        <ListItem listItemInfo={listItemInfo} key={GenerateRandomString()} appNavigation={props.appNavigation} />
       ))}
     </View>
   );

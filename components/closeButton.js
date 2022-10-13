@@ -1,17 +1,20 @@
-import { View } from "react-native";
+import { TouchableWithoutFeedback, View } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export const CloseButton = () => {
+export const CloseButton = (props) => {
   return (
-    <View style={{
-      position: 'absolute',
-      width: '100%',
-      alignItems: 'flex-end',
-      // borderColor: 'red',
-      // borderWidth: 2,
-      alignSelf: 'flex-end',
-    }}>
-      <Icon name="close-outline" size={30}/>
-    </View>
+    <TouchableWithoutFeedback onPress={props.handlePress}>
+      <View style={{
+        position: 'absolute',
+        width: '100%',
+        alignItems: 'flex-end',
+        // borderColor: 'red',
+        // borderWidth: 2,
+        alignSelf: 'flex-end',
+      }}>
+        <Icon name="close-outline" size={30} />
+      </View>
+    </TouchableWithoutFeedback>
+
   );
 }

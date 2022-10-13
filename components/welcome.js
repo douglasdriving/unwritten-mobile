@@ -7,7 +7,7 @@ export const Welcome = (props) => {
   const SignIn = async () => {
     const user = await GetUser();
     props.setUser(user);
-    return;
+    props.navigation.navigate('Menu');
   }
 
   return(

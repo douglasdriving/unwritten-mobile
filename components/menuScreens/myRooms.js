@@ -4,7 +4,7 @@ import { styles } from '../../style';
 import { GetMyRooms } from '../../backendCalls/backendCalls';
 import { useState, useEffect } from 'react';
 
-export const MyRooms = () => {
+export const MyRooms = (props) => {
 
   const [myRoomsList, setMyRoomsList] = useState();
 
@@ -61,12 +61,12 @@ export const MyRooms = () => {
       <Text style={styles.h2}>Open</Text>
       <Text style={styles.body}>Ongoing story writing</Text>
 
-      {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} />}
+      {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} appNavigation={props.appNavigation}/>}
 
       <Text style={styles.h2}>Closed</Text>
       <Text style={styles.body}>Finished Stories</Text>
 
-      {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} />}
+      {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} appNavigation={props.appNavigation}/>}
 
     </ScrollView>
   );

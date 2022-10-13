@@ -3,8 +3,8 @@ import { GenerateRandomString } from "../helperFunctions/helpers"
 export const GetUser = async () => {
   return {
     name: 'Smogg',
-    premium: true,
-    newUser: false
+    premium: false,
+    new: true
   }
 }
 
