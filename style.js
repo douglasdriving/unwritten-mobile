@@ -88,4 +88,12 @@ export const styles = StyleSheet.create({
     zIndex: 2,
   },
 
+  inputFieldStyle: {
+    backgroundColor: 'white',
+    padding: 0,
+    //height: (props.fieldHeight ? props.fieldHeight : 30),
+    //textAlignVertical: (props.fieldHeight ? 'top' : 'center'),
+    fontSize: 16,
+  },
+
 });

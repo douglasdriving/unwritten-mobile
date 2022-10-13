@@ -37,7 +37,7 @@ export const Archive = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.h1}>Archive</Text>
       <Text style={styles.body}>A collection of all {storyCount} stories finished so far in Unwritten</Text>
-      <StoryList type={'finished'} listItemInfo={storiesList}></StoryList>
+      <StoryList listItemInfo={storiesList}></StoryList>
     </ScrollView>
   );
 }
