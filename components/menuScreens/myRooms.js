@@ -1,4 +1,4 @@
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, View } from 'react-native';
 import { StoryList } from './storylist/storylist';
 import { styles } from '../../style';
 import { GetMyRooms } from '../../backendCalls/backendCalls';
@@ -11,6 +11,8 @@ export const MyRooms = (props) => {
   const LoadRooms = async () => {
 
     const rooms = await GetMyRooms();
+
+    if (!rooms) return false;
 
     const openRoomsList = rooms.open.map(room => {
       return {
@@ -56,17 +58,24 @@ export const MyRooms = (props) => {
     <ScrollView style={styles.container}>
 
       <Text style={styles.h1}>My Rooms</Text>
-      <Text style={styles.body}>Writing rooms that you are participating in.</Text>
 
-      <Text style={styles.h2}>Open</Text>
-      <Text style={styles.body}>Ongoing story writing</Text>
+      {!myRoomsList ?
+        <Text>You are currently not participating in any rooms! Join a new writing room to have it show here</Text>
+        :
+        <View>
+          <Text style={styles.body}>Writing rooms that you are participating in.</Text>
 
-      {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} appNavigation={props.appNavigation}/>}
+          <Text style={styles.h2}>Open</Text>
+          <Text style={styles.body}>Ongoing story writing</Text>
 
-      <Text style={styles.h2}>Closed</Text>
-      <Text style={styles.body}>Finished Stories</Text>
+          {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} appNavigation={props.appNavigation} />}
 
-      {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} appNavigation={props.appNavigation}/>}
+          <Text style={styles.h2}>Closed</Text>
+          <Text style={styles.body}>Finished Stories</Text>
+
+          {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} appNavigation={props.appNavigation} />}
+        </View>
+      }
 
     </ScrollView>
   );

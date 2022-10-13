@@ -7,9 +7,8 @@ import { Popup } from '../popup';
 
 export const JoinRoom = (props) => {
 
-  console.log(props.user);
-
   const [availableRoomsList, setAvailableRoomsList] = useState();
+  const [welcomPopup, setWelcomePopup] = useState(props.user.new);
 
   const LoadRooms = async () => {
     const rooms = await GetAvailableRooms();
@@ -57,13 +56,14 @@ export const JoinRoom = (props) => {
   return (
     <ScrollView style={styles.container}>
 
-      {props.user.new &&
+      {welcomPopup &&
         <Popup
           title='Welcome to Unwritten!'
           text='As a free user, you can join 2 rooms to write stories,
           and access the library of finished stories. Start by joining a room!
           If you want to play unlimited stories and create your own,
           consider joining Unwritten'
+          onClose={() => {setWelcomePopup(false)}}
           buttons={[
             {
               title: 'Join Unwritten',

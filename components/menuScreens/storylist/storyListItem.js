@@ -24,6 +24,8 @@ const topRowStyle = {
 
 export const ListItem = (props) => {
 
+  //console.log('generated list item with infO: ', props.listItemInfo);
+
   const [open, setOpen] = useState(false);
 
   let alert;

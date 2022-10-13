@@ -12,12 +12,12 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
-  const [popup, setPopup] = useState();
   const [user, setUser] = useState();
 
   const AppNavigator = () => {
+
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown: false}}>
 
         <Stack.Screen name="Welcome">
           {(props) => <Welcome {...props} setUser={(user) => setUser(user)} />}
@@ -40,18 +40,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-//test stuff
-// const examplePopup = {
-//   isLoading: false,
-//   title: 'This is a popup',
-//   text: 'A lot of cool shit can be put inside a popup. Kinda whatever you want. Or well, just text and buttons tbh',
-//   buttons: [
-//     {
-//       title: 'press me!',
-//     },
-//     {
-//       title: 'cucumber!',
-//     },
-//   ]
-// }

@@ -2,8 +2,23 @@ import { StyleSheet, Modal, Button, View, Text } from "react-native";
 import { CloseButton } from "./closeButton";
 import { styles } from "../style";
 import { useState } from "react";
+import { GenerateRandomString } from "../helperFunctions/helpers";
 
 export const Popup = (props) => {
+
+  /*
+  possible props:
+  title = heading text
+  text = descriptive text
+  onClose = what happens when you press x in corner. Pass callback
+  loading = true/false depending on if this is a loader
+  buttons = [
+    {
+      title: text on the button
+      handlePress: callback for when you press the button
+    },
+  ]
+  */
 
   const [rendered, setRendered] = useState(true);
 
@@ -27,14 +42,14 @@ export const Popup = (props) => {
       <View style={popupStyles.view}>
         <View style={popupStyles.background} />
         <View style={popupStyles.box}>
-          <CloseButton handlePress={Close}/>
+          {!props.loading && <CloseButton handlePress={props.onClose}/>}
           <View style={popupStyles.content}>
             <Text style={styles.h2}>{props.title}</Text>
             {props.text && <Text>{props.text}</Text>}
             {props.buttons &&
               <View style={popupStyles.buttonRow}>
                 {props.buttons.map(button => (
-                  <Button title={button.title} onPress={button.handlePress}/>
+                  <Button title={button.title} onPress={button.handlePress} key={button.title}/>
                 ))}
               </View>
             }
