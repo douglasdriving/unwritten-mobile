@@ -24,7 +24,7 @@ export const MyRooms = (props) => {
         //authorCount: 3,
         turn: room.turnsTaken,
         playersTurn: (room.nextPlayer == GetLoggedUserName()),
-        storyId: room.id,
+        roomId: room.id,
         buttonText: 'Enter ->'
       }
     });
@@ -39,7 +39,7 @@ export const MyRooms = (props) => {
         //authorCount: room.authors.length + 1,
         //turn: room.turn,
         // playersTurn: room.playersTurn,
-        storyId: room.id,
+        roomId: room.id,
         buttonText: 'Read ->'
       }
     });

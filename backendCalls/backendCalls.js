@@ -78,9 +78,6 @@ const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finishedRooms
   }
 
   return rooms;
-
-
-
 }
 const rooms = GenerateRandomRoomArray(10, 20, 6, 3);
 

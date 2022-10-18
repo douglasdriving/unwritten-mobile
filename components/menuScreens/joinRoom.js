@@ -23,7 +23,7 @@ export const JoinRoom = (props) => {
         //authorCount: 3,
         //turn: room.turn,
         //playersTurn: room.playersTurn,
-        storyId: room.id,
+        roomId: room.id,
         buttonText: 'Join ->'
       }
     });
@@ -38,7 +38,7 @@ export const JoinRoom = (props) => {
         authorCount: room.authors.length + 1,
         turn: room.turnsTaken,
         // playersTurn: room.playersTurn,
-        storyId: room.id,
+        roomId: room.id,
         buttonText: 'Join ->'
       }
     });
