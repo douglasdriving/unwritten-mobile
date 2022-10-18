@@ -39,7 +39,6 @@ export const ListItem = (props) => {
   }
 
   const HandleButtonPress = () => {
-    //console.log('opening room with id: ', props.listItemInfo.roomId);
     props.appNavigation.navigate('Game', { roomId: props.listItemInfo.roomId });
   }
 

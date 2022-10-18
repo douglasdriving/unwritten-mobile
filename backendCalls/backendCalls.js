@@ -1,90 +1,31 @@
 import { GenerateRandomString, PickRandomFromArray, GetRandomInt } from "../helperFunctions/helpers"
 import { fakeWriters, fakeTitles, scenarioTextPlaceholder } from "./fakeData";
+import { AsyncStorage } from 'react-native';
+import { GenerateRandomRoomArray, GenerateRandomRoom } from './dataGeneration.js';
 
 console.log('backend started ' + new Date());
 
-//balancing
-const maxScenarioCount = 40;
-
-//GENERATE DATA
-const GenerateRandomRoom = (turnsTaken, authorCount) => {
-
-  //ADD A CREATOR
-  const creator = PickRandomFromArray(fakeWriters);
-
-  //ADD AUTHORS
-  let authors = [];
-  for (let i = 0; i < authorCount; i++) {
-    authors.push(PickRandomFromArray(fakeWriters));
-  }
-  const currentPlayers = authors.concat(creator);
-
-  //FIND OUT WHO IS THE NEXT PLAYER
-  const turnsTakenInRound = turnsTaken % 4;
-  let nextPlayer;
-  if (turnsTakenInRound == 0) nextPlayer = creator;
-  else if (turnsTaken < 4 || turnsTaken == maxScenarioCount) nextPlayer = null;
-  else nextPlayer = authors[Math.min((turnsTakenInRound - 1), (authorCount - 1))];
-
-  //ADD SCENARIOS
-  const scenarios = [];
-  const allPlayers = currentPlayers;
-  while (allPlayers.length < 4) {
-    allPlayers.splice(1, 0, PickRandomFromArray(fakeWriters)); //insert player at i=1
-  }
-  for (let i = 0; i < turnsTaken; i++) {
-    scenarios.push({
-      text: scenarioTextPlaceholder,
-      author: allPlayers[i % 4 - 1]
-    })
-  };
-
-  //CREATE ROOM OBJECT
-  const room = {
-    title: PickRandomFromArray(fakeTitles),
-    description: 'An epic tale of an epic adventure',
-    creator: creator,
-    authors: authors,
-    turnsTaken: turnsTaken,
-    nextPlayer: nextPlayer,
-    id: GenerateRandomString(),
-    scenarios: scenarios
-  };
-
-  return room;
-}
-const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finishedRoomsCount, leavedRoomsCount) => {
-
-  const rooms = [];
-
-  for (let i = 0; i < ongoingRoomsCount; i++) {
-    rooms.push(GenerateRandomRoom(GetRandomInt(4, maxScenarioCount - 3), 3));
-  }
-
-  for (let i = 0; i < newRoomsCount; i++) {
-    const authorCountInNewRoom = GetRandomInt(1, 3);
-    rooms.push(GenerateRandomRoom(authorCountInNewRoom+1, authorCountInNewRoom));
-  }
-
-  for (let i = 0; i < finishedRoomsCount; i++) {
-    rooms.push(GenerateRandomRoom(maxScenarioCount, 3));
-  }
-
-  for (let i = 0; i < leavedRoomsCount; i++) {
-    rooms.push(GenerateRandomRoom(
-      GetRandomInt(5, maxScenarioCount - 3),
-      GetRandomInt(1, 2)
-    ));
-  }
-
-  return rooms;
-}
-const rooms = GenerateRandomRoomArray(10, 20, 6, 3);
-
-//USER
+//VARS
+let rooms;
 let loggedUser;
 let storyKeys = 4;
 
+//LOAD DATA FROM ASYNC FILE STORAGE
+const LoadRoomData = async () => {
+
+  const loadedRoomsData = await AsyncStorage.getItem('rooms');
+
+  if (loadedRoomsData) {
+    rooms = JSON.parse(loadedRoomsData);
+  }
+  else {
+    rooms = GenerateRandomRoomArray(10, 20, 6, 3)
+    await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
+  };
+}
+
+
+//USER
 export const GetLoggedUserName = () => {
   return loggedUser.name;
 }
@@ -117,7 +58,7 @@ export const CreateNewUser = async () => {
 
 }
 
-//STORIES
+//ROOMS
 export const GetAvailableRooms = async () => {
 
   const availableRooms = rooms.filter(room => (
@@ -133,7 +74,14 @@ export const GetAvailableRooms = async () => {
     room.scenarios.length >= 4
   ))
 
-  return {new: newRooms, ongoing: roomWithLeavers};
+  // newRooms.forEach(newRoom => {
+  //   console.log('backend returning ', newRoom.title, "(", newRoom.id, ")");
+  //   // rooms.forEach((room, i) => {
+  //   //    if(room.id == newRoom.id) console.log('it matches a room with name: ', room.title);
+  //   // })
+  // })
+
+  return { new: newRooms, ongoing: roomWithLeavers };
 }
 
 export const GetMyRooms = async () => {
@@ -180,21 +128,28 @@ export const CreateNewRoom = async (title, description, opening) => {
   };
 
   rooms.push(room);
+  await AsyncStorage.setItem('rooms', rooms);
   return room.id;
 }
 
-//Old STUFF
-// const exampleStoryFull = {
-//   title: 'storyTitle',
-//   description: 'storyDesc',
-//   creator: 'creatorUsername',
-//   authors: ['author1', 'author2', 'author3'],
-//   turn: 34,
-//   playersTurn: true,
-//   id: GenerateRandomString(),
-// }
+export const GetRoomData = async roomId => {
+  let roomToReturn = null;
+  rooms.forEach((room, i) => {
+    if (room.id == roomId) {
+      roomToReturn = room;
+    }
+  })
+  return roomToReturn;
+}
 
-// const GenerateRandomRoom = (authorCount, loggedPlayerIsIn, scenarioCount, closed,) => {
-//   //generate and return a room with some random text etc based on the passed info
-// }
+export const LogAllRooms = async () => {
 
+  console.log('ALL ROOMS:')
+  rooms.forEach((room, i) => {
+    console.log(room.title, " ", room.id);
+  })
+
+}
+
+//RUN ON START
+LoadRoomData();

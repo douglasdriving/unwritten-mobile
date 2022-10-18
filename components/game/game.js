@@ -3,19 +3,29 @@ import { styles } from '../../style.js';
 import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { GetRoomData, LogAllRooms } from '../../backendCalls/backendCalls.js';
+import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
 
 export const Game = (props) => {
 
-  useEffect(() => {
-    console.log('entered room with props: ', props.route.params.roomId);
-  })
+  //yes if its full & I am not in it, or if all scenarios are full
+  const [readOnly, setReadOnly] = useState("false");
+
+  const SetInitialStates = async () => {
+
+    const room = await GetRoomData(props.route.params.roomId);
+    setReadOnly(room.scenarios.length >= maxScenarioCount);
+
+  }
+
+  useEffect(() => {SetInitialStates()}, [])
 
   return (
     <View>
-      <GameArea readOnly={props.readOnly}/>
-      <StoryNav readOnly={props.readOnly}/>
-      <Text>Entered room with id {props.route.params.roomId}</Text>
+      <GameArea readOnly={props.readOnly} />
+      <StoryNav readOnly={props.readOnly} />
+      <Text>read only is: {readOnly}</Text>
       {/* <RoomMenu/> */}
     </View>
   );
