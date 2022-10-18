@@ -1,5 +1,5 @@
 import { GenerateRandomString, PickRandomFromArray, GetRandomInt } from "../helperFunctions/helpers"
-import { fakeWriters, fakeTitles } from "./fakeData";
+import { fakeWriters, fakeTitles, scenarioTextPlaceholder } from "./fakeData";
 
 console.log('backend started ' + new Date());
 
@@ -7,34 +7,39 @@ console.log('backend started ' + new Date());
 const maxScenarioCount = 40;
 
 //GENERATE DATA
-const GenerateRandomRoom = (turnsTaken) => {
+const GenerateRandomRoom = (turnsTaken, authorCount) => {
 
+  //ADD A CREATOR
   const creator = PickRandomFromArray(fakeWriters);
 
+  //ADD AUTHORS
   let authors = [];
-  const authorCount = (turnsTaken < 4) ? turnsTaken : 4;
   for (let i = 0; i < authorCount; i++) {
     authors.push(PickRandomFromArray(fakeWriters));
   }
+  const currentPlayers = authors.concat(creator);
 
-  //const turnsTaken = turnsTaken; //isNew ? authorCount : (Math.floor(Math.random() * 36) + 4);
+  //FIND OUT WHO IS THE NEXT PLAYER
   const turnsTakenInRound = turnsTaken % 4;
   let nextPlayer;
   if (turnsTakenInRound == 0) nextPlayer = creator;
   else if (turnsTaken < 4 || turnsTaken == maxScenarioCount) nextPlayer = null;
-  else nextPlayer = authors[turnsTakenInRound - 1];
+  else nextPlayer = authors[Math.min((turnsTakenInRound - 1), (authorCount - 1))];
 
+  //ADD SCENARIOS
   const scenarios = [];
+  const allPlayers = currentPlayers;
+  while (allPlayers.length < 4) {
+    allPlayers.splice(1, 0, PickRandomFromArray(fakeWriters)); //insert player at i=1
+  }
   for (let i = 0; i < turnsTaken; i++) {
-    let author;
-    if (i % 4 == 0) author = creator;
-    else author = authors[i % 4 - 1];
     scenarios.push({
-      text: 'The wild wolf fell into the example scenario text and was confused about what to do. The red fox jumped over the fence. Everyone expected some fat lorem ipsum but this is all they received',
-      author: author
+      text: scenarioTextPlaceholder,
+      author: allPlayers[i % 4 - 1]
     })
   };
 
+  //CREATE ROOM OBJECT
   const room = {
     title: PickRandomFromArray(fakeTitles),
     description: 'An epic tale of an epic adventure',
@@ -48,29 +53,40 @@ const GenerateRandomRoom = (turnsTaken) => {
 
   return room;
 }
-const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finishedRoomsCount) => {
+const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finishedRoomsCount, leavedRoomsCount) => {
 
   const rooms = [];
 
   for (let i = 0; i < ongoingRoomsCount; i++) {
-    rooms.push(GenerateRandomRoom(GetRandomInt(4, maxScenarioCount - 1)));
+    rooms.push(GenerateRandomRoom(GetRandomInt(4, maxScenarioCount - 3), 3));
   }
 
   for (let i = 0; i < newRoomsCount; i++) {
-    rooms.push(GenerateRandomRoom(GetRandomInt(1, 3)));
+    const authorCountInNewRoom = GenerateRandomRoom(1, 3);
+    rooms.push(GenerateRandomRoom(authorCountInNewRoom+1, authorCountInNewRoom));
   }
 
   for (let i = 0; i < finishedRoomsCount; i++) {
-    rooms.push(GenerateRandomRoom(maxScenarioCount));
+    rooms.push(GenerateRandomRoom(maxScenarioCount, 3));
+  }
+
+  for (let i = 0; i < leavedRoomsCount; i++) {
+    rooms.push(GenerateRandomRoom(
+      GetRandomInt(5, maxScenarioCount - 3),
+      GetRandomInt(1, 2)
+    ));
   }
 
   return rooms;
 
+
+
 }
-const rooms = GenerateRandomRoomArray(10, 20, 6);
+const rooms = GenerateRandomRoomArray(10, 20, 6, 3);
 
 //USER
 let loggedUser;
+let storyKeys = 4;
 
 export const GetUser = async () => {
 
@@ -110,14 +126,13 @@ export const GetAvailableRooms = async () => {
   ));
 
   const newRooms = availableRooms.filter(room => (
-    room.story.scenarios.length < 4
+    room.scenarios.length < 4
   ))
-  //currently no rooms with more than 4 scenarios but less than 4 authors. have to add some
-  const ongoingRooms = availableRooms.filter(room => (
-    room.story.scenarios.length >= 4
+  const roomWithLeavers = availableRooms.filter(room => (
+    room.scenarios.length >= 4
   ))
 
-  return rooms;
+  return {new: newRooms, ongoing: roomWithLeavers};
 }
 
 export const GetMyRooms = async () => {
@@ -135,7 +150,7 @@ export const GetMyRooms = async () => {
     (room.scenarios.length = maxScenarioCount)
   ));
 
-  return {open: openRooms, closed: closedRooms};
+  return { open: openRooms, closed: closedRooms };
 }
 
 export const GetFinishedStories = async () => {
@@ -144,9 +159,10 @@ export const GetFinishedStories = async () => {
 }
 
 export const GetStoryKeys = async () => {
-  return 4;
+  return storyKeys;
 }
 
+//THIS ONE DOES NOT WORK WITH NEW ROOM STRUCTURE!
 export const CreateNewRoom = async (title, description, opening) => {
   //add a new story to the database and get back an ID for the story
   const newRoom = {

@@ -78,3 +78,5 @@ export const fakeWriters = [
   'brogson',
   'todd',
 ]
+
+export const scenarioTextPlaceholder = 'The wild wolf fell into the example scenario text and was confused about what to do. The red fox jumped over the fence. Everyone expected some fat lorem ipsum but this is all they received';
