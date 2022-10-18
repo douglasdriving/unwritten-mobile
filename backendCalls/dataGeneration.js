@@ -15,7 +15,6 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
   for (let i = 0; i < authorCount; i++) {
     authors.push(PickRandomFromArray(fakeWriters));
   }
-  const currentPlayers = authors.concat(creator);
 
   //FIND OUT WHO IS THE NEXT PLAYER
   const turnsTakenInRound = turnsTaken % 4;
@@ -26,7 +25,7 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
 
   //ADD SCENARIOS
   const scenarios = [];
-  const allPlayers = currentPlayers;
+  const allPlayers = [...authors, creator];
   while (allPlayers.length < 4) {
     allPlayers.splice(1, 0, PickRandomFromArray(fakeWriters)); //insert player at i=1
   }

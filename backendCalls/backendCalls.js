@@ -7,7 +7,7 @@ console.log('backend started ' + new Date());
 
 //VARS
 let rooms;
-let loggedUser;
+export let loggedUser;
 let storyKeys = 4;
 
 //LOAD DATA FROM ASYNC FILE STORAGE
@@ -27,7 +27,8 @@ const LoadRoomData = async () => {
 
 //USER
 export const GetLoggedUserName = () => {
-  return loggedUser.name;
+  if(loggedUser.name) return loggedUser.name;
+  else return false;
 }
 
 export const GetUser = async () => {

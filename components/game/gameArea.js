@@ -6,12 +6,10 @@ import { ActionArea } from './actionArea/actionArea.js';
 
 export const GameArea = (props) => {
 
-  const readOnly = props.readOnly;
-
   return (
     <ScrollView style={styles.gameWindow}>
-      <StoryContent readOnly={readOnly}/>
-      {!readOnly && <ActionArea/>}
+      <StoryContent readOnly={props.readOnly}/>
+      {!props.readOnly && <ActionArea/>}
       <Spacer/>
     </ScrollView>
   );
