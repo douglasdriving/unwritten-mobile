@@ -1,25 +1,73 @@
-import { GenerateRandomString } from "../helperFunctions/helpers"
+import { GenerateRandomString, PickRandomFromArray, GetRandomInt } from "../helperFunctions/helpers"
+import { fakeWriters, fakeTitles } from "./fakeData";
 
-//DATA
-const rooms = [];
+console.log('backend started ' + new Date());
 
-/* Room Object Structure
-{
-  id:
-  story: {
-    title:
-    description:
-    scenarios: [{
-      author:
-      text:
-    }]
+//balancing
+const maxScenarioCount = 40;
+
+//GENERATE DATA
+const GenerateRandomRoom = (turnsTaken) => {
+
+  const creator = PickRandomFromArray(fakeWriters);
+
+  let authors = [];
+  const authorCount = (turnsTaken < 4) ? turnsTaken : 4;
+  for (let i = 0; i < authorCount; i++) {
+    authors.push(PickRandomFromArray(fakeWriters));
   }
-  creator:
-  authors: []
-  closed:
-  turn: 'whos turn it is'
+
+  //const turnsTaken = turnsTaken; //isNew ? authorCount : (Math.floor(Math.random() * 36) + 4);
+  const turnsTakenInRound = turnsTaken % 4;
+  let nextPlayer;
+  if (turnsTakenInRound == 0) nextPlayer = creator;
+  else if (turnsTaken < 4 || turnsTaken == maxScenarioCount) nextPlayer = null;
+  else nextPlayer = authors[turnsTakenInRound - 1];
+
+  const scenarios = [];
+  for (let i = 0; i < turnsTaken; i++) {
+    let author;
+    if (i % 4 == 0) author = creator;
+    else author = authors[i % 4 - 1];
+    scenarios.push({
+      text: 'The wild wolf fell into the example scenario text and was confused about what to do. The red fox jumped over the fence. Everyone expected some fat lorem ipsum but this is all they received',
+      author: author
+    })
+  };
+
+  const room = {
+    title: PickRandomFromArray(fakeTitles),
+    description: 'An epic tale of an epic adventure',
+    creator: creator,
+    authors: authors,
+    turnsTaken: turnsTaken,
+    nextPlayer: nextPlayer,
+    id: GenerateRandomString(),
+    scenarios: scenarios
+  };
+
+  return room;
 }
-*/
+const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finishedRoomsCount) => {
+
+  const rooms = [];
+
+  for (let i = 0; i < ongoingRoomsCount; i++) {
+    rooms.push(GenerateRandomRoom(GetRandomInt(4, maxScenarioCount - 1)));
+  }
+
+  for (let i = 0; i < newRoomsCount; i++) {
+    rooms.push(GenerateRandomRoom(GetRandomInt(1, 3)));
+  }
+
+  for (let i = 0; i < finishedRoomsCount; i++) {
+    rooms.push(GenerateRandomRoom(maxScenarioCount));
+  }
+
+  return rooms;
+
+}
+const rooms = GenerateRandomRoomArray(10, 20, 6);
 
 //USER
 let loggedUser;
@@ -27,7 +75,7 @@ let loggedUser;
 export const GetUser = async () => {
 
   user = {
-    name: 'EpicWriter2000',
+    name: PickRandomFromArray(fakeWriters),
     premium: true,
     new: false
   };
@@ -41,7 +89,7 @@ export const GetUser = async () => {
 export const CreateNewUser = async () => {
 
   user = {
-    name: 'FroggyBoy',
+    name: PickRandomFromArray(fakeWriters),
     premium: false,
     new: true
   };
@@ -62,17 +110,14 @@ export const GetAvailableRooms = async () => {
   ));
 
   const newRooms = availableRooms.filter(room => (
-    room.story.scenarios.count < 4
+    room.story.scenarios.length < 4
   ))
-
+  //currently no rooms with more than 4 scenarios but less than 4 authors. have to add some
   const ongoingRooms = availableRooms.filter(room => (
-    room.story.scenarios.count >= 4
+    room.story.scenarios.length >= 4
   ))
 
-  return {
-    new: newRooms,
-    ongoing: ongoingRooms
-  }
+  return rooms;
 }
 
 export const GetMyRooms = async () => {
@@ -84,23 +129,17 @@ export const GetMyRooms = async () => {
   ));
 
   const openRooms = myRooms.filter(room => (
-    !room.closed
+    (room.scenarios.length < maxScenarioCount)
   ));
-
   const closedRooms = myRooms.filter(room => (
-    room.closed
+    (room.scenarios.length = maxScenarioCount)
   ));
 
-  return {
-    open: openRooms,
-    closed: closedRooms
-  };
-
+  return {open: openRooms, closed: closedRooms};
 }
 
 export const GetFinishedStories = async () => {
-  //should make sure to clean up the data a bit, so that people dont get access to all scenarios when they dont need it
-  const finishedStories = rooms.filter(room => room.closed);
+  const finishedStories = rooms.filter(room => (room.scenarios.length == maxScenarioCount));
   return finishedStories;
 }
 
@@ -128,124 +167,18 @@ export const CreateNewRoom = async (title, description, opening) => {
   return newRoom.id;
 }
 
-//HELPERS
-const exampleStoryFull = {
-  title: 'storyTitle',
-  description: 'storyDesc',
-  creator: 'creatorUsername',
-  authors: ['author1', 'author2', 'author3'],
-  turn: 34,
-  playersTurn: true,
-  id: GenerateRandomString(),
-}
+//Old STUFF
+// const exampleStoryFull = {
+//   title: 'storyTitle',
+//   description: 'storyDesc',
+//   creator: 'creatorUsername',
+//   authors: ['author1', 'author2', 'author3'],
+//   turn: 34,
+//   playersTurn: true,
+//   id: GenerateRandomString(),
+// }
 
-const GenerateRandomStoryArray = count => {
-  const stories = [];
-  for (let i = 0; i < count; i++) {
-    stories.push(GenerateRandomStory());
-  }
-  return stories;
-}
+// const GenerateRandomRoom = (authorCount, loggedPlayerIsIn, scenarioCount, closed,) => {
+//   //generate and return a room with some random text etc based on the passed info
+// }
 
-const GenerateRandomStory = () => {
-  const story = {
-    title: PickRandomItem(fakeTitles),
-    description: 'An epic tale of an epic adventure',
-    creator: PickRandomItem(fakeWriters),
-    authors: [PickRandomItem(fakeWriters), PickRandomItem(fakeWriters), PickRandomItem(fakeWriters)],
-    turn: Math.floor(Math.random() * 40),
-    playersTurn: false,
-    id: GenerateRandomString(),
-  };
-  return story;
-}
-
-const GenerateRandomRoom = (authorCount, loggedPlayerIsIn, scenarioCount, closed, ) => {
-  //generate and return a room with some random text etc based on the passed info
-}
-
-const PickRandomItem = array => {
-  const index = Math.floor(Math.random() * array.length);
-  return array[index];
-}
-
-const fakeTitles = [
-  'Changeling With Sins',
-  'Duke Without A Goal',
-  'Lions Of The World',
-  'Blacksmiths Of Yesterday',
-  'Traitors And Phantoms',
-  'Boys And Traitors',
-  'Cause Of Tomorrow',
-  'Demise Of The North',
-  'Changing The Demons',
-  'Searching For Nature',
-  'Fox Of Rain',
-  'Ghost Of Sunshine',
-  'Little Birds In My Town',
-  'Bears Of Fantasia',
-  'Kings And Little Dragons',
-  'Cats And Owls',
-  'Hat Of Fire',
-  'Cup Of Mystery',
-  'Jealous Of Flowers',
-  'Amazing Life Of The Mountains',
-  'Bear Of Tomorrow',
-  'Little Dragon Of Gold',
-  'Rabbits Of Miracles',
-  'Boys Of Dreams',
-  'Kids And Kittens',
-  'Goats And Bunnies',
-  'House Of Puzzles',
-  'Chimney Of My Imagination',
-  'Reading With My Friend',
-  'Amazing World Of My Best Friend',
-  'Boy Of Wonder',
-  'Boy Of Utopia',
-  'Foxes Of Fantasia',
-  'Kings On The Moon',
-  'Frogs And Babies',
-  'Little Ducks And Kings',
-  'Car Of Mysteries',
-  'Field Of Wood',
-  'Playing With My New Pet',
-  'Playing With My Sister',
-];
-
-const fakeWriters = [
-  'billickin',
-  'snittle',
-  'tomkinley',
-  'jefferson',
-  'clarriker',
-  'skewton',
-  'smike',
-  'newman',
-  'ninetta',
-  'lummy',
-  'chollop',
-  'sluffen',
-  'sownds',
-  'tappertit',
-  'chevy',
-  'chestle',
-  'arethusa',
-  'spyers',
-  'compeyson',
-  'defarge',
-  'fibbitson',
-  'flopson',
-  'lavinia',
-  'septimus',
-  'curdle',
-  'skettles',
-  'blight',
-  'chopkins',
-  'gazingi',
-  'kibble',
-  'slum',
-  'mortimer',
-  'sleary',
-  'brogson',
-  'todd',
-]
