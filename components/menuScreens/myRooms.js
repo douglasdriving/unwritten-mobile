@@ -1,7 +1,7 @@
 import { Text, ScrollView, View } from 'react-native';
 import { StoryList } from './storylist/storylist';
 import { styles } from '../../style';
-import { GetMyRooms } from '../../backendCalls/backendCalls';
+import { GetMyRooms, GetLoggedUserName } from '../../backendCalls/backendCalls';
 import { useState, useEffect } from 'react';
 
 export const MyRooms = (props) => {
@@ -22,8 +22,8 @@ export const MyRooms = (props) => {
         creator: room.creator,
         authors: room.authors,
         //authorCount: 3,
-        turn: room.turn,
-        playersTurn: room.playersTurn,
+        turn: room.turnsTaken,
+        playersTurn: (room.nextPlayer == GetLoggedUserName()),
         storyId: room.id,
         buttonText: 'Enter ->'
       }

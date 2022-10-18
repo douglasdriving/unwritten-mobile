@@ -44,14 +44,18 @@ export const ListItem = (props) => {
   }
 
   const GenerateAuthorText = () => {
+
+    const authors = props.listItemInfo.authors;
+    if (!authors || authors.length == 0) return null;
+
     let authorText = null;
-    if (props.listItemInfo.authors.length > 0) {
-      authorText = 'Authors:'
-      props.listItemInfo.authors.forEach(author => {
-        authorText += ' ' + author + ','
-      });
-    }
+    authorText = 'Authors:'
+    props.listItemInfo.authors.forEach(author => {
+      authorText += ' ' + author + ','
+    });
+
     return authorText;
+
   }
 
   return (
@@ -69,7 +73,7 @@ export const ListItem = (props) => {
             <View>
               {props.listItemInfo.description && <Text>{props.listItemInfo.description}</Text>}
               {props.listItemInfo.creator && <Text>Creator: {props.listItemInfo.creator}</Text>}
-              {props.listItemInfo.authors && <Text>{GenerateAuthorText()}</Text>}
+              {(GenerateAuthorText() != null) && <Text>{GenerateAuthorText()}</Text>}
               {props.listItemInfo.authorCount && <Text>🧔 {props.listItemInfo.authorCount}/4 writers</Text>}
               {props.listItemInfo.turn && <Text>🎲 Turn {props.listItemInfo.turn}/40</Text>}
               {props.listItemInfo.buttonText && <Button title={props.listItemInfo.buttonText} onPress={HandleButtonPress} />}

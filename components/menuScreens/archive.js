@@ -12,18 +12,18 @@ export const Archive = (props) => {
   const [storiesList, setStoriesList] = useState();
 
   const LoadStories = async () => {
-    const stories = await GetFinishedStories();
-    const storiesInfo = stories.map(story => {
+    const rooms = await GetFinishedStories();
+    const storiesInfo = rooms.map(room => {
       return {
         //alert: false,
-        title: story.title,
-        description: story.description,
-        creator: story.creator,
-        authors: story.authors,
+        title: room.title,
+        description: room.description,
+        creator: room.creator,
+        authors: room.authors,
         //authorCount: 3,
         //turn: room.turn,
         //playersTurn: room.playersTurn,
-        storyId: story.id,
+        storyId: room.id,
         buttonText: 'Read ->'
       }
     })

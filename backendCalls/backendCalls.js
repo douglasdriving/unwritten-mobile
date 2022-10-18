@@ -62,7 +62,7 @@ const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finishedRooms
   }
 
   for (let i = 0; i < newRoomsCount; i++) {
-    const authorCountInNewRoom = GenerateRandomRoom(1, 3);
+    const authorCountInNewRoom = GetRandomInt(1, 3);
     rooms.push(GenerateRandomRoom(authorCountInNewRoom+1, authorCountInNewRoom));
   }
 
@@ -87,6 +87,10 @@ const rooms = GenerateRandomRoomArray(10, 20, 6, 3);
 //USER
 let loggedUser;
 let storyKeys = 4;
+
+export const GetLoggedUserName = () => {
+  return loggedUser.name;
+}
 
 export const GetUser = async () => {
 
@@ -147,7 +151,7 @@ export const GetMyRooms = async () => {
     (room.scenarios.length < maxScenarioCount)
   ));
   const closedRooms = myRooms.filter(room => (
-    (room.scenarios.length = maxScenarioCount)
+    (room.scenarios.length == maxScenarioCount)
   ));
 
   return { open: openRooms, closed: closedRooms };
@@ -162,25 +166,24 @@ export const GetStoryKeys = async () => {
   return storyKeys;
 }
 
-//THIS ONE DOES NOT WORK WITH NEW ROOM STRUCTURE!
 export const CreateNewRoom = async (title, description, opening) => {
-  //add a new story to the database and get back an ID for the story
-  const newRoom = {
-    story: {
-      title: title,
-      description: description,
-      scenarios: [{
-        author: loggedUser.name,
-        text: opening
-      }]
-    },
+
+  const room = {
+    title: title,
+    description: description,
     creator: loggedUser.name,
     authors: [],
-    closed: false,
+    turnsTaken: 1,
+    nextPlayer: null,
     id: GenerateRandomString(),
-  }
-  rooms.push(newRoom);
-  return newRoom.id;
+    scenarios: [{
+      author: loggedUser.name,
+      text: opening
+    }]
+  };
+
+  rooms.push(room);
+  return room.id;
 }
 
 //Old STUFF
