@@ -37,8 +37,8 @@ export const Game = (props) => {
 
     //testing
     setChars({
-      initial: 50,
-      remaining: 50
+      initial: 634,
+      remaining: 634
     });
 
     //if the logged player is not in the room, we should add him/her

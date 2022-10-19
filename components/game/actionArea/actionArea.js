@@ -9,10 +9,13 @@ export const ActionArea = (props) => {
   //should be several different things that can render here depending on the state of the game
   //1.
 
-  return(
+  return (
     <View>
-      {/* <YourTurnField/> */}
-      <WritingField charsRemaining={props.charsRemaining} updateCharsRemaining={props.updateCharsRemaining}/>
+      <YourTurnField charsRemaining={props.charsRemaining}/>
+      {/* <WritingField
+        charsRemaining={props.charsRemaining}
+        updateCharsRemaining={props.updateCharsRemaining}
+      /> */}
     </View>
   );
 }
