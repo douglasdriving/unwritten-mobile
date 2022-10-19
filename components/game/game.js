@@ -13,7 +13,12 @@ export const Game = (props) => {
 
   const [readOnly, setReadOnly] = useState("false");
   const [players, setPlayers] = useState([]);
-  const [chars, setChars] = useState({initial: 0, remaining: 0});
+  const [chars, setChars] = useState({ initial: 0, remaining: 0 });
+  const [story, setStory] = useState({
+    title: '',
+    description: '',
+    scenarios: []
+  });
 
   const SetInitialStates = async () => {
 
@@ -27,13 +32,19 @@ export const Game = (props) => {
     });
 
     if (!readOnly) {
-      if (players.creator.name == loggedUser.name) setChars({initial: players.creator.charsRemaining, remaining: players.creator.charsRemaining});
+      if (players.creator.name == loggedUser.name) setChars({ initial: players.creator.charsRemaining, remaining: players.creator.charsRemaining });
       else if (players.authors) {
         players.authors.forEach(author => {
-          if (author.name == loggedUser.name) setChars({initial: author.charsRemaining, remaining: author.charsRemaining});
+          if (author.name == loggedUser.name) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
         });
       }
     }
+
+    setStory({
+      title: room.title,
+      description: room.description,
+      scenarios: room.scenarios
+    })
 
     //testing
     setChars({
@@ -42,7 +53,9 @@ export const Game = (props) => {
     });
 
     //if the logged player is not in the room, we should add him/her
-    console.log('reloaded');
+    // console.log('reloaded');
+    // console.log(room.creator.name);
+    // console.log(room.authors);
 
   }
 
@@ -57,7 +70,12 @@ export const Game = (props) => {
 
   return (
     <View>
-      <GameArea readOnly={readOnly} charsRemaining={chars.remaining} updateCharsRemaining={UpdateCharsRemaining} />
+      <GameArea
+        readOnly={readOnly}
+        charsRemaining={chars.remaining}
+        updateCharsRemaining={UpdateCharsRemaining}
+        story={story}
+      />
       <StoryNav readOnly={readOnly} />
       {/* <RoomMenu/> */}
     </View>

@@ -24,15 +24,16 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
   else nextPlayer = authors[Math.min((turnsTakenInRound - 1), (authorCount - 1))];
 
   //ADD SCENARIOS
-  const scenarios = [];
   const allPlayers = [...authors, creator];
   while (allPlayers.length < 4) {
     allPlayers.splice(1, 0, GenerateRandomPlayer()); //insert player at i=1
   }
+  const scenarios = [];
   for (let i = 0; i < turnsTaken; i++) {
     scenarios.push({
       text: scenarioTextPlaceholder,
-      author: allPlayers[i % 4 - 1]
+      author: allPlayers[i%4],
+      id: GenerateRandomString()
     })
   };
 

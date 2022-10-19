@@ -8,7 +8,7 @@ export const GameArea = (props) => {
 
   return (
     <ScrollView style={styles.gameWindow}>
-      <StoryContent readOnly={props.readOnly}/>
+      <StoryContent readOnly={props.readOnly} story={props.story}/>
       {!props.readOnly && <ActionArea charsRemaining={props.charsRemaining} updateCharsRemaining={props.updateCharsRemaining}/>}
       <Spacer/>
     </ScrollView>
