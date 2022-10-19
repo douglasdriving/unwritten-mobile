@@ -9,11 +9,8 @@ export const MyRooms = (props) => {
   const [myRoomsList, setMyRoomsList] = useState();
 
   const LoadRooms = async () => {
-
     const rooms = await GetMyRooms();
-
     if (!rooms) return false;
-
     const openRoomsList = rooms.open.map(room => {
       return {
         //alert: false,
@@ -28,7 +25,6 @@ export const MyRooms = (props) => {
         buttonText: 'Enter ->'
       }
     });
-
     const closedRoomsList = rooms.closed.map(room => {
       return {
         //alert: false,
@@ -43,12 +39,10 @@ export const MyRooms = (props) => {
         buttonText: 'Read ->'
       }
     });
-
     const newMyRoomList = {
       open: openRoomsList,
       closed: closedRoomsList
     };
-
     setMyRoomsList(newMyRoomList);
   }
 

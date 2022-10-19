@@ -8,12 +8,12 @@ export const maxScenarioCount = 40;
 export const GenerateRandomRoom = (turnsTaken, authorCount) => {
 
   //ADD A CREATOR
-  const creator = PickRandomFromArray(fakeWriters);
+  const creator = GenerateRandomPlayer();
 
   //ADD AUTHORS
   let authors = [];
   for (let i = 0; i < authorCount; i++) {
-    authors.push(PickRandomFromArray(fakeWriters));
+    authors.push(GenerateRandomPlayer());
   }
 
   //FIND OUT WHO IS THE NEXT PLAYER
@@ -27,7 +27,7 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
   const scenarios = [];
   const allPlayers = [...authors, creator];
   while (allPlayers.length < 4) {
-    allPlayers.splice(1, 0, PickRandomFromArray(fakeWriters)); //insert player at i=1
+    allPlayers.splice(1, 0, GenerateRandomPlayer()); //insert player at i=1
   }
   for (let i = 0; i < turnsTaken; i++) {
     scenarios.push({
@@ -38,7 +38,6 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
 
   //Gen ID
   const roomId = GenerateRandomString();
-  //console.log()
 
   //CREATE ROOM OBJECT
   const room = {
@@ -79,4 +78,12 @@ export const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finish
   }
 
   return rooms;
+}
+
+const GenerateRandomPlayer = () => {
+  return {
+    name: PickRandomFromArray(fakeWriters),
+    id: GenerateRandomString(),
+    strikes: GetRandomInt(0, 2)
+  }
 }

@@ -9,7 +9,7 @@ const topRowStyle = {
   width: '100%',
 };
 
-//to generate a list item, include a prop in the following format:
+//LIST ITEM INFO FORMAT
 // listItemInfo = {
 //   alert: true,
 //   title: 'story title',
@@ -23,8 +23,6 @@ const topRowStyle = {
 // };
 
 export const ListItem = (props) => {
-
-  //console.log('generated list item with infO: ', props.listItemInfo);
 
   const [open, setOpen] = useState(false);
 
@@ -50,7 +48,7 @@ export const ListItem = (props) => {
     let authorText = null;
     authorText = 'Authors:'
     props.listItemInfo.authors.forEach(author => {
-      authorText += ' ' + author + ','
+      authorText += ' ' + author.name + ','
     });
 
     return authorText;
@@ -71,7 +69,7 @@ export const ListItem = (props) => {
           (
             <View>
               {props.listItemInfo.description && <Text>{props.listItemInfo.description}</Text>}
-              {props.listItemInfo.creator && <Text>Creator: {props.listItemInfo.creator}</Text>}
+              {props.listItemInfo.creator && <Text>Creator: {props.listItemInfo.creator.name}</Text>}
               {(GenerateAuthorText() != null) && <Text>{GenerateAuthorText()}</Text>}
               {props.listItemInfo.authorCount && <Text>🧔 {props.listItemInfo.authorCount}/4 writers</Text>}
               {props.listItemInfo.turn && <Text>🎲 Turn {props.listItemInfo.turn}/40</Text>}

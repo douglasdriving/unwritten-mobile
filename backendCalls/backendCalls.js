@@ -1,13 +1,17 @@
 import { GenerateRandomString, PickRandomFromArray, GetRandomInt } from "../helperFunctions/helpers"
 import { fakeWriters, fakeTitles, scenarioTextPlaceholder } from "./fakeData";
 import { AsyncStorage } from 'react-native';
-import { GenerateRandomRoomArray, GenerateRandomRoom } from './dataGeneration.js';
+import { GenerateRandomRoomArray, GenerateRandomRoom, maxScenarioCount } from './dataGeneration.js';
 
 console.log('backend started ' + new Date());
 
 //VARS
 let rooms;
-export let loggedUser;
+export let loggedUser = user = {
+  name: PickRandomFromArray(fakeWriters),
+  premium: true,
+  new: false
+};;
 let storyKeys = 4;
 
 //LOAD DATA FROM ASYNC FILE STORAGE
@@ -24,11 +28,11 @@ const LoadRoomData = async () => {
   };
 }
 
-
 //USER
 export const GetLoggedUserName = () => {
-  if(loggedUser.name) return loggedUser.name;
-  else return false;
+  if (!loggedUser) return false;
+  if (!loggedUser.name) return false;
+  return loggedUser.name;
 }
 
 export const GetUser = async () => {
@@ -60,12 +64,22 @@ export const CreateNewUser = async () => {
 }
 
 //ROOMS
+const UserIsInRoom = (room, name) => {
+
+  let isInRoom = false;
+  if (room.creator == name) isInRoom = true;
+  room.authors.forEach(author => {
+    if (author.name == name) isInRoom = true;
+  })
+  return isInRoom
+
+}
+
 export const GetAvailableRooms = async () => {
 
   const availableRooms = rooms.filter(room => (
-    room.creator != loggedUser.name
-    && !room.authors.includes(loggedUser.name)
-    && room.authors.length < 3
+    !UserIsInRoom(room, loggedUser.name)
+    && (room.authors.length < 3)
   ));
 
   const newRooms = availableRooms.filter(room => (
@@ -75,22 +89,13 @@ export const GetAvailableRooms = async () => {
     room.scenarios.length >= 4
   ))
 
-  // newRooms.forEach(newRoom => {
-  //   console.log('backend returning ', newRoom.title, "(", newRoom.id, ")");
-  //   // rooms.forEach((room, i) => {
-  //   //    if(room.id == newRoom.id) console.log('it matches a room with name: ', room.title);
-  //   // })
-  // })
-
   return { new: newRooms, ongoing: roomWithLeavers };
 }
 
 export const GetMyRooms = async () => {
 
   const myRooms = rooms.filter(room => (
-    room.creator == loggedUser.name
-    ||
-    room.authors.includes(loggedUser.name)
+    UserIsInRoom(room, loggedUser.name)
   ));
 
   const openRooms = myRooms.filter(room => (
@@ -154,3 +159,4 @@ export const LogAllRooms = async () => {
 
 //RUN ON START
 LoadRoomData();
+loggedUser = GetUser();

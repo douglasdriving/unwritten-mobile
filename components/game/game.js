@@ -6,6 +6,7 @@ import { RoomMenu } from './roomMenu/roomMenu.js';
 import { useEffect, useState } from 'react';
 import { GetRoomData, LogAllRooms, loggedUser } from '../../backendCalls/backendCalls.js';
 import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
+import { GetRandomInt } from '../../helperFunctions/helpers.js';
 
 export const Game = (props) => {
 
