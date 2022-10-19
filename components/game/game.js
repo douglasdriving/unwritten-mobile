@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { GetRoomData, LogAllRooms, loggedUser } from '../../backendCalls/backendCalls.js';
 import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
 import { GetRandomInt } from '../../helperFunctions/helpers.js';
+import { GenerateRandomPlayer } from '../../backendCalls/dataGeneration.js';
 
 export const Game = (props) => {
 

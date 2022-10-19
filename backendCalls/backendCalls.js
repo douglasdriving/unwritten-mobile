@@ -17,6 +17,9 @@ let storyKeys = 4;
 //LOAD DATA FROM ASYNC FILE STORAGE
 const LoadRoomData = async () => {
 
+  // rooms = GenerateRandomRoomArray(10, 20, 6, 3)
+  // await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
+
   const loadedRoomsData = await AsyncStorage.getItem('rooms');
 
   if (loadedRoomsData) {

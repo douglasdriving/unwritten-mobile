@@ -80,10 +80,19 @@ export const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finish
   return rooms;
 }
 
-const GenerateRandomPlayer = () => {
+export const GenerateRandomPlayer = () => {
+
+  const strikes = GetRandomInt(0, 2);
+  const strikeNotification = (
+    strikes != 0
+    &&
+    Math.random() > 0.5 //if there are strikes, there is a 50% chance that the player has not yet seen them
+  );
+
   return {
     name: PickRandomFromArray(fakeWriters),
     id: GenerateRandomString(),
-    strikes: GetRandomInt(0, 2)
+    strikes: strikes,
+    strikeNotification: strikeNotification
   }
 }
