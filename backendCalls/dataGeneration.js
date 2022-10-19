@@ -93,6 +93,7 @@ export const GenerateRandomPlayer = () => {
     name: PickRandomFromArray(fakeWriters),
     id: GenerateRandomString(),
     strikes: strikes,
-    strikeNotification: strikeNotification
+    strikeNotification: strikeNotification,
+    charsRemaining: GetRandomInt(250,750)
   }
 }

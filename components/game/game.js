@@ -13,24 +13,51 @@ export const Game = (props) => {
 
   const [readOnly, setReadOnly] = useState("false");
   const [players, setPlayers] = useState([]);
+  const [chars, setChars] = useState({initial: 0, remaining: 0});
 
   const SetInitialStates = async () => {
 
     const room = await GetRoomData(props.route.params.roomId);
 
     setReadOnly(room.scenarios.length >= maxScenarioCount);
+
     setPlayers({
       creator: room.creator,
       authors: room.authors
     });
 
+    if (!readOnly) {
+      if (players.creator.name == loggedUser.name) setChars({initial: players.creator.charsRemaining, remaining: players.creator.charsRemaining});
+      else if (players.authors) {
+        players.authors.forEach(author => {
+          if (author.name == loggedUser.name) setChars({initial: author.charsRemaining, remaining: author.charsRemaining});
+        });
+      }
+    }
+
+    //testing
+    setChars({
+      initial: 50,
+      remaining: 50
+    });
+
+    //if the logged player is not in the room, we should add him/her
+    console.log('reloaded');
+
   }
 
-  useEffect(() => {SetInitialStates()}, [])
+  const UpdateCharsRemaining = (textLength) => {
+    setChars({
+      initial: chars.initial,
+      remaining: chars.initial - textLength
+    })
+  }
+
+  useEffect(() => { SetInitialStates() }, [])
 
   return (
     <View>
-      <GameArea readOnly={readOnly} />
+      <GameArea readOnly={readOnly} charsRemaining={chars.remaining} updateCharsRemaining={UpdateCharsRemaining} />
       <StoryNav readOnly={readOnly} />
       {/* <RoomMenu/> */}
     </View>

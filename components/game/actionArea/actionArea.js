@@ -1,10 +1,18 @@
+import { useLinkProps } from "@react-navigation/native";
 import { View, Text } from "react-native";
+import { YourTurnField } from "./yourTurnField/yourTurnField";
+import { WritingField } from "./writingField/writingField";
 
-export const ActionArea = () => {
+export const ActionArea = (props) => {
+
+  //when writing in the field, input new char count to props.updateCharsRemaining
+  //should be several different things that can render here depending on the state of the game
+  //1.
 
   return(
-    <View style={{height: 100, width: 100, backgroundColor: "red"}}>
-      <Text>This is the action area!</Text>
+    <View>
+      {/* <YourTurnField/> */}
+      <WritingField charsRemaining={props.charsRemaining} updateCharsRemaining={props.updateCharsRemaining}/>
     </View>
   );
 }

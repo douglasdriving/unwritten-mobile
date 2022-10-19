@@ -1,9 +1,9 @@
 import { View, Text, Image } from "react-native";
 
-export const CharCounter = () => {
+export const CharCounter = (props) => {
   return(
     <View style={{flexDirection: 'row'}}>
-      <Text>514 </Text>
+      <Text>{props.charsRemaining} </Text>
       <View style={{width:20, height: 20, backgroundColor: 'gray'}}>
         <Text style={{color:'white', fontWeight:'bold', textAlign: 'center', textAlignVertical: 'center'}}>C</Text>
       </View>
