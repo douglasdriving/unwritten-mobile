@@ -4,7 +4,7 @@ import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 import { useEffect, useState } from 'react';
-import { GetRoomData, LogAllRooms, loggedUser } from '../../backendCalls/backendCalls.js';
+import { GetRoomData, LogAllRooms, loggedUser, UploadScenario } from '../../backendCalls/backendCalls.js';
 import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
 import { GetRandomInt } from '../../helperFunctions/helpers.js';
 import { GenerateRandomPlayer } from '../../backendCalls/dataGeneration.js';
@@ -19,6 +19,8 @@ export const Game = (props) => {
     description: '',
     scenarios: []
   });
+  const [nextPlayer, setNextPlayer] = useState({}); //might be redundant as a state! can be calculated
+  const [timeLeftInTurn, setTimeLeftInTurn] = useState();
 
   const SetInitialStates = async () => {
 
@@ -44,7 +46,9 @@ export const Game = (props) => {
       title: room.title,
       description: room.description,
       scenarios: room.scenarios
-    })
+    });
+
+    setNextPlayer(room.nextPlayer);
 
     //testing
     setChars({
@@ -66,6 +70,37 @@ export const Game = (props) => {
     })
   }
 
+  const AddScenario = async text => { //not complete yet. backend call must work to alter DB
+    if (chars.remaining < 0) return false;
+    console.log('not too long');
+    const uploadedScenario = await UploadScenario(text);
+    if (uploadedScenario) {
+      console.log('upload was successful');
+      setStory({
+        title: story.title,
+        description: story.description,
+        scenarios: [...story.scenarios, uploadedScenario]
+      });
+      console.log('added the scenario: ', uploadedScenario);
+      return true;
+    } //alternatively, we could just reload the game from scratch with the db data. Would be an extra call, but perhaps less code
+    else return false;
+  }
+
+  const GetNextPlayerName = () => {
+
+    if (!players) return null;
+    if (!players.creator) return null;
+    if (!players.authors) return null;
+
+
+    if (nextPlayer == 0) return players.creator.name;
+    else if (players.authors.length >= nextPlayer) {
+      return (players.authors[nextPlayer - 1].name)
+    }
+    else return null;
+  }
+
   useEffect(() => { SetInitialStates() }, [])
 
   return (
@@ -75,9 +110,11 @@ export const Game = (props) => {
         charsRemaining={chars.remaining}
         updateCharsRemaining={UpdateCharsRemaining}
         story={story}
+        AddScenario={AddScenario}
+        nextPlayerName={GetNextPlayerName()}
       />
       <StoryNav readOnly={readOnly} />
-      {/* <RoomMenu/> */}
+      {/* <RoomMenu players={players} nextPlayer={nextPlayer}/> */}
     </View>
   );
 }

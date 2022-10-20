@@ -17,11 +17,7 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
   }
 
   //FIND OUT WHO IS THE NEXT PLAYER
-  const turnsTakenInRound = turnsTaken % 4;
-  let nextPlayer;
-  if (turnsTakenInRound == 0) nextPlayer = creator;
-  else if (turnsTaken < 4 || turnsTaken == maxScenarioCount) nextPlayer = null;
-  else nextPlayer = authors[Math.min((turnsTakenInRound - 1), (authorCount - 1))];
+  let nextPlayer = turnsTaken % 4;
 
   //ADD SCENARIOS
   const allPlayers = [...authors, creator];
@@ -47,7 +43,7 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
     creator: creator,
     authors: authors,
     turnsTaken: turnsTaken,
-    nextPlayer: nextPlayer,
+    nextPlayer: nextPlayer, //int specifies number in list
     id: roomId,
     scenarios: scenarios
   };

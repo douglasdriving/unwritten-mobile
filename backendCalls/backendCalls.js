@@ -160,6 +160,16 @@ export const LogAllRooms = async () => {
 
 }
 
+//SCENARIOS
+export const UploadScenario = async (text) => {
+  //try uploading the scenario to the db, return the uploaded scenario if true
+  return {
+    text: text,
+    author: loggedUser,
+    id: GenerateRandomString()
+  };
+}
+
 //RUN ON START
 LoadRoomData();
 loggedUser = GetUser();

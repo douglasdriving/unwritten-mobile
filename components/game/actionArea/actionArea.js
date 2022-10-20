@@ -1,7 +1,12 @@
 import { useLinkProps } from "@react-navigation/native";
 import { View, Text } from "react-native";
+
 import { YourTurnField } from "./yourTurnField/yourTurnField";
 import { WritingField } from "./writingField/writingField";
+import { WaitingField } from "./waitingField/waitingField";
+import { PlayerSearchField } from "./playerSearchField/playerSearchField";
+
+import { loggedUser } from "../../../backendCalls/backendCalls";
 
 export const ActionArea = (props) => {
 
@@ -9,13 +14,30 @@ export const ActionArea = (props) => {
   //should be several different things that can render here depending on the state of the game
   //1.
 
+  /*
+  will get a NAME passed down as props.nextPlayerName
+  add writing field when a button is pressed
+  */
+ 
   return (
     <View>
-      <YourTurnField charsRemaining={props.charsRemaining}/>
+
+      {
+        (props.nextPlayerName == null) ?
+          <PlayerSearchField /> :
+          (
+            props.nextPlayerName == loggedUser.name ?
+              <YourTurnField charsRemaining={props.charsRemaining} /> :
+              <WaitingField nextPlayerName={props.nextPlayerName}/>
+          )
+      }
+
       {/* <WritingField
         charsRemaining={props.charsRemaining}
         updateCharsRemaining={props.updateCharsRemaining}
+        AddScenario={props.AddScenario}
       /> */}
+
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { TurnCountDown } from "../actionArea/turnCountDown";
 
-export const PlayerRow = () =>{
+export const PlayerRow = (props) =>{
   return(
     <View style={{
       flexDirection: 'row',
@@ -10,8 +10,8 @@ export const PlayerRow = () =>{
       marginTop: 5,
       backgroundColor: 'lightgray',
     }}>
-      <Text>Smogg</Text>
-      <TurnCountDown/>
+      <Text>{props.player.name}</Text>
+      {props.isNextPlayer && <TurnCountDown/>}
     </View>
   );
 }
