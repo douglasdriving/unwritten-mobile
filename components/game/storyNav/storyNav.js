@@ -5,9 +5,14 @@ import { styles } from '../../../style.js';
 export const StoryNav = (props) => {
 
   return (
+
     <View style={styles.storyNav}>
+
       <StoryNavButton type='close'/>
-      {!props.readOnly && <StoryNavButton type='menu'/>}
+      {!props.readOnly && <StoryNavButton type='menu' onPress={props.openMenu}/>}
+      
     </View>
+
   );
+
 }

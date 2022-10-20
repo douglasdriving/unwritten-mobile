@@ -21,6 +21,7 @@ export const Game = (props) => {
   });
   const [nextPlayer, setNextPlayer] = useState({}); //might be redundant as a state! can be calculated
   const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const SetInitialStates = async () => {
 
@@ -41,7 +42,7 @@ export const Game = (props) => {
       scenarios: room.scenarios
     });
 
-    if (readOnlyValue){
+    if (readOnlyValue) {
       console.log('is read only');
       return;
     }
@@ -117,12 +118,13 @@ export const Game = (props) => {
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
       />
-      <StoryNav readOnly={readOnly} />
-      <RoomMenu
+      <StoryNav readOnly={readOnly} openMenu={() => setMenuOpen(true)}/>
+      {menuOpen && <RoomMenu
         players={players}
         nextPlayer={nextPlayer}
         timeLeftInTurn={timeLeftInTurn}
-      />
+        closeMenu={() => setMenuOpen(false)}
+      />}
     </View>
   );
 }

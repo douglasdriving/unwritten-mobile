@@ -8,7 +8,7 @@ export const RoomMenu = (props) => {
   return(
     <View style={styles.roomMenu}>
 
-      <CloseButton/>
+      <CloseButton handlePress={props.closeMenu}/>
       <Text style={styles.h1}>Room</Text>
       <Text>The Little Red Riding Hood</Text>
       <Text>14 / 40 turns taken</Text>

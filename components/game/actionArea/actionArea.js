@@ -29,22 +29,7 @@ export const ActionArea = (props) => {
   return (
     <View>
 
-      {isWriting ?
-        <WritingField
-          charsRemaining={props.charsRemaining}
-          updateCharsRemaining={props.updateCharsRemaining}
-          AddScenario={props.AddScenario}
-          isWriting={isWriting}
-        />
-        :
-        <YourTurnField
-          charsRemaining={props.charsRemaining}
-          timeLeftInTurn={props.timeLeftInTurn}
-          SetWritingField={SetWritingField}
-        />
-      }
-
-      {/* {
+      {
         props.nextPlayerName == null ?
           <PlayerSearchField />
           :
@@ -56,18 +41,19 @@ export const ActionArea = (props) => {
                     charsRemaining={props.charsRemaining}
                     updateCharsRemaining={props.updateCharsRemaining}
                     AddScenario={props.AddScenario}
+                    isWriting={isWriting}
                   />
                   :
                   <YourTurnField
                     charsRemaining={props.charsRemaining}
                     timeLeftInTurn={props.timeLeftInTurn}
-                    ShowWritingField={ShowWritingField}
+                    SetWritingField={SetWritingField}
                   />
               )
               :
               <WaitingField nextPlayerName={props.nextPlayerName} timeLeftInTurn={props.timeLeftInTurn} />
           )
-      } */}
+      }
 
     </View>
   );
