@@ -1,12 +1,10 @@
 import { Text } from "react-native";
+import { useState, useEffect } from "react";
+import { TimeToHms } from "../../../helperFunctions/helpers";
 
 export const TurnCountDown = (props) => {
 
-  const timeLeft = '13h 43min 22s';
-  let textPrint = '⏳' + timeLeft;
-  if (props.full) textPrint += ' until turn passes';
-
-  return(
-    <Text>{textPrint}</Text>
+  return (
+    <Text>{TimeToHms(props.timeLeftInTurn)}</Text>
   );
 }

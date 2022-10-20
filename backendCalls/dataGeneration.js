@@ -45,7 +45,8 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
     turnsTaken: turnsTaken,
     nextPlayer: nextPlayer, //int specifies number in list
     id: roomId,
-    scenarios: scenarios
+    scenarios: scenarios,
+    deadline: (new Date().getTime() + 172800000) //2 days from now
   };
 
   return room;

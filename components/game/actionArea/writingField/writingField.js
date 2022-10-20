@@ -37,7 +37,7 @@ export const WritingField = (props) => {
         />
         <CharCounter charsRemaining={props.charsRemaining} />
       </View>
-      <Text>{writingEnd && 'Write Continuation Instead'}</Text>
+      <Text>{props.isWriting == 'ending' && 'Write Continuation Instead'}</Text>
     </View>
   );
 }

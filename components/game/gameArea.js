@@ -15,6 +15,7 @@ export const GameArea = (props) => {
           updateCharsRemaining={props.updateCharsRemaining}
           AddScenario={props.AddScenario}
           nextPlayerName={props.nextPlayerName}
+          timeLeftInTurn={props.timeLeftInTurn}
         />
       }
       <Spacer />

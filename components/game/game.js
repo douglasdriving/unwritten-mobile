@@ -6,13 +6,13 @@ import { RoomMenu } from './roomMenu/roomMenu.js';
 import { useEffect, useState } from 'react';
 import { GetRoomData, LogAllRooms, loggedUser, UploadScenario } from '../../backendCalls/backendCalls.js';
 import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
-import { GetRandomInt } from '../../helperFunctions/helpers.js';
+import { GetRandomInt, TimeToHms } from '../../helperFunctions/helpers.js';
 import { GenerateRandomPlayer } from '../../backendCalls/dataGeneration.js';
 
 export const Game = (props) => {
 
   const [readOnly, setReadOnly] = useState("false");
-  const [players, setPlayers] = useState([]);
+  const [players, setPlayers] = useState({});
   const [chars, setChars] = useState({ initial: 0, remaining: 0 });
   const [story, setStory] = useState({
     title: '',
@@ -20,27 +20,20 @@ export const Game = (props) => {
     scenarios: []
   });
   const [nextPlayer, setNextPlayer] = useState({}); //might be redundant as a state! can be calculated
-  const [timeLeftInTurn, setTimeLeftInTurn] = useState();
+  const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
 
   const SetInitialStates = async () => {
 
     const room = await GetRoomData(props.route.params.roomId);
 
-    setReadOnly(room.scenarios.length >= maxScenarioCount);
+    const readOnlyValue = room.scenarios.length >= maxScenarioCount;
+    setReadOnly(readOnlyValue);
 
-    setPlayers({
+    const playersValue = {
       creator: room.creator,
       authors: room.authors
-    });
-
-    if (!readOnly) {
-      if (players.creator.name == loggedUser.name) setChars({ initial: players.creator.charsRemaining, remaining: players.creator.charsRemaining });
-      else if (players.authors) {
-        players.authors.forEach(author => {
-          if (author.name == loggedUser.name) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
-        });
-      }
-    }
+    };
+    setPlayers(playersValue);
 
     setStory({
       title: room.title,
@@ -48,28 +41,39 @@ export const Game = (props) => {
       scenarios: room.scenarios
     });
 
+    if (readOnlyValue){
+      console.log('is read only');
+      return;
+    }
+
+    if (playersValue.creator.name == loggedUser.name) setChars({ initial: playersValue.creator.charsRemaining, remaining: playersValue.creator.charsRemaining });
+    else if (playersValue.authors) {
+      playersValue.authors.forEach(author => {
+        if (author.name == loggedUser.name) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
+      });
+    }
+
     setNextPlayer(room.nextPlayer);
 
+    setTimeLeftInTurn(room.deadline - new Date().getTime());
+    const interval = setInterval(() => {
+      setTimeLeftInTurn(room.deadline - new Date().getTime());
+    }, 1000);
+
     //testing
-    setChars({
-      initial: 634,
-      remaining: 634
-    });
+    // setChars({
+    //   initial: 634,
+    //   remaining: 634
+    // });
 
-    //if the logged player is not in the room, we should add him/her
-    // console.log('reloaded');
-    // console.log(room.creator.name);
-    // console.log(room.authors);
-
+    return () => clearInterval(interval);
   }
-
   const UpdateCharsRemaining = (textLength) => {
     setChars({
       initial: chars.initial,
       remaining: chars.initial - textLength
     })
   }
-
   const AddScenario = async text => { //not complete yet. backend call must work to alter DB
     if (chars.remaining < 0) return false;
     console.log('not too long');
@@ -86,7 +90,6 @@ export const Game = (props) => {
     } //alternatively, we could just reload the game from scratch with the db data. Would be an extra call, but perhaps less code
     else return false;
   }
-
   const GetNextPlayerName = () => {
 
     if (!players) return null;
@@ -112,9 +115,15 @@ export const Game = (props) => {
         story={story}
         AddScenario={AddScenario}
         nextPlayerName={GetNextPlayerName()}
+        timeLeftInTurn={timeLeftInTurn}
       />
       <StoryNav readOnly={readOnly} />
-      {/* <RoomMenu players={players} nextPlayer={nextPlayer}/> */}
+      <RoomMenu
+        players={players}
+        nextPlayer={nextPlayer}
+        timeLeftInTurn={timeLeftInTurn}
+      />
     </View>
   );
 }
+

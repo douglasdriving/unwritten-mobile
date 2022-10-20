@@ -3,6 +3,7 @@ import { styles } from "../../../../style";
 import { Divider } from "../../../visuals";
 import { Actions } from "./actions";
 import { TurnCountDown } from "../turnCountDown";
+import { TimeToHms } from "../../../../helperFunctions/helpers";
 
 export const YourTurnField = (props) => {
   return (
@@ -10,8 +11,8 @@ export const YourTurnField = (props) => {
       <Divider />
       <Text style={styles.h1}>Your turn to write!</Text>
       <Text>You got 500 new characters! You now have {props.charsRemaining} characters to write with.</Text>
-      <Actions/>
-      <TurnCountDown full={true}/>
+      <Actions SetWritingField={props.SetWritingField}/>
+      <Text>⏳ {TimeToHms(props.timeLeftInTurn)}</Text>
     </View>
   );
 }
