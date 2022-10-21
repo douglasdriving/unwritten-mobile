@@ -118,7 +118,7 @@ export const Game = (props) => {
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
       />
-      <StoryNav readOnly={readOnly} openMenu={() => setMenuOpen(true)}/>
+      <StoryNav readOnly={readOnly} openMenu={() => setMenuOpen(true)} appNavigation={props.route.params.appNavigation}/>
       {menuOpen && <RoomMenu
         players={players}
         nextPlayer={nextPlayer}
