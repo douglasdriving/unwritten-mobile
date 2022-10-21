@@ -37,7 +37,7 @@ export const ListItem = (props) => {
   }
 
   const HandleButtonPress = () => {
-    props.appNavigation.navigate('Game', { roomId: props.listItemInfo.roomId, appNavigation: props.appNavigation });
+    props.appNavigation.navigate('Game', { roomId: props.listItemInfo.roomId});
   }
 
   const GenerateAuthorText = () => {

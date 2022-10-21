@@ -4,6 +4,7 @@ import { StoryList } from './storylist/storylist';
 import { GetAvailableRooms } from '../../backendCalls/backendCalls';
 import { useEffect, useState } from 'react';
 import { Popup } from '../popup';
+import { MenuScreenHeader } from './modularComponents/menuScreenHeader';
 
 export const JoinRoom = (props) => {
 
@@ -55,6 +56,7 @@ export const JoinRoom = (props) => {
 
   return (
     <ScrollView style={styles.container}>
+      <MenuScreenHeader/>
 
       {welcomPopup &&
         <Popup
@@ -72,7 +74,7 @@ export const JoinRoom = (props) => {
           ]}
         />
       }
-
+      
       <Text style={styles.h1}>Join a Room</Text>
       <Text style={styles.h2}>New Rooms</Text>
       <Text style={styles.body}>Join a newly created room and take part in writing a story from the beginning!</Text>

@@ -3,6 +3,7 @@ import { StoryList } from './storylist/storylist';
 import { styles } from '../../style';
 import { GetMyRooms, GetLoggedUserName } from '../../backendCalls/backendCalls';
 import { useState, useEffect } from 'react';
+import { MenuScreenHeader } from './modularComponents/menuScreenHeader';
 
 export const MyRooms = (props) => {
 
@@ -50,7 +51,7 @@ export const MyRooms = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-
+      <MenuScreenHeader/>
       <Text style={styles.h1}>My Rooms</Text>
 
       {!myRoomsList ?

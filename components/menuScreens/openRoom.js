@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { GetStoryKeys, CreateNewRoom } from '../../backendCalls/backendCalls';
 import { Spacer } from '../visuals';
 import { Popup } from '../popup';
+import { MenuScreenHeader } from './modularComponents/menuScreenHeader';
 
 export const OpenRoom = (props) => {
 
@@ -43,6 +44,7 @@ export const OpenRoom = (props) => {
   return (
     //this could be separated into 2 components! one for the story form and one for the non-prem user info
     <ScrollView style={styles.container}>
+      <MenuScreenHeader></MenuScreenHeader>
       <Text style={styles.h1}>Open Room</Text>
       {
         premiumUser ?

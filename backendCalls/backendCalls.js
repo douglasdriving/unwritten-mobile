@@ -1,7 +1,7 @@
 import { GenerateRandomString, PickRandomFromArray, GetRandomInt } from "../helperFunctions/helpers"
 import { fakeWriters, fakeTitles, scenarioTextPlaceholder } from "./fakeData";
-import { AsyncStorage } from 'react-native';
 import { GenerateRandomRoomArray, GenerateRandomRoom, maxScenarioCount } from './dataGeneration.js';
+import {AsyncStorage} from 'react-native';
 
 console.log('backend started ' + new Date());
 
@@ -166,8 +166,6 @@ export const LogAllRooms = async () => {
 //SCENARIOS
 export const UploadScenario = async (text, roomId) => {
 
-  console.log('trying to upload new scenario with text: ', text);
-
   //MAKE A SHITLOAD OF CHECKS TO MAKE SURE THIS UPLOAD IS LEGIT
 
   //SETUP THE ROOM
@@ -182,15 +180,11 @@ export const UploadScenario = async (text, roomId) => {
   room.nextPlayer > room.authors.length && (room.nextPlayer=0);
   room.deadline = new Date().getTime() + 172800000; //turn into helper function ?
 
-  //ADD ROOM TO THE FULL ROOMS OBJECT
-    //should already be done, but check to make sure - if reloaded data does not happen, this might be the problem
-    const testRoomData = await GetRoomData(roomId)
-    console.log('the room object now returns this as the final scenario: ', testRoomData.scenarios[testRoomData.scenarios.length-1]);
-
   //UPLOAD THE FULL ROOMS OBJECT TO THE DB
   await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
 
   return true;
+
 }
 
 //RUN ON START
