@@ -10,8 +10,8 @@ export const RoomMenu = (props) => {
 
       <CloseButton handlePress={props.closeMenu}/>
       <Text style={styles.h1}>Room</Text>
-      <Text>The Little Red Riding Hood</Text>
-      <Text>14 / 40 turns taken</Text>
+      <Text>{props.storyTitle}</Text>
+      <Text>{props.turnsTaken} / 40 turns taken</Text>
       <PlayerList
         players={props.players}
         nextPlayer={props.nextPlayer}

@@ -124,6 +124,8 @@ export const Game = (props) => {
         nextPlayer={nextPlayer}
         timeLeftInTurn={timeLeftInTurn}
         closeMenu={() => setMenuOpen(false)}
+        storyTitle={story.title}
+        turnsTaken={story.scenarios.length}
       />}
     </View>
   );
