@@ -17,7 +17,7 @@ export default function App() {
   const AppNavigator = () => {
 
     return (
-      <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
 
         <Stack.Screen name="Welcome">
           {(props) => <Welcome {...props} setUser={(user) => setUser(user)} />}
@@ -28,7 +28,10 @@ export default function App() {
         </Stack.Screen>
 
         <Stack.Screen name="Join" component={Join} />
-        <Stack.Screen name="Game" component={Game} />
+        <Stack.Screen
+          name="Game"        >
+          {(props) => <Game {...props} />}
+        </Stack.Screen>
 
       </Stack.Navigator>
     );

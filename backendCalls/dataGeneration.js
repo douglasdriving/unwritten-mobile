@@ -3,6 +3,7 @@ import { fakeWriters, fakeTitles, scenarioTextPlaceholder } from "./fakeData";
 
 //BALANCING VARIABLES
 export const maxScenarioCount = 40;
+export const turnWhenCanEnd = 30;
 
 //DATA GENERATION METHODS
 export const GenerateRandomRoom = (turnsTaken, authorCount) => {
@@ -20,7 +21,7 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
   let nextPlayer = turnsTaken % 4;
 
   //ADD SCENARIOS
-  const allPlayers = [...authors, creator];
+  const allPlayers = [creator, ...authors];
   while (allPlayers.length < 4) {
     allPlayers.splice(1, 0, GenerateRandomPlayer()); //insert player at i=1
   }

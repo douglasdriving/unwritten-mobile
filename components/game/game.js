@@ -8,22 +8,27 @@ import { GetRoomData, LogAllRooms, loggedUser, UploadScenario } from '../../back
 import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
 import { GetRandomInt, TimeToHms } from '../../helperFunctions/helpers.js';
 import { GenerateRandomPlayer } from '../../backendCalls/dataGeneration.js';
+import { Popup } from '../popup.js';
 
 export const Game = (props) => {
 
+  //Load once
   const [readOnly, setReadOnly] = useState("false");
-  const [players, setPlayers] = useState({});
-  const [chars, setChars] = useState({ initial: 0, remaining: 0 });
+  const [players, setPlayers] = useState([{}]);
   const [story, setStory] = useState({
     title: '',
     description: '',
     scenarios: []
   });
-  const [nextPlayer, setNextPlayer] = useState({}); //might be redundant as a state! can be calculated
+  const [nextPlayer, setNextPlayer] = useState(0); //might be redundant as a state! can be calculated
+
+  //change during play
+  const [chars, setChars] = useState({ initial: 0, remaining: 0 });
   const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scenarioPostLoading, setScenarioPostLoading] = useState(false);
 
-  const SetInitialStates = async () => {
+  const LoadRoomData = async () => {
 
     const room = await GetRoomData(props.route.params.roomId);
 
@@ -75,21 +80,22 @@ export const Game = (props) => {
       remaining: chars.initial - textLength
     })
   }
-  const AddScenario = async text => { //not complete yet. backend call must work to alter DB
+  const AddScenario = async text => {
+
     if (chars.remaining < 0) return false;
-    console.log('not too long');
-    const uploadedScenario = await UploadScenario(text);
+
+    setScenarioPostLoading(true);
+
+    const uploadedScenario = await UploadScenario(text, props.route.params.roomId); //not complete yet. backend call must work to alter DB
+
+    setScenarioPostLoading(false);
+
     if (uploadedScenario) {
-      console.log('upload was successful');
-      setStory({
-        title: story.title,
-        description: story.description,
-        scenarios: [...story.scenarios, uploadedScenario]
-      });
-      console.log('added the scenario: ', uploadedScenario);
+      LoadRoomData();
       return true;
-    } //alternatively, we could just reload the game from scratch with the db data. Would be an extra call, but perhaps less code
+    }
     else return false;
+
   }
   const GetNextPlayerName = () => {
 
@@ -97,15 +103,16 @@ export const Game = (props) => {
     if (!players.creator) return null;
     if (!players.authors) return null;
 
+    let name = null;
 
-    if (nextPlayer == 0) return players.creator.name;
+    if (nextPlayer == 0) name = players.creator.name;
     else if (players.authors.length >= nextPlayer) {
-      return (players.authors[nextPlayer - 1].name)
+      name = players.authors[nextPlayer - 1].name;
     }
-    else return null;
+    return name;
   }
 
-  useEffect(() => { SetInitialStates() }, [])
+  useEffect(() => { LoadRoomData() }, [])
 
   return (
     <View>
@@ -118,7 +125,11 @@ export const Game = (props) => {
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
       />
-      <StoryNav readOnly={readOnly} openMenu={() => setMenuOpen(true)} appNavigation={props.route.params.appNavigation}/>
+      <StoryNav
+        readOnly={readOnly}
+        openMenu={() => setMenuOpen(true)}
+        appNavigation={props.navigation}
+      />
       {menuOpen && <RoomMenu
         players={players}
         nextPlayer={nextPlayer}
@@ -126,6 +137,10 @@ export const Game = (props) => {
         closeMenu={() => setMenuOpen(false)}
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}
+      />}
+      {scenarioPostLoading && <Popup
+        title={'Adding your text'}
+        loading={true}
       />}
     </View>
   );

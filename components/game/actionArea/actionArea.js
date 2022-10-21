@@ -10,7 +10,7 @@ import { PlayerSearchField } from "./playerSearchField/playerSearchField";
 import { loggedUser } from "../../../backendCalls/backendCalls";
 
 export const ActionArea = (props) => {
-
+  
   const [isWriting, setIsWriting] = useState(null);
 
   //when writing in the field, input new char count to props.updateCharsRemaining
@@ -28,6 +28,14 @@ export const ActionArea = (props) => {
 
   return (
     <View>
+
+      {/* <YourTurnField
+        charsRemaining={props.charsRemaining}
+        timeLeftInTurn={props.timeLeftInTurn}
+        SetWritingField={SetWritingField}
+        turnsUntilCanEnd={props.turnsUntilCanEnd}
+        turnsUntilMustEnd={props.turnsUntilMustEnd}
+      /> */}
 
       {
         props.nextPlayerName == null ?
@@ -48,6 +56,8 @@ export const ActionArea = (props) => {
                     charsRemaining={props.charsRemaining}
                     timeLeftInTurn={props.timeLeftInTurn}
                     SetWritingField={SetWritingField}
+                    turnsUntilCanEnd={props.turnsUntilCanEnd}
+                    
                   />
               )
               :

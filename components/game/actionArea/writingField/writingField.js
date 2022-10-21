@@ -15,10 +15,8 @@ export const WritingField = (props) => {
   }
 
   const handleButtonPress = async() => {
-    //show a "load" popup, probs by changing some "upload" state
     const success = await props.AddScenario(scenarioText);
-    console.log('scenario uploaded: ', success);
-    //depending on if success is true or false, should change screen in some way
+    //if false, there should be some sort of error feedback on screen
   }
 
   return (

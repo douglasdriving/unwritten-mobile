@@ -3,6 +3,7 @@ import { styles } from '../../style.js';
 import { StoryContent } from './storyArea/storyContent.js';
 import { Spacer } from '../visuals.js';
 import { ActionArea } from './actionArea/actionArea.js';
+import { turnWhenCanEnd, maxScenarioCount } from '../../backendCalls/dataGeneration.js';
 
 export const GameArea = (props) => {
 
@@ -16,6 +17,8 @@ export const GameArea = (props) => {
           AddScenario={props.AddScenario}
           nextPlayerName={props.nextPlayerName}
           timeLeftInTurn={props.timeLeftInTurn}
+          turnsUntilCanEnd={turnWhenCanEnd - props.story.scenarios.length}
+          turnsUntilMustEnd={maxScenarioCount - props.story.scenarios.length}
         />
       }
       <Spacer />

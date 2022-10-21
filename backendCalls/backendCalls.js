@@ -8,24 +8,27 @@ console.log('backend started ' + new Date());
 //VARS
 let rooms;
 export let loggedUser = user = {
-  name: PickRandomFromArray(fakeWriters),
+  name: 'defarge',
   premium: true,
   new: false
-};;
+};
 let storyKeys = 4;
 
 //LOAD DATA FROM ASYNC FILE STORAGE
 const LoadRoomData = async () => {
 
+  // console.log('regenerated rooms');
   // rooms = GenerateRandomRoomArray(10, 20, 6, 3)
   // await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
 
   const loadedRoomsData = await AsyncStorage.getItem('rooms');
 
   if (loadedRoomsData) {
+    console.log('loaded rooms data successfully!');
     rooms = JSON.parse(loadedRoomsData);
   }
   else {
+    console.log('created new room data');
     rooms = GenerateRandomRoomArray(10, 20, 6, 3)
     await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
   };
@@ -161,13 +164,33 @@ export const LogAllRooms = async () => {
 }
 
 //SCENARIOS
-export const UploadScenario = async (text) => {
-  //try uploading the scenario to the db, return the uploaded scenario if true
-  return {
+export const UploadScenario = async (text, roomId) => {
+
+  console.log('trying to upload new scenario with text: ', text);
+
+  //MAKE A SHITLOAD OF CHECKS TO MAKE SURE THIS UPLOAD IS LEGIT
+
+  //SETUP THE ROOM
+  room = await GetRoomData(roomId);
+  room.scenarios.push({
     text: text,
     author: loggedUser,
     id: GenerateRandomString()
-  };
+  })
+  room.turnsTaken++;
+  room.nextPlayer++;
+  room.nextPlayer > room.authors.length && (room.nextPlayer=0);
+  room.deadline = new Date().getTime() + 172800000; //turn into helper function ?
+
+  //ADD ROOM TO THE FULL ROOMS OBJECT
+    //should already be done, but check to make sure - if reloaded data does not happen, this might be the problem
+    const testRoomData = await GetRoomData(roomId)
+    console.log('the room object now returns this as the final scenario: ', testRoomData.scenarios[testRoomData.scenarios.length-1]);
+
+  //UPLOAD THE FULL ROOMS OBJECT TO THE DB
+  await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
+
+  return true;
 }
 
 //RUN ON START
