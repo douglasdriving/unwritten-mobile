@@ -18,3 +18,9 @@ export const TimeToHms = milliSeconds => {
   var s = Math.floor(seconds % 3600 % 60);
   return h + 'h ' + m + 'm ' + s + 's'; 
 }
+
+export const GetNextPlayerName = (room) => {
+  if (room.nextPlayer == 0) return room.creator.name;
+  else if (room.nextPlayer > room.authors.length) return null;
+  else return room.authors[room.nextPlayer - 1].name;
+}

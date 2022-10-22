@@ -21,14 +21,7 @@ export const PlayerList = (props) => {
           timeLeftInTurn={props.timeLeftInTurn}
         />
       ))}
-
-      {/* <PlayerRow
-        player={{name:'testy'}}
-        isNextPlayer={true}
-        key={'oidawjd80w98'}
-        timeLeftInTurn={props.timeLeftInTurn}
-      /> */}
-
+      
     </View>
   );
 }

@@ -5,13 +5,19 @@ import { GenerateRandomString } from '../../../helperFunctions/helpers';
 
 export const StoryList = (props) => {
 
-  //console.log('generating list with this info: ', props.listItemInfo)
-
   return (
     <View>
+
       {props.listItemInfo && props.listItemInfo.map(listItemInfo => (
-        <ListItem listItemInfo={listItemInfo} key={GenerateRandomString()} appNavigation={props.appNavigation} />
+
+        <ListItem
+          listItemInfo={listItemInfo}
+          key={GenerateRandomString()}
+          appNavigation={props.appNavigation}
+        />
+
       ))}
+
     </View>
   );
 

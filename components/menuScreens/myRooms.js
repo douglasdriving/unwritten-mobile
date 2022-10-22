@@ -4,6 +4,7 @@ import { styles } from '../../style';
 import { GetMyRooms, GetLoggedUserName } from '../../backendCalls/backendCalls';
 import { useState, useEffect } from 'react';
 import { MenuScreenHeader } from './modularComponents/menuScreenHeader';
+import { GetNextPlayerName } from '../../helperFunctions/helpers';
 
 export const MyRooms = (props) => {
 
@@ -21,7 +22,7 @@ export const MyRooms = (props) => {
         authors: room.authors,
         //authorCount: 3,
         turn: room.turnsTaken,
-        playersTurn: (room.nextPlayer == GetLoggedUserName()),
+        alert: (GetNextPlayerName(room) == GetLoggedUserName()), //next player is an int, this will never be true
         roomId: room.id,
         buttonText: 'Enter ->'
       }

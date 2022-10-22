@@ -3,33 +3,16 @@ import { styles } from '../../../style';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useState, useEffect } from 'react';
 
-const topRowStyle = {
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  width: '100%',
-};
-
-//LIST ITEM INFO FORMAT
-// listItemInfo = {
-//   alert: true,
-//   title: 'story title',
-//   description: 'story description',
-//   creator: 'story creator',
-//   authors: ['author1', 'author2', 'author3'],
-//   authorCount: 3,
-//   turn: 23,
-//   buttonText: 'press me'
-//    id: 'oj80jd2398j;
-// };
-
 export const ListItem = (props) => {
 
   const [open, setOpen] = useState(false);
 
-  let alert;
-  if (props.listItemInfo.playersTurn) {
-    alert = <Text style={styles.alert}>Your Turn!</Text>
-  }
+  //console.log(props.listItemInfo.alert);
+
+  // let alert;
+  // if (props.listItemInfo.playersTurn) {
+  //   alert = <Text style={styles.alert}>Your Turn!</Text>
+  // }
 
   const Toggle = () => {
     setOpen(!open);
@@ -37,7 +20,7 @@ export const ListItem = (props) => {
   }
 
   const HandleButtonPress = () => {
-    props.appNavigation.navigate('Game', { roomId: props.listItemInfo.roomId});
+    props.appNavigation.navigate('Game', { roomId: props.listItemInfo.roomId });
   }
 
   const GenerateAuthorText = () => {
@@ -57,11 +40,23 @@ export const ListItem = (props) => {
 
   return (
     <TouchableWithoutFeedback onPress={Toggle}>
-      <View style={styles.listItem}>
+      <View style={{
+        backgroundColor: 'white',
+        width: '100%',
+        marginTop: 5,
+        padding: 10
+      }} >
 
-        <View style={topRowStyle}>
-          {props.listItemInfo.title && <Text style={styles.h3}>{props.listItemInfo.title}</Text>}
-          {props.listItemInfo.playersTurn && alert}
+        <View style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          width: '100%',
+        }}>
+          {props.listItemInfo.title && <Text style={styles.h3}>
+            {props.listItemInfo.title}
+            {props.listItemInfo.alert && '❗'}
+            </Text>}
+          {props.listItemInfo.playersTurn && props.listItemInfo.alert}
           <Icon name={open ? "arrow-up" : "arrow-down"} size={20} />
         </View>
 
@@ -79,7 +74,20 @@ export const ListItem = (props) => {
         }
 
       </View>
-    </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback >
 
   );
 }
+
+//LIST ITEM INFO FORMAT
+// listItemInfo = {
+//   alert: true,
+//   title: 'story title',
+//   description: 'story description',
+//   creator: 'story creator',
+//   authors: ['author1', 'author2', 'author3'],
+//   authorCount: 3,
+//   turn: 23,
+//   buttonText: 'press me'
+//    id: 'oj80jd2398j;
+// };

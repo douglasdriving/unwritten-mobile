@@ -4,7 +4,7 @@ import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 import { useEffect, useState } from 'react';
-import { GetRoomData, LogAllRooms, loggedUser, UploadScenario } from '../../backendCalls/backendCalls.js';
+import { GetRoomData, LogAllRooms, GetLoggedUserName, UploadScenario } from '../../backendCalls/backendCalls.js';
 import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
 import { GetRandomInt, TimeToHms } from '../../helperFunctions/helpers.js';
 import { GenerateRandomPlayer } from '../../backendCalls/dataGeneration.js';
@@ -52,10 +52,10 @@ export const Game = (props) => {
       return;
     }
 
-    if (playersValue.creator.name == loggedUser.name) setChars({ initial: playersValue.creator.charsRemaining, remaining: playersValue.creator.charsRemaining });
+    if (playersValue.creator.name == GetLoggedUserName()) setChars({ initial: playersValue.creator.charsRemaining, remaining: playersValue.creator.charsRemaining });
     else if (playersValue.authors) {
       playersValue.authors.forEach(author => {
-        if (author.name == loggedUser.name) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
+        if (author.name == GetLoggedUserName()) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
       });
     }
 

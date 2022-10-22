@@ -1,10 +1,10 @@
 import { View, Text } from "react-native";
-import { TurnCountDown } from "../actionArea/turnCountDown";
 import { TimeToHms } from "../../../helperFunctions/helpers";
+import { GetLoggedUserName } from "../../../backendCalls/backendCalls";
 
-export const PlayerRow = (props) =>{
+export const PlayerRow = (props) => {
 
-  return(
+  return (
     <View style={{
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -12,7 +12,11 @@ export const PlayerRow = (props) =>{
       marginTop: 5,
       backgroundColor: 'lightgray',
     }}>
-      {props.player && <Text>{props.player.name}</Text>}
+      {props.player &&
+        <Text style={props.player.name == GetLoggedUserName() && {color: 'blue'}}>
+          {props.player.name}
+        </Text>
+      }
       {props.isNextPlayer && <Text>⏳ {TimeToHms(props.timeLeftInTurn)}</Text>}
     </View>
   );

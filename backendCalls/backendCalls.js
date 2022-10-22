@@ -7,11 +7,6 @@ console.log('backend started ' + new Date());
 
 //VARS
 let rooms;
-export let loggedUser = user = {
-  name: 'defarge',
-  premium: true,
-  new: false
-};
 let storyKeys = 4;
 
 //LOAD DATA FROM ASYNC FILE STORAGE
@@ -36,47 +31,48 @@ const LoadRoomData = async () => {
 
 //USER
 export const GetLoggedUserName = () => {
-  if (!loggedUser) return false;
-  if (!loggedUser.name) return false;
-  return loggedUser.name;
+  return 'flopson'
 }
 
 export const GetUser = async () => {
-
-  user = {
-    name: PickRandomFromArray(fakeWriters),
+  return {
+    name: 'flopson',
     premium: true,
     new: false
   };
-
-  loggedUser = user;
-
-  return user;
-
 }
 
-export const CreateNewUser = async () => {
+// export const CreateNewUser = async () => {
 
-  user = {
-    name: PickRandomFromArray(fakeWriters),
-    premium: false,
-    new: true
-  };
+//   console.log('new user created');
 
-  loggedUser = user;
+//   user = {
+//     name: PickRandomFromArray(fakeWriters),
+//     premium: false,
+//     new: true
+//   };
 
-  return user;
+//   loggedUser = user;
 
-}
+//   return user;
+
+// }
 
 //ROOMS
 const UserIsInRoom = (room, name) => {
 
   let isInRoom = false;
-  if (room.creator == name) isInRoom = true;
+  if (room.creator.name == name) isInRoom = true;
   room.authors.forEach(author => {
     if (author.name == name) isInRoom = true;
   })
+
+  // if (room.creator.name == 'flopson') console.log('flopson is in room with title: ', room.title);
+  // room.authors.forEach(author => {
+  //   if (author.name == 'flopson') console.log('flopson is in room with title: ', room.title);
+  // })
+
+  
   return isInRoom
 
 }
@@ -84,7 +80,7 @@ const UserIsInRoom = (room, name) => {
 export const GetAvailableRooms = async () => {
 
   const availableRooms = rooms.filter(room => (
-    !UserIsInRoom(room, loggedUser.name)
+    !UserIsInRoom(room, GetLoggedUserName())
     && (room.authors.length < 3)
   ));
 
@@ -101,7 +97,7 @@ export const GetAvailableRooms = async () => {
 export const GetMyRooms = async () => {
 
   const myRooms = rooms.filter(room => (
-    UserIsInRoom(room, loggedUser.name)
+    UserIsInRoom(room, GetLoggedUserName())
   ));
 
   const openRooms = myRooms.filter(room => (
@@ -125,16 +121,19 @@ export const GetStoryKeys = async () => {
 
 export const CreateNewRoom = async (title, description, opening) => {
 
+  console.log('creating a new room');
+
+  //this is probably wrong! Check data generation to correct the object format
   const room = {
     title: title,
     description: description,
-    creator: loggedUser.name,
+    creator: GetUser(),
     authors: [],
     turnsTaken: 1,
     nextPlayer: null,
     id: GenerateRandomString(),
     scenarios: [{
-      author: loggedUser.name,
+      author: GetUser(),
       text: opening
     }]
   };
@@ -172,7 +171,7 @@ export const UploadScenario = async (text, roomId) => {
   room = await GetRoomData(roomId);
   room.scenarios.push({
     text: text,
-    author: loggedUser,
+    author: GetUser(),
     id: GenerateRandomString()
   })
   room.turnsTaken++;
@@ -189,4 +188,3 @@ export const UploadScenario = async (text, roomId) => {
 
 //RUN ON START
 LoadRoomData();
-loggedUser = GetUser();
