@@ -7,8 +7,6 @@ import { WritingField } from "./writingField/writingField";
 import { WaitingField } from "./waitingField/waitingField";
 import { PlayerSearchField } from "./playerSearchField/playerSearchField";
 
-import { GetLoggedUserName } from "../../../backendCalls/backendCalls";
-
 export const ActionArea = (props) => {
   
   const [isWriting, setIsWriting] = useState(null);
@@ -42,7 +40,7 @@ export const ActionArea = (props) => {
           <PlayerSearchField />
           :
           (
-            props.nextPlayerName == GetLoggedUserName() ?
+            props.nextPlayerName == props.user.name ?
               (
                 isWriting ?
                   <WritingField

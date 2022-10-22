@@ -9,7 +9,13 @@ export const GameArea = (props) => {
 
   return (
     <ScrollView style={styles.gameWindow}>
-      <StoryContent readOnly={props.readOnly} story={props.story} />
+
+      <StoryContent
+        readOnly={props.readOnly}
+        story={props.story}
+        user={props.user}
+      />
+
       {!props.readOnly &&
         <ActionArea
           charsRemaining={props.charsRemaining}
@@ -19,9 +25,12 @@ export const GameArea = (props) => {
           timeLeftInTurn={props.timeLeftInTurn}
           turnsUntilCanEnd={turnWhenCanEnd - props.story.scenarios.length}
           turnsUntilMustEnd={maxScenarioCount - props.story.scenarios.length}
+          user={props.user}
         />
       }
+      
       <Spacer />
+
     </ScrollView>
   );
 }

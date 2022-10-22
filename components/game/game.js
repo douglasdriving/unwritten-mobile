@@ -1,13 +1,10 @@
-import { ScrollView, Text, View } from 'react-native';
-import { styles } from '../../style.js';
+import { View } from 'react-native';
 import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 import { useEffect, useState } from 'react';
-import { GetRoomData, LogAllRooms, GetLoggedUserName, UploadScenario } from '../../backendCalls/backendCalls.js';
+import { GetRoomData, UploadScenario } from '../../backendCalls/backendCalls.js';
 import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
-import { GetRandomInt, TimeToHms } from '../../helperFunctions/helpers.js';
-import { GenerateRandomPlayer } from '../../backendCalls/dataGeneration.js';
 import { Popup } from '../popup.js';
 
 export const Game = (props) => {
@@ -52,10 +49,10 @@ export const Game = (props) => {
       return;
     }
 
-    if (playersValue.creator.name == GetLoggedUserName()) setChars({ initial: playersValue.creator.charsRemaining, remaining: playersValue.creator.charsRemaining });
+    if (playersValue.creator.name == props.user.name) setChars({ initial: playersValue.creator.charsRemaining, remaining: playersValue.creator.charsRemaining });
     else if (playersValue.authors) {
       playersValue.authors.forEach(author => {
-        if (author.name == GetLoggedUserName()) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
+        if (author.name == props.user.name) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
       });
     }
 
@@ -65,12 +62,6 @@ export const Game = (props) => {
     const interval = setInterval(() => {
       setTimeLeftInTurn(room.deadline - new Date().getTime());
     }, 1000);
-
-    //testing
-    // setChars({
-    //   initial: 634,
-    //   remaining: 634
-    // });
 
     return () => clearInterval(interval);
   }
@@ -124,6 +115,7 @@ export const Game = (props) => {
         AddScenario={AddScenario}
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
+        user={props.user}
       />
       <StoryNav
         readOnly={readOnly}
@@ -137,6 +129,7 @@ export const Game = (props) => {
         closeMenu={() => setMenuOpen(false)}
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}
+        user={props.user}
       />}
       {scenarioPostLoading && <Popup
         title={'Adding your text'}

@@ -7,12 +7,22 @@ import { useState, useEffect } from 'react';
 import { Popup } from './components/popup';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import { GetUser } from './backendCalls/backendCalls';
 
 const Stack = createStackNavigator();
 
 export default function App() {
 
   const [user, setUser] = useState();
+
+  const loadUser = async () => {
+    const loadedUser = await GetUser();
+    setUser(loadedUser);
+  };
+
+  useEffect(() => {
+    loadUser();
+  }, [])
 
   const AppNavigator = () => {
 
@@ -30,7 +40,7 @@ export default function App() {
         <Stack.Screen name="Join" component={Join} />
         <Stack.Screen
           name="Game"        >
-          {(props) => <Game {...props} />}
+          {(props) => <Game {...props} user={user}/>}
         </Stack.Screen>
 
       </Stack.Navigator>

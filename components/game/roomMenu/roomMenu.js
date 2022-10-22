@@ -16,6 +16,7 @@ export const RoomMenu = (props) => {
         players={props.players}
         nextPlayer={props.nextPlayer}
         timeLeftInTurn={props.timeLeftInTurn}
+        user={props.user}
       />
       
     </View>

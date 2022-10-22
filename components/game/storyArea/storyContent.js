@@ -11,7 +11,12 @@ export const StoryContent = (props) => {
       {props.readOnly && <Text style={styles.h3}>Written by Smogg, Sebbe, Joakim, and Noobalot</Text>}
       {props.readOnly && <Divider />}
       {props.story.scenarios.map((scenario, i) =>
-        <Paragraph scenario={scenario} scenarioNumber={i + 1} key={scenario.id} />
+        <Paragraph
+          scenario={scenario}
+          scenarioNumber={i + 1}
+          key={scenario.id}
+          isUser={props.user.name == scenario.author.name}
+        />
       )}
     </View>
   );

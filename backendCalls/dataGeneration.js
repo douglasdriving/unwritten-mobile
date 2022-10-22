@@ -20,6 +20,10 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
   //FIND OUT WHO IS THE NEXT PLAYER
   let nextPlayer = turnsTaken % 4;
 
+  //ADD 500 CHARS TO THE NEXT PLAYER
+  if (nextPlayer == 0) creator.charsRemaining += 500;
+  else if(authorCount >= nextPlayer) authors[nextPlayer-1].charsRemaining += 500;
+
   //ADD SCENARIOS
   const allPlayers = [creator, ...authors];
   while (allPlayers.length < 4) {
@@ -93,6 +97,6 @@ export const GenerateRandomPlayer = () => {
     id: GenerateRandomString(),
     strikes: strikes,
     strikeNotification: strikeNotification,
-    charsRemaining: GetRandomInt(250,750)
+    charsRemaining: GetRandomInt(1,499)
   }
 }

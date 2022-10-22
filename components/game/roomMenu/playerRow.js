@@ -1,6 +1,5 @@
 import { View, Text } from "react-native";
 import { TimeToHms } from "../../../helperFunctions/helpers";
-import { GetLoggedUserName } from "../../../backendCalls/backendCalls";
 
 export const PlayerRow = (props) => {
 
@@ -13,7 +12,7 @@ export const PlayerRow = (props) => {
       backgroundColor: 'lightgray',
     }}>
       {props.player &&
-        <Text style={props.player.name == GetLoggedUserName() && {color: 'blue'}}>
+        <Text style={props.player.name == props.user.name && {color: 'blue'}}>
           {props.player.name}
         </Text>
       }
