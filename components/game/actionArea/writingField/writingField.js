@@ -1,7 +1,7 @@
-import { View, Text, TextInput, Button } from "react-native";
-import { styles } from "../../../../style";
+import { View, Text, Button } from "react-native";
 import { CharCounter } from "./charCounter";
 import { useState } from "react";
+import { ScenarioTextField } from "./scenarioTextField";
 
 export const WritingField = (props) => {
 
@@ -14,28 +14,29 @@ export const WritingField = (props) => {
     props.updateCharsRemaining(text.length);
   }
 
-  const handleButtonPress = async() => {
+  const handleAddButtonPress = async () => {
     const success = await props.AddScenario(scenarioText);
     //if false, there should be some sort of error feedback on screen
   }
 
+  const handleBackButtonPress = async () => {
+    props.SetWritingField(null);
+  }
+
   return (
     <View>
-      <Text style={styles.body}>6. Douglas {/* CHANGE TO THE RIGHT SCENARIO NUMBER AND LOGGED USER NAME */}</Text> 
-      <TextInput //breakout component?
-        style={styles.writingField}
-        onChangeText={handleChangeText}
-        multiline={true}
-      />
+      <Button title="<-" color='gray' onPress={handleBackButtonPress}/>
+      <Text style={{ color: 'blue' }}>{props.turnNumber}. {props.user.name}</Text>
+      <ScenarioTextField handleChangeText={handleChangeText} isWriting={props.isWriting}/>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Button //breakout component?
-          title='Add'
+        <Button
+          title={props.isWriting == 'ending' ? 'Add Ending' : 'Add'}
           disabled={!(props.charsRemaining >= 0)}
-          onPress={handleButtonPress}
+          onPress={handleAddButtonPress}
+          color={props.isWriting == 'ending' ? 'darkred' : 'blue'}
         />
         <CharCounter charsRemaining={props.charsRemaining} />
       </View>
-      <Text>{props.isWriting == 'ending' && 'Write Continuation Instead'}</Text>
     </View>
   );
 }

@@ -68,16 +68,6 @@ export const styles = StyleSheet.create({
     padding: 30,
   },
 
-  writingField: {
-    padding: 10,
-    height: 300,
-    textAlignVertical: 'top',
-    fontSize: 16,
-    borderStyle: 'solid',
-    borderColor: 'gray',
-    borderWidth: 2,
-  },
-
   roomMenu: {
     backgroundColor: 'gray',
     position: 'absolute',

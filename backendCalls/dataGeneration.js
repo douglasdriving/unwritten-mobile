@@ -8,6 +8,11 @@ export const turnWhenCanEnd = 30;
 //DATA GENERATION METHODS
 export const GenerateRandomRoom = (turnsTaken, authorCount) => {
 
+  //CORRECT FOR NEW ROOMS
+  if(turnsTaken < 5){
+    authorCount = turnsTaken-1;
+  }
+
   //ADD A CREATOR
   const creator = GenerateRandomPlayer();
 
@@ -26,8 +31,10 @@ export const GenerateRandomRoom = (turnsTaken, authorCount) => {
 
   //ADD SCENARIOS
   const allPlayers = [creator, ...authors];
-  while (allPlayers.length < 4) {
-    allPlayers.splice(1, 0, GenerateRandomPlayer()); //insert player at i=1
+  if (turnsTaken > 4){
+    while (allPlayers.length < 4) {
+      allPlayers.splice(1, 0, GenerateRandomPlayer()); //insert player at i=1
+    }
   }
   const scenarios = [];
   for (let i = 0; i < turnsTaken; i++) {

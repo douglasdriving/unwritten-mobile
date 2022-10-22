@@ -26,6 +26,7 @@ export const GameArea = (props) => {
           turnsUntilCanEnd={turnWhenCanEnd - props.story.scenarios.length}
           turnsUntilMustEnd={maxScenarioCount - props.story.scenarios.length}
           user={props.user}
+          turnNumber={props.turnNumber}
         />
       }
       

@@ -119,11 +119,10 @@ export const GetStoryKeys = async () => {
   return storyKeys;
 }
 
-export const CreateNewRoom = async (title, description, opening) => {
+export const CreateRoom = async (title, description, opening) => {
 
   console.log('creating a new room');
 
-  //this is probably wrong! Check data generation to correct the object format
   const room = {
     title: title,
     description: description,
@@ -135,11 +134,12 @@ export const CreateNewRoom = async (title, description, opening) => {
     scenarios: [{
       author: GetUser(),
       text: opening
-    }]
+    }],
+    deadline: (new Date().getTime() + 172800000) //2 days from now
   };
 
   rooms.push(room);
-  await AsyncStorage.setItem('rooms', rooms);
+  await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
   return room.id;
 }
 

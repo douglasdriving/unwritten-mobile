@@ -17,7 +17,7 @@ export const Game = (props) => {
     description: '',
     scenarios: []
   });
-  const [nextPlayer, setNextPlayer] = useState(0); //might be redundant as a state! can be calculated
+  const [nextPlayer, setNextPlayer] = useState();
 
   //change during play
   const [chars, setChars] = useState({ initial: 0, remaining: 0 });
@@ -116,6 +116,7 @@ export const Game = (props) => {
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
         user={props.user}
+        turnNumber={story.scenarios.length+1}
       />
       <StoryNav
         readOnly={readOnly}

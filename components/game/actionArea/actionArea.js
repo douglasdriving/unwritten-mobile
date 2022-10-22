@@ -11,29 +11,12 @@ export const ActionArea = (props) => {
   
   const [isWriting, setIsWriting] = useState(null);
 
-  //when writing in the field, input new char count to props.updateCharsRemaining
-  //should be several different things that can render here depending on the state of the game
-  //1.
-
-  /*
-  will get a NAME passed down as props.nextPlayerName
-  add writing field when a button is pressed
-  */
-
   const SetWritingField = type => {
     setIsWriting(type);
   }
 
   return (
     <View>
-
-      {/* <YourTurnField
-        charsRemaining={props.charsRemaining}
-        timeLeftInTurn={props.timeLeftInTurn}
-        SetWritingField={SetWritingField}
-        turnsUntilCanEnd={props.turnsUntilCanEnd}
-        turnsUntilMustEnd={props.turnsUntilMustEnd}
-      /> */}
 
       {
         props.nextPlayerName == null ?
@@ -48,6 +31,9 @@ export const ActionArea = (props) => {
                     updateCharsRemaining={props.updateCharsRemaining}
                     AddScenario={props.AddScenario}
                     isWriting={isWriting}
+                    user={props.user}
+                    turnNumber={props.turnNumber}
+                    SetWritingField={SetWritingField}
                   />
                   :
                   <YourTurnField
