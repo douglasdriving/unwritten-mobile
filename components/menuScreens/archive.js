@@ -3,8 +3,9 @@ import { styles } from '../../style';
 import { StoryList } from './storylist/storylist';
 import { useState, useEffect } from 'react';
 import { GetFinishedStories } from '../../backendCalls/backendCalls';
-import { clickProps } from 'react-native-web/dist/cjs/modules/forwardedProps';
 import { MenuScreenHeader } from './modularComponents/menuScreenHeader';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 export const Archive = (props) => {
 
@@ -31,16 +32,18 @@ export const Archive = (props) => {
     setStoriesList(storiesInfo);
   }
 
-  useEffect(() => {
-    LoadStories();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      LoadStories();
+    }, [])
+  );
 
   return (
     <ScrollView style={styles.container}>
-      <MenuScreenHeader/>
+      <MenuScreenHeader />
       <Text style={styles.h1}>Archive</Text>
       <Text style={styles.body}>A collection of all {storyCount} stories finished so far in Unwritten</Text>
-      <StoryList listItemInfo={storiesList} appNavigation={props.appNavigation}/>
+      <StoryList listItemInfo={storiesList} appNavigation={props.appNavigation} />
     </ScrollView>
   );
 }

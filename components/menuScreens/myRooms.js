@@ -5,6 +5,8 @@ import { GetMyRooms, GetLoggedUserName } from '../../backendCalls/backendCalls';
 import { useState, useEffect } from 'react';
 import { MenuScreenHeader } from './modularComponents/menuScreenHeader';
 import { GetNextPlayerName } from '../../helperFunctions/helpers';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 export const MyRooms = (props) => {
 
@@ -48,8 +50,12 @@ export const MyRooms = (props) => {
     setMyRoomsList(newMyRoomList);
   }
 
-  useEffect(() => { LoadRooms() }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      LoadRooms();
+    }, [])
+  );
+  
   return (
     <ScrollView style={styles.container}>
       <MenuScreenHeader/>

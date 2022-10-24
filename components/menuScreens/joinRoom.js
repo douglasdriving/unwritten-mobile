@@ -5,13 +5,15 @@ import { GetAvailableRooms } from '../../backendCalls/backendCalls';
 import { useEffect, useState } from 'react';
 import { Popup } from '../popup';
 import { MenuScreenHeader } from './modularComponents/menuScreenHeader';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback } from 'react';
 
 export const JoinRoom = (props) => {
 
   const [availableRoomsList, setAvailableRoomsList] = useState();
   const [welcomPopup, setWelcomePopup] = useState(props.user.new);
 
-  const LoadRooms = async () => {
+  const Load = async () => {
     const rooms = await GetAvailableRooms();
 
     const newRoomsList = rooms.new.map(room => {
@@ -52,7 +54,11 @@ export const JoinRoom = (props) => {
     setAvailableRoomsList(newList);
   }
 
-  useEffect(() => { LoadRooms() }, []);
+  useFocusEffect(
+    useCallback(() => {
+      Load();
+    }, [])
+  );
 
   return (
     <ScrollView style={styles.container}>
