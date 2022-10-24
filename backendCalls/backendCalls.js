@@ -173,9 +173,10 @@ export const UploadScenario = async (text, roomId) => {
 
   //SETUP THE ROOM
   room = await GetRoomData(roomId);
+  const user = await GetUser();
   room.scenarios.push({
     text: text,
-    author: GetUser(),
+    author: user,
     id: GenerateRandomString()
   })
   room.turnsTaken++;

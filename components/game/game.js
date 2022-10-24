@@ -45,7 +45,6 @@ export const Game = (props) => {
     });
 
     if (readOnlyValue) {
-      console.log('is read only');
       return;
     }
 
@@ -77,15 +76,18 @@ export const Game = (props) => {
 
     setScenarioPostLoading(true);
 
-    const uploadedScenario = await UploadScenario(text, props.route.params.roomId); //not complete yet. backend call must work to alter DB
-
-    setScenarioPostLoading(false);
+    const uploadedScenario = await UploadScenario(text, props.route.params.roomId);
 
     if (uploadedScenario) {
-      LoadRoomData();
+      await LoadRoomData();
+      setScenarioPostLoading(false);
       return true;
     }
-    else return false;
+    else {
+      console.error('was not able to add the scenario');
+      setScenarioPostLoading(false);
+      return false;
+    }
 
   }
   const GetNextPlayerName = () => {
@@ -117,7 +119,7 @@ export const Game = (props) => {
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
         user={props.user}
-        turnNumber={story.scenarios.length+1}
+        turnNumber={story.scenarios.length + 1}
       />
       <StoryNav
         readOnly={readOnly}
