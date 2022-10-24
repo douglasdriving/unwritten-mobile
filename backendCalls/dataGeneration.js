@@ -89,7 +89,6 @@ export const GenerateRandomRoomArray = (newRoomsCount, ongoingRoomsCount, finish
 
   return rooms;
 }
-
 export const GenerateRandomPlayer = () => {
 
   const strikes = GetRandomInt(0, 2);

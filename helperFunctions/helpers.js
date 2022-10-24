@@ -20,7 +20,12 @@ export const TimeToHms = milliSeconds => {
 }
 
 export const GetNextPlayerName = (room) => {
+  if(room.nextPlayer == null) return null;
   if (room.nextPlayer == 0) return room.creator.name;
-  else if (room.nextPlayer > room.authors.length) return null;
-  else return room.authors[room.nextPlayer - 1].name;
+  if (room.nextPlayer > room.authors.length) return null;
+  return room.authors[room.nextPlayer - 1].name;
+}
+
+export const TwoDaysFromNowInMs = () => {
+  return (new Date().getTime() + 172800000);
 }

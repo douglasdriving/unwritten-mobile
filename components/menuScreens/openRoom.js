@@ -25,8 +25,8 @@ export const OpenRoom = (props) => {
   const StartOpening = async () => {
     setOpening(true);
     const newRoomId = await CreateRoom(storyTitle, storyDescription, storyOpening);
-    console.log('creation successful! now trying to open');
-    props.appNavigation.navigate('Game', newRoomId);
+    console.log('creation successful! now trying to open with id: ', newRoomId);
+    props.appNavigation.navigate('Game', { roomId: newRoomId });
   }
 
   const LoadStoryKeys = async () => {

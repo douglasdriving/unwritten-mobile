@@ -11,9 +11,10 @@ export const StoryList = (props) => {
       {props.listItemInfo && props.listItemInfo.map(listItemInfo => (
 
         <ListItem
-          listItemInfo={listItemInfo}
           key={GenerateRandomString()}
+          listItemInfo={listItemInfo}
           appNavigation={props.appNavigation}
+          confirmJoin={props.confirmJoin}
         />
 
       ))}

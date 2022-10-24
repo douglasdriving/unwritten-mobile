@@ -93,6 +93,7 @@ export const Game = (props) => {
     if (!players) return null;
     if (!players.creator) return null;
     if (!players.authors) return null;
+    if (players.authors.length == 0) return null
 
     let name = null;
 
