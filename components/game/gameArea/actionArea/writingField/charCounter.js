@@ -1,6 +1,9 @@
 import { View, Text } from "react-native";
 
 export const CharCounter = (props) => {
+
+  if (!props.charsRemaining) console.error('no charsRemaining var passed onto CharCounter props');
+
   return(
     <View style={{flexDirection: 'row'}}>
       <Text>{props.charsRemaining} </Text>

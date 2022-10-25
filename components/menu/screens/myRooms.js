@@ -61,12 +61,12 @@ export const MyRooms = (props) => {
           <Text style={styles.h2}>Open</Text>
           <Text style={styles.body}>Ongoing story writing</Text>
 
-          {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} appNavigation={props.appNavigation} />}
+          {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} {...props} />}
 
           <Text style={styles.h2}>Closed</Text>
           <Text style={styles.body}>Finished Stories</Text>
 
-          {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} appNavigation={props.appNavigation} />}
+          {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} {...props} />}
         </View>
       }
 

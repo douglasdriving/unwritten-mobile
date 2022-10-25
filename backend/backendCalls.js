@@ -57,6 +57,7 @@ export const GetAvailableRooms = async () => {
   const availableRooms = rooms.filter(room => (
     !UserIsInRoom(room, GetLoggedUserName())
     && (room.authors.length < 3)
+    && (!room.finished)
   ));
 
   const newRooms = availableRooms.filter(room => (
@@ -76,10 +77,10 @@ export const GetMyRooms = async () => {
   ));
 
   const openRooms = myRooms.filter(room => (
-    (room.scenarios.length < maxScenarioCount)
+    (!room.finished)
   ));
   const closedRooms = myRooms.filter(room => (
-    (room.scenarios.length == maxScenarioCount)
+    (room.finished)
   ));
 
   return { open: openRooms, closed: closedRooms };
@@ -141,7 +142,6 @@ export const LogAllRooms = async () => {
 }
 
 export const JoinRoom = async (roomId) => {
-
   const user = await GetUser();
   let success = false;
 
@@ -162,6 +162,10 @@ export const JoinRoom = async (roomId) => {
   });
 
   if (success) await UpdateFileStorage();
+  else{
+    console.error('could not find any rooms with that id, open spots, and without the logged user');
+  }
+
   return success;
 }
 

@@ -38,7 +38,7 @@ export const Archive = (props) => {
       <MenuScreenHeader />
       <Text style={styles.h1}>Archive</Text>
       <Text style={styles.body}>A collection of the {storiesList.length} stories finished so far in Unwritten</Text>
-      <StoryList listItemInfo={storiesList} appNavigation={props.appNavigation} />
+      <StoryList listItemInfo={storiesList} {...props} />
     </ScrollView>
   );
 }

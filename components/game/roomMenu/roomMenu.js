@@ -1,24 +1,19 @@
-import { View, Text} from "react-native"
+import { View, Text } from "react-native"
 import { styles } from "../../../style";
 import { CloseButton } from "../../smart/closeButton";
 import { PlayerList } from "./playerList";
 
 export const RoomMenu = (props) => {
 
-  return(
+  return (
     <View style={styles.roomMenu}>
 
-      <CloseButton handlePress={props.closeMenu}/>
+      <CloseButton handlePress={props.closeMenu} />
       <Text style={styles.h1}>Room</Text>
       <Text>{props.storyTitle}</Text>
       <Text>{props.turnsTaken} / 40 turns taken</Text>
-      <PlayerList
-        players={props.players}
-        nextPlayer={props.nextPlayer}
-        timeLeftInTurn={props.timeLeftInTurn}
-        user={props.user}
-      />
-      
+      <PlayerList {...props} />
+
     </View>
   );
 

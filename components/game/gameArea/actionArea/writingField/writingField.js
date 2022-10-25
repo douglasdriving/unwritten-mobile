@@ -6,22 +6,46 @@ import { ScenarioTextField } from "./scenarioTextField";
 export const WritingField = (props) => {
 
   const [scenarioText, setScenarioText] = useState('');
-
-  const writingEnd = false;
-
+  
   const handleChangeText = text => {
     setScenarioText(text);
+
+    if(!props.updateCharsRemaining){
+      console.error('no updateCharsRemaining prop passed down onto WritingField, cant update char counter');
+      return;
+    } 
+
     props.updateCharsRemaining(text.length);
   }
 
   const handleAddButtonPress = async () => {
+    if(!props.AddScenario){
+      console.error('no AddScenaro propped passed down into WritingField. Can add scenario');
+      return;
+    }
+    if(scenarioText.length < 1){
+      console.error('scenario text must contain at least 1 character!');
+      return
+    }
     const success = await props.AddScenario(scenarioText);
-    //if false, there should be some sort of error feedback on screen
+
+    if(!success){
+      console.error('failed to add the scenario');
+      return;
+    }
   }
 
   const handleBackButtonPress = async () => {
+    if(!props.SetWritingField){
+      console.error('no SetWritingField passed into props of writingField -> Cant go back');
+      return;
+    }
     props.SetWritingField(null);
   }
+
+  if(!props.turnNumber) console.error('no turnNumber provided in writingField props');
+  if(!props.user.name) console.error('missing a user.name in props of writingField');
+  if(!props.isWriting) console.error('missing "isWriting" in props of writingField');
 
   return (
     <View>
@@ -35,7 +59,7 @@ export const WritingField = (props) => {
           onPress={handleAddButtonPress}
           color={props.isWriting == 'ending' ? 'darkred' : 'blue'}
         />
-        <CharCounter charsRemaining={props.charsRemaining} />
+        <CharCounter {...props} />
       </View>
     </View>
   );

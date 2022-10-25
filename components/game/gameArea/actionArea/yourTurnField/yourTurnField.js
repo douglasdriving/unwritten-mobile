@@ -10,11 +10,7 @@ export const YourTurnField = (props) => {
       <Divider />
       <Text style={styles.h1}>Your turn to write!</Text>
       <Text>You got 500 new characters! You now have {props.charsRemaining} characters to write with.</Text>
-      <Actions
-        SetWritingField={props.SetWritingField}
-        turnsUntilCanEnd={props.turnsUntilCanEnd}
-        turnsUntilMustEnd={props.turnsUntilMustEnd}
-      />
+      <Actions {...props} />
       <Text>⏳ {TimeToHms(props.timeLeftInTurn)}</Text>
     </View>
   );

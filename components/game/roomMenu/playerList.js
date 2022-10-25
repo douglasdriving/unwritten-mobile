@@ -9,20 +9,18 @@ export const PlayerList = (props) => {
       {props.players && <PlayerRow
         player={props.players.creator}
         isNextPlayer={props.nextPlayer == 0}
-        timeLeftInTurn={props.timeLeftInTurn}
-        user={props.user}
+        {...props}
       />}
 
       {props.players.authors && props.players.authors.map((player, i) => (
         <PlayerRow
+          {...props}
           player={player}
           isNextPlayer={i == props.nextPlayer - 1}
           key={player.id}
-          timeLeftInTurn={props.timeLeftInTurn}
-          user={props.user}
         />
       ))}
-      
+
     </View>
   );
 }

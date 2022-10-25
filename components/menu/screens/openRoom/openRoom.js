@@ -23,7 +23,7 @@ export const OpenRoom = (props) => {
     setOpening(true);
     const newRoomId = await CreateRoom(storyTitle, storyDescription, storyOpening);
     console.log('creation successful! now trying to open with id: ', newRoomId);
-    props.appNavigation.navigate('Game', { roomId: newRoomId });
+    props.navigation.navigate('Game', { roomId: newRoomId });
   }
 
   const LoadStoryKeys = async () => {
@@ -43,7 +43,7 @@ export const OpenRoom = (props) => {
       <MenuScreenHeader></MenuScreenHeader>
       <Text style={styles.h1}>Open Room</Text>
       {
-        props.premiumUser ?
+        props.user.premium ?
 
           <View>
             <Text style={styles.body}>Open a new writing room and create a new story with other players</Text>
@@ -98,7 +98,7 @@ export const OpenRoom = (props) => {
 
           <View>
             <Text>Join Unwritten to open new rooms and start your own stories!</Text>
-            <Button title='Join Unwritten' onPress={() => { props.appNavigation.navigate('Join') }} />
+            <Button title='Join Unwritten' onPress={() => { props.navigation.navigate('Join') }} />
           </View>
       }
 

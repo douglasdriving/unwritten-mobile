@@ -79,7 +79,7 @@ export const JoinRoom = (props) => {
       {(availableRoomsList && availableRoomsList.new) &&
         <StoryList
           listItemInfo={availableRoomsList.new}
-          appNavigation={props.appNavigation}
+          {...props}
           confirmJoin={true}
         />
       }
@@ -90,7 +90,7 @@ export const JoinRoom = (props) => {
       {(availableRoomsList && availableRoomsList.ongoing) &&
         <StoryList
           listItemInfo={availableRoomsList.ongoing}
-          appNavigation={props.appNavigation}
+          {...props}
           confirmJoin={true}
         />
       }

@@ -26,25 +26,18 @@ export const ActionArea = (props) => {
               (
                 isWriting ?
                   <WritingField
-                    charsRemaining={props.charsRemaining}
-                    updateCharsRemaining={props.updateCharsRemaining}
-                    AddScenario={props.AddScenario}
+                    {...props}
                     isWriting={isWriting}
-                    user={props.user}
-                    turnNumber={props.turnNumber}
                     SetWritingField={SetWritingField}
                   />
                   :
                   <YourTurnField
-                    charsRemaining={props.charsRemaining}
-                    timeLeftInTurn={props.timeLeftInTurn}
+                  {...props}
                     SetWritingField={SetWritingField}
-                    turnsUntilCanEnd={props.turnsUntilCanEnd}
-                    
                   />
               )
               :
-              <WaitingField nextPlayerName={props.nextPlayerName} timeLeftInTurn={props.timeLeftInTurn} />
+              <WaitingField {...props} />
           )
       }
 

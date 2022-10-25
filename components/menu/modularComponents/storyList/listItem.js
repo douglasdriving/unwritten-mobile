@@ -17,7 +17,7 @@ export const ListItem = (props) => {
   }
 
   const EnterRoom = () => {
-    props.appNavigation.navigate('Game', { roomId: props.listItemInfo.roomId });
+    props.navigation.navigate('Game', { roomId: props.listItemInfo.roomId });
   }
 
   const GenerateAuthorText = () => {
@@ -49,7 +49,7 @@ export const ListItem = (props) => {
       EnterRoom();
     }
     else{
-      console.log('FAILED TO JOIN ROOM')
+      console.error('FAILED TO JOIN ROOM. backend returned false');
     }
   }
 
