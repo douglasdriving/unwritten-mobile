@@ -1,11 +1,10 @@
 import { View } from 'react-native';
-import { StoryNav } from './storyNav/storyNav.js';
-import { GameArea } from './gameArea.js';
-import { RoomMenu } from './roomMenu/roomMenu.js';
 import { useEffect, useState } from 'react';
-import { GetRoomData, UploadScenario } from '../../backendCalls/backendCalls.js';
-import { maxScenarioCount } from '../../backendCalls/dataGeneration.js';
-import { Popup } from '../popup.js';
+import { GetRoomData, UploadScenario } from '../../backend/backendCalls.js';
+import { StoryNav } from './storyNav/storyNav.js';
+import { GameArea } from './gameArea/gameArea.js';
+import { RoomMenu } from './roomMenu/roomMenu.js';
+import { Popup } from '../smart/popup.js';
 
 export const Game = (props) => {
 
@@ -29,8 +28,7 @@ export const Game = (props) => {
 
     const room = await GetRoomData(props.route.params.roomId);
 
-    const readOnlyValue = room.scenarios.length >= maxScenarioCount;
-    setReadOnly(readOnlyValue);
+    setReadOnly(room.finished);
 
     const playersValue = {
       creator: room.creator,
@@ -44,7 +42,7 @@ export const Game = (props) => {
       scenarios: room.scenarios
     });
 
-    if (readOnlyValue) {
+    if (room.finished) {
       return;
     }
 

@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { TimeToHms } from "../../../helperFunctions/helpers";
+import { TimeToHms } from "../../../helpers/helpers";
 
 export const PlayerRow = (props) => {
 

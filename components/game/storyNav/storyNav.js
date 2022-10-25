@@ -1,8 +1,8 @@
-import { View, Text } from 'react-native';
-import { StoryNavButton } from './storyNavButton.js';
+import { View } from 'react-native';
 import { styles } from '../../../style.js';
-import { Popup } from '../../popup.js';
 import { useState } from 'react';
+import { StoryNavButton } from './storyNavButton.js';
+import { Popup } from '../../smart/popup.js';
 
 export const StoryNav = (props) => {
 
@@ -22,7 +22,9 @@ export const StoryNav = (props) => {
     <View style={styles.storyNav}>
 
       <StoryNavButton type='close' onPress={() => setClosePopupOpen(true)}/>
+
       {!props.readOnly && <StoryNavButton type='menu' onPress={props.openMenu} />}
+      
       {closePopupOpen && <Popup
         title={'Leave Room?'}
         text={'Leave room and go back to lobby'}

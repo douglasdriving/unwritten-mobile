@@ -1,13 +1,11 @@
-import { Welcome } from './components/welcome';
-import { Menu } from './components/menu';
-import { Join } from './components/join';
-import { Game } from './components/game/game';
-import { View, Text, Modal, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Popup } from './components/popup';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { GetUser } from './backendCalls/backendCalls';
+import { GetUser } from './backend/backendCalls';
+import { Welcome } from './components/menu/newUser/welcome';
+import { Menu } from './components/menu/menu';
+import { Join } from './components/menu/newUser/join';
+import { Game } from './components/game/game';
 
 const Stack = createStackNavigator();
 

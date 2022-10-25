@@ -1,7 +1,7 @@
 import { View, Text} from "react-native"
 import { styles } from "../../../style";
+import { CloseButton } from "../../smart/closeButton";
 import { PlayerList } from "./playerList";
-import { CloseButton } from "../../closeButton";
 
 export const RoomMenu = (props) => {
 
