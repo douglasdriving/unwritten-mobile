@@ -40,7 +40,7 @@ export const OpenRoom = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <MenuScreenHeader></MenuScreenHeader>
+      <MenuScreenHeader {...props}/>
       <Text style={styles.h1}>Open Room</Text>
       {
         props.user.premium ?

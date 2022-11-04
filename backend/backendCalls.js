@@ -1,80 +1,46 @@
-import { GenerateRandomString, TwoDaysFromNowInMs } from "../helpers/helpers"
-import { GenerateRandomRoomArray, maxScenarioCount } from './dataGeneration.js';
-import { AsyncStorage } from 'react-native';
+const API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
 
-console.log('backend started ' + new Date());
-
-//VARS
-let rooms;
-
-//LOAD DATA FROM ASYNC FILE STORAGE
-const LoadRoomData = async () => {
-
-  const loadedRoomsData = await AsyncStorage.getItem('rooms');
-
-  if (false) {
-    console.log('loaded rooms data successfully!');
-    rooms = JSON.parse(loadedRoomsData);
-  }
-  else {
-    console.log('created new room data');
-    rooms = GenerateRandomRoomArray(10, 20, 6, 3)
-    await UpdateFileStorage()
-  };
-}
+//TEST CODE
+console.log('backend call script started at' + new Date());
 
 //USER
-export const GetLoggedUserName = () => {
-  return 'flopson'
-}
-
 export const GetUser = async () => {
-  return {
-    name: 'flopson',
-    premium: true,
-    new: false,
-    id: 'jdwdj89weadj89ewadj',
-    storyKeys: 4
-  };
+
+  const response = await fetch(`${API_ENDPOINT}/user`);
+  const user = await response.json();
+  return user;
+
+}
+export const GetLoggedUserName = async () => {
+  const user = await GetUser();
+  return user.name;
+}
+export const GetStoryKeys = async () => {
+  const user = await GetUser();
+  return user.room_keys;
 }
 
 //ROOMS
-const UserIsInRoom = (room, name) => {
-
-  let isInRoom = false;
-
-  if (room.creator.name == name) isInRoom = true;
-  room.authors.forEach(author => {
-    if (author.name == name) isInRoom = true;
-  })
-
-  return isInRoom
-
-}
-
 export const GetAvailableRooms = async () => {
 
-  const availableRooms = rooms.filter(room => (
-    !UserIsInRoom(room, GetLoggedUserName())
-    && (room.authors.length < 3)
-    && (!room.finished)
-  ));
+  const response = await fetch(`${API_ENDPOINT}/room/available`);
+  const availableRooms = await response.json();
 
   const newRooms = availableRooms.filter(room => (
-    room.scenarios.length < 4
+    room.scenario_count < 4
   ))
   const roomWithLeavers = availableRooms.filter(room => (
-    room.scenarios.length >= 4
+    room.scenario_count >= 4
   ))
 
   return { new: newRooms, ongoing: roomWithLeavers };
+
 }
 
 export const GetMyRooms = async () => {
 
-  const myRooms = rooms.filter(room => (
-    UserIsInRoom(room, GetLoggedUserName())
-  ));
+  const response = await fetch(`${API_ENDPOINT}/room/user`);
+  const myRooms = await response.json();
 
   const openRooms = myRooms.filter(room => (
     (!room.finished)
@@ -87,117 +53,50 @@ export const GetMyRooms = async () => {
 }
 
 export const GetFinishedStories = async () => {
-  const finishedStories = rooms.filter(room => (room.finished));
-  return finishedStories;
-}
 
-export const GetStoryKeys = async () => {
-  const user = await GetUser();
-  return user.storyKeys;
+  const response = await fetch(`${API_ENDPOINT}/room/archive`);
+  const finishedStories = await response.json();
+  return finishedStories;
+
 }
 
 export const CreateRoom = async (title, description, opening) => {
 
-  console.log('creating a new room');
+  const querystring = `title=${title}&description=${description}&scenario=${opening}`
+  const response = await fetch(`${API_ENDPOINT}/room/?${querystring}`, {
+    method: "POST"
+  });
+  console.log('created a room and got response: ', response);
+  const roomId = parseInt(response.split(' ').pop()); //this is shit! should update backend to return string instead. Or a js object with data.
+  return roomId;
 
-  const creator = await GetUser();
-
-  const room = {
-    title: title,
-    description: description,
-    creator: creator,
-    authors: [],
-    nextPlayer: null,
-    id: GenerateRandomString(),
-    scenarios: [{
-      author: creator,
-      text: opening,
-      id: GenerateRandomString()
-    }],
-    deadline: TwoDaysFromNowInMs()
-  };
-
-  rooms.push(room);
-  await UpdateFileStorage()
-  return room.id;
 }
 
 export const GetRoomData = async roomId => {
-  let roomToReturn = null;
-  rooms.forEach((room, i) => {
-    if (room.id == roomId) {
-      roomToReturn = room;
-    }
-  })
-  return roomToReturn;
-}
 
-export const LogAllRooms = async () => {
-
-  console.log('ALL ROOMS:')
-  rooms.forEach((room, i) => {
-    console.log(room.title, " ", room.id);
-  })
+  const response = await fetch(`${API_ENDPOINT}/room/data/${roomId}`);
+  const room = await response.json();
+  return room;
 
 }
 
 export const JoinRoom = async (roomId) => {
-  const user = await GetUser();
-  let success = false;
 
-  rooms.forEach(room => {
-    if (room.id != roomId) return;
-    if (room.authors.length >= 3) return;
-    if (UserIsInRoom(room, user.name)) return;
-    room.authors.push({
-      name: user.name,
-      id: user.id,
-      strikes: 0,
-      strikeNotification: false,
-      charsRemaining: 500
-    });
-    room.nextPlayer = room.authors.length;
-    room.deadline = TwoDaysFromNowInMs();
-    success = true;
+  const response = await fetch(`${API_ENDPOINT}/room/join?room_id=${roomId}`, {
+    method: "POST"
   });
+  return response.ok;
 
-  if (success) await UpdateFileStorage();
-  else{
-    console.error('could not find any rooms with that id, open spots, and without the logged user');
-  }
-
-  return success;
 }
 
 //SCENARIOS
 export const UploadScenario = async (text, roomId) => {
 
-  //MAKE A SHITLOAD OF CHECKS TO MAKE SURE THIS UPLOAD IS LEGIT
-
-  //SETUP THE ROOM
-  room = await GetRoomData(roomId);
-  const user = await GetUser();
-  room.scenarios.push({
-    text: text,
-    author: user,
-    id: GenerateRandomString()
-  })
-  room.nextPlayer++;
-  room.nextPlayer > room.authors.length && (room.nextPlayer = 0);
-  room.deadline = TwoDaysFromNowInMs(); //turn into helper function ?
-
-  //UPLOAD THE FULL ROOMS OBJECT TO THE DB
-  await UpdateFileStorage();
-
-  return true;
+  const response = await fetch(`${API_ENDPOINT}/scenario/?room_id=${roomId}&text=${text}`, {
+    method: "POST"
+  });
+  return response.ok;
 
 }
-
-async function UpdateFileStorage() {
-  await AsyncStorage.setItem('rooms', JSON.stringify(rooms));
-}
-
-//RUN ON START
-LoadRoomData();
 
 

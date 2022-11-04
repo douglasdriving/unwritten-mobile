@@ -18,7 +18,7 @@ export const Archive = (props) => {
         title: room.title,
         description: room.description,
         creator: room.creator,
-        authors: room.authors,
+        authors: room.writers,
         roomId: room.id,
         buttonText: 'Read ->'
       }
@@ -35,7 +35,7 @@ export const Archive = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <MenuScreenHeader />
+      <MenuScreenHeader  {...props}/>
       <Text style={styles.h1}>Archive</Text>
       <Text style={styles.body}>A collection of the {storiesList.length} stories finished so far in Unwritten</Text>
       <StoryList listItemInfo={storiesList} {...props} />

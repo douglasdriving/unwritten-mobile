@@ -1,8 +1,11 @@
 import { View, Text } from "react-native";
+import { useEffect } from "react";
 
 export const CharCounter = (props) => {
 
-  if (!props.charsRemaining) console.error('no charsRemaining var passed onto CharCounter props');
+  useEffect( () => {
+    if (!props.charsRemaining) console.error('no charsRemaining var passed onto CharCounter props');
+  }, []);
 
   return(
     <View style={{flexDirection: 'row'}}>

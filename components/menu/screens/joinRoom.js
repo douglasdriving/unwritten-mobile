@@ -53,7 +53,7 @@ export const JoinRoom = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <MenuScreenHeader />
+      <MenuScreenHeader {...props}/>
 
       {welcomPopup &&
         <Popup

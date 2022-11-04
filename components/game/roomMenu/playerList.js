@@ -3,20 +3,17 @@ import { PlayerRow } from "./playerRow";
 
 export const PlayerList = (props) => {
 
+  // console.log('players: ', props.players);
+  // console.log('next player id: ', props.nextPlayerId);
+
   return (
     <View>
 
-      {props.players && <PlayerRow
-        player={props.players.creator}
-        isNextPlayer={props.nextPlayer == 0}
-        {...props}
-      />}
-
-      {props.players.authors && props.players.authors.map((player, i) => (
+      {props.players.map((player, i) => (
         <PlayerRow
           {...props}
           player={player}
-          isNextPlayer={i == props.nextPlayer - 1}
+          isNextPlayer={player.id == props.nextPlayerId}
           key={player.id}
         />
       ))}

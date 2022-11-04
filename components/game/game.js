@@ -16,7 +16,7 @@ export const Game = (props) => {
     description: '',
     scenarios: []
   });
-  const [nextPlayer, setNextPlayer] = useState();
+  const [nextPlayerId, setNextPlayerId] = useState();
 
   //change during play
   const [chars, setChars] = useState({ initial: 0, remaining: 0 });
@@ -29,35 +29,33 @@ export const Game = (props) => {
     const room = await GetRoomData(props.route.params.roomId);
 
     setReadOnly(room.finished);
-
-    const playersValue = {
-      creator: room.creator,
-      authors: room.authors
-    };
-    setPlayers(playersValue);
-
+    setPlayers(room.players);
     setStory({
       title: room.title,
       description: room.description,
       scenarios: room.scenarios
     });
 
-    if (room.finished) {
-      return;
-    }
+    if (room.finished) return;
 
-    if (playersValue.creator.name == props.user.name) setChars({ initial: playersValue.creator.charsRemaining, remaining: playersValue.creator.charsRemaining });
-    else if (playersValue.authors) {
-      playersValue.authors.forEach(author => {
-        if (author.name == props.user.name) setChars({ initial: author.charsRemaining, remaining: author.charsRemaining });
-      });
-    }
+    //load chars
+    room.players.forEach(player => {
+      if (player.id == props.user.id) {
+        setChars({
+          initial: player.char_count,
+          remaining: player.char_count
+        })
+        // console.log('from room got char coutn: ', player.char_count);
+        // console.log('chars was set to: ', chars);
+        // console.log('player is: ', player);
+      };
+    });
 
-    setNextPlayer(room.nextPlayer);
+    setNextPlayerId(room.next_player_id);
 
-    setTimeLeftInTurn(room.deadline - new Date().getTime());
+    setTimeLeftInTurn(new Date(room.turn_end).getTime()  - new Date().getTime());
     const interval = setInterval(() => {
-      setTimeLeftInTurn(room.deadline - new Date().getTime());
+      setTimeLeftInTurn(new Date(room.turn_end).getTime()  - new Date().getTime());
     }, 1000);
 
     return () => clearInterval(interval);
@@ -91,16 +89,14 @@ export const Game = (props) => {
   const GetNextPlayerName = () => {
 
     if (!players) return null;
-    if (!players.creator) return null;
-    if (!players.authors) return null;
-    if (players.authors.length == 0) return null
+    if (players.length == 0) return null
 
     let name = null;
 
-    if (nextPlayer == 0) name = players.creator.name;
-    else if (players.authors.length >= nextPlayer) {
-      name = players.authors[nextPlayer - 1].name;
-    }
+    players.forEach(player => {
+      if(player.id == nextPlayerId) name = player.name;
+    });
+
     return name;
   }
 
@@ -118,6 +114,7 @@ export const Game = (props) => {
         timeLeftInTurn={timeLeftInTurn}
         user={props.user}
         turnNumber={story.scenarios.length + 1}
+        players={players}
       />
       <StoryNav
         readOnly={readOnly}
@@ -126,12 +123,13 @@ export const Game = (props) => {
       />
       {menuOpen && <RoomMenu
         players={players}
-        nextPlayer={nextPlayer}
+        nextPlayer={nextPlayerId}
         timeLeftInTurn={timeLeftInTurn}
         closeMenu={() => setMenuOpen(false)}
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}
         user={props.user}
+        nextPlayerId={nextPlayerId}
       />}
       {scenarioPostLoading && <Popup
         title={'Adding your text'}

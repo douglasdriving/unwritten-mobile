@@ -6,11 +6,11 @@ export const Paragraph = (props) => {
     <View>
 
       <Text style={ props.isUser && {color: 'blue'}}>
-        {props.scenarioNumber}. {props.scenario.author.name}
+        {props.scenarioNumber}. {props.authorName}
       </Text>
 
       <Text style={ props.isUser && {color: 'blue'}}>
-        {props.scenario.text}
+        {props.scenario.scenario}
       </Text>
 
     </View>

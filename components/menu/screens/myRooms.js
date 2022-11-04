@@ -18,9 +18,9 @@ export const MyRooms = (props) => {
       return {
         title: room.title,
         creator: room.creator,
-        authors: room.authors,
-        turn: room.scenarios.length,
-        alert: (GetNextPlayerName(room) == GetLoggedUserName()),
+        authors: room.writers,
+        turn: parseInt(room.scenario_count) + 1,
+        alert: (room.users_turn == "TRUE"), //shit. should get an actual bool here instead
         roomId: room.id,
         buttonText: 'Enter ->'
       }
@@ -29,7 +29,7 @@ export const MyRooms = (props) => {
       return {
         title: room.title,
         creator: room.creator,
-        authors: room.authors,
+        authors: room.writers,
         roomId: room.id,
         buttonText: 'Read ->'
       }
@@ -49,7 +49,7 @@ export const MyRooms = (props) => {
   
   return (
     <ScrollView style={styles.container}>
-      <MenuScreenHeader/>
+      <MenuScreenHeader {...props}/>
       <Text style={styles.h1}>My Rooms</Text>
 
       {!myRoomsList ?

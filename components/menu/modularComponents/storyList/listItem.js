@@ -23,12 +23,12 @@ export const ListItem = (props) => {
   const GenerateAuthorText = () => {
 
     const authors = props.listItemInfo.authors;
-    if (!authors || authors.length == 0) return null;
+    if (!authors || authors.length == 0) return 'Authors: Searching...';
 
     let authorText = null;
     authorText = 'Authors:'
     props.listItemInfo.authors.forEach(author => {
-      authorText += ' ' + author.name + ','
+      authorText += ' ' + author + ','
     });
 
     return authorText;
@@ -106,7 +106,7 @@ export const ListItem = (props) => {
             (
               <View>
                 {props.listItemInfo.description && <Text>{props.listItemInfo.description}</Text>}
-                {props.listItemInfo.creator && <Text>Creator: {props.listItemInfo.creator.name}</Text>}
+                {props.listItemInfo.creator && <Text>Creator: {props.listItemInfo.creator}</Text>}
                 {(GenerateAuthorText() != null) && <Text>{GenerateAuthorText()}</Text>}
                 {props.listItemInfo.authorCount && <Text>🧔 {props.listItemInfo.authorCount}/4 writers</Text>}
                 {props.listItemInfo.turn && <Text>🎲 Turn {props.listItemInfo.turn}/40</Text>}
