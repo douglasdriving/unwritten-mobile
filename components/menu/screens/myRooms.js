@@ -20,7 +20,7 @@ export const MyRooms = (props) => {
         creator: room.creator,
         authors: room.writers,
         turn: parseInt(room.scenario_count) + 1,
-        alert: (room.users_turn == "TRUE"), //shit. should get an actual bool here instead
+        alert: room.users_turn,
         roomId: room.id,
         buttonText: 'Enter ->'
       }

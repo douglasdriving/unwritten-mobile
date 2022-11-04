@@ -66,8 +66,7 @@ export const CreateRoom = async (title, description, opening) => {
   const response = await fetch(`${API_ENDPOINT}/room/?${querystring}`, {
     method: "POST"
   });
-  console.log('created a room and got response: ', response);
-  const roomId = parseInt(response.split(' ').pop()); //this is shit! should update backend to return string instead. Or a js object with data.
+  const roomId = await response.json().roomId;
   return roomId;
 
 }

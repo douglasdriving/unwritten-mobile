@@ -1,7 +1,7 @@
 import { Text, View, Button, ScrollView, TextInput } from 'react-native';
 import { styles } from '../../../../style';
 import { useState, useEffect } from 'react';
-import { GetStoryKeys } from '../../../../backend/backendCalls';
+import { GetStoryKeys, CreateRoom } from '../../../../backend/backendCalls';
 import { Spacer } from '../../../smart/visuals';
 import { Popup } from '../../../smart/popup';
 import { MenuScreenHeader } from '../../modularComponents/menuScreenHeader';
@@ -22,7 +22,6 @@ export const OpenRoom = (props) => {
   const StartOpening = async () => {
     setOpening(true);
     const newRoomId = await CreateRoom(storyTitle, storyDescription, storyOpening);
-    console.log('creation successful! now trying to open with id: ', newRoomId);
     props.navigation.navigate('Game', { roomId: newRoomId });
   }
 
