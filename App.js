@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { GetUser } from './backend/backendCalls';
+import { GetUser, setAuthToken as setAuthTokenForFetch } from './backend/backendCalls';
 import { Welcome } from './components/menu/newUser/welcome';
 import { Menu } from './components/menu/menu';
 import { Join } from './components/menu/newUser/join';
@@ -10,22 +10,20 @@ import { AuthTokenContext } from './contexts/authContext';
 
 const Stack = createStackNavigator();
 
-// const loadUser = async () => {
-//   const loadedUser = await GetUser();
-//   setUser(loadedUser);
-// };
-
 export default function App() {
 
   const [user, setUser] = useState();
   const [authToken, setAuthToken] = useState();
 
-  // useEffect(() => {
-  //   loadUser();
-  // }, [])
+  const checkIfLoggedIn = async () => {
+    if (!authToken) return;
+    const user = await GetUser(authToken);
+    if (user.id) setUser(user);
+  }
 
   useEffect(() => {
-    console.log('your auth token is: ', authToken);
+    setAuthTokenForFetch(authToken);
+    checkIfLoggedIn();
   }, [authToken]);
 
   const AppNavigator = () => {
@@ -33,9 +31,7 @@ export default function App() {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-        <Stack.Screen name="Welcome">
-          {(props) => <Welcome {...props} setUser={(user) => setUser(user)} />}
-        </Stack.Screen>
+        {(!authToken || !user) && <Stack.Screen name="Welcome" component={Welcome} />}
 
         <Stack.Screen name="Menu">
           {(props) => <Menu {...props} user={user} />}

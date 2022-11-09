@@ -6,36 +6,33 @@ import { Popup } from '../../smart/popup.js';
 import { useContext } from 'react';
 import { AuthTokenContext } from '../../../contexts/authContext.js';
 
-export const Welcome = (props) => {
+export const Welcome = () => {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState();
   const [authToken, setAuthToken] = useContext(AuthTokenContext);
+  const [wrongCreds, setWrongCreds] = useState(false);
 
   const handleEmailChange = text => {
     setEmail(text);
+    setWrongCreds(false);
   }
 
   const handlePasswordChange = text => {
     setPassword(text);
+    setWrongCreds(false);
   }
 
   const signIn = async () => {
     setLoading('Signing In...');
     const signInResponse = await signInBackend(email, password);
     if (signInResponse.ok) {
-      if(!signInResponse.token) throw new Error('got no token from signin!');
+      if (!signInResponse.token) throw new Error('got no token from signin!');
       setAuthToken(signInResponse.token);
-      //make sure that page re-renders to a logged-in state
-      //-> in app.js, set the login stack screen to only render if there is no valid auth token
-      //must check that the token is valid for that.
-      //can use get logged user - if it returns something then we are logged
     }
     else {
-      console.log('failed to log in: ' + signInResponse.message);
-      //provide some feedback to the user
-      //wrong email or pass. Red fields. standard procedure
+      setWrongCreds(true);
     }
     setLoading(false)
   }
@@ -51,11 +48,11 @@ export const Welcome = (props) => {
       <Text>Password</Text>
       <TextInput onChangeText={handlePasswordChange} style={welcomeScreenStyles.inputField} secureTextEntry={true} />
       <Button title='Sign in' onPress={signIn} />
+      {wrongCreds &&
+        <Text style={{ color: 'red' }}>Wrong email or password</Text>
+      }
       {loading &&
-        <Popup
-          title={loading}
-          loading={true}
-        />
+        <Popup title={loading} loading={true} />
       }
     </View>
   );

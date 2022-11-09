@@ -3,10 +3,31 @@ const API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
 //TEST CODE
 console.log('backend call script started at' + new Date());
 
+//Headers
+let authToken;
+export const setAuthToken = (newToken) => {
+  authToken = newToken;
+}
+
+const AuthHeader = () => {
+  return new Headers({
+    'Authorization': authToken
+  })
+}
+const GetFetch = () => {
+  return {headers: AuthHeader(authToken)};
+}
+const PostFetch = () => {
+  return {
+    method: "POST",
+    headers: AuthHeader(authToken)
+  };
+}
+
 //USER
 export const GetUser = async () => {
 
-  const response = await fetch(`${API_ENDPOINT}/user`);
+  const response = await fetch(`${API_ENDPOINT}/user`, GetFetch());
   const user = await response.json();
   return user;
 
@@ -30,8 +51,8 @@ export const signIn = async (email, password) => {
     const jsonResponse = await response.json();
     return { ok: true, message: jsonResponse.message, token: jsonResponse.token };
   }
-  else{
-    return{ok: false, message: 'wrong email or password', token: null}
+  else {
+    return { ok: false, message: 'wrong email or password', token: null }
   }
 
 }
@@ -39,7 +60,7 @@ export const signIn = async (email, password) => {
 //ROOMS
 export const GetAvailableRooms = async () => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/available`);
+  const response = await fetch(`${API_ENDPOINT}/room/available`, GetFetch());
   const availableRooms = await response.json();
 
   const newRooms = availableRooms.filter(room => (
@@ -55,7 +76,7 @@ export const GetAvailableRooms = async () => {
 
 export const GetMyRooms = async () => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/user`);
+  const response = await fetch(`${API_ENDPOINT}/room/user`, GetFetch());
   const myRooms = await response.json();
 
   const openRooms = myRooms.filter(room => (
@@ -70,7 +91,7 @@ export const GetMyRooms = async () => {
 
 export const GetFinishedStories = async () => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/archive`);
+  const response = await fetch(`${API_ENDPOINT}/room/archive`, GetFetch());
   const finishedStories = await response.json();
   return finishedStories;
 
@@ -79,17 +100,15 @@ export const GetFinishedStories = async () => {
 export const CreateRoom = async (title, description, opening) => {
 
   const querystring = `title=${title}&description=${description}&scenario=${opening}`
-  const response = await fetch(`${API_ENDPOINT}/room/?${querystring}`, {
-    method: "POST"
-  });
+  const response = await fetch(`${API_ENDPOINT}/room/?${querystring}`, PostFetch());
   const roomId = await response.json().roomId;
   return roomId;
 
 }
 
-export const GetRoomData = async roomId => {
+export const GetRoomData = async (roomId) => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/data/${roomId}`);
+  const response = await fetch(`${API_ENDPOINT}/room/data/${roomId}`, GetFetch());
   const room = await response.json();
   return room;
 
@@ -97,9 +116,7 @@ export const GetRoomData = async roomId => {
 
 export const JoinRoom = async (roomId) => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/join?room_id=${roomId}`, {
-    method: "POST"
-  });
+  const response = await fetch(`${API_ENDPOINT}/room/join?room_id=${roomId}`, PostFetch());
   return response.ok;
 
 }
@@ -107,9 +124,7 @@ export const JoinRoom = async (roomId) => {
 //SCENARIOS
 export const UploadScenario = async (text, roomId) => {
 
-  const response = await fetch(`${API_ENDPOINT}/scenario/?room_id=${roomId}&text=${text}`, {
-    method: "POST"
-  });
+  const response = await fetch(`${API_ENDPOINT}/scenario/?room_id=${roomId}&text=${text}`, PostFetch());
   return response.ok;
 
 }
