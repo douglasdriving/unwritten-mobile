@@ -19,6 +19,22 @@ export const GetStoryKeys = async () => {
   const user = await GetUser();
   return user.room_keys;
 }
+export const signIn = async (email, password) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/user/login?email=${email}&password=${password}`,
+    { method: "POST" }
+  );
+
+  if (response.ok) {
+    const jsonResponse = await response.json();
+    return { ok: true, message: jsonResponse.message, token: jsonResponse.token };
+  }
+  else{
+    return{ok: false, message: 'wrong email or password', token: null}
+  }
+
+}
 
 //ROOMS
 export const GetAvailableRooms = async () => {

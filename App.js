@@ -6,21 +6,27 @@ import { Welcome } from './components/menu/newUser/welcome';
 import { Menu } from './components/menu/menu';
 import { Join } from './components/menu/newUser/join';
 import { Game } from './components/game/game';
+import { AuthTokenContext } from './contexts/authContext';
 
 const Stack = createStackNavigator();
+
+// const loadUser = async () => {
+//   const loadedUser = await GetUser();
+//   setUser(loadedUser);
+// };
 
 export default function App() {
 
   const [user, setUser] = useState();
+  const [authToken, setAuthToken] = useState();
 
-  const loadUser = async () => {
-    const loadedUser = await GetUser();
-    setUser(loadedUser);
-  };
+  // useEffect(() => {
+  //   loadUser();
+  // }, [])
 
   useEffect(() => {
-    loadUser();
-  }, [])
+    console.log('your auth token is: ', authToken);
+  }, [authToken]);
 
   const AppNavigator = () => {
 
@@ -36,9 +42,9 @@ export default function App() {
         </Stack.Screen>
 
         <Stack.Screen name="Join" component={Join} />
-        <Stack.Screen
-          name="Game"        >
-          {(props) => <Game {...props} user={user}/>}
+
+        <Stack.Screen name="Game">
+          {(props) => <Game {...props} user={user} />}
         </Stack.Screen>
 
       </Stack.Navigator>
@@ -47,7 +53,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <AppNavigator />
+      <AuthTokenContext.Provider value={[authToken, setAuthToken]}>
+        <AppNavigator />
+      </AuthTokenContext.Provider>
     </NavigationContainer>
   );
 }

@@ -1,39 +1,67 @@
-import { Text, View, Button, StyleSheet } from 'react-native';
+import { Text, View, Button, StyleSheet, TextInput } from 'react-native';
 import { styles } from '../../../style.js';
-import { GetUser } from '../../../backend/backendCalls.js';
+import { signIn as signInBackend } from '../../../backend/backendCalls.js';
+import { useState } from 'react';
+import { Popup } from '../../smart/popup.js';
+import { useContext } from 'react';
+import { AuthTokenContext } from '../../../contexts/authContext.js';
 
 export const Welcome = (props) => {
 
-  const SignInPremium = async () => {
-    const user = await GetUser();
-    props.setUser(user);
-    props.navigation.navigate('Menu');
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [loading, setLoading] = useState();
+  const [authToken, setAuthToken] = useContext(AuthTokenContext);
+
+  const handleEmailChange = text => {
+    setEmail(text);
   }
 
-  const SignUpNew = async () => {
-    // const user = await CreateNewUser();
-    // props.setUser(user);
-    // props.navigation.navigate('Menu');
+  const handlePasswordChange = text => {
+    setPassword(text);
+  }
+
+  const signIn = async () => {
+    setLoading('Signing In...');
+    const signInResponse = await signInBackend(email, password);
+    if (signInResponse.ok) {
+      if(!signInResponse.token) throw new Error('got no token from signin!');
+      setAuthToken(signInResponse.token);
+      //make sure that page re-renders to a logged-in state
+      //-> in app.js, set the login stack screen to only render if there is no valid auth token
+      //must check that the token is valid for that.
+      //can use get logged user - if it returns something then we are logged
+    }
+    else {
+      console.log('failed to log in: ' + signInResponse.message);
+      //provide some feedback to the user
+      //wrong email or pass. Red fields. standard procedure
+    }
+    setLoading(false)
   }
 
   return (
-    <View style={specialStyles.screen}>
+    <View style={welcomeScreenStyles.screen}>
       <Text style={styles.h1}>Unwritten</Text>
       <Text style={styles.body}>Welcome to the world of Unwritten!</Text>
       <Text style={styles.body}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
-      <Button
-        title='Sign in as premium user'
-        onPress={SignInPremium}
-      />
-      <Button
-        title='Sign up as new user'
-        onPress={SignUpNew}
-      />
+      <Text style={styles.h2}>Sign In</Text>
+      <Text>Email</Text>
+      <TextInput onChangeText={handleEmailChange} style={welcomeScreenStyles.inputField} />
+      <Text>Password</Text>
+      <TextInput onChangeText={handlePasswordChange} style={welcomeScreenStyles.inputField} secureTextEntry={true} />
+      <Button title='Sign in' onPress={signIn} />
+      {loading &&
+        <Popup
+          title={loading}
+          loading={true}
+        />
+      }
     </View>
   );
 }
 
-const specialStyles = StyleSheet.create({
+const welcomeScreenStyles = StyleSheet.create({
 
   screen: {
     flex: 1,
@@ -43,5 +71,12 @@ const specialStyles = StyleSheet.create({
     padding: 30,
     textAlign: 'center',
   },
+
+  inputField: {
+    backgroundColor: 'white',
+    width: '100%',
+    padding: 0,
+
+  }
 
 });

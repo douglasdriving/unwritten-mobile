@@ -2,7 +2,7 @@ import { View, TextInput } from "react-native";
 
 export const ScenarioTextField = (props) => {
 
-  if (!props.handleChangeText) console.error('no handleChangeText prop passed down onto ScenarioTextField');
+  if (!props.handleChangeText) throw new Error('no handleChangeText prop passed down onto ScenarioTextField');
 
   return (
     <View>
