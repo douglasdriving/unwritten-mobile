@@ -15,7 +15,7 @@ const AuthHeader = () => {
   })
 }
 const GetFetch = () => {
-  return {headers: AuthHeader(authToken)};
+  return { headers: AuthHeader(authToken) };
 }
 const PostFetch = () => {
   return {
@@ -53,6 +53,23 @@ export const signIn = async (email, password) => {
   }
   else {
     return { ok: false, message: 'wrong email or password', token: null }
+  }
+
+}
+export const signUp = async (email, password, name) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/user/create?email=${email}&password=${password}&name=${name}`,
+    PostFetch()
+  );
+
+  if (response.ok) {
+    const jsonResponse = await response.json();
+    console.log(jsonResponse.message);
+    return { ok: true, message: jsonResponse.message, token: jsonResponse.token };
+  }
+  else {
+    return { ok: false, message: 'email or displayname already taken', token: null }
   }
 
 }

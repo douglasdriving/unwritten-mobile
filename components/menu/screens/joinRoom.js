@@ -30,8 +30,8 @@ export const JoinRoom = (props) => {
         title: room.title,
         description: room.description,
         creator: room.creator,
-        authorCount: room.authors.length + 1,
-        turn: room.scenarios.length,
+        authorCount: room.writers.length + 1,
+        turn: room.scenario_count,
         roomId: room.id,
         buttonText: 'Join ->'
       }
