@@ -55,7 +55,7 @@ export const WritingField = (props) => {
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Button
           title={props.isWriting == 'ending' ? 'Add Ending' : 'Add'}
-          disabled={!(props.charsRemaining >= 0)}
+          disabled={!(props.charsRemaining >= 0) || scenarioText.length < 1}
           onPress={handleAddButtonPress}
           color={props.isWriting == 'ending' ? 'darkred' : 'blue'}
         />
