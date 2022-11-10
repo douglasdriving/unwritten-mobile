@@ -64,13 +64,10 @@ export const signUp = async (email, password, name) => {
     PostFetch()
   );
 
-  if (response.ok) {
-    const jsonResponse = await response.json();
-    return { ok: true, message: jsonResponse.message, token: jsonResponse.token };
-  }
-  else {
-    return { ok: false, message: 'email or displayname already taken', token: null }
-  }
+  const jsonResponse = await response.json();
+  jsonResponse.ok = response.ok;
+
+  return jsonResponse;
 
 }
 

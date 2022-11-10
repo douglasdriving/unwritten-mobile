@@ -35,27 +35,18 @@ export const Welcome = () => {
 
   const sendForm = async () => {
 
-    if (!signUp) {
-      setLoading('Signing In...');
-      const signInResponse = await signInBackend(email, password);
-      if (signInResponse.ok) {
-        if (!signInResponse.token) throw new Error('got no token from signin!');
-        setAuthToken(signInResponse.token);
-      }
-      else {
-        setErrorMessage(signInResponse.message);
-      }
+    setLoading(signUp ? 'Creating new user...' : 'Signing in...');
+
+    let response;
+    if (signUp) response = await signUpBackend(email, password, displayName);
+    else response = await signInBackend(email, password);
+
+    if (response.ok) {
+      if (!response.token) throw new Error('got no token from signin!');
+      setAuthToken(response.token);
     }
     else {
-      setLoading('Creating new user...');
-      const signUpResponse = await signUpBackend(email, password, displayName);
-      if(signUpResponse.ok){
-        if(!signUpResponse.token) throw new Error('received no token from the signUp backend call');
-        setAuthToken(signUpResponse.token);
-      }
-      else{
-        setErrorMessage(signUpResponse.message);
-      }
+      setErrorMessage(response.message);
     }
 
     setLoading(false)
@@ -82,7 +73,11 @@ export const Welcome = () => {
         </>
       }
 
-      <Button title={'Sign' + (signUp ? 'Up' : 'In')} onPress={sendForm} />
+      <Button
+        title={'Sign ' + (signUp ? 'Up' : 'In')}
+        onPress={sendForm}
+        disabled={!email || !password || (signUp && !displayName)}
+      />
 
       {(errorMessage != null) &&
         <Text style={{ color: 'red' }}>{errorMessage}</Text>
@@ -93,7 +88,7 @@ export const Welcome = () => {
       }
 
       <TouchableWithoutFeedback>
-        <Text onPress={() => {setSignUp(!signUp); setErrorMessage(null)}} style={{textDecorationLine: 'underline'}}>
+        <Text onPress={() => { setSignUp(!signUp); setErrorMessage(null) }} style={{ textDecorationLine: 'underline' }}>
           {signUp ?
             'Already have an account? Press here to sign in instead'
             :
