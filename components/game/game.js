@@ -45,9 +45,6 @@ export const Game = (props) => {
           initial: player.char_count,
           remaining: player.char_count
         })
-        // console.log('from room got char coutn: ', player.char_count);
-        // console.log('chars was set to: ', chars);
-        // console.log('player is: ', player);
       };
     });
 

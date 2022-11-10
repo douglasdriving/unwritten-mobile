@@ -2,6 +2,7 @@ import { View, Text, Button } from "react-native";
 import { useState } from "react";
 import { CharCounter } from "./charCounter";
 import { ScenarioTextField } from "./scenarioTextField";
+import { UploadScenario } from "../../../../../backend/backendCalls";
 
 export const WritingField = (props) => {
 

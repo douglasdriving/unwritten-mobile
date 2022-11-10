@@ -1,4 +1,5 @@
 const API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
+//const API_ENDPOINT = "http://localhost:5000";
 
 //TEST CODE
 console.log('backend call script started at' + new Date());
@@ -65,7 +66,6 @@ export const signUp = async (email, password, name) => {
 
   if (response.ok) {
     const jsonResponse = await response.json();
-    console.log(jsonResponse.message);
     return { ok: true, message: jsonResponse.message, token: jsonResponse.token };
   }
   else {
@@ -118,8 +118,8 @@ export const CreateRoom = async (title, description, opening) => {
 
   const querystring = `title=${title}&description=${description}&scenario=${opening}`
   const response = await fetch(`${API_ENDPOINT}/room/?${querystring}`, PostFetch());
-  const roomId = await response.json().roomId;
-  return roomId;
+  const jsonResponse = await response.json();
+  return jsonResponse.roomId;
 
 }
 
