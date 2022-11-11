@@ -1,8 +1,23 @@
-import { Text } from "react-native";
-import { GetLoggedUserName } from "../../../backend/backendCalls";
+import { useContext } from "react";
+import { Text, View, TouchableWithoutFeedback } from "react-native";
+import { AuthTokenContext } from "../../../contexts/authContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const MenuScreenHeader = (props) => {
+
+  const [authToken, setAuthToken] = useContext(AuthTokenContext);
+
+  const signOut = () =>{
+    setAuthToken('');
+    AsyncStorage.setItem('authToken', '');
+  }
+
   return (
-    <Text>Logged in as {props.user.name}</Text>
+    <View style={{flexDirection: 'row'}}>
+      <Text>Signed in as {props.user.name}. </Text>
+      <TouchableWithoutFeedback onPress={signOut}>
+        <Text style={{ textDecorationLine: 'underline' }}>Sign Out</Text>
+      </TouchableWithoutFeedback>
+    </View>
   )
 };

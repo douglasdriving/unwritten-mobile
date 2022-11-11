@@ -20,17 +20,18 @@ export default function App() {
     if (!authToken) return;
     const user = await GetUser(authToken);
     if (user.id) setUser(user);
+    //if we are NOT logged in, should navigate back to login screen
   }
 
   const fetchAuthTokenFromStorage = async () => {
     const tokenInStorage = await AsyncStorage.getItem('authToken')
-    if(tokenInStorage !== null) {
+    if (tokenInStorage !== null && tokenInStorage != '') {
       setAuthToken(tokenInStorage);
     }
   }
 
   //get auth token from phone storage when starting the app
-  useEffect(() => {fetchAuthTokenFromStorage();}, [])
+  useEffect(() => { fetchAuthTokenFromStorage(); }, [])
 
   //run when the auth token var is updated
   useEffect(() => {
@@ -38,33 +39,31 @@ export default function App() {
     checkIfLoggedIn();
   }, [authToken]);
 
-  
-
-  const AppNavigator = () => {
-
-    return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-
-        {(!authToken || !user) && <Stack.Screen name="Welcome" component={Welcome} />}
-
-        <Stack.Screen name="Menu">
-          {(props) => <Menu {...props} user={user} />}
-        </Stack.Screen>
-
-        <Stack.Screen name="Join" component={Join} />
-
-        <Stack.Screen name="Game">
-          {(props) => <Game {...props} user={user} />}
-        </Stack.Screen>
-
-      </Stack.Navigator>
-    );
-  };
-
   return (
     <NavigationContainer>
       <AuthTokenContext.Provider value={[authToken, setAuthToken]}>
-        <AppNavigator />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+          {
+            (!authToken || authToken == '' || !user) ?
+              <Stack.Screen name="Welcome" component={Welcome} />
+              :
+              <>
+                <Stack.Screen name="Menu">
+                  {(props) => <Menu {...props} user={user} />}
+                </Stack.Screen>
+
+                <Stack.Screen name="Join" component={Join} />
+
+                <Stack.Screen name="Game">
+                  {(props) => <Game {...props} user={user} />}
+                </Stack.Screen>
+              </>
+          }
+
+
+
+        </Stack.Navigator>
       </AuthTokenContext.Provider>
     </NavigationContainer>
   );
