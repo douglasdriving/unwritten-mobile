@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import { GetUser, setAuthToken as setAuthTokenForFetch } from './backend/backendCalls';
+import { GetUser, setAuthToken as setAuthTokenForBackendCalls } from './backend/backendCalls';
 import { Welcome } from './components/menu/newUser/welcome';
 import { Menu } from './components/menu/menu';
 import { Join } from './components/menu/newUser/join';
 import { Game } from './components/game/game';
 import { AuthTokenContext } from './contexts/authContext';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
@@ -21,10 +22,23 @@ export default function App() {
     if (user.id) setUser(user);
   }
 
+  const fetchAuthTokenFromStorage = async () => {
+    const tokenInStorage = await AsyncStorage.getItem('authToken')
+    if(tokenInStorage !== null) {
+      setAuthToken(tokenInStorage);
+    }
+  }
+
+  //get auth token from phone storage when starting the app
+  useEffect(() => {fetchAuthTokenFromStorage();}, [])
+
+  //run when the auth token var is updated
   useEffect(() => {
-    setAuthTokenForFetch(authToken);
+    setAuthTokenForBackendCalls(authToken);
     checkIfLoggedIn();
   }, [authToken]);
+
+  
 
   const AppNavigator = () => {
 

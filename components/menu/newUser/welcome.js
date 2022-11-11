@@ -6,6 +6,7 @@ import { Popup } from '../../smart/popup.js';
 import { useContext } from 'react';
 import { AuthTokenContext } from '../../../contexts/authContext.js';
 import { TouchableWithoutFeedback } from 'react-native-web';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Welcome = () => {
 
@@ -44,6 +45,7 @@ export const Welcome = () => {
     if (response.ok) {
       if (!response.token) throw new Error('got no token from signin!');
       setAuthToken(response.token);
+      AsyncStorage.setItem('authToken', response.token);
     }
     else {
       setErrorMessage(response.message);
