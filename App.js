@@ -8,6 +8,7 @@ import { Join } from './components/menu/newUser/join';
 import { Game } from './components/game/game';
 import { AuthTokenContext } from './contexts/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { registerForPushNotificationsAsync } from './backend/notifications';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,9 @@ export default function App() {
     setAuthTokenForBackendCalls(authToken);
     checkIfLoggedIn();
   }, [authToken]);
+
+  //sub to notifications (test)
+  useEffect(() => {registerForPushNotificationsAsync()}, []);
 
   return (
     <NavigationContainer>
