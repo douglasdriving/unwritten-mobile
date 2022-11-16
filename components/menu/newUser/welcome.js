@@ -3,13 +3,13 @@ import { styles } from '../../../style.js';
 import { signIn as signInBackend, signUp as signUpBackend } from '../../../backend/backendCalls.js';
 import { useState } from 'react';
 import { Popup } from '../../smart/popup.js';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthTokenContext } from '../../../contexts/authContext.js';
 import { TouchableWithoutFeedback } from 'react-native-web';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { registerForPushNotificationsAsync } from '../../../backend/notifications.js';
 
-export const Welcome = () => {
+export const Welcome = (props) => {
 
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -51,13 +51,37 @@ export const Welcome = () => {
       if (!response.token) throw new Error('got no token from signin!');
       setAuthToken(response.token);
       AsyncStorage.setItem('authToken', response.token);
+      props.navigation.navigate('Menu');
     }
     else {
       setErrorMessage(response.message);
     }
 
-    setLoading(false)
+    setLoading(false);
+
   }
+
+  const setStartScreen = () => {
+    //checking the "user" and "startRoomId" props
+    if (!props.user) {
+      return
+    };
+    if (!props.navigation) {
+      console.error('no nav prop passed into the welcome component');
+      return;
+    }
+
+    //nav into the game if we are given a room id on start
+    if (props.startRoomId) {
+      props.navigation.navigate('Game', { roomId: props.startRoomId });
+      return;
+    }
+
+    //nav to menu if we are logged in
+    props.navigation.navigate('Menu');
+  }
+
+  useEffect(setStartScreen, [props.user, props.startRoomId]);
 
   return (
     <View style={welcomeScreenStyles.screen}>
@@ -104,6 +128,31 @@ export const Welcome = () => {
         </Text>
       </TouchableWithoutFeedback>
 
+      <Button
+        title='SING IN AS DEV PLEASE REMOVE ME LATER'
+        onPress={
+          async () => {
+
+            console.log('logging in Douglas');
+
+            setLoading('Signing in...');
+            const response = await signInBackend('douglasdriving@gmail.com', 'Killingkebab1');
+
+            if (response.ok) {
+              if (!response.token) throw new Error('got no token from signin!');
+              setAuthToken(response.token);
+              AsyncStorage.setItem('authToken', response.token);
+              props.navigation.navigate('Menu');
+            }
+            else {
+              setErrorMessage(response.message);
+            }
+
+            setLoading(false);
+
+          }
+        }
+      />
 
     </View>
   );

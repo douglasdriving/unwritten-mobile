@@ -8,7 +8,7 @@ import { Join } from './components/menu/newUser/join';
 import { Game } from './components/game/game';
 import { AuthTokenContext } from './contexts/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { registerForPushNotificationsAsync } from './backend/notifications';
+import * as Notifications from 'expo-notifications';
 
 const Stack = createStackNavigator();
 
@@ -16,56 +16,64 @@ export default function App() {
 
   const [user, setUser] = useState();
   const [authToken, setAuthToken] = useState();
+  const [startRoomId, setStartRoomId] = useState(); //make sure to set this if user is pressing a notification! in notification handler :)
 
-  const checkIfLoggedIn = async () => {
+  const tryLoginWithAuthToken = async () => {
     if (!authToken) return;
-    const user = await GetUser(authToken);
-    if (user.id) setUser(user);
-    //if we are NOT logged in, should navigate back to login screen
+    const receivedUser = await GetUser(authToken);
+    if (receivedUser.id) setUser(receivedUser);
   }
 
-  const fetchAuthTokenFromStorage = async () => {
+  const loadAuthTokenLocal = async () => {
     const tokenInStorage = await AsyncStorage.getItem('authToken')
     if (tokenInStorage !== null && tokenInStorage != '') {
       setAuthToken(tokenInStorage);
     }
   }
 
-  //get auth token from phone storage when starting the app
-  useEffect(() => { fetchAuthTokenFromStorage(); }, [])
+  const addNotificationHandler = () => {
+    Notifications.addNotificationResponseReceivedListener(res => {
+      const data = res.notification.request.content.data;
 
-  //run when the auth token var is updated
+      if (data.roomId) {
+        setStartRoomId(data.roomId);
+      }
+      else {
+        console.error('no roomId found in the notification data');
+      }
+    });
+  }
+
+  //app start
+  useEffect(() => {
+    loadAuthTokenLocal();
+    addNotificationHandler();
+  }, []);
+
+  //auth token updated
   useEffect(() => {
     setAuthTokenForBackendCalls(authToken);
-    checkIfLoggedIn();
+    tryLoginWithAuthToken();
   }, [authToken]);
-
-  //sub to notifications (test)
-  useEffect(() => {registerForPushNotificationsAsync()}, []);
 
   return (
     <NavigationContainer>
       <AuthTokenContext.Provider value={[authToken, setAuthToken]}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-          {
-            (!authToken || authToken == '' || !user) ?
-              <Stack.Screen name="Welcome" component={Welcome} />
-              :
-              <>
-                <Stack.Screen name="Menu">
-                  {(props) => <Menu {...props} user={user} />}
-                </Stack.Screen>
+          <Stack.Screen name="Welcome">
+            {(props) => <Welcome {...props} startRoomId={startRoomId} user={user} />}
+          </Stack.Screen>
 
-                <Stack.Screen name="Join" component={Join} />
+          <Stack.Screen name="Menu">
+            {(props) => <Menu {...props} user={user} />}
+          </Stack.Screen>
 
-                <Stack.Screen name="Game">
-                  {(props) => <Game {...props} user={user} />}
-                </Stack.Screen>
-              </>
-          }
+          <Stack.Screen name="Join" component={Join} />
 
-
+          <Stack.Screen name="Game">
+            {(props) => <Game {...props} user={user} />}
+          </Stack.Screen>
 
         </Stack.Navigator>
       </AuthTokenContext.Provider>

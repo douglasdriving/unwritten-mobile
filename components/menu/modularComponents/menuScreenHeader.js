@@ -10,6 +10,7 @@ export const MenuScreenHeader = (props) => {
   const signOut = () =>{
     setAuthToken('');
     AsyncStorage.setItem('authToken', '');
+    props.navigation.navigate('Welcome');
   }
 
   return (

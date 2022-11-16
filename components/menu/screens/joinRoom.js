@@ -1,7 +1,7 @@
 import { Text, ScrollView } from 'react-native';
 import { styles } from '../../../style';
 import { GetAvailableRooms } from '../../../backend/backendCalls';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StoryList } from '../modularComponents/storyList/storylist';
 import { Popup } from '../../smart/popup';
@@ -10,7 +10,7 @@ import { MenuScreenHeader } from '../modularComponents/menuScreenHeader';
 export const JoinRoom = (props) => {
 
   const [availableRoomsList, setAvailableRoomsList] = useState();
-  const [welcomPopup, setWelcomePopup] = useState(props.user.new);
+  const [welcomPopup, setWelcomePopup] = useState();
 
   const Load = async () => {
     const rooms = await GetAvailableRooms();
@@ -44,6 +44,13 @@ export const JoinRoom = (props) => {
 
     setAvailableRoomsList(newList);
   }
+
+  useEffect(() => {
+    if (!props.user) console.error('no user object passed into JoinRoom props');
+    else{
+      setWelcomePopup(props.user.new)
+    }
+  })
 
   useFocusEffect(
     useCallback(() => {
