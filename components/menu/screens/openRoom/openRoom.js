@@ -6,6 +6,7 @@ import { Spacer } from '../../../smart/visuals';
 import { Popup } from '../../../smart/popup';
 import { MenuScreenHeader } from '../../modularComponents/menuScreenHeader';
 import { useFocusEffect } from '@react-navigation/native';
+import { ErrorText } from '../../modularComponents/errorText';
 
 export const OpenRoom = (props) => {
 
@@ -13,20 +14,30 @@ export const OpenRoom = (props) => {
 
   const [titleInput, setTitleInput] = useState();
   const [descriptionInput, setDescriptionInput] = useState();
-  const [openingInput, setOpeningInput] = useState();
+  const [startingScenario, setStartingScenario] = useState();
 
   const [tryingToOpen, setTryingToOpen] = useState(false);
   const [opening, setOpening] = useState(false);
+
+  const [roomCreateError, setRoomCreateError] = useState();
 
   const ToggleTryingToOpen = () => {
     setTryingToOpen(!tryingToOpen);
   }
 
   const StartOpening = async () => {
+
     setOpening(true);
-    const newRoomId = await CreateRoom(titleInput, descriptionInput, openingInput);
-    ClearFields();
-    props.navigation.navigate('Game', { roomId: newRoomId });
+    const response = await CreateRoom(titleInput, descriptionInput, startingScenario);
+    if(response.success){
+      ClearFields();
+      props.navigation.navigate('Game', { roomId: response.roomId });
+    }
+    else{
+      setRoomCreateError(response.message);
+      setOpening(false);
+    }
+
   }
 
   const LoadStoryKeys = async () => {
@@ -36,16 +47,18 @@ export const OpenRoom = (props) => {
   }
 
   const FieldsReady = () => {
-    return (titleInput && descriptionInput && openingInput);
+    return (titleInput && descriptionInput && startingScenario);
   }
 
   const ClearFields = () => {
     setDescriptionInput('');
-    setOpeningInput('');
+    setStartingScenario('');
     setTitleInput('');
   }
 
   useFocusEffect(() => { LoadStoryKeys() });
+
+  useEffect(() => setRoomCreateError(null), [titleInput, descriptionInput, startingScenario]);
 
   return (
     <ScrollView style={styles.container}>
@@ -77,15 +90,17 @@ export const OpenRoom = (props) => {
                     value={descriptionInput}
                   />
 
-                  <Text style={styles.h2}>Story Opening</Text>
+                  <Text style={styles.h2}>Story Opening Text</Text>
                   <TextInput
                     style={{ ...styles.inputFieldStyle, height: 150, textAlignVertical: 'top' }}
                     multiline={true}
-                    onChangeText={setOpeningInput}
-                    value={openingInput}
+                    onChangeText={setStartingScenario}
+                    value={startingScenario}
                   />
 
                   <Button title='🔑 Open Room' disabled={!FieldsReady()} onPress={ToggleTryingToOpen} />
+
+                  <ErrorText message={roomCreateError}/>
 
                   {tryingToOpen && <Popup
                     title='Open the room?'

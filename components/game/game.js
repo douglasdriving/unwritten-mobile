@@ -21,6 +21,7 @@ export const Game = (props) => {
   //change during play
   const [chars, setChars] = useState({ initial: 0, remaining: 0 });
   const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
+  const [counterUpdateInterval, setCounterUpdateInterval] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scenarioPostLoading, setScenarioPostLoading] = useState(false);
 
@@ -50,12 +51,16 @@ export const Game = (props) => {
 
     setNextPlayerId(room.next_player_id);
 
-    setTimeLeftInTurn(new Date(room.turn_end).getTime()  - new Date().getTime());
-    const interval = setInterval(() => {
-      setTimeLeftInTurn(new Date(room.turn_end).getTime()  - new Date().getTime());
-    }, 1000);
+    if (counterUpdateInterval) {
+      clearInterval(counterUpdateInterval);
+      setCounterUpdateInterval(null);
+    }
 
-    return () => clearInterval(interval);
+    setTimeLeftInTurn(new Date(room.turn_end).getTime() - new Date().getTime());
+    const interval = setInterval(() => {
+      setTimeLeftInTurn(new Date(room.turn_end).getTime() - new Date().getTime());
+    }, 1000);
+    setCounterUpdateInterval(interval);
   }
   const UpdateCharsRemaining = (textLength) => {
     setChars({
@@ -65,7 +70,10 @@ export const Game = (props) => {
   }
   const AddScenario = async text => {
 
-    if (chars.remaining < 0) return false;
+    if (chars.remaining < 0) {
+      console.log('could not add scenario because too many chars where used')
+      return false;
+    }
 
     setScenarioPostLoading(true);
 
@@ -91,13 +99,13 @@ export const Game = (props) => {
     let name = null;
 
     players.forEach(player => {
-      if(player.id == nextPlayerId) name = player.name;
+      if (player.id == nextPlayerId) name = player.name;
     });
 
     return name;
   }
 
-  useEffect(() => { LoadRoomData() }, [])
+  useEffect(() => { LoadRoomData(); }, [])
 
   return (
     <View>

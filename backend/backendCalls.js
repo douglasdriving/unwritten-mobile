@@ -60,11 +60,7 @@ export const signIn = async (email, password) => {
 export const signUp = async (email, password, name, pushToken) => {
 
   const response = await fetch(
-    `${API_ENDPOINT}/user/create
-    ?email=${email}
-    &password=${password}
-    &name=${name}
-    &pushToken=${pushToken}`,
+    `${API_ENDPOINT}/user/create?email=${email}&password=${password}&name=${name}&pushToken=${pushToken}`,
     PostFetch()
   );
 
@@ -120,7 +116,7 @@ export const CreateRoom = async (title, description, opening) => {
   const querystring = `title=${title}&description=${description}&scenario=${opening}`
   const response = await fetch(`${API_ENDPOINT}/room/?${querystring}`, PostFetch());
   const jsonResponse = await response.json();
-  return jsonResponse.roomId;
+  return jsonResponse;
 
 }
 
@@ -141,10 +137,8 @@ export const JoinRoom = async (roomId) => {
 
 //SCENARIOS
 export const UploadScenario = async (text, roomId) => {
-
-  const response = await fetch(`${API_ENDPOINT}/scenario/?room_id=${roomId}&text=${text}`, PostFetch());
-  return response.ok;
-
+    const response = await fetch(`${API_ENDPOINT}/scenario/?roomId=${roomId}&text=${text}`, PostFetch());
+    return response.ok;
 }
 
 

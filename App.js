@@ -22,6 +22,7 @@ export default function App() {
     if (!authToken) return;
     const receivedUser = await GetUser(authToken);
     if (receivedUser.id) setUser(receivedUser);
+    //navigate into the right page
   }
 
   const loadAuthTokenLocal = async () => {

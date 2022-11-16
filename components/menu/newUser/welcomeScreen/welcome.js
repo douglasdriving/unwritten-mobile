@@ -29,8 +29,8 @@ export const Welcome = (props) => {
     let response;
     if (signUp) {
       const pushToken = await registerForPushNotificationsAsync();
-      response = await signUpBackend(email, password, displayName, pushToken);
       AsyncStorage.setItem('pushToken', pushToken);
+      response = await signUpBackend(email, password, displayName, pushToken);
     }
     else response = await signInBackend(email, password);
 
@@ -70,6 +70,33 @@ export const Welcome = (props) => {
   useEffect(setStartScreen, [props.user, props.startRoomId]);
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
+  const DevLoginButton = props => {
+    return (
+      <Button
+        title={props.email}
+        onPress={
+          async () => {
+
+            setLoading('Signing in...');
+            const response = await signInBackend(props.email, props.password);
+
+            if (response.ok) {
+              if (!response.token) throw new Error('got no token from signin!');
+              setAuthToken(response.token);
+              AsyncStorage.setItem('authToken', response.token);
+            }
+            else {
+              setErrorMessage(response.message);
+            }
+
+            setLoading(false);
+
+          }
+        }
+      />
+    )
+  }
+
   return (
     <View style={{
       flex: 1,
@@ -105,31 +132,13 @@ export const Welcome = (props) => {
         offText='New to Unwritten? Sign up here'
       />
 
-      <Button
-        title='SING IN AS DEV PLEASE REMOVE ME LATER'
-        onPress={
-          async () => {
+      <Text style={styles.h1}>Insta Login</Text>
 
-            console.log('logging in Douglas');
-
-            setLoading('Signing in...');
-            const response = await signInBackend('douglasdriving@gmail.com', 'Killingkebab1');
-
-            if (response.ok) {
-              if (!response.token) throw new Error('got no token from signin!');
-              setAuthToken(response.token);
-              AsyncStorage.setItem('authToken', response.token);
-              //props.navigation.navigate('Menu'); //problematic, since we havent recieved user obj yet
-            }
-            else {
-              setErrorMessage(response.message);
-            }
-
-            setLoading(false);
-
-          }
-        }
-      />
+      <DevLoginButton email="douglasdriving@gmail.com" password="Killingkebab1" />
+      <DevLoginButton email="Kamiza@fakemail.com" password="password123" />
+      <DevLoginButton email="Myster@fakemail.com" password="password123" />
+      <DevLoginButton email="Storken@fakemail.com" password="password123" />
+      <DevLoginButton email="LolliPoppi@fakemail.com" password="password123" />
 
     </View>
   );
