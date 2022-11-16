@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { GetUser, setAuthToken as setAuthTokenForBackendCalls } from './backend/backendCalls';
-import { Welcome } from './components/menu/newUser/welcome';
+import { Welcome } from './components/menu/newUser/welcomeScreen/welcome';
 import { Menu } from './components/menu/menu';
 import { Join } from './components/menu/newUser/join';
 import { Game } from './components/game/game';

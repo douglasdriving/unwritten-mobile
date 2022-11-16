@@ -1,13 +1,15 @@
-import { Text, View, Button, StyleSheet, TextInput } from 'react-native';
-import { styles } from '../../../style.js';
-import { signIn as signInBackend, signUp as signUpBackend } from '../../../backend/backendCalls.js';
+import { Text, View, Button } from 'react-native';
+import { styles } from '../../../../style.js';
+import { signIn as signInBackend, signUp as signUpBackend } from '../../../../backend/backendCalls.js';
 import { useState } from 'react';
-import { Popup } from '../../smart/popup.js';
 import { useContext, useEffect } from 'react';
-import { AuthTokenContext } from '../../../contexts/authContext.js';
-import { TouchableWithoutFeedback } from 'react-native-web';
+import { AuthTokenContext } from '../../../../contexts/authContext.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { registerForPushNotificationsAsync } from '../../../backend/notifications.js';
+import { registerForPushNotificationsAsync } from '../../../../backend/notifications.js';
+import { LabeledInput } from '../../modularComponents/labeledInput.js';
+import { ErrorText } from '../../modularComponents/errorText.js';
+import { LoadPopup } from '../../modularComponents/loadPopup.js';
+import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
 
 export const Welcome = (props) => {
 
@@ -20,22 +22,7 @@ export const Welcome = (props) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
 
-  const handleEmailChange = text => {
-    setEmail(text);
-    setErrorMessage(null);
-  }
-
-  const handlePasswordChange = text => {
-    setPassword(text);
-    setErrorMessage(null);
-  }
-
-  const handleDisplayNameChange = text => {
-    setDisplayName(text);
-    setErrorMessage(null);
-  }
-
-  const sendForm = async () => {
+  const submitForm = async () => {
 
     setLoading(signUp ? 'Creating new user...' : 'Signing in...');
 
@@ -51,7 +38,6 @@ export const Welcome = (props) => {
       if (!response.token) throw new Error('got no token from signin!');
       setAuthToken(response.token);
       AsyncStorage.setItem('authToken', response.token);
-      props.navigation.navigate('Menu');
     }
     else {
       setErrorMessage(response.message);
@@ -82,51 +68,42 @@ export const Welcome = (props) => {
   }
 
   useEffect(setStartScreen, [props.user, props.startRoomId]);
+  useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
   return (
-    <View style={welcomeScreenStyles.screen}>
+    <View style={{
+      flex: 1,
+      backgroundColor: 'lightblue',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 30,
+      textAlign: 'center',
+    }}>
 
       <Text style={styles.h1}>Unwritten</Text>
       <Text style={styles.body}>Welcome to the world of Unwritten!</Text>
       <Text style={styles.body}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
+
       <Text style={styles.h2}>Sign {signUp ? 'Up' : 'In'}</Text>
 
-      <Text>Email</Text>
-      <TextInput onChangeText={handleEmailChange} style={welcomeScreenStyles.inputField} />
-
-      <Text>Password</Text>
-      <TextInput onChangeText={handlePasswordChange} style={welcomeScreenStyles.inputField} secureTextEntry={true} />
-
-      {signUp &&
-        <>
-          <Text>Display Name</Text>
-          <TextInput onChangeText={handleDisplayNameChange} style={welcomeScreenStyles.inputField} />
-        </>
-      }
+      <LabeledInput label={'Email'} onChangeText={text => { setEmail(text) }} />
+      <LabeledInput label={'Password'} onChangeText={text => { setPassword(text) }} />
+      {signUp && <LabeledInput label={'Display Name'} onChangeText={text => { setDisplayName(text) }} />}
 
       <Button
         title={'Sign ' + (signUp ? 'Up' : 'In')}
-        onPress={sendForm}
+        onPress={submitForm}
         disabled={!email || !password || (signUp && !displayName)}
       />
 
-      {(errorMessage != null) &&
-        <Text style={{ color: 'red' }}>{errorMessage}</Text>
-      }
-
-      {loading &&
-        <Popup title={loading} loading={true} />
-      }
-
-      <TouchableWithoutFeedback>
-        <Text onPress={() => { setSignUp(!signUp); setErrorMessage(null) }} style={{ textDecorationLine: 'underline' }}>
-          {signUp ?
-            'Already have an account? Press here to sign in instead'
-            :
-            'New to Unwritten? Sign up here'
-          }
-        </Text>
-      </TouchableWithoutFeedback>
+      <ErrorText message={errorMessage} />
+      <LoadPopup isLoading={loading != null && loading != ''} loadText={loading} />
+      <BoolStateToggler
+        setState={setSignUp}
+        state={signUp}
+        onText='Already have an account? Press here to sign in instead'
+        offText='New to Unwritten? Sign up here'
+      />
 
       <Button
         title='SING IN AS DEV PLEASE REMOVE ME LATER'
@@ -142,7 +119,7 @@ export const Welcome = (props) => {
               if (!response.token) throw new Error('got no token from signin!');
               setAuthToken(response.token);
               AsyncStorage.setItem('authToken', response.token);
-              props.navigation.navigate('Menu');
+              //props.navigation.navigate('Menu'); //problematic, since we havent recieved user obj yet
             }
             else {
               setErrorMessage(response.message);
@@ -157,23 +134,3 @@ export const Welcome = (props) => {
     </View>
   );
 }
-
-const welcomeScreenStyles = StyleSheet.create({
-
-  screen: {
-    flex: 1,
-    backgroundColor: 'lightblue',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 30,
-    textAlign: 'center',
-  },
-
-  inputField: {
-    backgroundColor: 'white',
-    width: '100%',
-    padding: 0,
-
-  }
-
-});
