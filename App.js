@@ -22,7 +22,7 @@ export default function App() {
     if (!authToken) return;
     const receivedUser = await GetUser(authToken);
     if (receivedUser.id) setUser(receivedUser);
-    //navigate into the right page
+
   }
 
   const loadAuthTokenLocal = async () => {
@@ -32,16 +32,46 @@ export default function App() {
     }
   }
 
+  //unclear if this should actually be in here... should be enough if we add it when we subscribe???
   const addNotificationHandler = () => {
-    Notifications.addNotificationResponseReceivedListener(res => {
-      const data = res.notification.request.content.data;
+    Notifications.addNotificationResponseReceivedListener(async res => {
 
-      if (data.roomId) {
-        setStartRoomId(data.roomId);
+      const notificationData = res.notification.request.content.data;
+
+      const authTokenInStorage = await AsyncStorage.getItem('authToken');
+      console.log('auth token in storage:');
+      console.log(authTokenInStorage);
+
+      if(!authTokenInStorage){
+        console.log('No auth token in storage, must log in');
+        return;
       }
-      else {
+
+      console.log('you got here!')
+      const preloggedUser = await GetUser(authTokenInStorage);
+      console.log('prelogged user:');
+      console.log(preloggedUser);
+
+      //remove these logs
+      console.log('prelogged user id is: ', preloggedUser.id);
+      console.log('notification is for user with id: ', notificationData.userId);
+
+      if (!notificationData.roomId) {
         console.error('no roomId found in the notification data');
+        return;
       }
+
+      if (!notificationData.userId) {
+        console.error('no userId found in the notification data');
+        return;
+      }
+
+      if (preloggedUser.id != notificationData.userId) {
+        console.log('the logged user is not the one the notification is aimed at');
+        return
+      }
+
+      setStartRoomId(notificationData.roomId);
     });
   }
 
