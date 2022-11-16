@@ -57,10 +57,14 @@ export const signIn = async (email, password) => {
   }
 
 }
-export const signUp = async (email, password, name) => {
+export const signUp = async (email, password, name, pushToken) => {
 
   const response = await fetch(
-    `${API_ENDPOINT}/user/create?email=${email}&password=${password}&name=${name}`,
+    `${API_ENDPOINT}/user/create
+    ?email=${email}
+    &password=${password}
+    &name=${name}
+    &pushToken=${pushToken}`,
     PostFetch()
   );
 

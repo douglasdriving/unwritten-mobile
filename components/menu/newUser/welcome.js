@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { AuthTokenContext } from '../../../contexts/authContext.js';
 import { TouchableWithoutFeedback } from 'react-native-web';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { registerForPushNotificationsAsync } from '../../../backend/notifications.js';
 
 export const Welcome = () => {
 
@@ -39,7 +40,11 @@ export const Welcome = () => {
     setLoading(signUp ? 'Creating new user...' : 'Signing in...');
 
     let response;
-    if (signUp) response = await signUpBackend(email, password, displayName);
+    if (signUp) {
+      const pushToken = await registerForPushNotificationsAsync();
+      response = await signUpBackend(email, password, displayName, pushToken);
+      AsyncStorage.setItem('pushToken', pushToken);
+    }
     else response = await signInBackend(email, password);
 
     if (response.ok) {
