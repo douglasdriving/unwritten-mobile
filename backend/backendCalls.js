@@ -77,14 +77,14 @@ export const GetAvailableRooms = async () => {
   const response = await fetch(`${API_ENDPOINT}/room/available`, GetFetch());
   const availableRooms = await response.json();
 
-  const newRooms = availableRooms.filter(room => (
-    room.scenario_count < 4
-  ))
-  const roomWithLeavers = availableRooms.filter(room => (
-    room.scenario_count >= 4
-  ))
+  // const newRooms = availableRooms.filter(room => (
+  //   room.scenario_count < 4
+  // ))
+  // const roomWithLeavers = availableRooms.filter(room => (
+  //   room.scenario_count >= 4
+  // ))
 
-  return { new: newRooms, ongoing: roomWithLeavers };
+  return { new: availableRooms.new, ongoing: availableRooms.old };
 
 }
 
