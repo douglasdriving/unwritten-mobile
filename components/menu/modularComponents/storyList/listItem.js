@@ -23,7 +23,7 @@ export const ListItem = (props) => {
   const GenerateAuthorText = () => {
 
     const authors = props.listItemInfo.authors;
-    if (!authors || authors.length == 0) return 'Authors: Searching...';
+    if (!authors || authors.length == 0) return null;
 
     let authorText = null;
     authorText = 'Authors:'
