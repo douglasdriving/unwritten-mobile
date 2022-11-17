@@ -1,5 +1,6 @@
 import { View } from 'react-native';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { GetRoomData, UploadScenario } from '../../backend/backendCalls.js';
 import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea/gameArea.js';
@@ -105,7 +106,12 @@ export const Game = (props) => {
     return name;
   }
 
-  useEffect(() => { LoadRoomData(); }, [])
+  //useFocusEffect(() => { LoadRoomData(); }, [])
+  useFocusEffect(
+    useCallback(() => {
+      LoadRoomData();
+    }, [props.route.params.roomId])
+  );
 
   return (
     <View>

@@ -9,6 +9,7 @@ import { Game } from './components/game/game';
 import { AuthTokenContext } from './contexts/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
+import { addNotificationHandler } from './backend/notifications';
 
 const Stack = createStackNavigator();
 
@@ -32,53 +33,41 @@ export default function App() {
     }
   }
 
-  //unclear if this should actually be in here... should be enough if we add it when we subscribe???
-  const addNotificationHandler = () => {
-    Notifications.addNotificationResponseReceivedListener(async res => {
+  // //unclear if this should actually be in here... should be enough if we add it when we subscribe???
+  // const addNotificationHandler = () => {
+  //   Notifications.addNotificationResponseReceivedListener(async res => {
 
-      const notificationData = res.notification.request.content.data;
+  //     const notificationData = res.notification.request.content.data;
 
-      const authTokenInStorage = await AsyncStorage.getItem('authToken');
-      console.log('auth token in storage:');
-      console.log(authTokenInStorage);
+  //     if (!notificationData.roomId) {
+  //       console.error('no roomId found in the notification data');
+  //       return;
+  //     }
+  //     if (!notificationData.userId) {
+  //       console.error('no userId found in the notification data');
+  //       return;
+  //     }
 
-      if(!authTokenInStorage){
-        console.log('No auth token in storage, must log in');
-        return;
-      }
+  //     const authTokenInStorage = await AsyncStorage.getItem('authToken');
+  //     if(!authTokenInStorage) return;
+  //     const preloggedUser = await GetUser(authTokenInStorage);
 
-      console.log('you got here!')
-      const preloggedUser = await GetUser(authTokenInStorage);
-      console.log('prelogged user:');
-      console.log(preloggedUser);
+  //     if (preloggedUser.id != notificationData.userId) {
+  //       setAuthToken('');
+  //       AsyncStorage.setItem('authToken', '');
+  //       setUser(null);
+  //       props.navigation.navigate('Welcome');
+  //       return;
+  //     }
 
-      //remove these logs
-      console.log('prelogged user id is: ', preloggedUser.id);
-      console.log('notification is for user with id: ', notificationData.userId);
-
-      if (!notificationData.roomId) {
-        console.error('no roomId found in the notification data');
-        return;
-      }
-
-      if (!notificationData.userId) {
-        console.error('no userId found in the notification data');
-        return;
-      }
-
-      if (preloggedUser.id != notificationData.userId) {
-        console.log('the logged user is not the one the notification is aimed at');
-        return
-      }
-
-      setStartRoomId(notificationData.roomId);
-    });
-  }
+  //     setStartRoomId(notificationData.roomId);
+  //   });
+  // }
 
   //app start
   useEffect(() => {
     loadAuthTokenLocal();
-    addNotificationHandler();
+    addNotificationHandler(setAuthToken, setUser, setStartRoomId);
   }, []);
 
   //auth token updated

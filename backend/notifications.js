@@ -1,5 +1,7 @@
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GetUser } from './backendCalls';
 
 export const registerForPushNotificationsAsync = async () => {
 
@@ -44,4 +46,34 @@ export const registerForPushNotificationsAsync = async () => {
   }
 
   return token;
+}
+
+export const addNotificationHandler = (setAuthToken, setUser, setStartRoomId) => {
+  Notifications.addNotificationResponseReceivedListener(async res => {
+
+    const notificationData = res.notification.request.content.data;
+
+    if (!notificationData.roomId) {
+      console.error('no roomId found in the notification data');
+      return;
+    }
+    if (!notificationData.userId) {
+      console.error('no userId found in the notification data');
+      return;
+    }
+
+    const authTokenInStorage = await AsyncStorage.getItem('authToken');
+    if(!authTokenInStorage) return;
+    const preloggedUser = await GetUser(authTokenInStorage);
+
+    if (preloggedUser.id != notificationData.userId) {
+      setAuthToken(''); //can get from context. Although can we? this not a component
+      AsyncStorage.setItem('authToken', '');
+      setUser(null); //must be passed down from app
+      //props.navigation.navigate('Welcome'); //idk, not sure if needded
+      return;
+    }
+
+    setStartRoomId(notificationData.roomId); //needs to be passed down from app
+  });
 }
