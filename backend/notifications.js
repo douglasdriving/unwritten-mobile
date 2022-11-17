@@ -67,13 +67,12 @@ export const addNotificationHandler = (setAuthToken, setUser, setStartRoomId) =>
     const preloggedUser = await GetUser(authTokenInStorage);
 
     if (preloggedUser.id != notificationData.userId) {
-      setAuthToken(''); //can get from context. Although can we? this not a component
+      setAuthToken('');
       AsyncStorage.setItem('authToken', '');
-      setUser(null); //must be passed down from app
-      //props.navigation.navigate('Welcome'); //idk, not sure if needded
+      setUser(null); 
       return;
     }
 
-    setStartRoomId(notificationData.roomId); //needs to be passed down from app
+    setStartRoomId(notificationData.roomId);
   });
 }
