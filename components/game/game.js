@@ -6,6 +6,7 @@ import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea/gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 import { Popup } from '../smart/popup.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const Game = (props) => {
 
@@ -18,6 +19,7 @@ export const Game = (props) => {
     scenarios: []
   });
   const [nextPlayerId, setNextPlayerId] = useState();
+  const [turnMissed, setTurnMissed] = useState(false);
 
   //change during play
   const [chars, setChars] = useState({ initial: 0, remaining: 0 });
@@ -25,6 +27,28 @@ export const Game = (props) => {
   const [counterUpdateInterval, setCounterUpdateInterval] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scenarioPostLoading, setScenarioPostLoading] = useState(false);
+
+  const GetPlayerStrikes = (players) => {
+
+    //gets the current players strike count
+    const player = players.filter(player => player.id == props.user.id)[0];
+    const strikes = player.strikes;
+    return strikes;
+
+  }
+
+  const CheckForNewStrike = async (players) => {
+
+    //checks to see if the player has gotten a new strike, and shows a popup if they have
+    const strikes = GetPlayerStrikes(players);
+    const strikeTrackerKey = String(`strikes ${props.route.params.roomId} ${props.user.id}`);
+    const seenStrikes = await AsyncStorage.getItem(strikeTrackerKey);
+    if (strikes != 0 && parseInt(seenStrikes) < strikes) {
+      AsyncStorage.setItem(strikeTrackerKey, String(strikes));
+      setTurnMissed(true);
+    }
+
+  }
 
   const LoadRoomData = async () => {
 
@@ -39,6 +63,8 @@ export const Game = (props) => {
     });
 
     if (room.finished) return;
+
+    CheckForNewStrike(room.players);
 
     //load chars
     room.players.forEach(player => {
@@ -106,7 +132,6 @@ export const Game = (props) => {
     return name;
   }
 
-  //useFocusEffect(() => { LoadRoomData(); }, [])
   useFocusEffect(
     useCallback(() => {
       LoadRoomData();
@@ -146,6 +171,13 @@ export const Game = (props) => {
         title={'Adding your text'}
         loading={true}
       />}
+      {turnMissed &&
+        <Popup
+          title={'You missed your turn!'}
+          text={`If you miss 3 turns you will be kicked from the room.`}
+          onClose={() => { setTurnMissed(false); }}
+        />
+      }
     </View>
   );
 }
