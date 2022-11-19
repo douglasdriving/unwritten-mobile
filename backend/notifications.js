@@ -2,6 +2,7 @@ import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GetUser } from './backendCalls';
+import { navigate, navigateToRoom } from '../contexts/rootNavigation';
 
 export const registerForPushNotificationsAsync = async () => {
 
@@ -48,7 +49,7 @@ export const registerForPushNotificationsAsync = async () => {
   return token;
 }
 
-export const addNotificationHandler = (setAuthToken, setUser, setStartRoomId) => {
+export const addNotificationHandler = (setAuthToken, setUser) => {
 
   Notifications.addNotificationResponseReceivedListener(async res => {
 
@@ -76,7 +77,7 @@ export const addNotificationHandler = (setAuthToken, setUser, setStartRoomId) =>
       return;
     }
 
-    setStartRoomId(roomId);
+    navigateToRoom(roomId);
   });
 
 }

@@ -10,6 +10,7 @@ import { AuthTokenContext } from './contexts/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import { addNotificationHandler } from './backend/notifications';
+import { navigationRef } from './contexts/rootNavigation';
 
 const Stack = createStackNavigator();
 
@@ -33,41 +34,10 @@ export default function App() {
     }
   }
 
-  // //unclear if this should actually be in here... should be enough if we add it when we subscribe???
-  // const addNotificationHandler = () => {
-  //   Notifications.addNotificationResponseReceivedListener(async res => {
-
-  //     const notificationData = res.notification.request.content.data;
-
-  //     if (!notificationData.roomId) {
-  //       console.error('no roomId found in the notification data');
-  //       return;
-  //     }
-  //     if (!notificationData.userId) {
-  //       console.error('no userId found in the notification data');
-  //       return;
-  //     }
-
-  //     const authTokenInStorage = await AsyncStorage.getItem('authToken');
-  //     if(!authTokenInStorage) return;
-  //     const preloggedUser = await GetUser(authTokenInStorage);
-
-  //     if (preloggedUser.id != notificationData.userId) {
-  //       setAuthToken('');
-  //       AsyncStorage.setItem('authToken', '');
-  //       setUser(null);
-  //       props.navigation.navigate('Welcome');
-  //       return;
-  //     }
-
-  //     setStartRoomId(notificationData.roomId);
-  //   });
-  // }
-
   //app start
   useEffect(() => {
     loadAuthTokenLocal();
-    addNotificationHandler(setAuthToken, setUser, setStartRoomId);
+    addNotificationHandler(setAuthToken, setUser);
   }, []);
 
   //auth token updated
@@ -77,7 +47,7 @@ export default function App() {
   }, [authToken]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <AuthTokenContext.Provider value={[authToken, setAuthToken]}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
 
