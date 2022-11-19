@@ -49,30 +49,34 @@ export const registerForPushNotificationsAsync = async () => {
 }
 
 export const addNotificationHandler = (setAuthToken, setUser, setStartRoomId) => {
+
   Notifications.addNotificationResponseReceivedListener(async res => {
 
-    const notificationData = res.notification.request.content.data;
+    const { roomId, userId, type } = res.notification.request.content.data;
 
-    if (!notificationData.roomId) {
+    if (type == 'kick') return;
+
+    if (!roomId) {
       console.error('no roomId found in the notification data');
       return;
     }
-    if (!notificationData.userId) {
+    if (!userId) {
       console.error('no userId found in the notification data');
       return;
     }
 
     const authTokenInStorage = await AsyncStorage.getItem('authToken');
-    if(!authTokenInStorage) return;
+    if (!authTokenInStorage) return;
     const preloggedUser = await GetUser(authTokenInStorage);
 
-    if (preloggedUser.id != notificationData.userId) {
+    if (preloggedUser.id != userId) {
       setAuthToken('');
       AsyncStorage.setItem('authToken', '');
-      setUser(null); 
+      setUser(null);
       return;
     }
 
-    setStartRoomId(notificationData.roomId);
+    setStartRoomId(roomId);
   });
+
 }
