@@ -12,7 +12,8 @@ export const Game = (props) => {
 
   //Load once
   const [readOnly, setReadOnly] = useState("false");
-  const [players, setPlayers] = useState([{}]);
+  const [activePlayers, setActivePlayers] = useState([]);
+  const [inActivePlayers, setInactivePlayers] = useState([]);
   const [story, setStory] = useState({
     title: '',
     description: '',
@@ -55,7 +56,8 @@ export const Game = (props) => {
     const room = await GetRoomData(props.route.params.roomId);
 
     setReadOnly(room.finished);
-    setPlayers(room.players);
+    setActivePlayers(room.players.filter(player => player.active));
+    setInactivePlayers(room.players.filter(player => !player.active));
     setStory({
       title: room.title,
       description: room.description,
@@ -120,12 +122,12 @@ export const Game = (props) => {
   }
   const GetNextPlayerName = () => {
 
-    if (!players) return null;
-    if (players.length == 0) return null
+    if (!activePlayers) return null;
+    if (activePlayers.length == 0) return null
 
     let name = null;
 
-    players.forEach(player => {
+    activePlayers.forEach(player => {
       if (player.id == nextPlayerId) name = player.name;
     });
 
@@ -150,7 +152,8 @@ export const Game = (props) => {
         timeLeftInTurn={timeLeftInTurn}
         user={props.user}
         turnNumber={story.scenarios.length + 1}
-        players={players}
+        players={activePlayers}
+        inActivePlayers={inActivePlayers}
       />
       <StoryNav
         readOnly={readOnly}
@@ -158,7 +161,7 @@ export const Game = (props) => {
         appNavigation={props.navigation}
       />
       {menuOpen && <RoomMenu
-        players={players}
+        players={activePlayers}
         nextPlayer={nextPlayerId}
         timeLeftInTurn={timeLeftInTurn}
         closeMenu={() => setMenuOpen(false)}
