@@ -1,11 +1,11 @@
 import { Text, ScrollView, View } from 'react-native';
 import { styles } from '../../../style';
-import { GetMyRooms, GetLoggedUserName } from '../../../backend/backendCalls';
+import { GetMyRooms } from '../../../backend/backendCalls';
 import { useState, useCallback } from 'react';
-import { GetNextPlayerName } from '../../../helpers/helpers';
 import { useFocusEffect } from '@react-navigation/native';
 import { StoryList } from '../modularComponents/storyList/storylist';
 import { MenuScreenHeader } from '../modularComponents/menuScreenHeader';
+import { Spacer } from '../../smart/visuals';
 
 export const MyRooms = (props) => {
 
@@ -69,6 +69,8 @@ export const MyRooms = (props) => {
           {(myRoomsList && myRoomsList.closed) && <StoryList listItemInfo={myRoomsList.closed} {...props} />}
         </View>
       }
+
+      <Spacer/>
 
     </ScrollView>
   );
