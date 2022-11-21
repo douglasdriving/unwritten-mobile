@@ -9,20 +9,19 @@ export const StoryContent = (props) => {
   const [allPlayers, setAllPlayers] = useState([]);
 
   const ListAllPlayers = async () => {
+
     if (!props.players) return;
     if (props.players.length < 1) return;
 
-    console.log('players: ', props.players);
-    console.log('players.length: ', props.players.length);
-    await setAllPlayers(props.players);
-    console.log('all players set to: ', allPlayers);
+    setAllPlayers(props.players);
 
-    if (!props.inactivePlayers) return;
-    if (props.inactivePlayers.length < 1) return;
-    allPlayers = [...allPlayers, ...inactivePlayers];
+    if (!props.inActivePlayers) return;
+    if (props.inActivePlayers.length < 1) return;
+    setAllPlayers([...allPlayers, ...props.inActivePlayers]);
+
   }
 
-  useEffect(() => {ListAllPlayers}, [props.players, props.inactivePlayers]);
+  useEffect(() => {ListAllPlayers();}, [props.players, props.inActivePlayers]);
 
   const GenerateAuthorText = () => {
 
@@ -35,6 +34,17 @@ export const StoryContent = (props) => {
     });
 
     return text;
+
+  }
+
+  const GetPlayerName = (id) => {
+
+    if (!allPlayers || allPlayers.length < 1) return '';
+
+    const filtered = allPlayers.filter(player => player.id == id);
+    const player = filtered[0];
+    const name = player.name;
+    return name;
 
   }
 
@@ -52,7 +62,7 @@ export const StoryContent = (props) => {
               scenarioNumber={i + 1}
               key={i}
               isUser={props.user.id == scenario.creator_id}
-              authorName={allPlayers.filter(player => (player.id == scenario.creator_id))[0].name}
+              authorName={GetPlayerName(scenario.creator_id)}
             />
           )}
         </>
