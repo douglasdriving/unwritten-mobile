@@ -131,15 +131,7 @@ export const Welcome = (props) => {
         onText='Already have an account? Press here to sign in instead'
         offText='New to Unwritten? Sign up here'
       />
-
-      <Text style={styles.h1}>Insta Login</Text>
-
-      <DevLoginButton email="douglasdriving@gmail.com" password="Killingkebab1" />
-      <DevLoginButton email="Kamiza@fakemail.com" password="password123" />
-      <DevLoginButton email="Myster@fakemail.com" password="password123" />
-      <DevLoginButton email="Storken@fakemail.com" password="password123" />
-      <DevLoginButton email="LolliPoppi@fakemail.com" password="password123" />
-
+      
     </View>
   );
 }
