@@ -43,6 +43,8 @@ export const StoryContent = (props) => {
 
     const filtered = allPlayers.filter(player => player.id == id);
     const player = filtered[0];
+    
+    if(!player) return '';
     const name = player.name;
     return name;
 
