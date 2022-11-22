@@ -11,7 +11,8 @@ export const LabeledInput = (props) => {
           backgroundColor: 'white',
           width: '100%',
           padding: 0,
-        }} />
+        }}
+        secureTextEntry={props.label=='Password'}/>
     </>
   );
 }
