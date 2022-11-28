@@ -11,6 +11,10 @@ import { ErrorText } from '../../modularComponents/errorText.js';
 import { LoadPopup } from '../../modularComponents/loadPopup.js';
 import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
 
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+import { selectAuthToken, loadAuthTokenFromStorage, clearAuthToken } from '../../../../redux/authTokenSlice.js';
+
 export const Welcome = (props) => {
 
   const [email, setEmail] = useState();
@@ -21,6 +25,10 @@ export const Welcome = (props) => {
   const [authToken, setAuthToken] = useContext(AuthTokenContext);
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
+
+  const authTokenInStore = useSelector(selectAuthToken);
+
+  const dispatch = useDispatch();
 
   const submitForm = async () => {
 
@@ -67,6 +75,15 @@ export const Welcome = (props) => {
     props.navigation.navigate('Menu');
   }
 
+  const checkAutoLogin = async () => {
+    
+    await dispatch(loadAuthTokenFromStorage());
+    if(authTokenInStore && authTokenInStore != null && authTokenInStore != ''){
+      
+    }
+  }
+
+  useEffect(() => { checkAutoLogin() }, []);
   useEffect(setStartScreen, [props.user, props.startRoomId]);
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
@@ -131,7 +148,7 @@ export const Welcome = (props) => {
         onText='Already have an account? Press here to sign in instead'
         offText='New to Unwritten? Sign up here'
       />
-      
+
     </View>
   );
 }

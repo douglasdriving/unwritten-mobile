@@ -12,6 +12,11 @@ import * as Notifications from 'expo-notifications';
 import { addNotificationHandler } from './backend/notifications';
 import { navigationRef } from './contexts/rootNavigation';
 
+//redux
+import reduxStore from './redux/reduxStore';
+import { Provider, useSelector } from 'react-redux';
+import { selectAuthToken } from './redux/authTokenSlice';
+
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -46,27 +51,30 @@ export default function App() {
     tryLoginWithAuthToken();
   }, [authToken]);
 
+  //REMOVE THE "AUTHTOKENCONTEXT.PROVIDE COMPONENT LATER. IT WILL BE REDUNDANT WHEN REDUX IS IMPLEMENTED"
   return (
-    <NavigationContainer ref={navigationRef}>
-      <AuthTokenContext.Provider value={[authToken, setAuthToken]}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Provider store={reduxStore}>
+      <NavigationContainer ref={navigationRef}>
+        <AuthTokenContext.Provider value={[authToken, setAuthToken]}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-          <Stack.Screen name="Welcome">
-            {(props) => <Welcome {...props} startRoomId={startRoomId} user={user} />}
-          </Stack.Screen>
+            <Stack.Screen name="Welcome">
+              {(props) => <Welcome {...props} startRoomId={startRoomId} user={user} />}
+            </Stack.Screen>
 
-          <Stack.Screen name="Menu">
-            {(props) => <Menu {...props} user={user} />}
-          </Stack.Screen>
+            <Stack.Screen name="Menu">
+              {(props) => <Menu {...props} user={user} />}
+            </Stack.Screen>
 
-          <Stack.Screen name="Join" component={Join} />
+            <Stack.Screen name="Join" component={Join} />
 
-          <Stack.Screen name="Game">
-            {(props) => <Game {...props} user={user} />}
-          </Stack.Screen>
+            <Stack.Screen name="Game">
+              {(props) => <Game {...props} user={user} />}
+            </Stack.Screen>
 
-        </Stack.Navigator>
-      </AuthTokenContext.Provider>
-    </NavigationContainer>
+          </Stack.Navigator>
+        </AuthTokenContext.Provider>
+      </NavigationContainer>
+    </Provider>
   );
 }
