@@ -3,6 +3,7 @@
 /*
 Reducers:
 - loadFromStorage (async)
+- fetchWithCredentials (async)
 - set
 - clear
 
@@ -13,12 +14,28 @@ Selectors:
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setAuthToken as setTokenForBackendCalls, signIn} from '../backend/backendCalls';
 
 export const loadAuthTokenFromStorage = createAsyncThunk(
   'authToken/loadAuthTokenFromStorage',
   async (arg, thunkAPI) => {
     const tokenInStorage = await AsyncStorage.getItem('authToken');
     return tokenInStorage;
+  }
+);
+
+export const fetchAuthTokenWithCredentials = createAsyncThunk(
+  'user/fetchWithCredentials',
+  async({email, password}, thunkAPI) => {
+    //uses the creds to retrieve the auth token from the backend and store in redux
+    const response = await signIn(email, password);
+    if(response.ok){
+      return response.token;
+    }
+    else{
+      //login failed! Must be handled in some way...
+      return '';
+    }
   }
 );
 
@@ -31,45 +48,25 @@ export const authTokenSlice = createSlice({
   },
   reducers: {
     setAuthToken: (state, action) => {
-      console.log('setting auth token to: ', action.payload);
-      return action.payload;
+      return {...state, token: action.payload};
     },
     clearAuthToken: (state, action) => {
-      console.log('clearing auth token');
-      return '';
+      setTokenForBackendCalls('');
+      return {...state, token: ''};
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadAuthTokenFromStorage.pending, (state, action) => {
-        state.isLoading = true;
-        state.hasError = false;
-      })
       .addCase(loadAuthTokenFromStorage.fulfilled, (state, action) => {
+        setTokenForBackendCalls(action.payload); //ok this is confusing, should just keep it here
         state.token = action.payload;
-        state.isLoading = false;
-        state.hasError = false;
       })
-      .addCase(loadAuthTokenFromStorage.rejected = (state, action) => {
-        state.isLoading = false;
-        state.hasError = true;
+      .addCase(fetchAuthTokenWithCredentials.fulfilled, (state, action) =>{
+        setTokenForBackendCalls(action.payload);
+        state.token = action.payload;
       })
+      //should add actions for pending and rejected here too
   }
-  // extraReducers: {
-  //   [loadAuthTokenFromStorage.pending]: (state, action) => {
-  //     state.isLoading = true;
-  //     state.hasError = false;
-  //   },
-  //   [loadAuthTokenFromStorage.fulfilled]: (state, action) => {
-  //     state.token = action.payload;
-  //     state.isLoading = false;
-  //     state.hasError = false;
-  //   },
-  //   [loadAuthTokenFromStorage.rejected]: (state, action) => {
-  //     state.isLoading = false;
-  //     state.hasError = true;
-  //   }
-  // }
 });
 
 export const selectAuthToken = state => state.authToken.token;

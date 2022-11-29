@@ -79,7 +79,8 @@ export const Welcome = (props) => {
     
     await dispatch(loadAuthTokenFromStorage());
     if(authTokenInStore && authTokenInStore != null && authTokenInStore != ''){
-      
+      //auth token loaded from phone storage
+      //try to login with it!
     }
   }
 
