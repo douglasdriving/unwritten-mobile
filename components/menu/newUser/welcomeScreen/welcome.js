@@ -11,9 +11,11 @@ import { ErrorText } from '../../modularComponents/errorText.js';
 import { LoadPopup } from '../../modularComponents/loadPopup.js';
 import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
 
-//redux
+/*
+//redux imports
 import { useSelector, useDispatch } from 'react-redux';
 import { selectAuthToken, loadAuthTokenFromStorage, clearAuthToken } from '../../../../redux/authTokenSlice.js';
+*/
 
 export const Welcome = (props) => {
 
@@ -26,9 +28,11 @@ export const Welcome = (props) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
 
+  /*
+  //Redux logic
   const authTokenInStore = useSelector(selectAuthToken);
-
   const dispatch = useDispatch();
+  */
 
   const submitForm = async () => {
 
@@ -75,16 +79,19 @@ export const Welcome = (props) => {
     props.navigation.navigate('Menu');
   }
 
+  /*
   const checkAutoLogin = async () => {
-    
-    await dispatch(loadAuthTokenFromStorage());
-    if(authTokenInStore && authTokenInStore != null && authTokenInStore != ''){
-      //auth token loaded from phone storage
-      //try to login with it!
+  
+  await dispatch(loadAuthTokenFromStorage());
+  if(authTokenInStore && authTokenInStore != null && authTokenInStore != ''){
+    //auth token loaded from phone storage
+    //try to login with it!
     }
   }
 
   useEffect(() => { checkAutoLogin() }, []);
+  */
+
   useEffect(setStartScreen, [props.user, props.startRoomId]);
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
