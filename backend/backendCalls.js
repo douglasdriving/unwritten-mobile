@@ -9,6 +9,9 @@ let authToken;
 export const setAuthToken = (newToken) => {
   authToken = newToken;
 }
+export const hasToken = () => {
+  return (authToken && authToken != '');
+}
 
 const AuthHeader = () => {
   return new Headers({

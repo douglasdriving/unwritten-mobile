@@ -11,11 +11,10 @@ import { ErrorText } from '../../modularComponents/errorText.js';
 import { LoadPopup } from '../../modularComponents/loadPopup.js';
 import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
 
-/*
 //redux imports
-import { useSelector, useDispatch } from 'react-redux';
-import { selectAuthToken, loadAuthTokenFromStorage, clearAuthToken } from '../../../../redux/authTokenSlice.js';
-*/
+// import { useSelector, useDispatch } from 'react-redux';
+// import { selectAuthToken, loadAuthTokenFromStorage, fetchAuthTokenWithCredentials, clearAuthToken } from '../../../../redux/authTokenSlice.js';
+// import { fetchUserWithToken, selectUser } from '../../../../redux/userSlice.js';
 
 export const Welcome = (props) => {
 
@@ -24,16 +23,33 @@ export const Welcome = (props) => {
   const [displayName, setDisplayName] = useState();
 
   const [loading, setLoading] = useState();
-  const [authToken, setAuthToken] = useContext(AuthTokenContext);
+  const [authToken, setAuthToken] = useContext(AuthTokenContext); //replace redux
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
 
-  /*
   //Redux logic
-  const authTokenInStore = useSelector(selectAuthToken);
-  const dispatch = useDispatch();
-  */
+  // const authTokenInStore = useSelector(selectAuthToken); //change name to authToken
+  // const user = useSelector(selectUser);
+  // const dispatch = useDispatch();
 
+  // const tryAutoLogin = async () => {
+  //   //checks if there is an auth token in the phone storage, and logs in with it if there is, and navigates into the game
+  //   await dispatch(loadAuthTokenFromStorage());
+  //   if (authTokenInStore && authTokenInStore != null && authTokenInStore != '') {
+  //     await dispatch(fetchUserWithToken());
+  //     if (user.id) {
+  //       if (props.startRoomId) {
+  //         props.navigation.navigate('Game', { roomId: props.startRoomId });
+  //       }
+  //       else {
+  //         props.navigation.navigate('Menu');
+  //       }
+  //     }
+  //   }
+  // }
+  // useEffect(() => { tryAutoLogin() }, []);
+
+  //Other
   const submitForm = async () => {
 
     setLoading(signUp ? 'Creating new user...' : 'Signing in...');
@@ -42,11 +58,11 @@ export const Welcome = (props) => {
     if (signUp) {
       const pushToken = await registerForPushNotificationsAsync();
       AsyncStorage.setItem('pushToken', pushToken);
-      response = await signUpBackend(email, password, displayName, pushToken);
+      response = await signUpBackend(email, password, displayName, pushToken); //this also needs to set the creds in user! should be a separate call for that in the user slice?
     }
-    else response = await signInBackend(email, password);
+    else response = await signInBackend(email, password); //should "fetchWithCredentials" instead, which will call the backend too
 
-    if (response.ok) {
+    if (response.ok) { //then, check if we managed to fetch an auth token, and try to login with it :)
       if (!response.token) throw new Error('got no token from signin!');
       setAuthToken(response.token);
       AsyncStorage.setItem('authToken', response.token);
@@ -59,6 +75,7 @@ export const Welcome = (props) => {
 
   }
 
+  //old system for auto login
   const setStartScreen = () => {
     //checking the "user" and "startRoomId" props
     if (!props.user) {
@@ -78,21 +95,8 @@ export const Welcome = (props) => {
     //nav to menu if we are logged in
     props.navigation.navigate('Menu');
   }
-
-  /*
-  const checkAutoLogin = async () => {
-  
-  await dispatch(loadAuthTokenFromStorage());
-  if(authTokenInStore && authTokenInStore != null && authTokenInStore != ''){
-    //auth token loaded from phone storage
-    //try to login with it!
-    }
-  }
-
-  useEffect(() => { checkAutoLogin() }, []);
-  */
-
   useEffect(setStartScreen, [props.user, props.startRoomId]);
+  
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
   const DevLoginButton = props => {

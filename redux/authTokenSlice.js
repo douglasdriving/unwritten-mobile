@@ -1,4 +1,5 @@
 /* authTokenSlice.js */
+//REMOVE??? SHould no longer be needed
 
 /*
 Reducers:
