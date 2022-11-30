@@ -18,14 +18,18 @@ export const Popup = (props) => {
       <View style={popupStyles.view}>
         <View style={popupStyles.background} />
         <View style={popupStyles.box}>
-          {!props.loading && <CloseButton handlePress={props.onClose}/>}
+          {!props.loading && <CloseButton handlePress={props.onClose} />}
           <View style={popupStyles.content}>
             <Text style={styles.h2}>{props.title}</Text>
-            {props.text && <Text>{props.text}</Text>}
+            {props.text && (
+              Array.isArray(props.text) ?
+              props.text.map((text, i) => <Text key={i}>{text}</Text>) :
+              <Text>{props.text}</Text>
+            )}
             {props.buttons &&
               <View style={popupStyles.buttonRow}>
                 {props.buttons.map(button => (
-                  <Button title={button.title} onPress={button.handlePress} key={button.title}/>
+                  <Button title={button.title} onPress={button.handlePress} key={button.title} />
                 ))}
               </View>
             }
