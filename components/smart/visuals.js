@@ -11,11 +11,11 @@ export const Divider = () => {
   );
 }
 
-export const Spacer = () => {
+export const Space = (height) => {
   return (
     <View
       style={{
-        height: 200,
+        height: height,
       }}
     />
   );

@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { Text, View, TouchableWithoutFeedback } from "react-native";
 import { AuthTokenContext } from "../../../contexts/authContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { styles } from "../../../style";
 
 export const MenuScreenHeader = (props) => {
 
@@ -21,10 +22,10 @@ export const MenuScreenHeader = (props) => {
   }, [user, authToken])
 
   return (
-    <View style={{flexDirection: 'row'}}>
-      <Text>Signed in as {user.name}. </Text>
+    <View style={{flexDirection: 'row', backgroundColor: 'white', width: '100%', paddingTop: 40, padding: 20, justifyContent: 'center'}}>
+      <Text style={{...styles.paragraph, ...styles.textCenter}}>Signed in as {user.name}. </Text>
       <TouchableWithoutFeedback onPress={signOut}>
-        <Text style={{ textDecorationLine: 'underline' }}>Sign Out</Text>
+        <Text style={{ textDecorationLine: 'underline', ...styles.body }}>Sign Out</Text>
       </TouchableWithoutFeedback>
     </View>
   )

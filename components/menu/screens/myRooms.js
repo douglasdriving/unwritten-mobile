@@ -5,7 +5,7 @@ import { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StoryList } from '../modularComponents/storyList/storylist';
 import { MenuScreenHeader } from '../modularComponents/menuScreenHeader';
-import { Spacer } from '../../smart/visuals';
+import { Space } from '../../smart/visuals';
 
 export const MyRooms = (props) => {
 
@@ -49,7 +49,6 @@ export const MyRooms = (props) => {
   
   return (
     <ScrollView style={styles.container}>
-      <MenuScreenHeader {...props}/>
       <Text style={styles.h1}>My Rooms</Text>
 
       {!myRoomsList ?
@@ -70,7 +69,7 @@ export const MyRooms = (props) => {
         </View>
       }
 
-      <Spacer/>
+      {Space(200)}
 
     </ScrollView>
   );

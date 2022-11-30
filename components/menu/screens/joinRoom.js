@@ -30,7 +30,7 @@ export const JoinRoom = (props) => {
         title: room.title,
         description: room.description,
         creator: room.creator,
-        authorCount: Math.min(room.writers.length + 1 , 3),
+        authorCount: Math.min(room.writers.length + 1, 3),
         turn: room.scenario_count,
         roomId: room.id,
         buttonText: 'Join ->'
@@ -47,7 +47,7 @@ export const JoinRoom = (props) => {
 
   useEffect(() => {
     if (!props.user) console.error('no user object passed into JoinRoom props');
-    else{
+    else {
       setWelcomePopup(props.user.new)
     }
   })
@@ -60,8 +60,6 @@ export const JoinRoom = (props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <MenuScreenHeader {...props}/>
-
       {welcomPopup &&
         <Popup
           title='Welcome to Unwritten!'
@@ -79,27 +77,36 @@ export const JoinRoom = (props) => {
         />
       }
 
-      <Text style={styles.h1}>Join a Room</Text>
-      <Text style={styles.h2}>New Rooms</Text>
-      <Text style={styles.body}>Join a newly created room and take part in writing a story from the beginning!</Text>
-
-      {(availableRoomsList && availableRoomsList.new) &&
-        <StoryList
-          listItemInfo={availableRoomsList.new}
-          {...props}
-          confirmJoin={true}
-        />
+      {(availableRoomsList && availableRoomsList.new && availableRoomsList.ongoing && availableRoomsList.new.length == 0 && availableRoomsList.ongoing.length == 0) &&
+        <Text style={styles.paragraph}>
+          There are currently no rooms available to join.
+          Please come back later.
+        </Text>
       }
 
-      <Text style={styles.h2}>Looking for people</Text>
-      <Text style={styles.body}>Rooms with ongoing story that has one or more spots open to fill</Text>
+      {(availableRoomsList && availableRoomsList.new && availableRoomsList.new.length > 0) &&
+        <>
+          <Text style={styles.h1}>New Rooms</Text>
+          <Text style={styles.paragraph}>Join a newly created room and take part in writing a story from the beginning!</Text>
+          <StoryList
+            listItemInfo={availableRoomsList.new}
+            {...props}
+            confirmJoin={true}
+          />
+        </>
 
-      {(availableRoomsList && availableRoomsList.ongoing) &&
-        <StoryList
-          listItemInfo={availableRoomsList.ongoing}
-          {...props}
-          confirmJoin={true}
-        />
+      }
+
+      {(availableRoomsList && availableRoomsList.ongoing && availableRoomsList.ongoing.length > 0) &&
+        <>
+          <Text style={styles.h1}>Looking for people</Text>
+          <Text style={styles.paragraph}>Rooms with ongoing story that has one or more spots open to fill</Text>
+          <StoryList
+            listItemInfo={availableRoomsList.ongoing}
+            {...props}
+            confirmJoin={true}
+          />
+        </>
       }
 
     </ScrollView>

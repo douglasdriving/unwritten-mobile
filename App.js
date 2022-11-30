@@ -11,6 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 import { addNotificationHandler } from './backend/notifications';
 import { navigationRef } from './contexts/rootNavigation';
+import { Text } from 'react-native';
+import { MenuScreenHeader } from './components/menu/modularComponents/menuScreenHeader';
 
 //redux
 import reduxStore from './redux/reduxStore';

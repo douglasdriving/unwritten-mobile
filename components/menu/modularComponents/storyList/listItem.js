@@ -129,9 +129,8 @@ export const ListItem = (props) => {
           backgroundColor: 'white',
           width: '100%',
           marginTop: 5,
-          padding: 10
+          padding: 15
         }} >
-
           <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -142,7 +141,6 @@ export const ListItem = (props) => {
               {alert && '❗'}
             </Text>}
             {playersTurn && alert}
-            {/* <Icon name={open ? "arrow-up" : "arrow-down"} size={20} /> */}
           </View>
 
         </View>

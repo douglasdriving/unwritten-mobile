@@ -5,18 +5,26 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'lightblue',
-    paddingTop: 50,
+    // paddingTop: 30,
     padding: 30,
+  },
+
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    paddingBottom: 6
   },
 
   h1: {
     fontSize: 22,
     fontWeight: 'bold',
+    marginBottom: 6
   },
 
   h2: {
     fontSize: 18,
     fontWeight: 'bold',
+    marginBottom: 6
   },
 
   h3: {
@@ -26,6 +34,30 @@ export const styles = StyleSheet.create({
 
   body: {
     fontSize: 16
+  },
+
+  paragraph: {
+    fontSize: 16,
+    paddingBottom: 6
+  },
+
+  textCenter: {
+    textAlign: 'center'
+  },
+
+  formField: {
+    width: '100%',
+    borderWidth: 2,
+    padding: 15
+  },
+
+  fullScreenCentered: {
+    flex: 1,
+    backgroundColor: 'lightblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 30,
+    textAlign: 'center',
   },
 
   alert: {
@@ -78,11 +110,10 @@ export const styles = StyleSheet.create({
     zIndex: 2,
   },
 
-  inputFieldStyle: {
+  inputField: {
     backgroundColor: 'white',
     padding: 0,
-    //height: (props.fieldHeight ? props.fieldHeight : 30),
-    //textAlignVertical: (props.fieldHeight ? 'top' : 'center'),
+    marginBottom: 6,
     fontSize: 16,
   },
 

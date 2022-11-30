@@ -10,6 +10,7 @@ import { LabeledInput } from '../../modularComponents/labeledInput.js';
 import { ErrorText } from '../../modularComponents/errorText.js';
 import { LoadPopup } from '../../modularComponents/loadPopup.js';
 import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
+import { Space } from '../../../smart/visuals.js';
 
 //redux imports
 // import { useSelector, useDispatch } from 'react-redux';
@@ -96,7 +97,7 @@ export const Welcome = (props) => {
     props.navigation.navigate('Menu');
   }
   useEffect(setStartScreen, [props.user, props.startRoomId]);
-  
+
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
   const DevLoginButton = props => {
@@ -127,39 +128,36 @@ export const Welcome = (props) => {
   }
 
   return (
-    <View style={{
-      flex: 1,
-      backgroundColor: 'lightblue',
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 30,
-      textAlign: 'center',
-    }}>
+    <View style={styles.fullScreenCentered}>
 
-      <Text style={styles.h1}>Unwritten</Text>
-      <Text style={styles.body}>Welcome to the world of Unwritten!</Text>
-      <Text style={styles.body}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
+      <Text style={styles.title}>Unwritten</Text>
+      <Text style={{ ...styles.paragraph, ...styles.textCenter }}>Welcome to the world of Unwritten!</Text>
+      <Text style={{ ...styles.paragraph, ...styles.textCenter }}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
+      {Space(20)}
 
-      <Text style={styles.h2}>Sign {signUp ? 'Up' : 'In'}</Text>
+      <View style={styles.formField}>
+        <Text style={styles.h1}>Sign {signUp ? 'Up' : 'In'}</Text>
 
-      <LabeledInput label={'Email'} onChangeText={text => { setEmail(text) }} />
-      <LabeledInput label={'Password'} onChangeText={text => { setPassword(text) }} />
-      {signUp && <LabeledInput label={'Display Name'} onChangeText={text => { setDisplayName(text) }} />}
+        <LabeledInput label={'Email'} onChangeText={text => { setEmail(text) }} />
+        <LabeledInput label={'Password'} onChangeText={text => { setPassword(text) }} />
+        {signUp && <LabeledInput label={'Display Name'} onChangeText={text => { setDisplayName(text) }} />}
+        {Space(10)}
+        <Button
+          title={'Sign ' + (signUp ? 'Up' : 'In')}
+          onPress={submitForm}
+          disabled={!email || !password || (signUp && !displayName)}
+        />
 
-      <Button
-        title={'Sign ' + (signUp ? 'Up' : 'In')}
-        onPress={submitForm}
-        disabled={!email || !password || (signUp && !displayName)}
-      />
+        <ErrorText message={errorMessage} />
+        <LoadPopup isLoading={loading != null && loading != ''} loadText={loading} />
+        <BoolStateToggler
+          setState={setSignUp}
+          state={signUp}
+          onText='Already have an account? Press here to sign in instead'
+          offText='New to Unwritten? Sign up here'
+        />
 
-      <ErrorText message={errorMessage} />
-      <LoadPopup isLoading={loading != null && loading != ''} loadText={loading} />
-      <BoolStateToggler
-        setState={setSignUp}
-        state={signUp}
-        onText='Already have an account? Press here to sign in instead'
-        offText='New to Unwritten? Sign up here'
-      />
+      </View>
 
     </View>
   );

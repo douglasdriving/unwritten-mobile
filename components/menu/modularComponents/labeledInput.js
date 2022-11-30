@@ -1,4 +1,5 @@
 import { Text, TextInput } from 'react-native';
+import { styles } from '../../../style';
 
 export const LabeledInput = (props) => {
 
@@ -7,11 +8,7 @@ export const LabeledInput = (props) => {
       <Text>{props.label}</Text>
       <TextInput
         onChangeText={props.onChangeText}
-        style={{
-          backgroundColor: 'white',
-          width: '100%',
-          padding: 0,
-        }}
+        style={styles.inputField}
         secureTextEntry={props.label=='Password'}/>
     </>
   );

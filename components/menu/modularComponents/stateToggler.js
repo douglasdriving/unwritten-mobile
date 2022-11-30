@@ -10,7 +10,7 @@ export const BoolStateToggler = (props) => {
     <TouchableWithoutFeedback>
       <Text
         onPress={toggleState}
-        style={{ textDecorationLine: 'underline' }}
+        style={{ textDecorationLine: 'underline', textAlign: 'center', padding: 10 }}
       >
         {props.state ? props.onText : props.offText}
       </Text>
