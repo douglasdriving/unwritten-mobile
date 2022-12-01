@@ -8,16 +8,12 @@ import { Join } from './components/menu/newUser/join';
 import { Game } from './components/game/game';
 import { AuthTokenContext } from './contexts/authContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Notifications from 'expo-notifications';
 import { addNotificationHandler } from './backend/notifications';
 import { navigationRef } from './contexts/rootNavigation';
-import { Text } from 'react-native';
-import { MenuScreenHeader } from './components/menu/modularComponents/menuScreenHeader';
 
 //redux
 import reduxStore from './redux/reduxStore';
-import { Provider, useSelector } from 'react-redux';
-import { selectAuthToken } from './redux/authTokenSlice';
+import { Provider } from 'react-redux';
 
 const Stack = createStackNavigator();
 
@@ -43,11 +39,11 @@ export default function App() {
 
   //app start
   useEffect(() => {
-    loadAuthTokenLocal();
+    loadAuthTokenLocal(); //reduntant after redux?
     addNotificationHandler(setAuthToken, setUser);
   }, []);
 
-  //auth token updated
+  //auth token updated. redundant after redux?
   useEffect(() => {
     setAuthTokenForBackendCalls(authToken);
     tryLoginWithAuthToken();

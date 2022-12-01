@@ -55,7 +55,7 @@ export const login = createAsyncThunk(
   'user/login',
   async (arg, thunkAPI) => {
 
-    if (!hasToken) return null;
+    if (!hasToken()) return null;
 
     const user = await GetUser();
 

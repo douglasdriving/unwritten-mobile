@@ -1,6 +1,6 @@
 import { Text, View, Button } from 'react-native';
 import { styles } from '../../../../style.js';
-import { signIn as signInBackend, signUp as signUpBackend } from '../../../../backend/backendCalls.js';
+import { hasToken, signIn as signInBackend, signUp as signUpBackend } from '../../../../backend/backendCalls.js';
 import { useState } from 'react';
 import { useContext, useEffect } from 'react';
 import { AuthTokenContext } from '../../../../contexts/authContext.js';
@@ -11,11 +11,6 @@ import { ErrorText } from '../../modularComponents/errorText.js';
 import { LoadPopup } from '../../modularComponents/loadPopup.js';
 import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
 import { Space } from '../../../smart/visuals.js';
-
-//redux imports
-// import { useSelector, useDispatch } from 'react-redux';
-// import { selectAuthToken, loadAuthTokenFromStorage, fetchAuthTokenWithCredentials, clearAuthToken } from '../../../../redux/authTokenSlice.js';
-// import { fetchUserWithToken, selectUser } from '../../../../redux/userSlice.js';
 
 export const Welcome = (props) => {
 
@@ -28,29 +23,6 @@ export const Welcome = (props) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
 
-  //Redux logic
-  // const authTokenInStore = useSelector(selectAuthToken); //change name to authToken
-  // const user = useSelector(selectUser);
-  // const dispatch = useDispatch();
-
-  // const tryAutoLogin = async () => {
-  //   //checks if there is an auth token in the phone storage, and logs in with it if there is, and navigates into the game
-  //   await dispatch(loadAuthTokenFromStorage());
-  //   if (authTokenInStore && authTokenInStore != null && authTokenInStore != '') {
-  //     await dispatch(fetchUserWithToken());
-  //     if (user.id) {
-  //       if (props.startRoomId) {
-  //         props.navigation.navigate('Game', { roomId: props.startRoomId });
-  //       }
-  //       else {
-  //         props.navigation.navigate('Menu');
-  //       }
-  //     }
-  //   }
-  // }
-  // useEffect(() => { tryAutoLogin() }, []);
-
-  //Other
   const submitForm = async () => {
 
     setLoading(signUp ? 'Creating new user...' : 'Signing in...');
@@ -75,8 +47,6 @@ export const Welcome = (props) => {
     setLoading(false);
 
   }
-
-  //old system for auto login
   const setStartScreen = () => {
     //checking the "user" and "startRoomId" props
     if (!props.user) {
@@ -97,7 +67,6 @@ export const Welcome = (props) => {
     props.navigation.navigate('Menu');
   }
   useEffect(setStartScreen, [props.user, props.startRoomId]);
-
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
   const DevLoginButton = props => {
