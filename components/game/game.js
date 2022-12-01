@@ -37,7 +37,6 @@ export const Game = (props) => {
     return strikes;
 
   }
-
   const CheckForNewStrike = async (players) => {
 
     //checks to see if the player has gotten a new strike, and shows a popup if they have
@@ -50,7 +49,6 @@ export const Game = (props) => {
     }
 
   }
-
   const LoadRoomData = async () => {
 
     const room = await GetRoomData(props.route.params.roomId);

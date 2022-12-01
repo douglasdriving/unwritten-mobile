@@ -2,11 +2,13 @@ import { Text, View, Button, ScrollView, TextInput } from 'react-native';
 import { styles } from '../../../../style';
 import { useState, useEffect } from 'react';
 import { GetStoryKeys, CreateRoom } from '../../../../backend/backendCalls';
-import { Spacer } from '../../../smart/visuals';
+import { Space, Spacer } from '../../../smart/visuals';
 import { Popup } from '../../../smart/popup';
 import { MenuScreenHeader } from '../../modularComponents/menuScreenHeader';
 import { useFocusEffect } from '@react-navigation/native';
 import { ErrorText } from '../../modularComponents/errorText';
+import { Modal } from 'react-native';
+import { FocusInputField } from '../../../smart/focusInputField';
 
 export const OpenRoom = (props) => {
 
@@ -18,6 +20,15 @@ export const OpenRoom = (props) => {
 
   const [tryingToOpen, setTryingToOpen] = useState(false);
   const [opening, setOpening] = useState(false);
+  const [descriptionFocused, setDescriptionFocused] = useState(true);
+
+  /*
+  ok this is a pretty tricky challenge
+  but I think we could do it really cleverly with a single component
+  somthing that, when pressed, expands a popup field that covers the whole space and that you can write in
+  it should probably just appear "above" the other content, since then we dont have to hide other stuff
+  similar to a popup
+  */
 
   const [roomCreateError, setRoomCreateError] = useState();
 
@@ -29,11 +40,11 @@ export const OpenRoom = (props) => {
 
     setOpening(true);
     const response = await CreateRoom(titleInput, descriptionInput, startingScenario);
-    if(response.success){
+    if (response.success) {
       ClearFields();
       props.navigation.navigate('Game', { roomId: response.roomId });
     }
-    else{
+    else {
       setRoomCreateError(response.message);
       setOpening(false);
     }
@@ -57,90 +68,79 @@ export const OpenRoom = (props) => {
   }
 
   useFocusEffect(() => { LoadStoryKeys() });
-
   useEffect(() => setRoomCreateError(null), [titleInput, descriptionInput, startingScenario]);
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={{ ...styles.container, justifyContent: 'center' }}>
+
+      <FocusInputField label='test'/>
+
       <Text style={styles.h1}>Open Room</Text>
+      <Text style={styles.paragraph}>🔑  {storyKeys}</Text>
+
+      <Text style={styles.body}>
+        {
+          storyKeys > 0 ?
+            'Open a new writing room and create a new story with other players' :
+            'Opening a new room requires story keys! Earn keys by participating in other stories.'
+        }
+      </Text>
+
       {
-        // props.user.premium ?
-
-        <View>
-          <Text style={styles.body}>Open a new writing room and create a new story with other players</Text>
-          <Text style={styles.body}>🔑 {storyKeys}</Text>
-          {
-            (storyKeys > 0) ?
-              (
-                <View>
-                  <Text style={styles.h2}>Story Title</Text>
-                  <TextInput
-                    style={styles.inputFieldStyle}
-                    multiline={true}
-                    onChangeText={setTitleInput}
-                    value={titleInput}
-                  />
-
-                  <Text style={styles.h2}>Story Description</Text>
-                  <TextInput
-                    style={{ ...styles.inputFieldStyle, height: 150, textAlignVertical: 'top' }}
-                    multiline={true}
-                    onChangeText={setDescriptionInput}
-                    value={descriptionInput}
-                  />
-
-                  <Text style={styles.h2}>Story Opening Text</Text>
-                  <TextInput
-                    style={{ ...styles.inputFieldStyle, height: 150, textAlignVertical: 'top' }}
-                    multiline={true}
-                    onChangeText={setStartingScenario}
-                    value={startingScenario}
-                  />
-
-                  <Button title='🔑 Open Room' disabled={!FieldsReady()} onPress={ToggleTryingToOpen} />
-
-                  <ErrorText message={roomCreateError}/>
-
-                  {tryingToOpen && <Popup
-                    title='Open the room?'
-                    text={'Opening this room will cost  1🔑️. You currently have ' + storyKeys}
-                    onClose={ToggleTryingToOpen}
-                    buttons={[
-                      {
-                        title: 'Open 🔑️',
-                        handlePress: (() => { ToggleTryingToOpen(); StartOpening() })
-                      },
-                      {
-                        title: 'Cancel',
-                        handlePress: ToggleTryingToOpen
-                      }
-                    ]}
-                  />}
-
-                  {opening && <Popup
-                    title='🔑️ Opening Room...'
-                    loading={true}
-                  />}
-
-                  <Spacer />
-                </View>
-              )
-              :
-              (
-                <Text>Opening a new room requires story keys! Earn more keys by helping out with finishing other stories.</Text>
-              )
-          }
-        </View>
-
-        // :
-
-        // <View>
-        //   <Text>Join Unwritten to open new rooms and start your own stories!</Text>
-        //   <Button title='Join Unwritten' onPress={() => { props.navigation.navigate('Join') }} />
-        // </View>
+        (storyKeys > 0) &&
+        <>
+          {Space(10)}
+          <Text style={styles.h3}>Story Title</Text>
+          <TextInput
+            style={styles.inputField}
+            multiline={true}
+            onChangeText={setTitleInput}
+            value={titleInput}
+          />
+          <Text style={styles.h3}>Story Description</Text>
+          <TextInput
+            style={{ ...styles.inputField, flex: 1, textAlignVertical: 'top' }}
+            multiline={true}
+            onChangeText={setDescriptionInput}
+            value={descriptionInput}
+          />
+          <Text style={styles.h3}>Story Opening Text</Text>
+          <TextInput
+            style={{ ...styles.inputField, flex: 1, textAlignVertical: 'top' }}
+            multiline={true}
+            onChangeText={setStartingScenario}
+            value={startingScenario}
+          // onFocus={make a writing window appear}
+          />
+          {Space(15)}
+          <Button title='🔑 Open Room' disabled={!FieldsReady()} onPress={ToggleTryingToOpen} />
+        </>
       }
 
-    </ScrollView>
+      <ErrorText message={roomCreateError} />
+
+      {tryingToOpen && <Popup
+        title='Open the room?'
+        text={'Opening this room will cost  1🔑️. You currently have ' + storyKeys}
+        onClose={ToggleTryingToOpen}
+        buttons={[
+          {
+            title: 'Open 🔑️',
+            handlePress: (() => { ToggleTryingToOpen(); StartOpening() })
+          },
+          {
+            title: 'Cancel',
+            handlePress: ToggleTryingToOpen
+          }
+        ]}
+      />}
+
+      {opening && <Popup
+        title='🔑️ Opening Room...'
+        loading={true}
+      />}
+
+    </View>
 
   );
 

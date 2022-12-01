@@ -77,6 +77,8 @@ export const JoinRoom = (props) => {
         />
       }
 
+      <Text style={styles.h1}>Rooms</Text>
+
       {(availableRoomsList && availableRoomsList.new && availableRoomsList.ongoing && availableRoomsList.new.length == 0 && availableRoomsList.ongoing.length == 0) &&
         <Text style={styles.paragraph}>
           There are currently no rooms available to join.
@@ -86,7 +88,6 @@ export const JoinRoom = (props) => {
 
       {(availableRoomsList && availableRoomsList.new && availableRoomsList.new.length > 0) &&
         <>
-          <Text style={styles.h1}>New Rooms</Text>
           <Text style={styles.paragraph}>Join a newly created room and take part in writing a story from the beginning!</Text>
           <StoryList
             listItemInfo={availableRoomsList.new}

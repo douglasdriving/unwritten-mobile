@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'lightblue',
-    // paddingTop: 30,
     padding: 30,
   },
 
@@ -115,6 +114,7 @@ export const styles = StyleSheet.create({
     padding: 0,
     marginBottom: 6,
     fontSize: 16,
+    minHeight: 30
   },
 
 });
