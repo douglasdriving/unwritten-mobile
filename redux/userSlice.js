@@ -33,8 +33,8 @@ export const fetchTokenWithCredentials = createAsyncThunk(
   'user/fetchTokenWithCredentials',
   async ({ email, password }, thunkAPI) => {
     const tokenFetch = await signIn(email, password);
-    await AsyncStorage.setItem('authToken', tokenFetch.token);
-    return tokenFetch.token;
+    if (tokenFetch.token) await AsyncStorage.setItem('authToken', tokenFetch.token);
+    return tokenFetch;
   }
 );
 
@@ -47,7 +47,6 @@ export const createUserAndFetchToken = createAsyncThunk(
   }
 )
 
-//use token to login
 export const login = createAsyncThunk(
   //uses the auth token to log the user in!
   'user/login',
@@ -81,17 +80,19 @@ export const userSlice = createSlice({
     name: null,
     id: null,
     premium: false,
-    token: null
+    token: null,
+    loginError: null
   },
   extraReducers: (builder) => {
     builder
       .addCase(loadLocalToken.fulfilled, (state, action) => {
-        setAuthToken(action.payload); //for backend calls
+        setAuthToken(action.payload);
         return { ...state, token: action.payload };
       })
       .addCase(fetchTokenWithCredentials.fulfilled, (state, action) => {
-        setAuthToken(action.payload); //should not be needed later
+        setAuthToken(action.payload);
         state.token = action.payload;
+        if(!action.payload.ok) state.loginError = action.payload.message;
       })
       .addCase(createUserAndFetchToken.fulfilled, (state, action) => {
         setAuthToken(action.payload);

@@ -75,9 +75,17 @@ export const LoginScreen = (props) => {
       const pushToken = await registerForPushNotificationsAsync();
       AsyncStorage.setItem('pushToken', pushToken);
       await dispatch(createUserAndFetchToken({ email, password, displayName, pushToken }));
+      //should get a message here if we fail..
     }
     else {
-      await dispatch(fetchTokenWithCredentials({ email, password }));
+      const tokenFetchDisp = await dispatch(fetchTokenWithCredentials({ email, password }));
+      //need error handling here! but backend does not return correctly. fix there first...
+      // console.log('token fetch disp: ', tokenFetchDisp);
+      // if(!tokenFetchDisp.payload.ok){
+      //   setErrorMessage(tokenFetchDisp.payload.message);
+      //   setLoading(false);
+      //   return;
+      // }
     }
 
     const loggedIn = await tryLogin();
@@ -92,7 +100,6 @@ export const LoginScreen = (props) => {
     setLoading(false);
 
   }
-
   const quickSignIn = async () => {
 
     //show load screen

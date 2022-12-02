@@ -56,7 +56,7 @@ export const signIn = async (email, password) => {
     return { ok: true, message: jsonResponse.message, token: jsonResponse.token };
   }
   else {
-    return { ok: false, message: 'wrong email or password', token: null }
+    return { ok: false, message: 'fail', token: null }
   }
 
 }
