@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Menu } from './components/menu/menu';
-import { Join } from './components/menu/newUser/join';
+import { Join } from './components/join/join';
 import { Game } from './components/game/game';
 import { addNotificationHandler } from './backend/notifications';
 import { navigationRef } from './contexts/rootNavigation';
-import { LoginScreen } from './components/menu/newUser/welcomeScreen/loginScreen';
+import { LoginScreen } from './components/login/loginScreen';
 
 //redux
 import reduxStore from './redux/reduxStore';

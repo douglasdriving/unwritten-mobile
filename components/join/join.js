@@ -1,5 +1,5 @@
 import { Text, View, Button } from 'react-native';
-import {styles} from '../../../style.js';
+import {styles} from '../../style.js';
 
 export const Join = () => {
   return(

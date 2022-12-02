@@ -1,19 +1,19 @@
 import { Text, View, Button } from 'react-native';
-import { styles } from '../../../../style.js';
+import { styles } from '../../style.js';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { registerForPushNotificationsAsync } from '../../../../backend/notifications.js';
-import { LabeledInput } from '../../modularComponents/labeledInput.js';
-import { ErrorText } from '../../modularComponents/errorText.js';
-import { LoadPopup } from '../../modularComponents/loadPopup.js';
-import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
-import { Space } from '../../../smart/visuals.js';
-import { navigate } from '../../../../contexts/rootNavigation.js';
+import { registerForPushNotificationsAsync } from '../../backend/notifications.js';
+import { LabeledInput } from '../menu/modularComponents/labeledInput.js';
+import { ErrorText } from '../menu/modularComponents/errorText.js';
+import { LoadPopup } from '../menu/modularComponents/loadPopup.js';
+import { BoolStateToggler } from '../menu/modularComponents/stateToggler.js';
+import { Space } from '../smart/visuals.js';
+import { navigate } from '../../contexts/rootNavigation.js';
 
 //redux imports
 import { useSelector, useDispatch } from 'react-redux';
-import { login, selectUser, loadLocalToken, createUserAndFetchToken, fetchTokenWithCredentials } from '../../../../redux/userSlice.js';
+import { login, selectUser, loadLocalToken, createUserAndFetchToken, fetchTokenWithCredentials } from '../../redux/userSlice.js';
 
 export const LoginScreen = (props) => {
 
