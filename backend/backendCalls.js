@@ -12,6 +12,9 @@ export const setAuthToken = (newToken) => {
 export const hasToken = () => {
   return (authToken && authToken != '');
 }
+export const backendCallToken = () => {
+  return authToken;
+}
 
 const AuthHeader = () => {
   return new Headers({

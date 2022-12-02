@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useState } from 'react';
 import { Popup } from '../../../smart/popup';
 import { JoinRoom } from '../../../../backend/backendCalls';
+import { navigate, navigateToRoom } from '../../../../contexts/rootNavigation';
 
 export const ListItem = (props) => {
 
@@ -30,7 +31,7 @@ export const ListItem = (props) => {
   }
 
   const EnterRoom = () => {
-    props.navigation.navigate('Game', { roomId: roomId });
+    navigateToRoom(roomId)
   }
 
   const GeneratePopupText = () => {

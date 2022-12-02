@@ -3,10 +3,13 @@ import { Divider } from '../../../smart/visuals.js';
 import { Paragraph } from './paragraph.js';
 import { styles } from '../../../../style.js';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectUserId } from '../../../../redux/userSlice.js';
 
 export const StoryContent = (props) => {
 
   const [allPlayers, setAllPlayers] = useState([]);
+  const userId = useSelector(selectUserId);
 
   const ListAllPlayers = async () => {
 
@@ -63,7 +66,7 @@ export const StoryContent = (props) => {
               scenario={scenario}
               scenarioNumber={i + 1}
               key={i}
-              isUser={props.user.id == scenario.creator_id}
+              isUser={userId == scenario.creator_id}
               authorName={GetPlayerName(scenario.creator_id)}
             />
           )}

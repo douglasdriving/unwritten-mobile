@@ -4,10 +4,9 @@ import { useState, useCallback } from 'react';
 import { GetFinishedStories } from '../../../backend/backendCalls';
 import { useFocusEffect } from '@react-navigation/native';
 import { StoryList } from '../modularComponents/storyList/storylist';
-import { MenuScreenHeader } from '../modularComponents/menuScreenHeader';
 import { Space } from '../../smart/visuals';
 
-export const Archive = (props) => {
+export const Archive = () => {
 
   const [storiesList, setStoriesList] = useState([]);
 
@@ -38,7 +37,7 @@ export const Archive = (props) => {
     <ScrollView style={styles.container}>
       <Text style={styles.h1}>Archive</Text>
       <Text style={styles.body}>A collection of the {storiesList.length} stories finished so far in Unwritten</Text>
-      <StoryList listItemInfo={storiesList} {...props} />
+      <StoryList listItemInfo={storiesList}/>
       {Space(200)}
     </ScrollView>
   );

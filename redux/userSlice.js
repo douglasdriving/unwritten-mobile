@@ -19,12 +19,12 @@ Selectors:
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GetUser, signUp, setAuthToken, signIn, hasToken } from '../backend/backendCalls';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loadLocalToken = createAsyncThunk(
   'user/loadLocalToken',
   async (arg, thunkAPI) => {
     const token = await AsyncStorage.getItem('authToken');
-    setAuthToken(token);
     return token;
   }
 );
@@ -33,9 +33,8 @@ export const fetchTokenWithCredentials = createAsyncThunk(
   'user/fetchTokenWithCredentials',
   async ({ email, password }, thunkAPI) => {
     const tokenFetch = await signIn(email, password);
-    const token = tokenFetch.token;
-    setAuthToken(token); //should not be needed later
-    return token;
+    await AsyncStorage.setItem('authToken', tokenFetch.token);
+    return tokenFetch.token;
   }
 );
 
@@ -44,7 +43,6 @@ export const createUserAndFetchToken = createAsyncThunk(
   async ({ email, password, displayName, pushToken }, thunkAPI) => {
     const response = await signUp(email, password, displayName, pushToken);
     const token = response.token;
-    setAuthToken(token); //should not be needed later
     return token;
   }
 )
@@ -69,6 +67,14 @@ export const login = createAsyncThunk(
   }
 )
 
+export const logout = createAsyncThunk(
+  'user/logout',
+  async (arg, thunkAPI) => {
+    await AsyncStorage.setItem('authToken', '');
+    return;
+  }
+)
+
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -77,43 +83,42 @@ export const userSlice = createSlice({
     premium: false,
     token: null
   },
-  reducers: {
-    logout: (state, action) => {
-      setAuthToken(null); //should not be needed
-      return {
-        name: null,
-        id: null,
-        premium: false,
-        token: null
-      }
-    }
-  },
   extraReducers: (builder) => {
     builder
       .addCase(loadLocalToken.fulfilled, (state, action) => {
-        state.token = action.payload;
+        setAuthToken(action.payload); //for backend calls
+        return { ...state, token: action.payload };
       })
       .addCase(fetchTokenWithCredentials.fulfilled, (state, action) => {
+        setAuthToken(action.payload); //should not be needed later
         state.token = action.payload;
       })
       .addCase(createUserAndFetchToken.fulfilled, (state, action) => {
+        setAuthToken(action.payload);
         state.token = action.payload;
       })
       .addCase(login.fulfilled, (state, action) => {
-        if (action.payload){
+        if (action.payload) {
           state.name = action.payload.name;
           state.id = action.payload.id;
           state.premium = action.payload.premium;
         }
       })
+      .addCase(logout.fulfilled, (state, action) => {
+        setAuthToken(null);
+        state.name = null;
+        state.id = null;
+        state.premium = false;
+        state.token = null;
+      })
+
   }
 });
 
-export const selectUserName = state => state.name;
-export const selectUserId = state => state.id;
-export const selectUserPremium = state => state.premium;
-export const selectUserToken = state => state.token;
-export const selectUser = state => state;
+export const selectUserName = state => state.user.name;
+export const selectUserId = state => state.user.id;
+export const selectUserPremium = state => state.user.premium;
+export const selectUserToken = state => state.user.token;
+export const selectUser = state => state.user;
 
-export const { logout } = authTokenSlice.actions;
-export const authTokenReducer = authTokenSlice.reducer;
+export const userReducer = userSlice.reducer;

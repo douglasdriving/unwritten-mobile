@@ -6,11 +6,16 @@ import { useFocusEffect } from '@react-navigation/native';
 import { StoryList } from '../modularComponents/storyList/storylist';
 import { Popup } from '../../smart/popup';
 import { MenuScreenHeader } from '../modularComponents/menuScreenHeader';
+import { navigate } from '../../../contexts/rootNavigation';
+
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../../redux/userSlice';
 
 export const JoinRoom = (props) => {
 
   const [availableRoomsList, setAvailableRoomsList] = useState();
   const [welcomPopup, setWelcomePopup] = useState();
+  const user = useSelector(selectUser);
 
   const Load = async () => {
     const rooms = await GetAvailableRooms();
@@ -46,10 +51,7 @@ export const JoinRoom = (props) => {
   }
 
   useEffect(() => {
-    if (!props.user) console.error('no user object passed into JoinRoom props');
-    else {
-      setWelcomePopup(props.user.new)
-    }
+    if (!user) console.error('no user found in the redux store');
   })
 
   useFocusEffect(
@@ -71,7 +73,7 @@ export const JoinRoom = (props) => {
           buttons={[
             {
               title: 'Join Unwritten',
-              handlePress: () => { props.appNavigation.navigate('Join') }
+              handlePress: () => { navigate('Join') }
             },
           ]}
         />
@@ -91,7 +93,6 @@ export const JoinRoom = (props) => {
           <Text style={styles.paragraph}>Join a newly created room and take part in writing a story from the beginning!</Text>
           <StoryList
             listItemInfo={availableRoomsList.new}
-            {...props}
             confirmJoin={true}
           />
         </>
@@ -104,7 +105,6 @@ export const JoinRoom = (props) => {
           <Text style={styles.paragraph}>Rooms with ongoing story that has one or more spots open to fill</Text>
           <StoryList
             listItemInfo={availableRoomsList.ongoing}
-            {...props}
             confirmJoin={true}
           />
         </>

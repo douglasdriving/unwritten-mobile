@@ -4,11 +4,13 @@ import { YourTurnField } from "./yourTurnField/yourTurnField";
 import { WritingField } from "./writingField/writingField";
 import { WaitingField } from "./waitingField/waitingField";
 import { PlayerSearchField } from "./playerSearchField/playerSearchField";
-
+import { useSelector } from "react-redux";
+import { selectUserName } from "../../../../redux/userSlice";
 
 export const ActionArea = (props) => {
   
   const [isWriting, setIsWriting] = useState(null);
+  const userName = useSelector(selectUserName);
 
   const SetWritingField = type => {
     setIsWriting(type);
@@ -22,7 +24,7 @@ export const ActionArea = (props) => {
           <PlayerSearchField />
           :
           (
-            props.nextPlayerName == props.user.name ?
+            props.nextPlayerName == userName ?
               (
                 isWriting ?
                   <WritingField

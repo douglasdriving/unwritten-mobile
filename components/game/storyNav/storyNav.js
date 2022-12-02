@@ -3,6 +3,7 @@ import { styles } from '../../../style.js';
 import { useState } from 'react';
 import { StoryNavButton } from './storyNavButton.js';
 import { Popup } from '../../smart/popup.js';
+import { navigate } from '../../../contexts/rootNavigation.js';
 
 export const StoryNav = (props) => {
 
@@ -10,7 +11,7 @@ export const StoryNav = (props) => {
 
   const LeaveRoom = () => {
     ClosePopup();
-    props.appNavigation.navigate('Menu');
+    navigate('Menu');
   }
 
   const ClosePopup = () => {

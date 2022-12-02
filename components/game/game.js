@@ -8,7 +8,13 @@ import { RoomMenu } from './roomMenu/roomMenu.js';
 import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../redux/userSlice.js';
+
 export const Game = (props) => {
+
+  //global
+  const user = useSelector(selectUser);
 
   //Load once
   const [readOnly, setReadOnly] = useState("false");
@@ -32,7 +38,7 @@ export const Game = (props) => {
   const GetPlayerStrikes = (players) => {
 
     //gets the current players strike count
-    const player = players.filter(player => player.id == props.user.id)[0];
+    const player = players.filter(player => player.id == user.id)[0];
     const strikes = player.strikes;
     return strikes;
 
@@ -41,7 +47,7 @@ export const Game = (props) => {
 
     //checks to see if the player has gotten a new strike, and shows a popup if they have
     const strikes = GetPlayerStrikes(players);
-    const strikeTrackerKey = String(`strikes ${props.route.params.roomId} ${props.user.id}`);
+    const strikeTrackerKey = String(`strikes ${props.route.params.roomId} ${user.id}`);
     const seenStrikes = await AsyncStorage.getItem(strikeTrackerKey);
     if (strikes != 0 && parseInt(seenStrikes) < strikes) {
       AsyncStorage.setItem(strikeTrackerKey, String(strikes));
@@ -68,7 +74,7 @@ export const Game = (props) => {
 
     //load chars
     room.players.forEach(player => {
-      if (player.id == props.user.id) {
+      if (player.id == user.id) {
         setChars({
           initial: player.char_count,
           remaining: player.char_count
@@ -148,7 +154,6 @@ export const Game = (props) => {
         AddScenario={AddScenario}
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
-        user={props.user}
         turnNumber={story.scenarios.length + 1}
         players={activePlayers}
         inActivePlayers={inActivePlayers}
@@ -156,7 +161,6 @@ export const Game = (props) => {
       <StoryNav
         readOnly={readOnly}
         openMenu={() => setMenuOpen(true)}
-        appNavigation={props.navigation}
       />
       {menuOpen && <RoomMenu
         players={activePlayers}
@@ -165,7 +169,6 @@ export const Game = (props) => {
         closeMenu={() => setMenuOpen(false)}
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}
-        user={props.user}
         nextPlayerId={nextPlayerId}
       />}
       {scenarioPostLoading && <Popup

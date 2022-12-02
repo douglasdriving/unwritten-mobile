@@ -3,9 +3,6 @@ import { PlayerRow } from "./playerRow";
 
 export const PlayerList = (props) => {
 
-  // console.log('players: ', props.players);
-  // console.log('next player id: ', props.nextPlayerId);
-
   return (
     <View>
 

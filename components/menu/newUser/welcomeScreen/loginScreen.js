@@ -9,10 +9,11 @@ import { ErrorText } from '../../modularComponents/errorText.js';
 import { LoadPopup } from '../../modularComponents/loadPopup.js';
 import { BoolStateToggler } from '../../modularComponents/stateToggler.js';
 import { Space } from '../../../smart/visuals.js';
+import { navigate } from '../../../../contexts/rootNavigation.js';
 
 //redux imports
 import { useSelector, useDispatch } from 'react-redux';
-import { login, selectUser, selectUserToken, loadLocalToken, createUserAndFetchToken, fetchTokenWithCredentials } from '../../../../redux/userSlice.js';
+import { login, selectUser, loadLocalToken, createUserAndFetchToken, fetchTokenWithCredentials } from '../../../../redux/userSlice.js';
 
 export const LoginScreen = (props) => {
 
@@ -28,21 +29,13 @@ export const LoginScreen = (props) => {
   const [loading, setLoading] = useState();
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
-
-  //global states
-  const authToken = useSelector(selectUserToken);
-  const user = useSelector(selectUser);
-
+  
   //login functions
-  const hasAuthToken = () => {
-    //chech if we have a token
-    return (authToken && authToken != null && authToken != '');
-  }
   const tryLoginStart = async () => {
 
     //try loading a token and use it to login
-    const gotToken = await tryLoadTokenFromStorage();
-    if (!gotToken) return;
+    const tokenInStorage = await tryLoadTokenFromStorage();
+    if (!tokenInStorage || tokenInStorage == '') return;
     const gotUser = await tryLogin();
     return gotUser;
 
@@ -50,20 +43,24 @@ export const LoginScreen = (props) => {
   const tryLoadTokenFromStorage = async () => {
 
     //try loading an auth token from the local phone storage
-    await dispatch(loadLocalToken());
-    return hasAuthToken();
+    const token = await dispatch(loadLocalToken());
+    return (token.payload);
 
   }
   const tryLogin = async () => {
 
     //try using the auth token to login
-    await dispatch(login());
-    if (!user.id) return false;
+    const loginDisp = await dispatch(login());
+    const returnedUser = loginDisp.payload;
+
+    if (!returnedUser) return;
+    if (!returnedUser.id) return false;
+    
     if (props.startRoomId) {
-      props.navigation.navigate('Game', { roomId: props.startRoomId });
+      navigate('Game', { roomId: props.startRoomId });
     }
     else {
-      props.navigation.navigate('Menu');
+      navigate('Menu');
     }
     return true;
 
@@ -77,11 +74,32 @@ export const LoginScreen = (props) => {
     if (signUp) {
       const pushToken = await registerForPushNotificationsAsync();
       AsyncStorage.setItem('pushToken', pushToken);
-      await dispatch(createUserAndFetchToken(email, password, displayName, pushToken));
+      await dispatch(createUserAndFetchToken({ email, password, displayName, pushToken }));
     }
     else {
-      await dispatch(fetchTokenWithCredentials(email, password));
+      await dispatch(fetchTokenWithCredentials({ email, password }));
     }
+
+    const loggedIn = await tryLogin();
+
+    //failed to login? Show error
+    if (!loggedIn) {
+      if (signUp) setErrorMessage('Failed to create user, please check your credentials'); //have to know why!!!!! backend will say...
+      else setErrorMessage('Failed to login. Please check your credentials'); //have to know why!!! backend will say...
+    }
+
+    //hide load screen
+    setLoading(false);
+
+  }
+
+  const quickSignIn = async () => {
+
+    //show load screen
+    setLoading(signUp ? 'Creating new user...' : 'Signing in...');
+
+    //fetch token with signup or signin
+    await dispatch(fetchTokenWithCredentials({ email: 'douglasdriving@gmail.com', password: 'Gammalgrodan80' }));
 
     const loggedIn = await tryLogin();
 
@@ -99,34 +117,6 @@ export const LoginScreen = (props) => {
   //update page
   useEffect(() => { tryLoginStart() }, []);
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
-
-  //easy dev login component
-  // const DevLoginButton = props => {
-  //   return (
-  //     <Button
-  //       title={props.email}
-  //       onPress={
-  //         async () => {
-
-  //           setLoading('Signing in...');
-  //           const response = await signInBackend(props.email, props.password);
-
-  //           if (response.ok) {
-  //             if (!response.token) throw new Error('got no token from signin!');
-  //             setAuthToken(response.token);
-  //             AsyncStorage.setItem('authToken', response.token);
-  //           }
-  //           else {
-  //             setErrorMessage(response.message);
-  //           }
-
-  //           setLoading(false);
-
-  //         }
-  //       }
-  //     />
-  //   )
-  // }
 
   return (
     <View style={styles.fullScreenCentered}>
@@ -147,6 +137,10 @@ export const LoginScreen = (props) => {
           title={'Sign ' + (signUp ? 'Up' : 'In')}
           onPress={submitForm}
           disabled={!email || !password || (signUp && !displayName)}
+        />
+        <Button
+          title={'Quick Sign In'}
+          onPress={quickSignIn}
         />
 
         <ErrorText message={errorMessage} />

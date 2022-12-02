@@ -4,6 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GetUser } from './backendCalls';
 import { navigate, navigateToRoom } from '../contexts/rootNavigation';
 
+import { useDispatch } from 'react-redux';
+import { logout } from '../redux/userSlice';
+
 export const registerForPushNotificationsAsync = async () => {
 
   console.log('starting notification registration');
@@ -49,7 +52,7 @@ export const registerForPushNotificationsAsync = async () => {
   return token;
 }
 
-export const addNotificationHandler = (setAuthToken, setUser) => {
+export const addNotificationHandler = () => {
 
   Notifications.addNotificationResponseReceivedListener(async res => {
 
@@ -71,9 +74,8 @@ export const addNotificationHandler = (setAuthToken, setUser) => {
     const preloggedUser = await GetUser(authTokenInStorage);
 
     if (preloggedUser.id != userId) {
-      setAuthToken('');
-      AsyncStorage.setItem('authToken', '');
-      setUser(null);
+      const dispatch = useDispatch();
+      dispatch(logout());
       return;
     }
 

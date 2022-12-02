@@ -3,10 +3,13 @@ import { useState } from "react";
 import { CharCounter } from "./charCounter";
 import { ScenarioTextField } from "./scenarioTextField";
 import { UploadScenario } from "../../../../../backend/backendCalls";
+import { useSelector } from "react-redux";
+import { selectUserName } from "../../../../../redux/userSlice";
 
 export const WritingField = (props) => {
 
   const [scenarioText, setScenarioText] = useState('');
+  const userName = useSelector(selectUserName);
   
   const handleChangeText = text => {
     setScenarioText(text);
@@ -45,13 +48,13 @@ export const WritingField = (props) => {
   }
 
   if(!props.turnNumber) console.error('no turnNumber provided in writingField props');
-  if(!props.user.name) console.error('missing a user.name in props of writingField');
+  if(!userName) console.error('missing a username in redux store of writingField');
   if(!props.isWriting) console.error('missing "isWriting" in props of writingField');
 
   return (
     <View>
       <Button title="<-" color='gray' onPress={handleBackButtonPress}/>
-      <Text style={{ color: 'blue' }}>{props.turnNumber}. {props.user.name}</Text>
+      <Text style={{ color: 'blue' }}>{props.turnNumber}. {userName}</Text>
       <ScenarioTextField handleChangeText={handleChangeText} isWriting={props.isWriting}/>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Button

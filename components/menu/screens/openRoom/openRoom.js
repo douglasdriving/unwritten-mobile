@@ -1,16 +1,15 @@
-import { Text, View, Button, ScrollView, TextInput } from 'react-native';
+import { Text, View, Button, TextInput } from 'react-native';
 import { styles } from '../../../../style';
 import { useState, useEffect } from 'react';
 import { GetStoryKeys, CreateRoom } from '../../../../backend/backendCalls';
-import { Space, Spacer } from '../../../smart/visuals';
+import { Space } from '../../../smart/visuals';
 import { Popup } from '../../../smart/popup';
-import { MenuScreenHeader } from '../../modularComponents/menuScreenHeader';
 import { useFocusEffect } from '@react-navigation/native';
 import { ErrorText } from '../../modularComponents/errorText';
-import { Modal } from 'react-native';
 import { FocusInputField } from '../../../smart/focusInputField';
+import { navigate, navigateToRoom } from '../../../../contexts/rootNavigation';
 
-export const OpenRoom = (props) => {
+export const OpenRoom = () => {
 
   const [storyKeys, setStoryKeys] = useState();
 
@@ -42,7 +41,7 @@ export const OpenRoom = (props) => {
     const response = await CreateRoom(titleInput, descriptionInput, startingScenario);
     if (response.success) {
       ClearFields();
-      props.navigation.navigate('Game', { roomId: response.roomId });
+      navigateToRoom(response.roomId)
     }
     else {
       setRoomCreateError(response.message);
