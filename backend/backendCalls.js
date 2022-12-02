@@ -1,9 +1,6 @@
 const API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
 //const API_ENDPOINT = "http://localhost:5000";
 
-//TEST CODE
-console.log('backend call script started at' + new Date());
-
 //Headers
 let authToken;
 export const setAuthToken = (newToken) => {
