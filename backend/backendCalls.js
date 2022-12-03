@@ -130,10 +130,27 @@ export const JoinRoom = async (roomId) => {
 
 }
 
+export const GetChars = async (roomId, userId) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/room/user/chars?roomId=${roomId}&userId=${userId}`,
+    GetFetch()
+  );
+  const jsonResponse = await response.json();
+
+  if (!jsonResponse.ok) {
+    console.error(jsonResponse.message);
+    return null;
+  }
+
+  return jsonResponse.chars;
+
+}
+
 //SCENARIOS
 export const UploadScenario = async (text, roomId) => {
-    const response = await fetch(`${API_ENDPOINT}/scenario/?roomId=${roomId}&text=${text}`, PostFetch());
-    return response.ok;
+  const response = await fetch(`${API_ENDPOINT}/scenario/?roomId=${roomId}&text=${text}`, PostFetch());
+  return response.ok;
 }
 
 

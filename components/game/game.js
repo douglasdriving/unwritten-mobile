@@ -29,7 +29,6 @@ export const Game = (props) => {
   const [turnMissed, setTurnMissed] = useState(false);
 
   //change during play
-  const [chars, setChars] = useState({ initial: 0, remaining: 0 });
   const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
   const [counterUpdateInterval, setCounterUpdateInterval] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -72,16 +71,6 @@ export const Game = (props) => {
 
     CheckForNewStrike(room.players);
 
-    //load chars
-    room.players.forEach(player => {
-      if (player.id == user.id) {
-        setChars({
-          initial: player.char_count,
-          remaining: player.char_count
-        })
-      };
-    });
-
     setNextPlayerId(room.next_player_id);
 
     if (counterUpdateInterval) {
@@ -95,18 +84,13 @@ export const Game = (props) => {
     }, 1000);
     setCounterUpdateInterval(interval);
   }
-  const UpdateCharsRemaining = (textLength) => {
-    setChars({
-      initial: chars.initial,
-      remaining: chars.initial - textLength
-    })
-  }
+
+  //this function should be moved into the writing field!!!
   const AddScenario = async text => {
 
-    if (chars.remaining < 0) {
-      console.log('could not add scenario because too many chars where used')
-      return false;
-    }
+    //here is a problem, we kinda wanna check the chars when we post a scenario
+    //although, I think scenario posting could be done in the writing field!
+    //would make sense
 
     setScenarioPostLoading(true);
 
@@ -148,8 +132,6 @@ export const Game = (props) => {
     <View>
       <GameArea
         readOnly={readOnly}
-        charsRemaining={chars.remaining}
-        updateCharsRemaining={UpdateCharsRemaining}
         story={story}
         AddScenario={AddScenario}
         nextPlayerName={GetNextPlayerName()}
@@ -157,6 +139,7 @@ export const Game = (props) => {
         turnNumber={story.scenarios.length + 1}
         players={activePlayers}
         inActivePlayers={inActivePlayers}
+        roomId={props.route.params.roomId}
       />
       <StoryNav
         readOnly={readOnly}
