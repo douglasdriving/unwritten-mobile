@@ -1,6 +1,7 @@
 import { StyleSheet, Modal, Button, View, Text } from "react-native";
 import { styles } from "../../style";
 import { CloseButton } from "./closeButton";
+import { MyButton } from "./myButton";
 
 export const Popup = (props) => {
 
@@ -20,16 +21,16 @@ export const Popup = (props) => {
         <View style={popupStyles.box}>
           {!props.loading && <CloseButton handlePress={props.onClose} />}
           <View style={popupStyles.content}>
-            <Text style={styles.h2}>{props.title}</Text>
+            <Text style={styles.h1}>{props.title}</Text>
             {props.text && (
               Array.isArray(props.text) ?
-              props.text.map((text, i) => <Text key={i}>{text}</Text>) :
-              <Text>{props.text}</Text>
+                props.text.map((text, i) => <Text key={i} style={styles.paragraph}>{text}</Text>) :
+                <Text>{props.text}</Text>
             )}
             {props.buttons &&
               <View style={popupStyles.buttonRow}>
                 {props.buttons.map(button => (
-                  <Button title={button.title} onPress={button.handlePress} key={button.title} />
+                  <MyButton title={button.title} onPress={button.handlePress} key={button.title} />
                 ))}
               </View>
             }
@@ -53,11 +54,12 @@ const popupStyles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     backgroundColor: 'black',
-    opacity: 0.3,
+    opacity: 0.5,
   },
   box: {
     backgroundColor: 'white',
     margin: 30,
+    width: '85%',
   },
   content: {
     margin: 40,
@@ -65,6 +67,6 @@ const popupStyles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly'
+    // justifyContent: 'space-between'
   }
 });

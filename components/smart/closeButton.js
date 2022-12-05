@@ -3,29 +3,19 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 export const CloseButton = (props) => {
   return (
-    <View style={{height:30}}>
-      <TouchableWithoutFeedback
-        onPress={props.handlePress}
-        style={{
-          width: 150,
-          height: 150,
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
+    <View>
+      <TouchableWithoutFeedback onPress={props.handlePress}>
         <View style={{
-          width: 75,
-          height: 75,
-          // borderColor: 'red',
-          // borderWidth: 2,
-          left: -25,
-          top: -25,
-          // backgroundColor: "lightgrey",
+          width: 50,
+          height: 50,
+          borderWidth: 2,
+          top: -15,
+          left: -15,
+          backgroundColor: "lightgrey",
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',
+          // alignSelf: 'center'
         }}>
           <Icon name="close-outline" size={30} />
         </View>

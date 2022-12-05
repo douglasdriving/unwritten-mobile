@@ -1,10 +1,9 @@
-import { Button, Text, View, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { styles } from '../../../../style';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { useState } from 'react';
 import { Popup } from '../../../smart/popup';
 import { JoinRoom } from '../../../../backend/backendCalls';
-import { navigate, navigateToRoom } from '../../../../contexts/rootNavigation';
+import { navigateToRoom } from '../../../../contexts/rootNavigation';
 
 export const ListItem = (props) => {
 
