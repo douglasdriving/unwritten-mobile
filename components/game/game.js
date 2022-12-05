@@ -1,13 +1,12 @@
 import { View } from 'react-native';
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { GetRoomData, UploadScenario } from '../../backend/backendCalls.js';
+import { GetRoomData } from '../../backend/backendCalls.js';
 import { StoryNav } from './storyNav/storyNav.js';
 import { GameArea } from './gameArea/gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
 
@@ -32,7 +31,6 @@ export const Game = (props) => {
   const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
   const [counterUpdateInterval, setCounterUpdateInterval] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scenarioPostLoading, setScenarioPostLoading] = useState(false);
 
   const GetPlayerStrikes = (players) => {
 
@@ -84,30 +82,6 @@ export const Game = (props) => {
     }, 1000);
     setCounterUpdateInterval(interval);
   }
-
-  //this function should be moved into the writing field!!!
-  const AddScenario = async text => {
-
-    //here is a problem, we kinda wanna check the chars when we post a scenario
-    //although, I think scenario posting could be done in the writing field!
-    //would make sense
-
-    setScenarioPostLoading(true);
-
-    const uploadedScenario = await UploadScenario(text, props.route.params.roomId);
-
-    if (uploadedScenario) {
-      await LoadRoomData();
-      setScenarioPostLoading(false);
-      return true;
-    }
-    else {
-      console.error('was not able to add the scenario');
-      setScenarioPostLoading(false);
-      return false;
-    }
-
-  }
   const GetNextPlayerName = () => {
 
     if (!activePlayers) return null;
@@ -133,13 +107,13 @@ export const Game = (props) => {
       <GameArea
         readOnly={readOnly}
         story={story}
-        AddScenario={AddScenario}
         nextPlayerName={GetNextPlayerName()}
         timeLeftInTurn={timeLeftInTurn}
         turnNumber={story.scenarios.length + 1}
         players={activePlayers}
         inActivePlayers={inActivePlayers}
         roomId={props.route.params.roomId}
+        LoadRoomData={LoadRoomData}
       />
       <StoryNav
         readOnly={readOnly}
@@ -153,10 +127,6 @@ export const Game = (props) => {
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}
         nextPlayerId={nextPlayerId}
-      />}
-      {scenarioPostLoading && <Popup
-        title={'Adding your text'}
-        loading={true}
       />}
       {turnMissed &&
         <Popup

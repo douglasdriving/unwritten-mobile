@@ -4,15 +4,18 @@ import { CharCounter } from "./charCounter";
 import { ScenarioTextField } from "./scenarioTextField";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
-import { GetChars } from "../../../../../backend/backendCalls";
+import { GetChars, UploadScenario } from "../../../../../backend/backendCalls";
+import { Popup } from "../../../../smart/popup";
+import { styles } from "../../../../../style";
 
 export const WritingField = (props) => {
 
-
+  const [scenarioPostLoading, setScenarioPostLoading] = useState(false);
   const [scenarioText, setScenarioText] = useState('');
-  const [chars, setChars] = useState({total: 0, remaining: 0});
+  const [chars, setChars] = useState({ total: 0, remaining: 0 });
+  const [warning, setWarning] = useState();
   const user = useSelector(selectUser);
-  
+
   const handleChangeText = text => {
     setScenarioText(text);
     setChars({
@@ -21,23 +24,31 @@ export const WritingField = (props) => {
     })
   }
   const handleAddButtonPress = async () => {
-    if(!props.AddScenario){
-      console.error('no AddScenaro propped passed down into WritingField. Cant add scenario');
-      return;
-    }
-    if(scenarioText.length < 1){
-      console.error('scenario text must contain at least 1 character!');
-      return
-    }
-    const success = await props.AddScenario(scenarioText);
 
-    if(!success){
-      console.error('failed to add the scenario');
+    if (scenarioText.length < 1) {
+      setWarning('scenario must contain at least one character!')
       return;
     }
+    if (chars.remaining < 0) {
+      setWarning('not enough characters!')
+      return;
+    }
+
+    setScenarioPostLoading(true);
+
+    const uploadSuccess = await UploadScenario(scenarioText, props.roomId);
+
+    if (uploadSuccess) {
+      await props.LoadRoomData();
+    }
+    else {
+      setWarning('failed to add scenario. Please try again...')
+    }
+
+    setScenarioPostLoading(false);
   }
   const handleBackButtonPress = async () => {
-    if(!props.SetWritingField){
+    if (!props.SetWritingField) {
       console.error('no SetWritingField passed into props of writingField -> Cant go back');
       return;
     }
@@ -46,7 +57,7 @@ export const WritingField = (props) => {
   const loadChars = async () => {
 
     const loadedChars = await GetChars(props.roomId, user.id);
-    if(!loadedChars){
+    if (!loadedChars) {
       console.error('unable to load chars from backend into the writing field component');
       return;
     }
@@ -57,17 +68,17 @@ export const WritingField = (props) => {
 
   }
 
-  if(!props.turnNumber) console.error('no turnNumber provided in writingField props');
-  if(!user) console.error('missing a user in redux store of writingField');
-  if(!props.isWriting) console.error('missing "isWriting" in props of writingField');
+  if (!props.turnNumber) console.error('no turnNumber provided in writingField props');
+  if (!user) console.error('missing a user in redux store of writingField');
+  if (!props.isWriting) console.error('missing "isWriting" in props of writingField');
 
-  useEffect(() => {loadChars();}, []);
+  useEffect(() => { loadChars(); }, []);
 
   return (
     <View>
-      <Button title="<-" color='gray' onPress={handleBackButtonPress}/>
+      <Button title="<-" color='gray' onPress={handleBackButtonPress} />
       <Text style={{ color: 'blue' }}>{props.turnNumber}. {user.name}</Text>
-      <ScenarioTextField handleChangeText={handleChangeText} isWriting={props.isWriting}/>
+      <ScenarioTextField handleChangeText={handleChangeText} isWriting={props.isWriting} />
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Button
           title={props.isWriting == 'ending' ? 'Add Ending' : 'Add'}
@@ -75,8 +86,13 @@ export const WritingField = (props) => {
           onPress={handleAddButtonPress}
           color={props.isWriting == 'ending' ? 'darkred' : 'blue'}
         />
-        {chars.remaining && <CharCounter chars={chars.remaining} />}
+        <CharCounter chars={chars.remaining}/>
       </View>
+      {warning && <Text style={{ ...styles.warning }}>{warning}</Text>}
+      {scenarioPostLoading && <Popup
+        title={'Adding your text'}
+        loading={true}
+      />}
     </View>
   );
 }

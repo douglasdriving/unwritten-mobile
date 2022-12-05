@@ -9,7 +9,7 @@ export const CharCounter = (props) => {
 
   return (
     <View style={{ flexDirection: 'row' }}>
-      <Text>{props.chars} </Text>
+      <Text>{props.chars}</Text>
       <View style={{ width: 20, height: 20, backgroundColor: 'gray' }}>
         <Text style={{ color: 'white', fontWeight: 'bold', textAlign: 'center', textAlignVertical: 'center' }}>C</Text>
       </View>

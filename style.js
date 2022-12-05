@@ -35,6 +35,11 @@ export const styles = StyleSheet.create({
     fontSize: 16
   },
 
+  warning: {
+    fontSize: 16,
+    color: 'red'
+  },
+
   paragraph: {
     fontSize: 16,
     paddingBottom: 6
