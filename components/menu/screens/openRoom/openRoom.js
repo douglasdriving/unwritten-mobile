@@ -19,16 +19,6 @@ export const OpenRoom = () => {
 
   const [tryingToOpen, setTryingToOpen] = useState(false);
   const [opening, setOpening] = useState(false);
-  const [descriptionFocused, setDescriptionFocused] = useState(true);
-
-  /*
-  ok this is a pretty tricky challenge
-  but I think we could do it really cleverly with a single component
-  somthing that, when pressed, expands a popup field that covers the whole space and that you can write in
-  it should probably just appear "above" the other content, since then we dont have to hide other stuff
-  similar to a popup
-  */
-
   const [roomCreateError, setRoomCreateError] = useState();
 
   const ToggleTryingToOpen = () => {
@@ -70,9 +60,7 @@ export const OpenRoom = () => {
   useEffect(() => setRoomCreateError(null), [titleInput, descriptionInput, startingScenario]);
 
   return (
-    <View style={{ ...styles.container, justifyContent: 'center' }}>
-
-      <FocusInputField label='test'/>
+    <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
 
       <Text style={styles.h1}>Open Room</Text>
       <Text style={styles.paragraph}>🔑  {storyKeys}</Text>
@@ -89,27 +77,22 @@ export const OpenRoom = () => {
         (storyKeys > 0) &&
         <>
           {Space(10)}
-          <Text style={styles.h3}>Story Title</Text>
-          <TextInput
-            style={styles.inputField}
-            multiline={true}
-            onChangeText={setTitleInput}
-            value={titleInput}
+
+          <FocusInputField
+            label='Story Title'
+            oneLine
+            setText={text => { setTitleInput(text) }}
+            height={40}
           />
-          <Text style={styles.h3}>Story Description</Text>
-          <TextInput
-            style={{ ...styles.inputField, flex: 1, textAlignVertical: 'top' }}
-            multiline={true}
-            onChangeText={setDescriptionInput}
-            value={descriptionInput}
+          <FocusInputField
+            label='Story Description'
+            setText={text => { setDescriptionInput(text) }}
+            height={'20%'}
           />
-          <Text style={styles.h3}>Story Opening Text</Text>
-          <TextInput
-            style={{ ...styles.inputField, flex: 1, textAlignVertical: 'top' }}
-            multiline={true}
-            onChangeText={setStartingScenario}
-            value={startingScenario}
-          // onFocus={make a writing window appear}
+          <FocusInputField
+            label='Opening Text'
+            setText={text => { setStartingScenario(text) }}
+            height={'20%'}
           />
           {Space(15)}
           <Button title='🔑 Open Room' disabled={!FieldsReady()} onPress={ToggleTryingToOpen} />
