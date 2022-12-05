@@ -36,8 +36,14 @@ export const Archive = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.h1}>Archive</Text>
-      <Text style={styles.body}>A collection of the {storiesList.length} stories finished so far in Unwritten</Text>
-      <StoryList listItemInfo={storiesList}/>
+      <Text style={styles.paragraph}>
+        {storiesList.length > 0 ?
+          `A collection of the ${storiesList.length} stories finished so far in Unwritten`
+          :
+          `Finished stories will appear here`
+        }
+      </Text>
+      <StoryList listItemInfo={storiesList} />
       {Space(200)}
     </ScrollView>
   );
