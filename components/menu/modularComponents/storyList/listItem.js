@@ -137,7 +137,7 @@ export const ListItem = (props) => {
             justifyContent: 'space-between',
             width: '100%',
           }}>
-            {title && <Text style={styles.h3}>
+            {title && <Text style={styles.h3} numberOfLines={1}>
               {title}
               {alert && '❗'}
             </Text>}
