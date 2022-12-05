@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
 
   paragraph: {
     fontSize: 16,
-    paddingBottom: 6
+    paddingBottom: 6,
   },
 
   textCenter: {
@@ -52,6 +52,11 @@ export const styles = StyleSheet.create({
   formField: {
     width: '100%',
     borderWidth: 2,
+    padding: 15
+  },
+
+  actionBox: {
+    backgroundColor: 'lightgrey',
     padding: 15
   },
 
@@ -88,7 +93,7 @@ export const styles = StyleSheet.create({
   },
 
   storyNavButton: {
-    opacity: 0.3,
+    opacity: 0.2,
     borderRadius: 35,
     backgroundColor: 'black',
     width: 70,

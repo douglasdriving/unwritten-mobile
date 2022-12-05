@@ -9,6 +9,7 @@ export const GameArea = (props) => {
   return (
     <ScrollView style={styles.gameWindow}>
       <StoryContent {...props} />
+      {Space(15)}
       {!props.readOnly && <ActionArea {...props} />}
       {Space(200)}
     </ScrollView>

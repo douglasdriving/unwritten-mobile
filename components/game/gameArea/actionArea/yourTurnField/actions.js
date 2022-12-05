@@ -1,29 +1,34 @@
 import { View, Text, Button } from "react-native";
 import { turnWhenCanEnd, maxScenarioCount } from "../../../../../backend/dataGeneration";
+import { styles } from "../../../../../style";
+import { MyButton } from "../../../../smart/myButton";
 
 export const Actions = (props) => {
 
   const turnsUntilCanEnd = turnWhenCanEnd - props.story.scenarios.length;
   const turnsUntilMustEnd = maxScenarioCount - props.story.scenarios.length;
 
-  const HandleContinue = () =>{
+  const HandleContinue = () => {
     props.SetWritingField('continuation');
   }
 
-  const HandleWriteEnding = () =>{
+  const HandleWriteEnding = () => {
     props.SetWritingField('ending');
   }
 
   return (
-    <View style={{ flexDirection: 'row' }}>
-      <View>
-        <Button title="Continue" onPress={HandleContinue}/>
-        <Text>{(turnsUntilCanEnd <= 0) && (turnsUntilMustEnd + ' turns left')}</Text>
-      </View>
-      <View>
-        <Button title="Write Ending" onPress={HandleWriteEnding} disabled={turnsUntilCanEnd >= 0}/>
-        <Text>{(turnsUntilCanEnd >= 0) && ('Available in ' + turnsUntilCanEnd + 'turns')}</Text>
-      </View>
+    <View style={{ flexDirection: 'row', flex: 1 }}>
+      <MyButton
+        title={`Write Continuation${turnsUntilCanEnd <= 0 ? (' (' + turnsUntilMustEnd + ' turns left') : ''}`}
+        onPress={HandleContinue}
+        color='white'
+      />
+      <MyButton
+        title={`Write Ending${turnsUntilCanEnd >= 0 ? (' (Available in ' + turnsUntilCanEnd + ' turns)') : ''}`}
+        onPress={HandleWriteEnding}
+        disabled={turnsUntilCanEnd >= 0}
+        color={'white'}
+      />
     </View>
   );
 }

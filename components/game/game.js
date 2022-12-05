@@ -9,6 +9,7 @@ import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
+import { Space } from '../smart/visuals.js';
 
 export const Game = (props) => {
 

@@ -1,18 +1,27 @@
 import { Text, View } from 'react-native';
+import { styles } from '../../../../style';
 
 export const Paragraph = (props) => {
 
   return (
-    <View>
+    <>
+      <Text >
 
-      <Text style={ props.isUser && {color: 'blue'}}>
-        {props.scenarioNumber}. {props.authorName}
+        <Text
+          style={{
+            ...styles.paragraph,
+            color: (props.isUser ? 'lightblue' : 'lightgrey'),
+          }}
+        >
+          {`(@${props.authorName}) `}
+        </Text>
+
+        <Text style={{ ...styles.paragraph, ...props.isUser && { color: 'blue' } }}>
+          {props.scenario.scenario}
+        </Text>
+
       </Text>
+    </>
 
-      <Text style={ props.isUser && {color: 'blue'}}>
-        {props.scenario.scenario}
-      </Text>
-
-    </View>
   );
 }
