@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import { TimeToHms } from "../../../helpers/helpers";
 import { useSelector } from "react-redux";
 import { selectUserName } from "../../../redux/userSlice";
-import { styles } from "../../../style";
+import { colors, styles } from "../../../style";
 
 export const PlayerRow = (props) => {
 
@@ -22,10 +22,15 @@ export const PlayerRow = (props) => {
       justifyContent: 'space-between',
       padding: 10,
       marginTop: 5,
-      backgroundColor: (props.player.name == userName ? 'lightblue' : 'white'),
+      backgroundColor: colors.white,
     }}>
       {props.player &&
-        <Text style={styles.paragraph}>
+        <Text style={
+          [styles.paragraph,
+          {
+            fontWeight: (props.player.name == userName ? 'bold' : 'regular')
+          }]
+          }>
           {props.player.name + ' ' + strikeEmojis()}
         </Text>
       }

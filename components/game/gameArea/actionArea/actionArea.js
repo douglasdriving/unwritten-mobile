@@ -19,12 +19,12 @@ export const ActionArea = (props) => {
   return (
     <View>
 
-      {/* <WritingField
+      {/* <YourTurnField
         {...props}
-        isWriting={true}
         SetWritingField={SetWritingField}
       /> */}
-
+      
+      
       {
         props.nextPlayerName == null ?
           <PlayerSearchField />

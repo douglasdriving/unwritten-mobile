@@ -22,10 +22,10 @@ export const StoryNav = (props) => {
 
     <View style={styles.storyNav}>
 
-      <StoryNavButton type='close' onPress={() => setClosePopupOpen(true)}/>
+      <StoryNavButton type='close' onPress={() => setClosePopupOpen(true)} />
 
       {!props.readOnly && <StoryNavButton type='menu' onPress={props.openMenu} />}
-      
+
       {closePopupOpen && <Popup
         title={'Leave Room?'}
         text={'Leave room and go back to lobby'}
@@ -35,10 +35,6 @@ export const StoryNav = (props) => {
           {
             title: 'Leave',
             handlePress: LeaveRoom
-          },
-          {
-            title: 'Stay',
-            handlePress: ClosePopup
           }
         ]}
       />}

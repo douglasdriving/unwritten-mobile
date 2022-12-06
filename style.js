@@ -8,6 +8,30 @@ export const colors = {
   white: '#FFFFFF'
 }
 
+export const textColors = StyleSheet.create({
+
+  white: {
+    color: colors.white,
+  },
+
+  black: {
+    color: colors.black
+  },
+
+  dark: {
+    color: colors.dark
+  },
+
+  light: {
+    color: colors.light
+  },
+
+  fire: {
+    color: colors.fire
+  },
+
+})
+
 export const styles = StyleSheet.create({
 
   container: {
@@ -75,7 +99,7 @@ export const styles = StyleSheet.create({
   },
 
   actionBox: {
-    backgroundColor: 'lightgrey',
+    backgroundColor: colors.light,
     padding: 15
   },
 
@@ -109,12 +133,15 @@ export const styles = StyleSheet.create({
     paddingTop: 30,
     paddingLeft: 15,
     paddingRight: 15,
+    backgroundColor: colors.fire,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.light,
   },
 
   storyNavButton: {
-    opacity: 0.2,
-    borderRadius: 35,
-    backgroundColor: 'black',
+    // opacity: 0.2,
+    // borderRadius: 35,
+    // backgroundColor: colors.dark,
     width: 70,
     height: 70,
     justifyContent: 'center',
@@ -123,19 +150,19 @@ export const styles = StyleSheet.create({
   },
 
   gameWindow: {
-    backgroundColor: 'white',
+    backgroundColor: colors.fire,
     paddingTop: 120,
     padding: 30,
   },
 
   roomMenu: {
-    backgroundColor: 'lightgray',
+    backgroundColor: colors.light,
     position: 'absolute',
     margin: '5%',
     marginTop: 40,
     width: '90%',
     zIndex: 2,
-    borderWidth: 2
+    // borderWidth: 2
   },
 
   inputField: {

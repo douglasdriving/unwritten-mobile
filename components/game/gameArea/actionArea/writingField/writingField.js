@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
 import { GetChars, UploadScenario } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
-import { styles } from "../../../../../style";
+import { colors, styles } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
 
 export const WritingField = (props) => {
@@ -84,7 +84,8 @@ export const WritingField = (props) => {
         style={{
           textAlignVertical: 'top',
           fontSize: 16,
-          flex: 1
+          flex: 1,
+          color: colors.white
         }}
         onChangeText={handleChangeText}
         multiline
@@ -95,7 +96,8 @@ export const WritingField = (props) => {
           title={props.isWriting == 'ending' ? 'Add Ending' : 'Add'}
           disabled={chars.remaining < 0 || scenarioText.length < 1}
           onPress={handleAddButtonPress}
-          color={props.isWriting == 'ending' ? 'darkred' : 'blue'}
+          color={colors.fire}
+          textColor={colors.light}
           flex
         />
         <CharCounter chars={chars.remaining} />

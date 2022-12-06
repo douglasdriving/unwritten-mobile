@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 import { Divider, Space } from '../../../smart/visuals.js';
 import { Paragraph } from './paragraph.js';
-import { styles } from '../../../../style.js';
+import { colors, styles } from '../../../../style.js';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserId } from '../../../../redux/userSlice.js';
@@ -57,11 +57,11 @@ export const StoryContent = (props) => {
     <View>
       {allPlayers.length > 0 &&
         <>
-          <Text style={styles.h1}>{props.story.title}</Text>
-          <Text style={styles.h3}>{props.story.description}</Text>
+          <Text style={[styles.h1, {color: colors.black}]}>{props.story.title}</Text>
+          <Text style={[styles.h3, {color: colors.black}]}>{props.story.description}</Text>
           {Space(10)}
-          <Divider/>
-          {Space(10)}
+          {/* <Divider color={colors.light}/>
+          {Space(10)} */}
           {props.readOnly && <Text style={styles.h3}>{GenerateAuthorText()}</Text>}
           {props.readOnly && <Divider />}
           {props.story.scenarios.map((scenario, i) =>

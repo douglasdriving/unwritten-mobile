@@ -1,6 +1,6 @@
 import { View, Text, Button } from "react-native";
 import { turnWhenCanEnd, maxScenarioCount } from "../../../../../backend/dataGeneration";
-import { styles } from "../../../../../style";
+import { colors, styles } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
 
 export const Actions = (props) => {
@@ -21,14 +21,16 @@ export const Actions = (props) => {
       <MyButton
         title={`Write Continuation${turnsUntilCanEnd <= 0 ? (' (' + turnsUntilMustEnd + ' turns left') : ''}`}
         onPress={HandleContinue}
-        color='white'
+        color={colors.fire}
+        textColor={colors.dark}
         flex
       />
       <MyButton
         title={`Write Ending${turnsUntilCanEnd >= 0 ? (' (Available in ' + turnsUntilCanEnd + ' turns)') : ''}`}
         onPress={HandleWriteEnding}
         disabled={turnsUntilCanEnd >= 0}
-        color={'white'}
+        color={colors.fire}
+        textColor={colors.dark}
         flex
       />
     </View>

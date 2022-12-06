@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
 import { Space } from '../smart/visuals.js';
+import { colors } from '../../style.js';
 
 export const Game = (props) => {
 
@@ -104,7 +105,7 @@ export const Game = (props) => {
   );
 
   return (
-    <View>
+    <View style={{backgroundColor: colors.fire, height: '100%'}}>
       <GameArea
         readOnly={readOnly}
         story={story}

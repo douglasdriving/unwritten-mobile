@@ -1,5 +1,5 @@
 import { StyleSheet, Modal, Button, View, Text } from "react-native";
-import { styles } from "../../style";
+import { styles, colors } from "../../style";
 import { CloseButton } from "./closeButton";
 import { MyButton } from "./myButton";
 
@@ -24,8 +24,10 @@ export const Popup = (props) => {
             <Text style={styles.h1}>{props.title}</Text>
             {props.text && (
               Array.isArray(props.text) ?
-                props.text.map((text, i) => <Text key={i} style={styles.paragraph}>{text}</Text>) :
-                <Text>{props.text}</Text>
+                props.text.map((text, i) =>
+                  <Text key={i} style={[styles.paragraph, {color: colors.white}]}>{text}</Text>
+                ) :
+                <Text style={[styles.paragraph, {color: colors.white}]}>{props.text}</Text>
             )}
             {props.buttons &&
               <View style={popupStyles.buttonRow}>
@@ -35,6 +37,8 @@ export const Popup = (props) => {
                     onPress={button.handlePress}
                     key={button.title}
                     flex
+                    color={colors.fire}
+                    textColor={colors.light}
                   />
                 ))}
               </View>
@@ -62,7 +66,7 @@ const popupStyles = StyleSheet.create({
     opacity: 0.5,
   },
   box: {
-    backgroundColor: 'white',
+    backgroundColor: colors.light,
     margin: 30,
     width: '85%',
   },

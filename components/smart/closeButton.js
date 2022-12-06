@@ -1,5 +1,6 @@
 import { TouchableWithoutFeedback, View } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { colors } from "../../style";
 import { Space } from "./visuals";
 
 export const CloseButton = (props) => {
@@ -9,10 +10,10 @@ export const CloseButton = (props) => {
         <View style={{
           width: 50,
           height: 50,
-          borderWidth: 2,
+          // borderWidth: 2,
           top: -15,
           left: -15,
-          backgroundColor: "lightgrey",
+          backgroundColor: colors.fire,
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',

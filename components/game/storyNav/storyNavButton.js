@@ -1,6 +1,6 @@
 import { View, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { styles } from '../../../style';
+import { colors, styles } from '../../../style';
 
 export const StoryNavButton = (props) => {
 
@@ -8,11 +8,11 @@ export const StoryNavButton = (props) => {
   let iconName = 'ellipse-outline';
   let size = 40;
   if (type == 'close') {
-    iconName = 'close-outline';
-    size = 50;
+    iconName = 'arrow-back-outline';
+    size = 40;
   }
   else if (type == 'menu') {
-    iconName = 'people-outline'
+    iconName = 'alert-circle-outline'
   }
 
   const handlePress = () => {
@@ -22,7 +22,7 @@ export const StoryNavButton = (props) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.storyNavButton} >
-        <Icon name={iconName} size={size} />
+        <Icon name={iconName} size={size} color={colors.dark}/>
       </View>
     </TouchableWithoutFeedback >
   );
