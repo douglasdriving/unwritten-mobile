@@ -1,12 +1,15 @@
+import { useEffect } from "react";
 import { TouchableWithoutFeedback, View, Text } from "react-native";
 import { styles, colors } from "../../style";
 
 export const MyButton = (props) => {
 
-  const {disabled, onPress, color, textColor, flex} = props;
+  const { disabled, onPress, color, textColor, flex } = props;
+
+  // useEffect(() => { console.log('text colors: ', textColor) }, []);
 
   const handlePress = () => {
-    if(disabled) return;
+    if (disabled) return;
     onPress();
   }
 
@@ -24,7 +27,14 @@ export const MyButton = (props) => {
         opacity: disabled ? 0.4 : 1,
         height: props.height
       }}>
-        <Text style={{...styles.h3, textAlign: 'center'}}>{props.title}</Text>
+        <Text
+          style={[styles.h3, {
+            textAlign: 'center',
+            color: (textColor || colors.white),
+          }]}
+        >
+          {props.title}
+        </Text>
       </View>
     </TouchableWithoutFeedback >
   );

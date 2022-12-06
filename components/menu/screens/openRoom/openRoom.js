@@ -101,6 +101,7 @@ export const OpenRoom = () => {
             disabled={!FieldsReady()}
             onPress={ToggleTryingToOpen}
             color={colors.fire}
+            textColor={colors.dark}
           />
         </>
       }

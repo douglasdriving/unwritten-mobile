@@ -1,5 +1,5 @@
 import { Text, ScrollView, View } from 'react-native';
-import { styles } from '../../../style';
+import { colors, styles } from '../../../style';
 import { GetMyRooms } from '../../../backend/backendCalls';
 import { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
@@ -47,30 +47,30 @@ export const MyRooms = (props) => {
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.h1}>My Rooms</Text>
+      <ScrollView style={styles.scrollBox}>
+        {!myRoomsList ?
+          <Text style={styles.paragraph}>
+            You are currently not participating in any rooms!
+            Join a new writing room to have it show here
+          </Text>
+          :
+          <View>
 
-      {!myRoomsList ?
-        <Text style={styles.paragraph}>
-          You are currently not participating in any rooms!
-          Join a new writing room to have it show here
-        </Text>
-        :
-        <View>
+            {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} {...props} />}
 
-          {(myRoomsList && myRoomsList.open) && <StoryList listItemInfo={myRoomsList.open} {...props} />}
+            {(myRoomsList && myRoomsList.closed && myRoomsList.closed.length > 0) &&
+              <>
+                <Text style={styles.h2}>Finished Stories</Text>
+                <StoryList listItemInfo={myRoomsList.closed} {...props} />
+              </>
+            }
+          </View>
+        }
+        {Space(20)}
+      </ScrollView>
+    </View>
 
-          {(myRoomsList && myRoomsList.closed && myRoomsList.closed.length > 0) &&
-            <>
-              <Text style={styles.h2}>Finished Stories</Text>
-              <StoryList listItemInfo={myRoomsList.closed} {...props} />
-            </>
-          }
-        </View>
-      }
-
-      {Space(200)}
-
-    </ScrollView>
   );
 }

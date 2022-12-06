@@ -156,4 +156,9 @@ export const styles = StyleSheet.create({
     opacity: 0.5,
   },
 
+  scrollBox: {
+    backgroundColor: colors.light,
+    padding: 10,
+  }
+
 });
