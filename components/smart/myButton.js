@@ -1,9 +1,9 @@
 import { TouchableWithoutFeedback, View, Text } from "react-native";
-import { styles } from "../../style";
+import { styles, colors } from "../../style";
 
 export const MyButton = (props) => {
 
-  const {disabled, onPress} = props;
+  const {disabled, onPress, color, textColor, flex} = props;
 
   const handlePress = () => {
     if(disabled) return;
@@ -13,13 +13,14 @@ export const MyButton = (props) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={{
-        borderWidth: 2,
-        backgroundColor: props.color,
+        // borderWidth: 2,
+        // borderColor: colors.white,
+        backgroundColor: (color || colors.light),
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 15,
+        padding: 10,
         // margin: 5,
-        flex: 1,
+        flex: (flex ? 1 : null),
         opacity: disabled ? 0.4 : 1,
         height: props.height
       }}>

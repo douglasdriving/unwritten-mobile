@@ -8,6 +8,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { ErrorText } from '../../modularComponents/errorText';
 import { FocusInputField } from '../../../smart/focusInputField';
 import { navigate, navigateToRoom } from '../../../../contexts/rootNavigation';
+import { MyButton } from '../../../smart/myButton';
 
 export const OpenRoom = () => {
 
@@ -95,7 +96,7 @@ export const OpenRoom = () => {
             height={'20%'}
           />
           {Space(15)}
-          <Button title='🔑 Open Room' disabled={!FieldsReady()} onPress={ToggleTryingToOpen} />
+          <MyButton title='🔑 Open Room' disabled={!FieldsReady()} onPress={ToggleTryingToOpen}/>
         </>
       }
 

@@ -7,6 +7,7 @@ import { Game } from './components/game/game';
 import { addNotificationHandler } from './backend/notifications';
 import { navigationRef } from './contexts/rootNavigation';
 import { LoginScreen } from './components/login/loginScreen';
+import { useFonts } from 'expo-font';
 
 //redux
 import reduxStore from './redux/reduxStore';
@@ -18,10 +19,21 @@ export default function App() {
 
   const [startRoomId, setStartRoomId] = useState();
 
+  const [fontsLoaded] = useFonts({
+    'Title': require('./assets/fonts/LibreBaskerville-Regular.ttf'),
+    'Title-Bold': require('./assets/fonts/LibreBaskerville-Bold.ttf'),
+    'Body': require('./assets/fonts/SourceSansPro-Regular.ttf'),
+    'Body-Bold': require('./assets/fonts/SourceSansPro-Bold.ttf'),
+  });
+
   //app start
   useEffect(() => {
     addNotificationHandler();
   }, []);
+
+  if (!fontsLoaded){
+    return null;
+  }
 
   return (
     <Provider store={reduxStore}>

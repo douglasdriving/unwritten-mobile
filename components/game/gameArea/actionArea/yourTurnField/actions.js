@@ -22,12 +22,14 @@ export const Actions = (props) => {
         title={`Write Continuation${turnsUntilCanEnd <= 0 ? (' (' + turnsUntilMustEnd + ' turns left') : ''}`}
         onPress={HandleContinue}
         color='white'
+        flex
       />
       <MyButton
         title={`Write Ending${turnsUntilCanEnd >= 0 ? (' (Available in ' + turnsUntilCanEnd + ' turns)') : ''}`}
         onPress={HandleWriteEnding}
         disabled={turnsUntilCanEnd >= 0}
         color={'white'}
+        flex
       />
     </View>
   );

@@ -5,7 +5,7 @@ export const LabeledInput = (props) => {
 
   return (
     <>
-      <Text>{props.label}</Text>
+      <Text style={styles.paragraph}>{props.label}</Text>
       <TextInput
         onChangeText={props.onChangeText}
         style={styles.inputField}

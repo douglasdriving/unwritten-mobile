@@ -2,6 +2,7 @@ import { StyleSheet, Modal, Button, View, Text, TextInput, Keyboard, TouchableWi
 import { styles } from "../../style";
 import { CloseButton } from "./closeButton";
 import { useState } from "react";
+import { MyButton } from "./myButton";
 
 /*
 The idea:
@@ -35,7 +36,7 @@ export const FocusInputField = (props) => {
     <>
 
       {/* View in form */}
-      {!focused && <Text style={styles.h2}>{props.label}</Text>}
+      {!focused && <Text style={styles.h3}>{props.label}</Text>}
       <TouchableWithoutFeedback onPress={handleAreaPress}>
         <View
           style={{
@@ -64,19 +65,20 @@ export const FocusInputField = (props) => {
           marginTop: 25,
           borderWidth: 2
         }}>
-          {focused && <Text style={styles.h2}>{props.label}</Text>}
+          {focused && <Text style={styles.h3}>{props.label}</Text>}
           <TextInput
             style={{
               flex: 1,
               textAlignVertical: 'top',
               padding: 0,
+              fontFamily: 'Body'
             }}
             autoFocus={true}
             onChangeText={handleTextChange}
             defaultValue={textInput}
             onEndEditing={handleDonePress}
           />
-          {focused && <Button title='done' onPress={handleDonePress} />}
+          {focused && <MyButton title='Done' onPress={handleDonePress} color={'lightgrey'}/>}
         </View>
       }
 

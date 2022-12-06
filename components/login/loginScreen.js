@@ -1,4 +1,4 @@
-import { Text, View, Button } from 'react-native';
+import { Text, View, Button, ImageBackground } from 'react-native';
 import { styles } from '../../style.js';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -10,6 +10,9 @@ import { LoadPopup } from '../menu/modularComponents/loadPopup.js';
 import { BoolStateToggler } from '../menu/modularComponents/stateToggler.js';
 import { Space } from '../smart/visuals.js';
 import { navigate } from '../../contexts/rootNavigation.js';
+import { MyButton } from '../smart/myButton.js';
+import { colors } from '../../style.js';
+import background from '../../assets/background/starsBackground.png';
 
 //redux imports
 import { useSelector, useDispatch } from 'react-redux';
@@ -29,7 +32,7 @@ export const LoginScreen = (props) => {
   const [loading, setLoading] = useState();
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
-  
+
   //login functions
   const tryLoginStart = async () => {
 
@@ -55,7 +58,7 @@ export const LoginScreen = (props) => {
 
     if (!returnedUser) return;
     if (!returnedUser.id) return false;
-    
+
     if (props.startRoomId) {
       navigate('Game', { roomId: props.startRoomId });
     }
@@ -126,40 +129,49 @@ export const LoginScreen = (props) => {
   useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
 
   return (
-    <View style={styles.fullScreenCentered}>
 
-      <Text style={styles.title}>Unwritten</Text>
-      <Text style={{ ...styles.paragraph, ...styles.textCenter }}>Welcome to the world of Unwritten!</Text>
-      <Text style={{ ...styles.paragraph, ...styles.textCenter }}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
-      {Space(20)}
+    <View style={{
+      flex: 1,
+    }}>
+      <ImageBackground source={background} resizeMode='cover' style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: 'center',
+        padding: 30,
+        textAlign: 'center',
+      }}>
+        <Text style={[styles.title, { color: colors.white }]}>Unwritten</Text>
+        <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Welcome to the world of Unwritten!</Text>
+        <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
+        {Space(20)}
 
-      <View style={styles.formField}>
-        <Text style={styles.h1}>Sign {signUp ? 'Up' : 'In'}</Text>
+        <View style={styles.formField}>
+          <Text style={styles.h2}>Sign {signUp ? 'Up' : 'In'}</Text>
 
-        <LabeledInput label={'Email'} onChangeText={text => { setEmail(text) }} />
-        <LabeledInput label={'Password'} onChangeText={text => { setPassword(text) }} />
-        {signUp && <LabeledInput label={'Display Name'} onChangeText={text => { setDisplayName(text) }} />}
-        {Space(10)}
-        <Button
-          title={'Sign ' + (signUp ? 'Up' : 'In')}
-          onPress={submitForm}
-          disabled={!email || !password || (signUp && !displayName)}
-        />
-        <Button
-          title={'Quick Sign In'}
-          onPress={quickSignIn}
-        />
+          <LabeledInput label={'Email'} onChangeText={text => { setEmail(text) }} />
+          <LabeledInput label={'Password'} onChangeText={text => { setPassword(text) }} />
+          {signUp && <LabeledInput label={'Display Name'} onChangeText={text => { setDisplayName(text) }} />}
+          {Space(10)}
+          <MyButton
+            title={'Sign ' + (signUp ? 'Up' : 'In')}
+            onPress={submitForm}
+            disabled={!email || !password || (signUp && !displayName)}
+          />
+          <MyButton
+            title={'Quick Sign In'}
+            onPress={quickSignIn}
+          />
 
-        <ErrorText message={errorMessage} />
-        <LoadPopup isLoading={loading != null && loading != ''} loadText={loading} />
-        <BoolStateToggler
-          setState={setSignUp}
-          state={signUp}
-          onText='Already have an account? Press here to sign in instead'
-          offText='New to Unwritten? Sign up here'
-        />
-      </View>
-
-    </View>
+          <ErrorText message={errorMessage} />
+          <LoadPopup isLoading={loading != null && loading != ''} loadText={loading} />
+          <BoolStateToggler
+            setState={setSignUp}
+            state={signUp}
+            onText='Already have an account? Press here to sign in instead'
+            offText='New to Unwritten? Sign up here'
+          />
+        </View>
+      </ImageBackground>
+    </View >
   );
 }

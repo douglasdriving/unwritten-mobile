@@ -96,6 +96,7 @@ export const WritingField = (props) => {
           disabled={chars.remaining < 0 || scenarioText.length < 1}
           onPress={handleAddButtonPress}
           color={props.isWriting == 'ending' ? 'darkred' : 'blue'}
+          flex
         />
         <CharCounter chars={chars.remaining} />
       </View>

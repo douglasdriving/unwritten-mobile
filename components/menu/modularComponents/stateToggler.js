@@ -1,4 +1,5 @@
 import { TouchableWithoutFeedback, Text } from "react-native";
+import { styles } from "../../../style";
 
 export const BoolStateToggler = (props) => {
 
@@ -10,7 +11,7 @@ export const BoolStateToggler = (props) => {
     <TouchableWithoutFeedback>
       <Text
         onPress={toggleState}
-        style={{ textDecorationLine: 'underline', textAlign: 'center', padding: 10 }}
+        style={{ ...styles.paragraph, textDecorationLine: 'underline', textAlign: 'center', padding: 10 }}
       >
         {props.state ? props.onText : props.offText}
       </Text>

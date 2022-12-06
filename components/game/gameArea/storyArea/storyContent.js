@@ -1,5 +1,5 @@
 import { Text, View } from 'react-native';
-import { Divider } from '../../../smart/visuals.js';
+import { Divider, Space } from '../../../smart/visuals.js';
 import { Paragraph } from './paragraph.js';
 import { styles } from '../../../../style.js';
 import { useState, useEffect } from 'react';
@@ -58,7 +58,10 @@ export const StoryContent = (props) => {
       {allPlayers.length > 0 &&
         <>
           <Text style={styles.h1}>{props.story.title}</Text>
-          <Text style={styles.h2}>{props.story.description}</Text>
+          <Text style={styles.h3}>{props.story.description}</Text>
+          {Space(10)}
+          <Divider/>
+          {Space(10)}
           {props.readOnly && <Text style={styles.h3}>{GenerateAuthorText()}</Text>}
           {props.readOnly && <Divider />}
           {props.story.scenarios.map((scenario, i) =>

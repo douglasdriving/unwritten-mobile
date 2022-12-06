@@ -1,48 +1,65 @@
 import { StyleSheet } from 'react-native';
 
+export const colors = {
+  black: '#000000',
+  dark: '#372755',
+  light: '#4A3C65',
+  fire: '#FFB68F',
+  white: '#FFFFFF'
+}
+
 export const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'lightblue',
+    backgroundColor: colors.dark,
     padding: 30
   },
 
   title: {
     fontSize: 30,
-    fontWeight: 'bold',
-    paddingBottom: 6
+    marginBottom: 15,
+    fontFamily: 'Title-Bold'
   },
 
   h1: {
     fontSize: 22,
-    fontWeight: 'bold',
-    marginBottom: 6
+    marginBottom: 6,
+    fontFamily: 'Title-Bold'
   },
 
   h2: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 6
+    marginBottom: 6,
+    marginTop: 6,
+    fontFamily: 'Title-Bold',
+    color: colors.dark,
   },
 
   h3: {
     fontSize: 16,
-    fontWeight: 'bold',
+    marginTop: 6,
+    marginBottom: 6,
+    fontFamily: 'Body-Bold',
+    color: colors.white,
   },
 
   body: {
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'Body'
   },
 
   warning: {
     fontSize: 16,
-    color: 'red'
+    color: 'red',
+    fontFamily: 'Body'
   },
 
   paragraph: {
     fontSize: 16,
     paddingBottom: 6,
+    fontFamily: 'Body',
+    color: colors.light,
   },
 
   textCenter: {
@@ -51,8 +68,8 @@ export const styles = StyleSheet.create({
 
   formField: {
     width: '100%',
-    borderWidth: 2,
-    padding: 15
+    padding: 15,
+    backgroundColor: colors.fire,
   },
 
   actionBox: {
@@ -62,7 +79,7 @@ export const styles = StyleSheet.create({
 
   fullScreenCentered: {
     flex: 1,
-    backgroundColor: 'lightblue',
+    backgroundColor: colors.dark,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 30,
@@ -121,10 +138,12 @@ export const styles = StyleSheet.create({
 
   inputField: {
     backgroundColor: 'white',
-    padding: 0,
+    padding: 5,
     marginBottom: 6,
     fontSize: 16,
-    minHeight: 30
+    minHeight: 30,
+    fontFamily: 'Body',
+    color: colors.light,
   },
 
   cover: {

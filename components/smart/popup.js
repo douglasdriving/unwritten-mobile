@@ -30,7 +30,12 @@ export const Popup = (props) => {
             {props.buttons &&
               <View style={popupStyles.buttonRow}>
                 {props.buttons.map(button => (
-                  <MyButton title={button.title} onPress={button.handlePress} key={button.title} />
+                  <MyButton
+                    title={button.title}
+                    onPress={button.handlePress}
+                    key={button.title}
+                    flex
+                  />
                 ))}
               </View>
             }
@@ -67,6 +72,7 @@ const popupStyles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
+    marginTop: 15
     // justifyContent: 'space-between'
   }
 });
