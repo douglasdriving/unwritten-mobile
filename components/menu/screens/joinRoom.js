@@ -1,11 +1,10 @@
 import { Text, ScrollView } from 'react-native';
-import { styles } from '../../../style';
+import { colors, styles } from '../../../style';
 import { GetAvailableRooms } from '../../../backend/backendCalls';
 import { useState, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StoryList } from '../modularComponents/storyList/storylist';
 import { Popup } from '../../smart/popup';
-import { MenuScreenHeader } from '../modularComponents/menuScreenHeader';
 import { navigate } from '../../../contexts/rootNavigation';
 
 import { useSelector } from 'react-redux';
@@ -82,7 +81,7 @@ export const JoinRoom = (props) => {
       <Text style={styles.h1}>Rooms</Text>
 
       {(availableRoomsList && availableRoomsList.new && availableRoomsList.ongoing && availableRoomsList.new.length == 0 && availableRoomsList.ongoing.length == 0) &&
-        <Text style={styles.paragraph}>
+        <Text style={[styles.paragraph, { color: colors.white }]}>
           There are currently no rooms available to join.
           Please come back later.
         </Text>

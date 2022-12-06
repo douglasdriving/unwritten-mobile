@@ -1,7 +1,6 @@
-import { StyleSheet, Modal, Button, View, Text, TextInput, Keyboard, TouchableWithoutFeedback } from "react-native";
-import { styles } from "../../style";
-import { CloseButton } from "./closeButton";
-import { useState } from "react";
+import { View, Text, TextInput, Keyboard, TouchableWithoutFeedback, Modal } from "react-native";
+import { styles, colors } from "../../style";
+import { useState, useRef, useEffect } from "react";
 import { MyButton } from "./myButton";
 
 /*
@@ -18,8 +17,17 @@ export const FocusInputField = (props) => {
   const [textInput, setTextInput] = useState('');
   const [focused, setFocused] = useState(false);
 
+  const innerRef = useRef();
+  useEffect(() => {
+    if (innerRef.current && !innerRef.current.focused) {
+      setTimeout(() => {
+        innerRef.current.focus();
+      }, 10);
+    }
+  })
+
   const handleDonePress = () => {
-    Keyboard.dismiss();
+    // Keyboard.dismiss();
     setFocused(false);
     props.setText(textInput);
   }
@@ -53,33 +61,45 @@ export const FocusInputField = (props) => {
 
       {/* Appears on focus */}
       {focused &&
-        <View style={{
-          flex: 1,
-          position: 'absolute',
-          alignSelf: 'center',
-          width: '100%',
-          height: '100%',
-          zIndex: 3,
-          backgroundColor: 'white',
-          padding: 15,
-          marginTop: 25,
-          borderWidth: 2
-        }}>
-          {focused && <Text style={styles.h3}>{props.label}</Text>}
-          <TextInput
-            style={{
-              flex: 1,
-              textAlignVertical: 'top',
-              padding: 0,
-              fontFamily: 'Body'
-            }}
-            autoFocus={true}
-            onChangeText={handleTextChange}
-            defaultValue={textInput}
-            onEndEditing={handleDonePress}
-          />
-          {focused && <MyButton title='Done' onPress={handleDonePress} color={'lightgrey'}/>}
-        </View>
+        <Modal
+          transparent
+        // onShow={() => {
+        //   console.log('modal open :)');
+        // }}
+        >
+          <View style={styles.cover} />
+          <View style={{
+            flex: 1,
+            position: 'absolute',
+            alignSelf: 'center',
+            width: '90%',
+            height: '90%',
+            zIndex: 3,
+            backgroundColor: colors.white,
+            padding: 15,
+            margin: 25,
+            borderWidth: 2,
+            borderColor: colors.light
+          }}>
+            {focused && <Text style={[styles.h3, { color: colors.dark }]}>{props.label}</Text>}
+            <TextInput
+              style={{
+                flex: 1,
+                textAlignVertical: 'top',
+                padding: 0,
+                fontFamily: 'Body',
+                color: colors.light,
+              }}
+              // autoFocus
+              onChangeText={handleTextChange}
+              defaultValue={textInput}
+              onEndEditing={handleDonePress}
+              ref={innerRef}
+            />
+            {focused && <MyButton title='Done' onPress={handleDonePress} color={colors.light} />}
+          </View>
+        </Modal>
+
       }
 
     </>

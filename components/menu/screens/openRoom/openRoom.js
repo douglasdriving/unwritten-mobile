@@ -1,5 +1,5 @@
 import { Text, View, Button, TextInput } from 'react-native';
-import { styles } from '../../../../style';
+import { colors, styles } from '../../../../style';
 import { useState, useEffect } from 'react';
 import { GetStoryKeys, CreateRoom } from '../../../../backend/backendCalls';
 import { Space } from '../../../smart/visuals';
@@ -64,9 +64,9 @@ export const OpenRoom = () => {
     <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
 
       <Text style={styles.h1}>Open Room</Text>
-      <Text style={styles.paragraph}>🔑  {storyKeys}</Text>
+      <Text style={[styles.paragraph, { color: colors.white }]}>🔑  {storyKeys}</Text>
 
-      <Text style={styles.body}>
+      <Text style={[styles.body, { color: colors.white }]}>
         {
           storyKeys > 0 ?
             'Open a new writing room and create a new story with other players' :
@@ -96,7 +96,12 @@ export const OpenRoom = () => {
             height={'20%'}
           />
           {Space(15)}
-          <MyButton title='🔑 Open Room' disabled={!FieldsReady()} onPress={ToggleTryingToOpen}/>
+          <MyButton
+            title='🔑 Open Room'
+            disabled={!FieldsReady()}
+            onPress={ToggleTryingToOpen}
+            color={colors.fire}
+          />
         </>
       }
 

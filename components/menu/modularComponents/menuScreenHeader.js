@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Text, View, TouchableWithoutFeedback } from "react-native";
-import { styles } from "../../../style";
+import { styles, colors } from "../../../style";
 import { navigate } from "../../../contexts/rootNavigation";
 
 //redux imports
@@ -24,10 +24,17 @@ export const MenuScreenHeader = () => {
   }, [user])
 
   return (
-    <View style={{ flexDirection: 'row', backgroundColor: 'white', width: '100%', paddingTop: 40, padding: 20, justifyContent: 'center' }}>
+    <View style={{
+      flexDirection: 'row',
+      backgroundColor: colors.fire,
+      width: '100%',
+      paddingTop: 40,
+      padding: 20,
+      justifyContent: 'center'
+    }}>
       <Text style={{ ...styles.paragraph, ...styles.textCenter }}>Signed in as {user.name}. </Text>
       <TouchableWithoutFeedback onPress={signOut}>
-        <Text style={{ textDecorationLine: 'underline', ...styles.body }}>Sign Out</Text>
+        <Text style={[{ textDecorationLine: 'underline' }, styles.body]}>Sign Out</Text>
       </TouchableWithoutFeedback>
     </View>
   )

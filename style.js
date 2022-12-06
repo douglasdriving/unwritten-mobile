@@ -25,7 +25,8 @@ export const styles = StyleSheet.create({
   h1: {
     fontSize: 22,
     marginBottom: 6,
-    fontFamily: 'Title-Bold'
+    fontFamily: 'Title-Bold',
+    color: colors.white,
   },
 
   h2: {
@@ -46,7 +47,8 @@ export const styles = StyleSheet.create({
 
   body: {
     fontSize: 16,
-    fontFamily: 'Body'
+    fontFamily: 'Body',
+    color: colors.light
   },
 
   warning: {
