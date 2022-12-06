@@ -110,13 +110,13 @@ export const styles = StyleSheet.create({
   },
 
   roomMenu: {
-    backgroundColor: 'gray',
+    backgroundColor: 'lightgray',
     position: 'absolute',
     margin: '5%',
     marginTop: 40,
     width: '90%',
-    padding: 10,
     zIndex: 2,
+    borderWidth: 2
   },
 
   inputField: {
@@ -125,6 +125,14 @@ export const styles = StyleSheet.create({
     marginBottom: 6,
     fontSize: 16,
     minHeight: 30
+  },
+
+  cover: {
+    height: '100%',
+    width: '100%',
+    position: 'absolute',
+    backgroundColor: 'black',
+    opacity: 0.5,
   },
 
 });

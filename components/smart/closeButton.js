@@ -1,5 +1,6 @@
 import { TouchableWithoutFeedback, View } from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Space } from "./visuals";
 
 export const CloseButton = (props) => {
   return (
@@ -15,6 +16,7 @@ export const CloseButton = (props) => {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',
+          zIndex: 5
           // alignSelf: 'center'
         }}>
           <Icon name="close-outline" size={30} />
