@@ -18,7 +18,7 @@ export const MyButton = (props) => {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 15,
-        margin: 5,
+        // margin: 5,
         flex: 1,
         opacity: disabled ? 0.4 : 1,
         height: props.height

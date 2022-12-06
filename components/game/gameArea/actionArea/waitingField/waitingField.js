@@ -7,7 +7,7 @@ export const WaitingField = (props) => {
 
   return (
 
-    <View>
+    <View style={styles.actionBox}>
       
       {Space(10)}
       <Text style={styles.h3}>It's {props.nextPlayerName}'s turn to write</Text>

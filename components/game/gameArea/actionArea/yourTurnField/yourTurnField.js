@@ -3,8 +3,6 @@ import { styles } from "../../../../../style";
 import { TimeToHms } from "../../../../../helpers/helpers";
 import { Space } from "../../../../smart/visuals";
 import { Actions } from "./actions";
-import { FocusInputField } from "../../../../smart/focusInputField";
-import { useState } from "react";
 
 export const YourTurnField = (props) => {
 

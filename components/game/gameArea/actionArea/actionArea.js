@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { selectUserName } from "../../../../redux/userSlice";
 
 export const ActionArea = (props) => {
-  
+
   const [isWriting, setIsWriting] = useState(null);
   const userName = useSelector(selectUserName);
 
@@ -18,6 +18,12 @@ export const ActionArea = (props) => {
 
   return (
     <View>
+
+      {/* <WritingField
+        {...props}
+        isWriting={true}
+        SetWritingField={SetWritingField}
+      /> */}
 
       {
         props.nextPlayerName == null ?
@@ -34,7 +40,7 @@ export const ActionArea = (props) => {
                   />
                   :
                   <YourTurnField
-                  {...props}
+                    {...props}
                     SetWritingField={SetWritingField}
                   />
               )

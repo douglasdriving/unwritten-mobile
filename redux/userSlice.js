@@ -52,7 +52,10 @@ export const login = createAsyncThunk(
   'user/login',
   async (arg, thunkAPI) => {
 
-    if (!hasToken()) return null;
+    if (!hasToken()) {
+      console.log('cant login because there is no token in backend');
+      return null;
+    };
 
     const user = await GetUser();
 
@@ -90,8 +93,8 @@ export const userSlice = createSlice({
         return { ...state, token: action.payload };
       })
       .addCase(fetchTokenWithCredentials.fulfilled, (state, action) => {
-        setAuthToken(action.payload);
-        state.token = action.payload;
+        setAuthToken(action.payload.token);
+        state.token = action.payload.token;
         if(!action.payload.ok) state.loginError = action.payload.message;
       })
       .addCase(createUserAndFetchToken.fulfilled, (state, action) => {
