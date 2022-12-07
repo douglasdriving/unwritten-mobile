@@ -64,7 +64,7 @@ export const OpenRoom = () => {
     <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
 
       <Text style={styles.h1}>Open Room</Text>
-      <Text style={[styles.paragraph, { color: colors.white }]}>🔑  {storyKeys}</Text>
+      <Text style={[styles.paragraph, { color: colors.white }]}>🪵  {storyKeys}</Text>
 
       <Text style={[styles.body, { color: colors.white }]}>
         {
@@ -97,7 +97,7 @@ export const OpenRoom = () => {
           />
           {Space(15)}
           <MyButton
-            title='🔑 Open Room'
+            title='🪵 Open Room'
             disabled={!FieldsReady()}
             onPress={ToggleTryingToOpen}
             color={colors.fire}
@@ -110,22 +110,18 @@ export const OpenRoom = () => {
 
       {tryingToOpen && <Popup
         title='Open the room?'
-        text={'Opening this room will cost  1🔑️. You currently have ' + storyKeys}
+        text={'Opening this room will cost  1🪵. You currently have ' + storyKeys}
         onClose={ToggleTryingToOpen}
         buttons={[
           {
-            title: 'Open 🔑️',
+            title: 'Open 🪵',
             handlePress: (() => { ToggleTryingToOpen(); StartOpening() })
-          },
-          {
-            title: 'Cancel',
-            handlePress: ToggleTryingToOpen
           }
         ]}
       />}
 
       {opening && <Popup
-        title='🔑️ Opening Room...'
+        title='🪵 Opening Room...'
         loading={true}
       />}
 

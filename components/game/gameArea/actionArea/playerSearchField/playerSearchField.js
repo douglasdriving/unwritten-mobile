@@ -5,9 +5,9 @@ import { colors, styles } from "../../../../../style";
 export const PlayerSearchField = () => {
   return (
     <View style={styles.actionBox}>
-      <Icon name="search-outline" size={40} style={{margin: 10, textAlign: 'center'}} color={colors.white} />
+      <Icon name="bonfire" size={50} style={{margin: 10, textAlign: 'center'}} color={colors.fire} />
       <Text style={[styles.paragraph, styles.textCenter, {color: colors.white}]}>
-        Searching for another player to join the lobby and continue the story.
+        Waiting for players to join the camp and continue the story.
       </Text>
     </View>
   );

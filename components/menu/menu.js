@@ -1,5 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicon from 'react-native-vector-icons/Ionicons';
+import Fontisto from 'react-native-vector-icons/Fontisto';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { JoinRoom } from "./screens/joinRoom.js";
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { MyRooms } from "./screens/myRooms.js";
@@ -12,6 +14,8 @@ const screenOptions = {
   tabBarShowLabel: false,
   tabBarActiveBackgroundColor: colors.dark,
   tabBarInactiveBackgroundColor: colors.fire,
+  // tabBarActiveTintColor: colors.fire,
+  // tabBarInactiveTintColor: colors.light,
   tabBarHideOnKeyboard: true,
   headerShown: false,
   tabBarStyle: {
@@ -30,7 +34,13 @@ export const Menu = (menuProps) => {
         <Tab.Screen
           name='Join Room'
           options={{
-            tabBarIcon: () => (<Icon name="add-circle-outline" size={26} color={colors.white}/>)
+            tabBarIcon: ({ focused }) => (
+              <Ionicon
+                name="bonfire"
+                size={45}
+                color={focused ? colors.fire : colors.light}
+              />
+            )
           }}
         >
           {() => <JoinRoom {...menuProps} />}
@@ -39,7 +49,13 @@ export const Menu = (menuProps) => {
         <Tab.Screen
           name='Open New Room'
           options={{
-            tabBarIcon: () => (<Icon name="key" size={26} color={colors.white}/>)
+            tabBarIcon: ({ focused }) => (
+              <MaterialCommunityIcons
+                name="fire"
+                size={50}
+                color={focused ? colors.fire : colors.light}
+              />
+            )
           }}
         >
           {(props) => <OpenRoom {...menuProps} />}
@@ -48,7 +64,13 @@ export const Menu = (menuProps) => {
         <Tab.Screen
           name='My Rooms'
           options={{
-            tabBarIcon: () => (<Icon name="home" size={26} color={colors.white}/>)
+            tabBarIcon: ({ focused }) => (
+              <Fontisto
+                name="tent"
+                size={40}
+                color={focused ? colors.fire : colors.light}
+              />
+            )
           }}
         >
           {() => <MyRooms {...menuProps} />}
@@ -57,7 +79,13 @@ export const Menu = (menuProps) => {
         <Tab.Screen
           name='Archive'
           options={{
-            tabBarIcon: () => (<Icon name="folder" size={26} color={colors.white}/>)
+            tabBarIcon: ({ focused }) => (
+              <Ionicon
+                name="library"
+                size={40}
+                color={focused ? colors.fire : colors.light}
+              />
+            )
           }}
         >
           {() => <Archive {...menuProps} />}
