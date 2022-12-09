@@ -48,12 +48,12 @@ export const MyRooms = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.h1}>My Rooms</Text>
+      <Text style={styles.h1}>My Camps</Text>
       <ScrollView style={styles.scrollBox}>
         {!myRoomsList ?
           <Text style={styles.paragraph}>
-            You are currently not participating in any rooms!
-            Join a new writing room to have it show here
+            You are currently not in any camps!
+            Join a camp to have it show here
           </Text>
           :
           <View>

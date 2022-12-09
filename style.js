@@ -34,6 +34,10 @@ export const textColors = StyleSheet.create({
 
 export const styles = StyleSheet.create({
 
+  faded: {
+    opacity: 0.4,
+  },
+
   container: {
     flex: 1,
     backgroundColor: colors.dark,

@@ -63,14 +63,14 @@ export const OpenRoom = () => {
   return (
     <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
 
-      <Text style={styles.h1}>Open Room</Text>
+      <Text style={styles.h1}>Start a Camp</Text>
       <Text style={[styles.paragraph, { color: colors.white }]}>🪵  {storyKeys}</Text>
 
       <Text style={[styles.body, { color: colors.white }]}>
         {
           storyKeys > 0 ?
-            'Open a new writing room and create a new story with other players' :
-            'Opening a new room requires story keys! Earn keys by participating in other stories.'
+            'Light a fire and open a storytelling camp for others to join' :
+            'Lighting a fire requires firewood! Help finish other peoples stories to earn firewood.'
         }
       </Text>
 
@@ -80,24 +80,27 @@ export const OpenRoom = () => {
           {Space(10)}
 
           <FocusInputField
-            label='Story Title'
+            label='Title'
             oneLine
             setText={text => { setTitleInput(text) }}
             height={40}
+            placeholder={'Name your story'}
           />
           <FocusInputField
-            label='Story Description'
+            label='Description'
             setText={text => { setDescriptionInput(text) }}
             height={'20%'}
+            placeholder={'Describe the story plot briefly'}
           />
           <FocusInputField
-            label='Opening Text'
+            label='Opening'
             setText={text => { setStartingScenario(text) }}
             height={'20%'}
+            placeholder={'Start off the story with an opening paragraph'}
           />
           {Space(15)}
           <MyButton
-            title='🪵 Open Room'
+            title='🪵 Start Story Camp'
             disabled={!FieldsReady()}
             onPress={ToggleTryingToOpen}
             color={colors.fire}
@@ -109,19 +112,19 @@ export const OpenRoom = () => {
       <ErrorText message={roomCreateError} />
 
       {tryingToOpen && <Popup
-        title='Open the room?'
-        text={'Opening this room will cost  1🪵. You currently have ' + storyKeys}
+        title='Start the camp?'
+        text={'Starting the camp will cost 1🪵. You currently have ' + storyKeys}
         onClose={ToggleTryingToOpen}
         buttons={[
           {
-            title: 'Open 🪵',
+            title: 'Start 🪵',
             handlePress: (() => { ToggleTryingToOpen(); StartOpening() })
           }
         ]}
       />}
 
       {opening && <Popup
-        title='🪵 Opening Room...'
+        title='🪵 Lighting the bonfire...'
         loading={true}
       />}
 

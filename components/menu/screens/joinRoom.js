@@ -1,5 +1,5 @@
 import { Text, ScrollView } from 'react-native';
-import { colors, styles } from '../../../style';
+import { colors, styles, textColors } from '../../../style';
 import { GetAvailableRooms } from '../../../backend/backendCalls';
 import { useState, useCallback, useEffect } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
@@ -78,18 +78,21 @@ export const JoinRoom = (props) => {
         />
       }
 
-      <Text style={styles.h1}>Rooms</Text>
+      <Text style={styles.h1}>Open Camps</Text>
+      <Text style={[styles.paragraph, textColors.white]}>
+        Join camps to participate in the storytelling.
+      </Text>
 
       {(availableRoomsList && availableRoomsList.new && availableRoomsList.ongoing && availableRoomsList.new.length == 0 && availableRoomsList.ongoing.length == 0) &&
         <Text style={[styles.paragraph, { color: colors.white }]}>
-          There are currently no rooms available to join.
+          There are currently no camps available.
           Please come back later.
         </Text>
       }
 
       {(availableRoomsList && availableRoomsList.new && availableRoomsList.new.length > 0) &&
         <>
-          <Text style={styles.paragraph}>Join a newly created room and take part in writing a story from the beginning!</Text>
+
           <StoryList
             listItemInfo={availableRoomsList.new}
             confirmJoin={true}
@@ -101,7 +104,7 @@ export const JoinRoom = (props) => {
       {(availableRoomsList && availableRoomsList.ongoing && availableRoomsList.ongoing.length > 0) &&
         <>
           <Text style={styles.h1}>Looking for people</Text>
-          <Text style={styles.paragraph}>Rooms with ongoing story that has one or more spots open to fill</Text>
+          <Text style={styles.paragraph}>Camps with ongoing stories that has one or more spots open to fill</Text>
           <StoryList
             listItemInfo={availableRoomsList.ongoing}
             confirmJoin={true}
