@@ -124,7 +124,7 @@ export const OpenRoom = () => {
       />}
 
       {opening && <Popup
-        title='🪵 Lighting the bonfire...'
+        title='🪵 Lighting fire...'
         loading={true}
       />}
 

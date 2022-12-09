@@ -38,7 +38,7 @@ export default function App() {
   return (
     <Provider store={reduxStore}>
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator screenOptions={{ headerShown: false}}>
 
           <Stack.Screen name="Welcome">
             {(props) =>
