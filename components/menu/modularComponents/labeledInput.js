@@ -9,7 +9,7 @@ export const LabeledInput = (props) => {
       <TextInput
         onChangeText={props.onChangeText}
         style={styles.inputField}
-        secureTextEntry={props.label == 'Password'}
+        secureTextEntry={props.secureTextEntry}
         onSubmitEditing={props.onSubmitEditing}
       />
 

@@ -26,6 +26,7 @@ export const LoginScreen = (props) => {
   //form fields
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [repeatPassword, setRepeatPassword] = useState();
   const [displayName, setDisplayName] = useState();
 
   //page display
@@ -75,8 +76,18 @@ export const LoginScreen = (props) => {
 
     //fetch token with signup or signin
     if (signUp) {
+      //check repeated pw
+      if (password != repeatPassword){
+        setErrorMessage('passwords does not match');
+        setLoading(false);
+        return;
+      }
+
+      //create push token
       const pushToken = await registerForPushNotificationsAsync();
       AsyncStorage.setItem('pushToken', pushToken);
+
+      //create user in backend
       await dispatch(createUserAndFetchToken({ email, password, displayName, pushToken }));
       //should get a message here if we fail..
     }
@@ -152,6 +163,7 @@ export const LoginScreen = (props) => {
           <LabeledInput
             label={'Password'}
             onChangeText={text => { setPassword(text) }}
+            secureTextEntry
             onSubmitEditing={() => {
               if (!signUp) {
                 submitForm();
@@ -159,11 +171,18 @@ export const LoginScreen = (props) => {
             }}
           />
           {signUp &&
-            <LabeledInput
-              label={'Display Name'}
-              onChangeText={text => { setDisplayName(text) }}
-              onSubmitEditing={submitForm}
-            />
+            <>
+              <LabeledInput
+                label={'Repeat Password'}
+                onChangeText={text => { setRepeatPassword(text) }}
+                secureTextEntry
+              />
+              <LabeledInput
+                label={'Display Name'}
+                onChangeText={text => { setDisplayName(text) }}
+                onSubmitEditing={submitForm}
+              />
+            </>
           }
           {Space(10)}
           <MyButton
