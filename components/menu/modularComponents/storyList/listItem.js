@@ -60,7 +60,7 @@ export const ListItem = (props) => {
     if (authors) texts.push(GenerateAuthorText());
     if (authorCount) texts.push(`${authorCount}/4 players`);
     if (turn) texts.push(`🎲 Turn ${turn}`);
-    if (props.confirmJoin){
+    if (props.confirmJoin) {
       texts.push(`---`);
       texts.push(`Do you want to join this camp? You will be expected to continue the story`);
     }
@@ -69,23 +69,23 @@ export const ListItem = (props) => {
 
   }
 
-  const HandleJoinButtonPress = () => {
-    EnterRoom();
-    // if (props.confirmJoin) setJoinConfirmPopup(true);
-  }
+  const HandleJoinButtonPress = async () => {
 
-  // const HandleConfirmButtonPress = async () => {
-  //   setJoinConfirmPopup(false);
-  //   setRoomLoading(true);
-  //   const success = await JoinRoom(roomId);
-  //   setRoomLoading(false);
-  //   if (success) {
-  //     EnterRoom();
-  //   }
-  //   else {
-  //     console.error('FAILED TO JOIN ROOM. backend returned false');
-  //   }
-  // }
+    if (props.confirmJoin) {
+      setRoomLoading(true);
+      const success = await JoinRoom(roomId);
+      setRoomLoading(false);
+      if (success) {
+        EnterRoom();
+      }
+      else {
+        console.error('FAILED TO JOIN ROOM. backend returned false');
+      }
+    }
+    else {
+      EnterRoom();
+    }
+  }
 
   return (
     <View>
@@ -140,7 +140,7 @@ export const ListItem = (props) => {
             justifyContent: 'space-between',
             width: '100%',
           }}>
-            {title && <Text style={[styles.h3, {color: colors.light}]} numberOfLines={1}>
+            {title && <Text style={[styles.h3, { color: colors.light }]} numberOfLines={1}>
               {title}
               {alert && '❗'}
             </Text>}
