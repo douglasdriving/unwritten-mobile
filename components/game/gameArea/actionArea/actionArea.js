@@ -27,7 +27,7 @@ export const ActionArea = (props) => {
       
       {
         props.nextPlayerName == null ?
-          <PlayerSearchField />
+          <PlayerSearchField playerCount={props.players.length}/>
           :
           (
             props.nextPlayerName == userName ?
