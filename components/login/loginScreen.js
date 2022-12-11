@@ -149,8 +149,22 @@ export const LoginScreen = (props) => {
           <Text style={styles.h2}>Sign {signUp ? 'Up' : 'In'}</Text>
 
           <LabeledInput label={'Email'} onChangeText={text => { setEmail(text) }} />
-          <LabeledInput label={'Password'} onChangeText={text => { setPassword(text) }} />
-          {signUp && <LabeledInput label={'Display Name'} onChangeText={text => { setDisplayName(text) }} />}
+          <LabeledInput
+            label={'Password'}
+            onChangeText={text => { setPassword(text) }}
+            onSubmitEditing={() => {
+              if (!signUp) {
+                submitForm();
+              }
+            }}
+          />
+          {signUp &&
+            <LabeledInput
+              label={'Display Name'}
+              onChangeText={text => { setDisplayName(text) }}
+              onSubmitEditing={submitForm}
+            />
+          }
           {Space(10)}
           <MyButton
             title={'Sign ' + (signUp ? 'Up' : 'In')}
