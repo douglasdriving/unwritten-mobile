@@ -8,7 +8,7 @@ import { navigateToRoom } from '../../../../contexts/rootNavigation';
 export const ListItem = (props) => {
 
   const [open, setOpen] = useState(false);
-  const [joinConfirmPopup, setJoinConfirmPopup] = useState(false);
+  // const [joinConfirmPopup, setJoinConfirmPopup] = useState(false);
   const [roomLoading, setRoomLoading] = useState(false);
 
   const {
@@ -60,33 +60,37 @@ export const ListItem = (props) => {
     if (authors) texts.push(GenerateAuthorText());
     if (authorCount) texts.push(`${authorCount}/4 players`);
     if (turn) texts.push(`🎲 Turn ${turn}`);
+    if (props.confirmJoin){
+      texts.push(`---`);
+      texts.push(`Do you want to join this camp? You will be expected to continue the story`);
+    }
 
     return texts;
 
   }
 
   const HandleJoinButtonPress = () => {
-    if (props.confirmJoin) setJoinConfirmPopup(true);
-    else EnterRoom();
+    EnterRoom();
+    // if (props.confirmJoin) setJoinConfirmPopup(true);
   }
 
-  const HandleConfirmButtonPress = async () => {
-    setJoinConfirmPopup(false);
-    setRoomLoading(true);
-    const success = await JoinRoom(roomId);
-    setRoomLoading(false);
-    if (success) {
-      EnterRoom();
-    }
-    else {
-      console.error('FAILED TO JOIN ROOM. backend returned false');
-    }
-  }
+  // const HandleConfirmButtonPress = async () => {
+  //   setJoinConfirmPopup(false);
+  //   setRoomLoading(true);
+  //   const success = await JoinRoom(roomId);
+  //   setRoomLoading(false);
+  //   if (success) {
+  //     EnterRoom();
+  //   }
+  //   else {
+  //     console.error('FAILED TO JOIN ROOM. backend returned false');
+  //   }
+  // }
 
   return (
     <View>
 
-      {joinConfirmPopup &&
+      {/* {joinConfirmPopup &&
         <Popup
           title={'Join the room to write "' + title + '"?'}
           text='Once you join this room, you will be expected to write the next part of the story.'
@@ -102,11 +106,11 @@ export const ListItem = (props) => {
             }
           ]}
         />
-      }
+      } */}
 
       {roomLoading &&
         <Popup
-          title='Joining Room...'
+          title='Joining Camp...'
           loading={true}
         />
       }
