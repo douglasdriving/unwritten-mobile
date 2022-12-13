@@ -8,7 +8,6 @@ import { navigateToRoom } from '../../../../contexts/rootNavigation';
 export const ListItem = (props) => {
 
   const [open, setOpen] = useState(false);
-  // const [joinConfirmPopup, setJoinConfirmPopup] = useState(false);
   const [roomLoading, setRoomLoading] = useState(false);
 
   const {
@@ -89,24 +88,6 @@ export const ListItem = (props) => {
 
   return (
     <View>
-
-      {/* {joinConfirmPopup &&
-        <Popup
-          title={'Join the room to write "' + title + '"?'}
-          text='Once you join this room, you will be expected to write the next part of the story.'
-          onClose={() => { setJoinConfirmPopup(false) }}
-          buttons={[
-            {
-              title: 'Join Room',
-              handlePress: HandleConfirmButtonPress
-            },
-            {
-              title: 'Cancel',
-              handlePress: () => { setJoinConfirmPopup(false) }
-            }
-          ]}
-        />
-      } */}
 
       {roomLoading &&
         <Popup

@@ -57,8 +57,14 @@ export const LoginScreen = (props) => {
     const loginDisp = await dispatch(login());
     const returnedUser = loginDisp.payload;
 
-    if (!returnedUser) return;
-    if (!returnedUser.id) return false;
+    if (!returnedUser) {
+      console.error('no user returned in login dispatch. returned payload is: ', loginDisp.payload);
+      return false;
+    }
+    if (!returnedUser.id) {
+      console.error('no id on user returned from login dispatch. returned payload is: ', loginDisp.payload);
+      return false;
+    }
 
     if (props.startRoomId) {
       navigate('Game', { roomId: props.startRoomId });
@@ -77,7 +83,7 @@ export const LoginScreen = (props) => {
     //fetch token with signup or signin
     if (signUp) {
       //check repeated pw
-      if (password != repeatPassword){
+      if (password != repeatPassword) {
         setErrorMessage('passwords does not match');
         setLoading(false);
         return;

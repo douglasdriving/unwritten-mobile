@@ -54,7 +54,7 @@ export const login = createAsyncThunk(
   async (arg, thunkAPI) => {
 
     if (!hasToken()) {
-      console.log('cant login because there is no token in backend call script');
+      console.error('cant login because there is no token in backend call script');
       return null;
     };
 
@@ -64,6 +64,7 @@ export const login = createAsyncThunk(
       return user;
     }
     else {
+      console.error('no user id returned from backend call. The call returned: ', user);
       return null;
     }
 
@@ -103,6 +104,7 @@ export const userSlice = createSlice({
         state.token = action.payload;
       })
       .addCase(login.fulfilled, (state, action) => {
+        console.log('login fullfilled, actio payload is: ', action.payload);
         if (action.payload) {
           state.name = action.payload.name;
           state.id = action.payload.id;

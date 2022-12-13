@@ -58,6 +58,11 @@ export const Game = (props) => {
 
     const room = await GetRoomData(props.route.params.roomId);
 
+    if(!room){
+      console.error('Failed to get the room data from the backend!');
+      return;
+    }
+
     setReadOnly(room.finished);
     setActivePlayers(room.players.filter(player => player.active));
     setInactivePlayers(room.players.filter(player => !player.active));
@@ -70,7 +75,6 @@ export const Game = (props) => {
     if (room.finished) return;
 
     CheckForNewStrike(room.players);
-
     setNextPlayerId(room.next_player_id);
 
     if (counterUpdateInterval) {
@@ -105,7 +109,7 @@ export const Game = (props) => {
   );
 
   return (
-    <View style={{backgroundColor: colors.fire, height: '100%'}}>
+    <View style={{ backgroundColor: colors.fire, height: '100%' }}>
       <GameArea
         readOnly={readOnly}
         story={story}
