@@ -4,6 +4,7 @@ const API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
 //Headers
 let authToken;
 export const setAuthToken = (newToken) => {
+  console.log('auth token set to: ', newToken);
   authToken = newToken;
 }
 export const hasToken = () => {
@@ -83,7 +84,6 @@ export const GetAvailableRooms = async () => {
   return { new: availableRooms.new, ongoing: availableRooms.old };
 
 }
-
 export const GetMyRooms = async () => {
 
   const response = await fetch(`${API_ENDPOINT}/room/user`, GetFetch());
@@ -98,7 +98,6 @@ export const GetMyRooms = async () => {
 
   return { open: openRooms, closed: closedRooms };
 }
-
 export const GetFinishedStories = async () => {
 
   const response = await fetch(`${API_ENDPOINT}/room/archive`, GetFetch());
@@ -106,7 +105,6 @@ export const GetFinishedStories = async () => {
   return finishedStories;
 
 }
-
 export const CreateRoom = async (title, description, opening) => {
 
   const querystring = `title=${title}&description=${description}&scenario=${opening}`
@@ -115,22 +113,28 @@ export const CreateRoom = async (title, description, opening) => {
   return jsonResponse;
 
 }
-
 export const GetRoomData = async (roomId) => {
 
   const response = await fetch(`${API_ENDPOINT}/room/data/${roomId}`, GetFetch());
   const room = await response.json();
+
+  if (room.turn_end) {
+    const now = new Date();
+    const diff = now.getTimezoneOffset();
+    if (diff != 0) {
+      room.turn_end = new Date(new Date(room.turn_end).getTime() - (diff * 60 * 1000));
+    }
+  }
+
   return room;
 
 }
-
 export const JoinRoom = async (roomId) => {
 
   const response = await fetch(`${API_ENDPOINT}/room/join?room_id=${roomId}`, PostFetch());
   return response.ok;
 
 }
-
 export const GetChars = async (roomId, userId) => {
 
   const response = await fetch(

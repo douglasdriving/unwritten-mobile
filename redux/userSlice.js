@@ -33,6 +33,7 @@ export const fetchTokenWithCredentials = createAsyncThunk(
   'user/fetchTokenWithCredentials',
   async ({ email, password }, thunkAPI) => {
     const tokenFetch = await signIn(email, password);
+    // console.log('fetched token and got: ', tokenFetch.token);
     if (tokenFetch.token) await AsyncStorage.setItem('authToken', tokenFetch.token);
     return tokenFetch;
   }
@@ -53,7 +54,7 @@ export const login = createAsyncThunk(
   async (arg, thunkAPI) => {
 
     if (!hasToken()) {
-      console.log('cant login because there is no token in backend');
+      console.log('cant login because there is no token in backend call script');
       return null;
     };
 
