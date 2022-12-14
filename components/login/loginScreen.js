@@ -188,6 +188,9 @@ export const LoginScreen = (props) => {
                 onChangeText={text => { setDisplayName(text) }}
                 onSubmitEditing={submitForm}
               />
+              <Text style={[styles.paragraph]}>
+                *Note! No password reset system has be implemented yet, so please keep track of your credentials
+              </Text>
             </>
           }
           {Space(10)}
