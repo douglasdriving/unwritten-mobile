@@ -31,14 +31,14 @@ export default function App() {
     addNotificationHandler();
   }, []);
 
-  if (!fontsLoaded){
+  if (!fontsLoaded) {
     return null;
   }
 
   return (
     <Provider store={reduxStore}>
       <NavigationContainer ref={navigationRef}>
-        <Stack.Navigator screenOptions={{ headerShown: false}}>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
 
           <Stack.Screen name="Welcome">
             {(props) =>

@@ -20,15 +20,17 @@ export const registerForPushNotificationsAsync = async () => {
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
   let finalStatus = existingStatus;
 
-
+  // if we don't have access to it, we ask for it
   if (existingStatus !== 'granted') {
-    // if we don't have access to it, we ask for it
     const { status } = await Notifications.requestPermissionsAsync();
     finalStatus = status;
   }
+
+  //if user still does not allow it, return
   if (finalStatus !== 'granted') {
-    // user does not allow us to access to the notifications
-    alert('Failed to get push token for push notification!');
+    alert(
+      `It is highly recommended to use Unwritten with push notification turned on, as this will allow you to know when it's your turn to write. If you want the intended experience, please turn notifications on in your settings. You can always turn them off later if they annoy you :)`
+    );
     return;
   }
 
