@@ -53,11 +53,11 @@ export const ListItem = (props) => {
     }
 
     const texts = [];
-
+    
     if (description) texts.push(description);
     if (creator) texts.push(`Creator: ${creator}`);
-    if (authors) texts.push(GenerateAuthorText());
-    if (authorCount) texts.push(`${authorCount}/4 players`);
+    if (authors.length > 0) texts.push(GenerateAuthorText());
+    if (authors.length > 0) texts.push(`${authors.length + 1}/4 players`);
     if (turn) texts.push(`🎲 Turn ${turn}`);
     if (props.confirmJoin) {
       texts.push(`---`);
