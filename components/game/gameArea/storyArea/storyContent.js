@@ -24,7 +24,7 @@ export const StoryContent = (props) => {
 
   }
 
-  useEffect(() => {ListAllPlayers();}, [props.players, props.inActivePlayers]);
+  useEffect(() => { ListAllPlayers(); }, [props.players, props.inActivePlayers]);
 
   const GenerateAuthorText = () => {
 
@@ -46,8 +46,8 @@ export const StoryContent = (props) => {
 
     const filtered = allPlayers.filter(player => player.id == id);
     const player = filtered[0];
-    
-    if(!player) return '';
+
+    if (!player) return '';
     const name = player.name;
     return name;
 
@@ -57,13 +57,12 @@ export const StoryContent = (props) => {
     <View>
       {allPlayers.length > 0 &&
         <>
-          <Text style={[styles.h1, {color: colors.black}]}>{props.story.title}</Text>
-          <Text style={[styles.h3, {color: colors.black}]}>{props.story.description}</Text>
+          <Text style={[styles.h1, { color: colors.black }]}>{props.story.title}</Text>
+          <Text style={[styles.h3, { color: colors.black }]}>{props.story.description}</Text>
+          {props.readOnly && <Text style={[styles.h3, { color: colors.black }]}>{GenerateAuthorText()}</Text>}
+
           {Space(10)}
-          {/* <Divider color={colors.light}/>
-          {Space(10)} */}
-          {props.readOnly && <Text style={styles.h3}>{GenerateAuthorText()}</Text>}
-          {props.readOnly && <Divider />}
+
           {props.story.scenarios.map((scenario, i) =>
             <Paragraph
               scenario={scenario}

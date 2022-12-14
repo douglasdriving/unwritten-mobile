@@ -4,7 +4,6 @@ const API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
 //Headers
 let authToken;
 export const setAuthToken = (newToken) => {
-  console.log('auth token set to: ', newToken);
   authToken = newToken;
 }
 export const hasToken = () => {

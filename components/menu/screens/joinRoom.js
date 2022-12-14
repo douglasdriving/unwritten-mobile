@@ -9,6 +9,7 @@ import { navigate } from '../../../contexts/rootNavigation';
 
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../redux/userSlice';
+import { Space } from '../../smart/visuals';
 
 export const JoinRoom = (props) => {
 
@@ -103,8 +104,9 @@ export const JoinRoom = (props) => {
 
       {(availableRoomsList && availableRoomsList.ongoing && availableRoomsList.ongoing.length > 0) &&
         <>
+          {Space(15)}
           <Text style={styles.h1}>Looking for people</Text>
-          <Text style={styles.paragraph}>Camps with ongoing stories that has one or more spots open to fill</Text>
+          <Text style={[styles.paragraph, textColors.white]}>Camps with ongoing stories that has one or more spots open to fill</Text>
           <StoryList
             listItemInfo={availableRoomsList.ongoing}
             confirmJoin={true}
