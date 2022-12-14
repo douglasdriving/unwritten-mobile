@@ -98,6 +98,7 @@ export const FocusInputField = (props) => {
               defaultValue={textInput}
               onEndEditing={handleDonePress}
               ref={innerRef}
+              multiline
             />
             {focused && <MyButton title='Done' onPress={handleDonePress} color={colors.light} />}
           </View>
