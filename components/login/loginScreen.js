@@ -1,4 +1,5 @@
-import { Text, View, Button, ImageBackground } from 'react-native';
+import { Text, View, Button, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import Checkbox from 'expo-checkbox';
 import { styles } from '../../style.js';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -17,6 +18,7 @@ import background from '../../assets/background/starsBackground.png';
 //redux imports
 import { useSelector, useDispatch } from 'react-redux';
 import { login, selectUser, loadLocalToken, createUserAndFetchToken, fetchTokenWithCredentials } from '../../redux/userSlice.js';
+import { Popup } from '../smart/popup.js';
 
 export const LoginScreen = (props) => {
 
@@ -24,15 +26,17 @@ export const LoginScreen = (props) => {
   const dispatch = useDispatch();
 
   //form fields
-  const [email, setEmail] = useState();
+  const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [repeatPassword, setRepeatPassword] = useState();
   const [displayName, setDisplayName] = useState();
+  // const [consentChecked, setConsentChecked] = useState(false);
 
   //page display
   const [loading, setLoading] = useState();
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
+  // const [termsDocOpen, setTermsDocOpen] = useState(false);
 
   //login functions
   const tryLoginStart = async () => {
@@ -82,6 +86,13 @@ export const LoginScreen = (props) => {
 
     //fetch token with signup or signin
     if (signUp) {
+      // //check consent form check
+      // if (!consentChecked) {
+      //   setErrorMessage('In order to sign up, you must agree to the terms and conditions');
+      //   setLoading(false);
+      //   return;
+      // }
+
       //check repeated pw
       if (password != repeatPassword) {
         setErrorMessage('passwords does not match');
@@ -94,11 +105,11 @@ export const LoginScreen = (props) => {
       AsyncStorage.setItem('pushToken', pushToken);
 
       //create user in backend
-      await dispatch(createUserAndFetchToken({ email, password, displayName, pushToken }));
+      await dispatch(createUserAndFetchToken({ email: userName, password, displayName, pushToken }));
       //should get a message here if we fail..
     }
     else {
-      const tokenFetchDisp = await dispatch(fetchTokenWithCredentials({ email, password }));
+      const tokenFetchDisp = await dispatch(fetchTokenWithCredentials({ email: userName, password }));
       //need error handling here! but backend does not return correctly. fix there first...
       // console.log('token fetch disp: ', tokenFetchDisp);
       // if(!tokenFetchDisp.payload.ok){
@@ -123,7 +134,7 @@ export const LoginScreen = (props) => {
 
   //update page
   useEffect(() => { tryLoginStart() }, []);
-  useEffect(() => { setErrorMessage(null) }, [email, password, displayName, signUp])
+  useEffect(() => { setErrorMessage(null) }, [userName, password, displayName, signUp])
 
   return (
 
@@ -138,14 +149,18 @@ export const LoginScreen = (props) => {
         textAlign: 'center',
       }}>
         <Text style={[styles.title, { color: colors.white }]}>Unwritten</Text>
-        <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Welcome to the world of Unwritten!</Text>
-        <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
+        {!signUp &&
+          <>
+            <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Welcome to the world of Unwritten!</Text>
+            <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
+          </>
+        }
         {Space(20)}
 
         <View style={styles.formField}>
           <Text style={styles.h2}>Sign {signUp ? 'Up' : 'In'}</Text>
 
-          <LabeledInput label={'Email'} onChangeText={text => { setEmail(text) }} />
+          <LabeledInput label={'Username'} onChangeText={text => { setUserName(text) }} />
           <LabeledInput
             label={'Password'}
             onChangeText={text => { setPassword(text) }}
@@ -171,13 +186,37 @@ export const LoginScreen = (props) => {
               <Text style={[styles.paragraph]}>
                 *Note! No password reset system has be implemented yet, so please keep track of your credentials
               </Text>
+              {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Checkbox
+                  style={{ marginRight: 10, width: 25, height: 25 }}
+                  value={consentChecked}
+                  onValueChange={setConsentChecked}
+                  color={consentChecked ? '#4630EB' : undefined}
+                />
+                <Text style={styles.paragraph}>I agree to the </Text>
+                <TouchableWithoutFeedback>
+                  <Text
+                    onPress={() => setTermsDocOpen(true)}
+                    style={{ ...styles.paragraph, textDecorationLine: 'underline' }}
+                  >
+                    terms and conditions
+                  </Text>
+                </TouchableWithoutFeedback>
+                {termsDocOpen &&
+                  <Popup
+                    title='Terms and conditions'
+                    text='By signing up to Unwritten, you agree that all text that you write in the app will be stored in our database. '
+                    onClose={() => setTermsDocOpen(false)}
+                  />
+                }
+              </View> */}
             </>
           }
           {Space(10)}
           <MyButton
             title={'Sign ' + (signUp ? 'Up' : 'In')}
             onPress={submitForm}
-            disabled={!email || !password || (signUp && !displayName)}
+            disabled={!userName || !password || (signUp && !displayName)}
           />
 
           <ErrorText message={errorMessage} />
@@ -189,7 +228,7 @@ export const LoginScreen = (props) => {
             offText='New to Unwritten? Sign up here'
           />
         </View>
-      </ImageBackground>
+      </ImageBackground >
     </View >
   );
 }
