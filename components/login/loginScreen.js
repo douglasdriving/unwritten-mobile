@@ -120,26 +120,6 @@ export const LoginScreen = (props) => {
     setLoading(false);
 
   }
-  const quickSignIn = async () => {
-
-    //show load screen
-    setLoading(signUp ? 'Creating new user...' : 'Signing in...');
-
-    //fetch token with signup or signin
-    await dispatch(fetchTokenWithCredentials({ email: 'douglasdriving@gmail.com', password: 'Gammalgrodan80' }));
-
-    const loggedIn = await tryLogin();
-
-    //failed to login? Show error
-    if (!loggedIn) {
-      if (signUp) setErrorMessage('Failed to create user, please check your credentials'); //have to know why!!!!! backend will say...
-      else setErrorMessage('Failed to login. Please check your credentials'); //have to know why!!! backend will say...
-    }
-
-    //hide load screen
-    setLoading(false);
-
-  }
 
   //update page
   useEffect(() => { tryLoginStart() }, []);
@@ -198,10 +178,6 @@ export const LoginScreen = (props) => {
             title={'Sign ' + (signUp ? 'Up' : 'In')}
             onPress={submitForm}
             disabled={!email || !password || (signUp && !displayName)}
-          />
-          <MyButton
-            title={'Quick Sign In'}
-            onPress={quickSignIn}
           />
 
           <ErrorText message={errorMessage} />
