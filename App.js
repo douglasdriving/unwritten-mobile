@@ -1,3 +1,4 @@
+//IMPORTS
 import { useState, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -8,8 +9,6 @@ import { addNotificationHandler } from './backend/notifications';
 import { navigationRef } from './contexts/rootNavigation';
 import { LoginScreen } from './components/login/loginScreen';
 import { useFonts } from 'expo-font';
-
-//redux
 import reduxStore from './redux/reduxStore';
 import { Provider } from 'react-redux';
 

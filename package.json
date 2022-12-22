@@ -1,7 +1,6 @@
 {
   "name": "unwritten-mobile",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -33,7 +32,13 @@
     "react-native-web": "~0.18.7",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
-    "expo-checkbox": "~2.2.2"
+    "expo-checkbox": "~2.2.2",
+    "expo-system-ui": "~2.0.1",
+    "expo-splash-screen": "~0.17.5",
+    "sentry-expo": "~6.0.0",
+    "expo-application": "~5.0.1",
+    "expo-constants": "~14.0.2",
+    "@sentry/react-native": "4.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3"

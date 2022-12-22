@@ -1,6 +1,7 @@
 {
   "cli": {
-    "version": ">= 2.7.1"
+    "version": ">= 3.1.1",
+    "appVersionSource": "remote"
   },
   "build": {
     "development": {
@@ -9,10 +10,16 @@
     },
     "preview": {
       "distribution": "internal",
-      "channel": "preview"
+      "channel": "preview",
+      "android": {
+        "buildType": "apk"
+      }
     },
     "production": {
-      "channel": "production"
+      "channel": "production",
+      "autoIncrement": true,
+      "npm": "8.18.0",
+      "node": "16.14.0"
     }
   },
   "submit": {
