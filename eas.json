@@ -17,9 +17,7 @@
     },
     "production": {
       "channel": "production",
-      "autoIncrement": true,
-      "npm": "8.18.0",
-      "node": "16.14.0"
+      "autoIncrement": true
     }
   },
   "submit": {
