@@ -167,7 +167,8 @@ export const GetChars = async (roomId, userId) => {
 //SCENARIOS
 export const UploadScenario = async (text, roomId) => {
   const response = await fetch(`${API_ENDPOINT}/scenario/?roomId=${roomId}&text=${text}`, PostFetch());
-  return response.ok;
+  const jsonResponse = await response.json();
+  return jsonResponse;
 }
 
 

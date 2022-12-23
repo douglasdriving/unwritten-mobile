@@ -37,14 +37,13 @@ export const WritingField = (props) => {
 
     setScenarioPostLoading(true);
 
-    const uploadSuccess = await UploadScenario(scenarioText, props.roomId);
+    const scenarioUploadResponse = await UploadScenario(scenarioText, props.roomId);
 
-
-    if (uploadSuccess) {
+    if (scenarioUploadResponse.ok) {
       await props.LoadRoomData();
     }
     else {
-      setWarning('failed to add scenario. Please try again...')
+      setWarning(scenarioUploadResponse.message);
     }
 
     setScenarioPostLoading(false);
