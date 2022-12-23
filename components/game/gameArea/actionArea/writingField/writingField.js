@@ -39,6 +39,7 @@ export const WritingField = (props) => {
 
     const uploadSuccess = await UploadScenario(scenarioText, props.roomId);
 
+
     if (uploadSuccess) {
       await props.LoadRoomData();
     }
@@ -77,9 +78,6 @@ export const WritingField = (props) => {
 
   return (
     <View style={styles.actionBox}>
-      {/* <Button title="<-" color='gray' onPress={handleBackButtonPress} /> */}
-      {/* <Text style={styles.paragraph}>{props.turnNumber}. {user.name}</Text> */}
-      {/* <ScenarioTextField handleChangeText={handleChangeText} isWriting={props.isWriting} /> */}
       <TextInput
         style={{
           textAlignVertical: 'top',

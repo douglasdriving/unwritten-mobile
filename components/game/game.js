@@ -58,7 +58,7 @@ export const Game = (props) => {
 
     const room = await GetRoomData(props.route.params.roomId);
 
-    if(!room){
+    if (!room) {
       console.error('Failed to get the room data from the backend!');
       return;
     }
