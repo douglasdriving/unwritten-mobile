@@ -22,7 +22,7 @@ export const FocusInputField = (props) => {
     if (innerRef.current && !innerRef.current.focused) {
       setTimeout(() => {
         innerRef.current.focus();
-      }, 10);
+      }, 100);
     }
   })
 
