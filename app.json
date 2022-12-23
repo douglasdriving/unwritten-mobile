@@ -28,7 +28,8 @@
         "monochromeImage": "./assets/unwrittenAdaptiveIcon.png",
         "backgroundColor": "#4A3C65"
       },
-      "package": "com.douglasdriving.unwrittenmobile"
+      "package": "com.douglasdriving.unwrittenmobile",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/unwrittenFavicon.png"
