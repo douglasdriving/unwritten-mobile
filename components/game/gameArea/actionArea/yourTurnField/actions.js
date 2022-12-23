@@ -5,7 +5,7 @@ import { MyButton } from "../../../../smart/myButton";
 
 export const Actions = (props) => {
 
-  const turnWhenCanEnd = 2;
+  const turnWhenCanEnd = 30;
   const turnWhenMustEnd = 40;
 
   const scenarioCount = props.story.scenarios.length;
