@@ -29,7 +29,8 @@ export const ListItem = (props) => {
   }
 
   const EnterRoom = () => {
-    navigateToRoom(roomId)
+    setOpen(false);
+    navigateToRoom(roomId);
   }
 
   const GeneratePopupText = () => {
