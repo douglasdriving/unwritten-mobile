@@ -170,5 +170,13 @@ export const UploadScenario = async (text, roomId) => {
   const jsonResponse = await response.json();
   return jsonResponse;
 }
+export const UploadEnding = async (text, roomId) => {
+  const response = await fetch(
+    `${API_ENDPOINT}/scenario/?roomId=${roomId}&text=${text}&end=true`,
+    PostFetch()
+  );
+  const jsonResponse = await response.json();
+  return jsonResponse;
+}
 
 

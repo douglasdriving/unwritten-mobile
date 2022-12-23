@@ -4,7 +4,7 @@ import { CharCounter } from "./charCounter";
 import { ScenarioTextField } from "./scenarioTextField";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
-import { GetChars, UploadScenario } from "../../../../../backend/backendCalls";
+import { GetChars, UploadScenario, UploadEnding } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
 import { colors, styles } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
@@ -16,6 +16,7 @@ export const WritingField = (props) => {
   const [chars, setChars] = useState({ total: 0, remaining: 0 });
   const [warning, setWarning] = useState();
   const user = useSelector(selectUser);
+  const isEnd = props.isWriting == 'ending';
 
   const handleChangeText = text => {
     setScenarioText(text);
@@ -37,7 +38,13 @@ export const WritingField = (props) => {
 
     setScenarioPostLoading(true);
 
-    const scenarioUploadResponse = await UploadScenario(scenarioText, props.roomId);
+    let scenarioUploadResponse
+    if (isEnd) {
+      scenarioUploadResponse = await UploadEnding(scenarioText, props.roomId);
+    }
+    else {
+      scenarioUploadResponse = await UploadScenario(scenarioText, props.roomId);
+    }
 
     if (scenarioUploadResponse.ok) {
       await props.LoadRoomData();
@@ -90,7 +97,7 @@ export const WritingField = (props) => {
       />
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10 }}>
         <MyButton
-          title={props.isWriting == 'ending' ? 'Add Ending' : 'Add'}
+          title={isEnd ? 'Add Ending' : 'Add'}
           disabled={chars.remaining < 0 || scenarioText.length < 1}
           onPress={handleAddButtonPress}
           color={colors.fire}
