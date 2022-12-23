@@ -24,8 +24,14 @@
     },
     "android": {
       "adaptiveIcon": {
+<<<<<<< Updated upstream
         "foregroundImage": "./assets/unwrittenAdaptiveIcon.png",
+        "backgroundColor": "#FFFFFF"
+=======
+        "foregroundImage": "./assets/unwrittenAdaptiveIconColored.png",
+        "monochromeImage": "./assets/unwrittenAdaptiveIcon.png",
         "backgroundColor": "#4A3C65"
+>>>>>>> Stashed changes
       },
       "package": "com.douglasdriving.unwrittenmobile"
     },
