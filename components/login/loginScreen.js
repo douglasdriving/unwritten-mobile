@@ -36,7 +36,6 @@ export const LoginScreen = (props) => {
   const [loading, setLoading] = useState();
   const [errorMessage, setErrorMessage] = useState(false);
   const [signUp, setSignUp] = useState(false);
-  // const [termsDocOpen, setTermsDocOpen] = useState(false);
 
   //login functions
   const tryLoginStart = async () => {
@@ -86,13 +85,6 @@ export const LoginScreen = (props) => {
 
     //fetch token with signup or signin
     if (signUp) {
-      // //check consent form check
-      // if (!consentChecked) {
-      //   setErrorMessage('In order to sign up, you must agree to the terms and conditions');
-      //   setLoading(false);
-      //   return;
-      // }
-
       //check repeated pw
       if (password != repeatPassword) {
         setErrorMessage('passwords does not match');
@@ -186,30 +178,6 @@ export const LoginScreen = (props) => {
               <Text style={[styles.paragraph]}>
                 *Note! No password reset system has be implemented yet, so please keep track of your credentials
               </Text>
-              {/* <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Checkbox
-                  style={{ marginRight: 10, width: 25, height: 25 }}
-                  value={consentChecked}
-                  onValueChange={setConsentChecked}
-                  color={consentChecked ? '#4630EB' : undefined}
-                />
-                <Text style={styles.paragraph}>I agree to the </Text>
-                <TouchableWithoutFeedback>
-                  <Text
-                    onPress={() => setTermsDocOpen(true)}
-                    style={{ ...styles.paragraph, textDecorationLine: 'underline' }}
-                  >
-                    terms and conditions
-                  </Text>
-                </TouchableWithoutFeedback>
-                {termsDocOpen &&
-                  <Popup
-                    title='Terms and conditions'
-                    text='By signing up to Unwritten, you agree that all text that you write in the app will be stored in our database. '
-                    onClose={() => setTermsDocOpen(false)}
-                  />
-                }
-              </View> */}
             </>
           }
           {Space(10)}
