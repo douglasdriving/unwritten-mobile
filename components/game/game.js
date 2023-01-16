@@ -7,15 +7,18 @@ import { GameArea } from './gameArea/gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
+import { selectTurnDeadline, setTurnDeadline } from '../../redux/roomSlice.js';
 import { Space } from '../smart/visuals.js';
 import { colors } from '../../style.js';
 
 export const Game = (props) => {
 
-  //global
+  //global redux
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const turnDeadline = useSelector(selectTurnDeadline);
 
   //Load once
   const [readOnly, setReadOnly] = useState("false");
@@ -30,7 +33,7 @@ export const Game = (props) => {
   const [turnMissed, setTurnMissed] = useState(false);
 
   //change during play
-  const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
+  // const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
   const [counterUpdateInterval, setCounterUpdateInterval] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -38,6 +41,10 @@ export const Game = (props) => {
 
     //gets the current players strike count
     const player = players.filter(player => player.id == user.id)[0];
+    if (!player || !player.strikes) {
+      console.error('could not identify the logged player to get strikes');
+      return 0;
+    }
     const strikes = player.strikes;
     return strikes;
 
@@ -82,12 +89,21 @@ export const Game = (props) => {
       setCounterUpdateInterval(null);
     }
 
-    setTimeLeftInTurn(new Date(room.turn_end).getTime() - new Date().getTime());
-    const interval = setInterval(() => {
-      setTimeLeftInTurn(new Date(room.turn_end).getTime() - new Date().getTime());
-    }, 1000);
-    setCounterUpdateInterval(interval);
+    //const timeLeft = new Date(room.turn_end).getTime() - new Date().getTime();
+    dispatch(setTurnDeadline(room.turn_end));
+
+    // setTimeLeftInTurn(new Date(room.turn_end).getTime() - new Date().getTime());
+
+    //make time left tick down
+    //++ improvement is to move this logic into the room slice! it should always tick down
+    // const interval = setInterval(() => {
+    //   const newTimeLeft = new Date(room.turn_end).getTime() - new Date().getTime();
+    //   dispatch(setTimeLeftInTurn(newTimeLeft));
+    // }, 1000);
+    // setCounterUpdateInterval(interval);
+
   }
+
   const GetNextPlayerName = () => {
 
     if (!activePlayers) return null;
@@ -114,7 +130,7 @@ export const Game = (props) => {
         readOnly={readOnly}
         story={story}
         nextPlayerName={GetNextPlayerName()}
-        timeLeftInTurn={timeLeftInTurn}
+        // timeLeftInTurn={timeLeftInTurn}
         turnNumber={story.scenarios.length + 1}
         players={activePlayers}
         inActivePlayers={inActivePlayers}
@@ -128,7 +144,7 @@ export const Game = (props) => {
       {menuOpen && <RoomMenu
         players={activePlayers}
         nextPlayer={nextPlayerId}
-        timeLeftInTurn={timeLeftInTurn}
+        // timeLeftInTurn={timeLeftInTurn}
         closeMenu={() => setMenuOpen(false)}
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}
