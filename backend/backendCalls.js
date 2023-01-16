@@ -163,6 +163,22 @@ export const GetChars = async (roomId, userId) => {
   return jsonResponse.chars;
 
 }
+export const GetRoomDeadline = async (roomId) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/room/deadline?roomId=${roomId}`,
+    GetFetch()
+  );
+  const jsonResponse = await response.json();
+
+  if (!jsonResponse.ok) {
+    console.error(jsonResponse.message);
+    return null;
+  }
+
+  return jsonResponse.deadline;
+
+}
 
 //SCENARIOS
 export const UploadScenario = async (text, roomId) => {

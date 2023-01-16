@@ -19,7 +19,7 @@ export const roomSlice = createSlice({
   },
   reducers: { //add each reducers
     setTurnDeadline: (state, action) => {
-      console.log('turn deadline set to: ', action.payload);
+      // console.log('turn deadline set to: ', action.payload);
       return ({
         turnDeadline: action.payload
       })

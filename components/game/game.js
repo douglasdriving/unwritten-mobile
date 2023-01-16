@@ -149,6 +149,7 @@ export const Game = (props) => {
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}
         nextPlayerId={nextPlayerId}
+        roomId={props.route.params.roomId}
       />}
       {turnMissed &&
         <Popup

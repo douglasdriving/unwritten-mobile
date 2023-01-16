@@ -37,7 +37,7 @@ export const WaitingField = (props) => {
   return (
     <View style={styles.actionBox}>
       <Text style={styles.h3}>It's {props.nextPlayerName}'s turn to write</Text>
-      <TurnTimer/>
+      <TurnTimer roomId={props.roomId}/>
     </View>
   );
 
