@@ -1,15 +1,11 @@
 import { View, Text } from "react-native";
 import { styles, textColors, colors } from "../../../../../style";
-// import { TimeToHms } from "../../../../../helpers/helpers";
 import { Space } from "../../../../smart/visuals";
 import { Actions } from "./actions";
-// import { useSelector } from "react-redux";
-// import { selectTimeLeftInTurn } from "../../../../../redux/roomSlice";
 import { TurnTimer } from "../../../../smart/turnTimer";
 
 export const YourTurnField = (props) => {
 
-  // const timeLeftInTurn = useSelector(selectTimeLeftInTurn);
   const playerJustJoined = props.turnNumber < 5;
 
   return (
@@ -31,7 +27,7 @@ export const YourTurnField = (props) => {
         <Actions {...props} />
       </View>
       {Space(20)}
-      <TurnTimer color={colors.dark} roomId={props.roomId}/>
+      <TurnTimer color={colors.dark} roomId={props.roomId} />
     </>
   );
 }

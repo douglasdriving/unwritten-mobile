@@ -1,4 +1,7 @@
+
 /*
+NOT USED RIGHT NOW! MIGHT BE RELEVANT AgAIN IN THE FUTuRE TO SAVE ROOM INFO GLOBALLY
+
 roomSlice.js
 used to store info about the current room
 Includes:

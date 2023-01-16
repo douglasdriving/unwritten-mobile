@@ -1,15 +1,12 @@
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import { styles, colors } from "../../style";
 import { TimeToHms } from "../../helpers/helpers";
-import { useSelector } from "react-redux";
-import { selectTurnDeadline } from "../../redux/roomSlice";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GetRoomDeadline } from "../../backend/backendCalls";
 
 export const TurnTimer = (props) => {
 
-  // const turnDeadline = useSelector(selectTurnDeadline);
   const [turnDeadline, setTurnDeadline] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [counterInterval, setCounterInterval] = useState(null);

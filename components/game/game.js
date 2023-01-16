@@ -9,16 +9,13 @@ import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
-import { selectTurnDeadline, setTurnDeadline } from '../../redux/roomSlice.js';
-import { Space } from '../smart/visuals.js';
 import { colors } from '../../style.js';
 
 export const Game = (props) => {
 
   //global redux
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const turnDeadline = useSelector(selectTurnDeadline);
 
   //Load once
   const [readOnly, setReadOnly] = useState("false");
@@ -33,8 +30,6 @@ export const Game = (props) => {
   const [turnMissed, setTurnMissed] = useState(false);
 
   //change during play
-  // const [timeLeftInTurn, setTimeLeftInTurn] = useState(0);
-  const [counterUpdateInterval, setCounterUpdateInterval] = useState();
   const [menuOpen, setMenuOpen] = useState(false);
 
   const GetPlayerStrikes = (players) => {
@@ -49,6 +44,7 @@ export const Game = (props) => {
     return strikes;
 
   }
+
   const CheckForNewStrike = async (players) => {
 
     //checks to see if the player has gotten a new strike, and shows a popup if they have
@@ -61,6 +57,7 @@ export const Game = (props) => {
     }
 
   }
+
   const LoadRoomData = async () => {
 
     const room = await GetRoomData(props.route.params.roomId);
@@ -83,25 +80,6 @@ export const Game = (props) => {
 
     CheckForNewStrike(room.players);
     setNextPlayerId(room.next_player_id);
-
-    if (counterUpdateInterval) {
-      clearInterval(counterUpdateInterval);
-      setCounterUpdateInterval(null);
-    }
-
-    //const timeLeft = new Date(room.turn_end).getTime() - new Date().getTime();
-    dispatch(setTurnDeadline(room.turn_end));
-
-    // setTimeLeftInTurn(new Date(room.turn_end).getTime() - new Date().getTime());
-
-    //make time left tick down
-    //++ improvement is to move this logic into the room slice! it should always tick down
-    // const interval = setInterval(() => {
-    //   const newTimeLeft = new Date(room.turn_end).getTime() - new Date().getTime();
-    //   dispatch(setTimeLeftInTurn(newTimeLeft));
-    // }, 1000);
-    // setCounterUpdateInterval(interval);
-
   }
 
   const GetNextPlayerName = () => {
@@ -130,7 +108,6 @@ export const Game = (props) => {
         readOnly={readOnly}
         story={story}
         nextPlayerName={GetNextPlayerName()}
-        // timeLeftInTurn={timeLeftInTurn}
         turnNumber={story.scenarios.length + 1}
         players={activePlayers}
         inActivePlayers={inActivePlayers}
@@ -144,7 +121,6 @@ export const Game = (props) => {
       {menuOpen && <RoomMenu
         players={activePlayers}
         nextPlayer={nextPlayerId}
-        // timeLeftInTurn={timeLeftInTurn}
         closeMenu={() => setMenuOpen(false)}
         storyTitle={story.title}
         turnsTaken={story.scenarios.length}

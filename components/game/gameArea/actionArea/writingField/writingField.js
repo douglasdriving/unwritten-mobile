@@ -17,7 +17,7 @@ export const WritingField = (props) => {
   const [warning, setWarning] = useState();
   const user = useSelector(selectUser);
   const isEnd = props.isWriting == 'ending';
-  const {roomId} = props;
+  const { roomId } = props;
 
   const handleChangeText = text => {
     setScenarioText(text);
@@ -65,7 +65,7 @@ export const WritingField = (props) => {
   //   }
   //   props.SetWritingField(null);
   // }
-  
+
   const loadChars = async () => {
 
     const loadedChars = await GetChars(roomId, user.id);

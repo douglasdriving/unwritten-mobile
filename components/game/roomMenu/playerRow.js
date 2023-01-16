@@ -1,15 +1,12 @@
 import { View, Text } from "react-native";
-// import { TimeToHms } from "../../../helpers/helpers";
 import { useSelector } from "react-redux";
 import { selectUserName } from "../../../redux/userSlice";
 import { colors, styles } from "../../../style";
-// import { selectTimeLeftInTurn } from "../../../redux/roomSlice";
 import { TurnTimer } from "../../smart/turnTimer";
 
 export const PlayerRow = (props) => {
 
   const userName = useSelector(selectUserName);
-  // const timeLeftInTurn = useSelector(selectTimeLeftInTurn);
 
   const strikeEmojis = () => {
     let emojiString = '';
@@ -37,7 +34,7 @@ export const PlayerRow = (props) => {
           {props.player.name + ' ' + strikeEmojis()}
         </Text>
       }
-      {props.isNextPlayer && <TurnTimer color={colors.dark} roomId={props.roomId}/>}
+      {props.isNextPlayer && <TurnTimer color={colors.dark} roomId={props.roomId} />}
     </View>
   );
 }
