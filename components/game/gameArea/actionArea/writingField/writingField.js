@@ -17,6 +17,7 @@ export const WritingField = (props) => {
   const [warning, setWarning] = useState();
   const user = useSelector(selectUser);
   const isEnd = props.isWriting == 'ending';
+  const {roomId} = props;
 
   const handleChangeText = text => {
     setScenarioText(text);
@@ -25,6 +26,7 @@ export const WritingField = (props) => {
       remaining: chars.total - text.length
     })
   }
+
   const handleAddButtonPress = async () => {
 
     if (scenarioText.length < 1) {
@@ -40,10 +42,10 @@ export const WritingField = (props) => {
 
     let scenarioUploadResponse
     if (isEnd) {
-      scenarioUploadResponse = await UploadEnding(scenarioText, props.roomId);
+      scenarioUploadResponse = await UploadEnding(scenarioText, roomId);
     }
     else {
-      scenarioUploadResponse = await UploadScenario(scenarioText, props.roomId);
+      scenarioUploadResponse = await UploadScenario(scenarioText, roomId);
     }
 
     if (scenarioUploadResponse.ok) {
@@ -55,16 +57,18 @@ export const WritingField = (props) => {
 
     setScenarioPostLoading(false);
   }
-  const handleBackButtonPress = async () => {
-    if (!props.SetWritingField) {
-      console.error('no SetWritingField passed into props of writingField -> Cant go back');
-      return;
-    }
-    props.SetWritingField(null);
-  }
+
+  // const handleBackButtonPress = async () => {
+  //   if (!props.SetWritingField) {
+  //     console.error('no SetWritingField passed into props of writingField -> Cant go back');
+  //     return;
+  //   }
+  //   props.SetWritingField(null);
+  // }
+  
   const loadChars = async () => {
 
-    const loadedChars = await GetChars(props.roomId, user.id);
+    const loadedChars = await GetChars(roomId, user.id);
     if (!loadedChars) {
       console.error('unable to load chars from backend into the writing field component');
       return;
