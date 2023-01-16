@@ -36,7 +36,8 @@ export const Game = (props) => {
 
     //gets the current players strike count
     const player = players.filter(player => player.id == user.id)[0];
-    if (!player || !player.strikes) {
+
+    if (!player || (!player.strikes && player.strikes != 0)) {
       console.error('could not identify the logged player to get strikes');
       return 0;
     }
