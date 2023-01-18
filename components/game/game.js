@@ -38,7 +38,7 @@ export const Game = (props) => {
     const player = players.filter(player => player.id == user.id)[0];
 
     if (!player || (!player.strikes && player.strikes != 0)) {
-      console.error('could not identify the logged player to get strikes');
+      console.error('could not identify the logged player to get strikes. setting it to 0');
       return 0;
     }
     const strikes = player.strikes;
