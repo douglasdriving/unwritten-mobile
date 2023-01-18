@@ -4,10 +4,13 @@ import { useState } from 'react';
 import { StoryNavButton } from './storyNavButton.js';
 import { Popup } from '../../smart/popup.js';
 import { navigate } from '../../../contexts/rootNavigation.js';
+import { useSelector } from 'react-redux';
+import { selectReadOnly } from '../../../redux/roomSlice.js';
 
 export const StoryNav = (props) => {
 
   const [closePopupOpen, setClosePopupOpen] = useState(false);
+  const readOnly = useSelector(selectReadOnly);
 
   const LeaveRoom = () => {
     ClosePopup();
@@ -24,7 +27,7 @@ export const StoryNav = (props) => {
 
       <StoryNavButton type='close' onPress={() => setClosePopupOpen(true)} />
 
-      {!props.readOnly && <StoryNavButton type='menu' onPress={props.openMenu} />}
+      {!readOnly && <StoryNavButton type='menu' onPress={props.openMenu} />}
 
       {closePopupOpen && <Popup
         title={'Leave Room?'}

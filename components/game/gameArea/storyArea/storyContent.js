@@ -5,11 +5,13 @@ import { colors, styles } from '../../../../style.js';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserId } from '../../../../redux/userSlice.js';
+import { selectReadOnly } from '../../../../redux/roomSlice.js';
 
 export const StoryContent = (props) => {
 
   const [allPlayers, setAllPlayers] = useState([]);
   const userId = useSelector(selectUserId);
+  const readOnly = useSelector(selectReadOnly);
 
   const ListAllPlayers = async () => {
 
@@ -59,7 +61,7 @@ export const StoryContent = (props) => {
         <>
           <Text style={[styles.h1, { color: colors.black }]}>{props.story.title}</Text>
           <Text style={[styles.h3, { color: colors.black }]}>{props.story.description}</Text>
-          {props.readOnly && <Text style={[styles.h3, { color: colors.black }]}>{GenerateAuthorText()}</Text>}
+          {readOnly && <Text style={[styles.h3, { color: colors.black }]}>{GenerateAuthorText()}</Text>}
 
           {Space(10)}
 

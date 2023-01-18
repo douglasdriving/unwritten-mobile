@@ -5,7 +5,7 @@ NOT USED RIGHT NOW! MIGHT BE RELEVANT AgAIN IN THE FUTuRE TO SAVE ROOM INFO GLOB
 roomSlice.js
 used to store info about the current room
 Includes:
-- turnDeadline
+- readOnly
 */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
@@ -18,19 +18,25 @@ import { } from '../backend/backendCalls';
 export const roomSlice = createSlice({
   name: 'room',
   initialState: {
-    turnDeadline: null
+    readOnly: true
   },
-  reducers: { //add each reducers
-    setTurnDeadline: (state, action) => {
-      // console.log('turn deadline set to: ', action.payload);
+  reducers: {
+    setReadOnlyOn: (state, action) => {
+      // console.log('read only set to true');
       return ({
-        turnDeadline: action.payload
+        readOnly: true
+      })
+    },
+    setReadOnlyOff: (state, action) => {
+      // console.log('read only set to false');
+      return ({
+        readOnly: false
       })
     }
   }
 });
 
 //export selectors and reducer
-export const selectTurnDeadline = state => state.room.turnDeadline;
-export const { setTurnDeadline } = roomSlice.actions;
+export const selectReadOnly = state => state.room.readOnly;
+export const { setReadOnlyOff, setReadOnlyOn } = roomSlice.actions;
 export const roomReducer = roomSlice.reducer;

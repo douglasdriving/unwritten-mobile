@@ -4,10 +4,13 @@ import { styles } from '../../../style.js';
 import { StoryContent } from './storyArea/storyContent.js';
 import { Space } from '../../smart/visuals.js';
 import { ActionArea } from './actionArea/actionArea.js';
+import { useSelector } from 'react-redux';
+import { selectReadOnly } from '../../../redux/roomSlice.js';
 
 export const GameArea = (props) => {
 
   const scrollViewRef = useRef();
+  const readOnly = useSelector(selectReadOnly);
 
   return (
     <ScrollView
@@ -17,7 +20,7 @@ export const GameArea = (props) => {
     >
       <StoryContent {...props} />
       {Space(15)}
-      {!props.readOnly && <ActionArea {...props} />}
+      {!readOnly && <ActionArea {...props} />}
       {Space(200)}
     </ScrollView>
   );

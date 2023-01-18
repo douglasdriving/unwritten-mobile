@@ -9,16 +9,16 @@ import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
+import { setReadOnlyOn, setReadOnlyOff } from '../../redux/roomSlice.js';
 import { colors } from '../../style.js';
 
 export const Game = (props) => {
 
   //global redux
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   //Load once
-  const [readOnly, setReadOnly] = useState("false");
   const [activePlayers, setActivePlayers] = useState([]);
   const [inActivePlayers, setInactivePlayers] = useState([]);
   const [story, setStory] = useState({
@@ -68,7 +68,9 @@ export const Game = (props) => {
       return;
     }
 
-    setReadOnly(room.finished);
+    if (room.finished) dispatch(setReadOnlyOn());
+    else dispatch(setReadOnlyOff());
+
     setActivePlayers(room.players.filter(player => player.active));
     setInactivePlayers(room.players.filter(player => !player.active));
     setStory({
@@ -106,7 +108,6 @@ export const Game = (props) => {
   return (
     <View style={{ backgroundColor: colors.fire, height: '100%' }}>
       <GameArea
-        readOnly={readOnly}
         story={story}
         nextPlayerName={GetNextPlayerName()}
         turnNumber={story.scenarios.length + 1}
@@ -116,7 +117,6 @@ export const Game = (props) => {
         LoadRoomData={LoadRoomData}
       />
       <StoryNav
-        readOnly={readOnly}
         openMenu={() => setMenuOpen(true)}
       />
       {menuOpen && <RoomMenu
