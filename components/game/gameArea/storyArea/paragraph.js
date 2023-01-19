@@ -25,7 +25,6 @@ export const Paragraph = (props) => {
           styles.paragraph,
           {
             color: colors.light,
-            // fontWeight: (isUser ? 'bold' : 'regular'),
           },
         ]}
         >

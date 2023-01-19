@@ -1,17 +1,17 @@
 import { Text, View } from 'react-native';
-import { Divider, Space } from '../../../smart/visuals.js';
-import { Paragraph } from './paragraph.js';
+import { Space } from '../../../smart/visuals.js';
 import { colors, styles } from '../../../../style.js';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectUserId } from '../../../../redux/userSlice.js';
-import { selectReadOnly } from '../../../../redux/roomSlice.js';
+import { selectReadOnly, selectTitle, selectDescription } from '../../../../redux/roomSlice.js';
+import { StoryBody } from './storyBody/storyBody.js';
 
 export const StoryContent = (props) => {
 
   const [allPlayers, setAllPlayers] = useState([]);
-  const userId = useSelector(selectUserId);
   const readOnly = useSelector(selectReadOnly);
+  const title = useSelector(selectTitle);
+  const description = useSelector(selectDescription);
 
   const ListAllPlayers = async () => {
 
@@ -24,7 +24,7 @@ export const StoryContent = (props) => {
     if (props.inActivePlayers.length < 1) return;
     setAllPlayers([...allPlayers, ...props.inActivePlayers]);
 
-  }
+  } //could be a function in redux -> retrieve the list.
 
   useEffect(() => { ListAllPlayers(); }, [props.players, props.inActivePlayers]);
 
@@ -42,38 +42,15 @@ export const StoryContent = (props) => {
 
   }
 
-  const GetPlayerName = (id) => {
-
-    if (!allPlayers || allPlayers.length < 1) return '';
-
-    const filtered = allPlayers.filter(player => player.id == id);
-    const player = filtered[0];
-
-    if (!player) return '';
-    const name = player.name;
-    return name;
-
-  }
-
   return (
     <View>
       {allPlayers.length > 0 &&
         <>
-          <Text style={[styles.h1, { color: colors.black }]}>{props.story.title}</Text>
-          <Text style={[styles.h3, { color: colors.black }]}>{props.story.description}</Text>
+          <Text style={[styles.h1, { color: colors.black }]}>{title}</Text>
+          <Text style={[styles.h3, { color: colors.black }]}>{description}</Text>
           {readOnly && <Text style={[styles.h3, { color: colors.black }]}>{GenerateAuthorText()}</Text>}
-
           {Space(10)}
-
-          {props.story.scenarios.map((scenario, i) =>
-            <Paragraph
-              scenario={scenario}
-              scenarioNumber={i + 1}
-              key={i}
-              isUser={userId == scenario.creator_id}
-              authorName={GetPlayerName(scenario.creator_id)}
-            />
-          )}
+          <StoryBody allPlayers={allPlayers} />
         </>
       }
     </View>

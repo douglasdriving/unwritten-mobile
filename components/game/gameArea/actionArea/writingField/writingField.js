@@ -80,7 +80,7 @@ export const WritingField = (props) => {
 
   }
 
-  if (!props.turnNumber) console.error('no turnNumber provided in writingField props');
+  // if (!props.turnNumber) console.error('no turnNumber provided in writingField props');
   if (!user) console.error('missing a user in redux store of writingField');
   if (!props.isWriting) console.error('missing "isWriting" in props of writingField');
 

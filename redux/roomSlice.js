@@ -1,15 +1,10 @@
 
 /*
-NOT USED RIGHT NOW! MIGHT BE RELEVANT AgAIN IN THE FUTuRE TO SAVE ROOM INFO GLOBALLY
-
 roomSlice.js
 used to store info about the current room
-Includes:
-- readOnly
 */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { } from '../backend/backendCalls';
 
 //async reducers
 
@@ -18,25 +13,42 @@ import { } from '../backend/backendCalls';
 export const roomSlice = createSlice({
   name: 'room',
   initialState: {
-    readOnly: true
+    readOnly: true,
+    title: '',
+    description: '',
+    scenarios: []
   },
   reducers: {
     setReadOnlyOn: (state, action) => {
-      // console.log('read only set to true');
       return ({
+        ...state,
         readOnly: true
       })
     },
     setReadOnlyOff: (state, action) => {
-      // console.log('read only set to false');
       return ({
+        ...state,
         readOnly: false
+      })
+    },
+    setStoryContent: (state, action) => {
+      return ({
+        ...state,
+        title: action.payload.title,
+        description: action.payload.description,
+        scenarios: action.payload.scenarios
       })
     }
   }
 });
 
-//export selectors and reducer
+//export selectors
 export const selectReadOnly = state => state.room.readOnly;
-export const { setReadOnlyOff, setReadOnlyOn } = roomSlice.actions;
+export const selectTitle = state => state.room.title;
+export const selectDescription = state => state.room.description;
+export const selectScenarios = state => state.room.scenarios;
+export const selectScenarioCount = state => state.room.scenarios.length;
+
+//export reducers
+export const { setReadOnlyOff, setReadOnlyOn, setStoryContent } = roomSlice.actions;
 export const roomReducer = roomSlice.reducer;

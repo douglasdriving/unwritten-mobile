@@ -3,8 +3,13 @@ import { colors, styles } from "../../../style";
 import { CloseButton } from "../../smart/closeButton";
 import { PlayerList } from "./playerList";
 import { Space } from "../../smart/visuals";
+import { useSelector } from "react-redux";
+import { selectTitle, selectScenarioCount } from "../../../redux/roomSlice";
 
 export const RoomMenu = (props) => {
+
+  const title = useSelector(selectTitle);
+  const scenarioCount = useSelector(selectScenarioCount);
 
   return (
     <Modal
@@ -22,8 +27,8 @@ export const RoomMenu = (props) => {
         <CloseButton handlePress={props.closeMenu} />
         {Space(20)}
         <View style={{ padding: 20 }}>
-          <Text style={styles.h1}>{props.storyTitle}</Text>
-          <Text style={[styles.paragraph, { color: colors.white }]}>{props.turnsTaken} / 40 turns taken</Text>
+          <Text style={styles.h1}>{title}</Text>
+          <Text style={[styles.paragraph, { color: colors.white }]}>{scenarioCount} / 40 turns taken</Text>
           <PlayerList {...props} />
         </View>
 

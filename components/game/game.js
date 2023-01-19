@@ -9,7 +9,7 @@ import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
-import { setReadOnlyOn, setReadOnlyOff } from '../../redux/roomSlice.js';
+import { setReadOnlyOn, setReadOnlyOff, setStoryContent } from '../../redux/roomSlice.js';
 import { colors } from '../../style.js';
 
 export const Game = (props) => {
@@ -21,11 +21,6 @@ export const Game = (props) => {
   //Load once
   const [activePlayers, setActivePlayers] = useState([]);
   const [inActivePlayers, setInactivePlayers] = useState([]);
-  const [story, setStory] = useState({
-    title: '',
-    description: '',
-    scenarios: []
-  });
   const [nextPlayerId, setNextPlayerId] = useState();
   const [turnMissed, setTurnMissed] = useState(false);
 
@@ -73,11 +68,12 @@ export const Game = (props) => {
 
     setActivePlayers(room.players.filter(player => player.active));
     setInactivePlayers(room.players.filter(player => !player.active));
-    setStory({
+
+    dispatch(setStoryContent({
       title: room.title,
       description: room.description,
       scenarios: room.scenarios
-    });
+    }));
 
     if (room.finished) return;
 
@@ -108,9 +104,7 @@ export const Game = (props) => {
   return (
     <View style={{ backgroundColor: colors.fire, height: '100%' }}>
       <GameArea
-        story={story}
         nextPlayerName={GetNextPlayerName()}
-        turnNumber={story.scenarios.length + 1}
         players={activePlayers}
         inActivePlayers={inActivePlayers}
         roomId={props.route.params.roomId}
@@ -123,8 +117,6 @@ export const Game = (props) => {
         players={activePlayers}
         nextPlayer={nextPlayerId}
         closeMenu={() => setMenuOpen(false)}
-        storyTitle={story.title}
-        turnsTaken={story.scenarios.length}
         nextPlayerId={nextPlayerId}
         roomId={props.route.params.roomId}
       />}

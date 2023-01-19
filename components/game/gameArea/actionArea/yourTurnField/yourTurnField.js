@@ -3,10 +3,14 @@ import { styles, textColors, colors } from "../../../../../style";
 import { Space } from "../../../../smart/visuals";
 import { Actions } from "./actions";
 import { TurnTimer } from "../../../../smart/turnTimer";
+import { selectScenarioCount } from "../../../../../redux/roomSlice";
+import { useSelector } from "react-redux";
 
 export const YourTurnField = (props) => {
 
-  const playerJustJoined = props.turnNumber < 5;
+  //wanna be able to select the scenario count
+  const scenarioCount = useSelector(selectScenarioCount);
+  const playerJustJoined = scenarioCount < 4;
 
   return (
     <>
