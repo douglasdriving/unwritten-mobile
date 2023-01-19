@@ -1,8 +1,7 @@
-import { View, Text, Button, TextInput, Modal } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { useState, useEffect } from "react";
 import { CharCounter } from "./charCounter";
-import { ScenarioTextField } from "./scenarioTextField";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
 import { GetChars, UploadScenario, UploadEnding } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
@@ -58,14 +57,6 @@ export const WritingField = (props) => {
     setScenarioPostLoading(false);
   }
 
-  // const handleBackButtonPress = async () => {
-  //   if (!props.SetWritingField) {
-  //     console.error('no SetWritingField passed into props of writingField -> Cant go back');
-  //     return;
-  //   }
-  //   props.SetWritingField(null);
-  // }
-
   const loadChars = async () => {
 
     const loadedChars = await GetChars(roomId, user.id);
@@ -80,7 +71,6 @@ export const WritingField = (props) => {
 
   }
 
-  // if (!props.turnNumber) console.error('no turnNumber provided in writingField props');
   if (!user) console.error('missing a user in redux store of writingField');
   if (!props.isWriting) console.error('missing "isWriting" in props of writingField');
 

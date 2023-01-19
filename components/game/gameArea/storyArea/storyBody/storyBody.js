@@ -1,12 +1,12 @@
 
 import { useSelector } from 'react-redux';
 import { selectUserId } from '../../../../../redux/userSlice.js';
-import { selectScenarios } from '../../../../../redux/roomSlice.js';
+import { selectScenarios, selectAllPlayers } from '../../../../../redux/roomSlice.js';
 import { Paragraph } from '../paragraph.js';
 
-export const StoryBody = (props) => {
+export const StoryBody = () => {
 
-  const allPlayers = props.allPlayers; //could also be in redux.
+  const allPlayers = useSelector(selectAllPlayers);
   const userId = useSelector(selectUserId);
   const scenarios = useSelector(selectScenarios);
 

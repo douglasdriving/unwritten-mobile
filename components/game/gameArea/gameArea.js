@@ -18,7 +18,7 @@ export const GameArea = (props) => {
       ref={scrollViewRef}
       onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
     >
-      <StoryContent {...props} />
+      <StoryContent />
       {Space(15)}
       {!readOnly && <ActionArea {...props} />}
       {Space(200)}

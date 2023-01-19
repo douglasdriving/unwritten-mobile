@@ -9,7 +9,7 @@ import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
-import { setReadOnlyOn, setReadOnlyOff, setStoryContent } from '../../redux/roomSlice.js';
+import { setReadOnlyOn, setReadOnlyOff, setStoryContent, setPlayers, setNextPlayerId } from '../../redux/roomSlice.js';
 import { colors } from '../../style.js';
 
 export const Game = (props) => {
@@ -19,9 +19,6 @@ export const Game = (props) => {
   const user = useSelector(selectUser);
 
   //Load once
-  const [activePlayers, setActivePlayers] = useState([]);
-  const [inActivePlayers, setInactivePlayers] = useState([]);
-  const [nextPlayerId, setNextPlayerId] = useState();
   const [turnMissed, setTurnMissed] = useState(false);
 
   //change during play
@@ -66,8 +63,7 @@ export const Game = (props) => {
     if (room.finished) dispatch(setReadOnlyOn());
     else dispatch(setReadOnlyOff());
 
-    setActivePlayers(room.players.filter(player => player.active));
-    setInactivePlayers(room.players.filter(player => !player.active));
+    dispatch(setPlayers(room.players));
 
     dispatch(setStoryContent({
       title: room.title,
@@ -78,21 +74,7 @@ export const Game = (props) => {
     if (room.finished) return;
 
     CheckForNewStrike(room.players);
-    setNextPlayerId(room.next_player_id);
-  }
-
-  const GetNextPlayerName = () => {
-
-    if (!activePlayers) return null;
-    if (activePlayers.length == 0) return null
-
-    let name = null;
-
-    activePlayers.forEach(player => {
-      if (player.id == nextPlayerId) name = player.name;
-    });
-
-    return name;
+    dispatch(setNextPlayerId(room.next_player_id));
   }
 
   useFocusEffect(
@@ -104,9 +86,6 @@ export const Game = (props) => {
   return (
     <View style={{ backgroundColor: colors.fire, height: '100%' }}>
       <GameArea
-        nextPlayerName={GetNextPlayerName()}
-        players={activePlayers}
-        inActivePlayers={inActivePlayers}
         roomId={props.route.params.roomId}
         LoadRoomData={LoadRoomData}
       />
@@ -114,10 +93,7 @@ export const Game = (props) => {
         openMenu={() => setMenuOpen(true)}
       />
       {menuOpen && <RoomMenu
-        players={activePlayers}
-        nextPlayer={nextPlayerId}
         closeMenu={() => setMenuOpen(false)}
-        nextPlayerId={nextPlayerId}
         roomId={props.route.params.roomId}
       />}
       {turnMissed &&

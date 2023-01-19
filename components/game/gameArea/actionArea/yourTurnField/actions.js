@@ -1,6 +1,5 @@
-import { View, Text, Button } from "react-native";
-// import { turnWhenCanEnd, maxScenarioCount } from "../../../../../backend/dataGeneration";
-import { colors, styles } from "../../../../../style";
+import { View } from "react-native";
+import { colors } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
 
 export const Actions = (props) => {

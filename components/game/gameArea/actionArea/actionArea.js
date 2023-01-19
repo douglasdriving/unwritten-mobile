@@ -6,11 +6,13 @@ import { WaitingField } from "./waitingField/waitingField";
 import { PlayerSearchField } from "./playerSearchField/playerSearchField";
 import { useSelector } from "react-redux";
 import { selectUserName } from "../../../../redux/userSlice";
+import { selectNextPlayer } from "../../../../redux/roomSlice";
 
 export const ActionArea = (props) => {
 
   const [isWriting, setIsWriting] = useState(null);
   const userName = useSelector(selectUserName);
+  const nextPlayer = useSelector(selectNextPlayer);
 
   const SetWritingField = type => {
     setIsWriting(type);
@@ -18,9 +20,9 @@ export const ActionArea = (props) => {
 
   const IsPlayersTurn = () => {
 
-    if (!props.nextPlayerName) return false;
+    if (nextPlayer == null) return false;
     if (!userName) return false;
-    return (props.nextPlayerName == userName);
+    return (nextPlayer.name == userName);
 
   }
 
@@ -28,8 +30,8 @@ export const ActionArea = (props) => {
     <View>
 
       {
-        props.nextPlayerName == null ?
-          <PlayerSearchField playerCount={props.players.length} />
+        nextPlayer == null ?
+          <PlayerSearchField/>
           :
           (
             IsPlayersTurn() ?
