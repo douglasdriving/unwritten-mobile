@@ -34,7 +34,7 @@ export const PlayerRow = (props) => {
           {props.player.name + ' ' + strikeEmojis()}
         </Text>
       }
-      {props.isNextPlayer && <TurnTimer color={colors.dark} roomId={props.roomId} />}
+      {props.isNextPlayer && <TurnTimer color={colors.dark} />}
     </View>
   );
 }

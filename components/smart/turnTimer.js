@@ -4,20 +4,23 @@ import { TimeToHms } from "../../helpers/helpers";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GetRoomDeadline } from "../../backend/backendCalls";
+import { useSelector } from "react-redux";
+import { selectRoomId } from "../../redux/roomSlice";
 
 export const TurnTimer = (props) => {
 
   const [turnDeadline, setTurnDeadline] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [counterInterval, setCounterInterval] = useState(null);
+  const roomId = useSelector(selectRoomId);
 
   const loadDeadline = async () => {
 
-    if (!props.roomId) {
+    if (!roomId) {
       console.error('no roomId passed down into turn timer props');
       return;
     }
-    const deadline = await GetRoomDeadline(props.roomId);
+    const deadline = await GetRoomDeadline(roomId);
     await setTurnDeadline(deadline);
 
   }

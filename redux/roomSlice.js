@@ -7,6 +7,7 @@ used to store info about the current room
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 const initialState = {
+  id: null,
   readOnly: true,
   title: '',
   description: '',
@@ -23,6 +24,12 @@ export const roomSlice = createSlice({
   name: 'room',
   initialState: initialState,
   reducers: {
+    setRoomId: (state, action) => {
+      return {
+        ...state,
+        id: action.payload
+      }
+    },
     setReadOnlyOn: (state, action) => {
       return ({
         ...state,
@@ -60,6 +67,7 @@ export const roomSlice = createSlice({
 });
 
 //selectors
+export const selectRoomId = state => state.room.id;
 export const selectReadOnly = state => state.room.readOnly;
 export const selectTitle = state => state.room.title;
 export const selectDescription = state => state.room.description;
@@ -80,7 +88,15 @@ export const selectNextPlayer = state => {
 }
 
 //actions
-export const { setReadOnlyOff, setReadOnlyOn, setStoryContent, setPlayers, setNextPlayerId, resetRoom } = roomSlice.actions;
+export const {
+  setReadOnlyOff,
+  setReadOnlyOn,
+  setStoryContent,
+  setPlayers,
+  setNextPlayerId,
+  resetRoom,
+  setRoomId
+} = roomSlice.actions;
 
 //reducer
 export const roomReducer = roomSlice.reducer;

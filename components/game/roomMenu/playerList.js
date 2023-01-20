@@ -13,7 +13,6 @@ export const PlayerList = (props) => {
 
       {activePlayers.map((player, i) => (
         <PlayerRow
-          roomId={props.roomId}
           player={player}
           isNextPlayer={nextPlayer && player.id == nextPlayer.id}
           key={player.id}

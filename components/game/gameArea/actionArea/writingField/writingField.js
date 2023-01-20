@@ -7,6 +7,7 @@ import { GetChars, UploadScenario, UploadEnding } from "../../../../../backend/b
 import { Popup } from "../../../../smart/popup";
 import { colors, styles } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
+import { selectRoomId } from "../../../../../redux/roomSlice";
 
 export const WritingField = (props) => {
 
@@ -16,7 +17,7 @@ export const WritingField = (props) => {
   const [warning, setWarning] = useState();
   const user = useSelector(selectUser);
   const isEnd = props.isWriting == 'ending';
-  const { roomId } = props;
+  const roomId = useSelector(selectRoomId);
 
   const handleChangeText = text => {
     setScenarioText(text);

@@ -9,10 +9,12 @@ import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
-import { setReadOnlyOn, setReadOnlyOff, setStoryContent, setPlayers, setNextPlayerId } from '../../redux/roomSlice.js';
+import { setReadOnlyOn, setReadOnlyOff, setStoryContent, setPlayers, setNextPlayerId, setRoomId } from '../../redux/roomSlice.js';
 import { colors } from '../../style.js';
 
 export const Game = (props) => {
+
+  const roomId = props.route.params.roomId;
 
   //global redux
   const dispatch = useDispatch();
@@ -53,12 +55,14 @@ export const Game = (props) => {
 
   const LoadRoomData = async () => {
 
-    const room = await GetRoomData(props.route.params.roomId);
+    const room = await GetRoomData(roomId);
 
     if (!room) {
       console.error('Failed to get the room data from the backend!');
       return;
     }
+
+    dispatch(setRoomId(roomId));
 
     if (room.finished) dispatch(setReadOnlyOn());
     else dispatch(setReadOnlyOff());
@@ -86,7 +90,6 @@ export const Game = (props) => {
   return (
     <View style={{ backgroundColor: colors.fire, height: '100%' }}>
       <GameArea
-        roomId={props.route.params.roomId}
         LoadRoomData={LoadRoomData}
       />
       <StoryNav
@@ -94,7 +97,6 @@ export const Game = (props) => {
       />
       {menuOpen && <RoomMenu
         closeMenu={() => setMenuOpen(false)}
-        roomId={props.route.params.roomId}
       />}
       {turnMissed &&
         <Popup

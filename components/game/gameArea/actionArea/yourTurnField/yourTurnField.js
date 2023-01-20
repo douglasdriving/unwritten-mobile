@@ -31,7 +31,7 @@ export const YourTurnField = (props) => {
         <Actions {...props} />
       </View>
       {Space(20)}
-      <TurnTimer color={colors.dark} roomId={props.roomId} />
+      <TurnTimer color={colors.dark}/>
     </>
   );
 }
