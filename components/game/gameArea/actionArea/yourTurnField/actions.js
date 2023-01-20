@@ -1,13 +1,15 @@
 import { View } from "react-native";
 import { colors } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
+import { useSelector } from "react-redux";
+import { selectScenarioCount } from "../../../../../redux/roomSlice";
 
 export const Actions = (props) => {
 
   const turnWhenCanEnd = 30;
   const turnWhenMustEnd = 40;
 
-  const scenarioCount = props.story.scenarios.length;
+  const scenarioCount = useSelector(selectScenarioCount);
 
   const canEnd = (scenarioCount >= (turnWhenCanEnd - 1));
   const mustEnd = (scenarioCount >= turnWhenMustEnd);

@@ -28,7 +28,7 @@ export const YourTurnField = (props) => {
             'You got 500 new characters to write with'
           }
         </Text>
-        <Actions {...props} />
+        <Actions {...props}/>
       </View>
       {Space(20)}
       <TurnTimer color={colors.dark}/>

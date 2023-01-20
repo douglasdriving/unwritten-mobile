@@ -7,7 +7,7 @@ import { ActionArea } from './actionArea/actionArea.js';
 import { useSelector } from 'react-redux';
 import { selectReadOnly } from '../../../redux/roomSlice.js';
 
-export const GameArea = (props) => {
+export const GameArea = () => {
 
   const scrollViewRef = useRef();
   const readOnly = useSelector(selectReadOnly);
@@ -20,7 +20,7 @@ export const GameArea = (props) => {
     >
       <StoryContent />
       {Space(15)}
-      {!readOnly && <ActionArea {...props} />}
+      {!readOnly && <ActionArea />}
       {Space(200)}
     </ScrollView>
   );

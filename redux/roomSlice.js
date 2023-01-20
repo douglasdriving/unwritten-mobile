@@ -96,7 +96,7 @@ export const roomSlice = createSlice({
           description: room.description,
           scenarios: room.scenarios,
           players: room.players,
-          nextPlayerId: null,
+          nextPlayerId: room.next_player_id,
         };
       })
   }

@@ -1,13 +1,13 @@
 import { View, Text, TextInput } from "react-native";
 import { useState, useEffect } from "react";
 import { CharCounter } from "./charCounter";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
 import { GetChars, UploadScenario, UploadEnding } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
 import { colors, styles } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
-import { selectRoomId } from "../../../../../redux/roomSlice";
+import { selectRoomId, loadRoomData } from "../../../../../redux/roomSlice";
 
 export const WritingField = (props) => {
 
@@ -18,6 +18,7 @@ export const WritingField = (props) => {
   const user = useSelector(selectUser);
   const isEnd = props.isWriting == 'ending';
   const roomId = useSelector(selectRoomId);
+  const dispatch = useDispatch();
 
   const handleChangeText = text => {
     setScenarioText(text);
@@ -49,7 +50,7 @@ export const WritingField = (props) => {
     }
 
     if (scenarioUploadResponse.ok) {
-      await props.LoadRoomData();
+      await dispatch(loadRoomData({id: roomId}));
     }
     else {
       setWarning(scenarioUploadResponse.message);

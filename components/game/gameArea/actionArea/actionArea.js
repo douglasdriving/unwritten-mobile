@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { selectUserName } from "../../../../redux/userSlice";
 import { selectNextPlayer } from "../../../../redux/roomSlice";
 
-export const ActionArea = (props) => {
+export const ActionArea = () => {
 
   const [isWriting, setIsWriting] = useState(null);
   const userName = useSelector(selectUserName);
@@ -38,18 +38,16 @@ export const ActionArea = (props) => {
               (
                 isWriting ?
                   <WritingField
-                    {...props}
                     isWriting={isWriting}
                     SetWritingField={SetWritingField}
                   />
                   :
                   <YourTurnField
-                    {...props}
                     SetWritingField={SetWritingField}
                   />
               )
               :
-              <WaitingField {...props} />
+              <WaitingField />
           )
       }
 

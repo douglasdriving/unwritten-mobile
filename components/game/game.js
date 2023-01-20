@@ -68,9 +68,7 @@ export const Game = (props) => {
 
   return (
     <View style={{ backgroundColor: colors.fire, height: '100%' }}>
-      <GameArea
-        LoadRoomData={LoadRoomData}
-      />
+      <GameArea />
       <StoryNav
         openMenu={() => setMenuOpen(true)}
       />
