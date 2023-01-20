@@ -5,6 +5,7 @@ used to store info about the current room
 */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { GetRoomData } from '../backend/backendCalls';
 
 const initialState = {
   id: null,
@@ -17,7 +18,26 @@ const initialState = {
 };
 
 //async reducers
+export const loadRoomData = createAsyncThunk(
+  'room/loadRoomData',
+  async (arg, thunkAPI) => {
 
+    if (!arg.id) {
+      console.error('no room id passed into load room data thunk');
+      return;
+    }
+
+    const data = await GetRoomData(arg.id);
+
+    if (!data) {
+      console.error('Failed to get the room data from the backend!');
+      return;
+    }
+
+    return data;
+
+  }
+)
 
 //slice
 export const roomSlice = createSlice({
@@ -63,6 +83,22 @@ export const roomSlice = createSlice({
       })
     },
     resetRoom: () => initialState
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(loadRoomData.fulfilled, (state, action) => {
+        //return the state with ALL the extracted data
+        const room = action.payload;
+        return {
+          id: room.id,
+          readOnly: room.finished,
+          title: room.title,
+          description: room.description,
+          scenarios: room.scenarios,
+          players: room.players,
+          nextPlayerId: null,
+        };
+      })
   }
 });
 
