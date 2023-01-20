@@ -4,11 +4,14 @@ import { useState } from 'react';
 import { Popup } from '../../../smart/popup';
 import { JoinRoom } from '../../../../backend/backendCalls';
 import { navigateToRoom } from '../../../../contexts/rootNavigation';
+import { useDispatch } from 'react-redux';
+import { loadRoomData } from '../../../../redux/roomSlice';
 
 export const ListItem = (props) => {
 
   const [open, setOpen] = useState(false);
   const [roomLoading, setRoomLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const {
     title,
@@ -28,8 +31,9 @@ export const ListItem = (props) => {
     return;
   }
 
-  const EnterRoom = () => {
+  const EnterRoom = async () => {
     setOpen(false);
+    await dispatch(loadRoomData({id: roomId}));
     navigateToRoom(roomId);
   }
 

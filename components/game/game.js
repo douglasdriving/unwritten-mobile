@@ -6,27 +6,24 @@ import { GameArea } from './gameArea/gameArea.js';
 import { RoomMenu } from './roomMenu/roomMenu.js';
 import { Popup } from '../smart/popup.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
-import { loadRoomData, selectAllPlayers, selectReadOnly } from '../../redux/roomSlice.js';
+import { selectAllPlayers, selectReadOnly, selectRoomId } from '../../redux/roomSlice.js';
 import { colors } from '../../style.js';
 
 export const Game = (props) => {
 
-  const roomId = props.route.params.roomId;
-
   //global redux
-  const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const readOnly = useSelector(selectReadOnly);
   const players = useSelector(selectAllPlayers);
+  const roomId = useSelector(selectRoomId);
 
   //Load once
   const [turnMissed, setTurnMissed] = useState(false);
 
   //change during play
   const [menuOpen, setMenuOpen] = useState(false);
-
 
   const CheckForNewStrike = async () => {
 
@@ -55,15 +52,10 @@ export const Game = (props) => {
 
   }
 
-  const LoadRoomData = async () => {
-    await dispatch(loadRoomData({ id: roomId }));
-    CheckForNewStrike();
-  }
-
   useFocusEffect(
     useCallback(() => {
-      LoadRoomData();
-    }, [props.route.params.roomId])
+      CheckForNewStrike();
+    }, [])
   );
 
   return (
