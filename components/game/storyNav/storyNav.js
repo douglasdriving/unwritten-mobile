@@ -1,15 +1,17 @@
 import { View } from 'react-native';
-import { styles } from '../../../style.js';
+import { styles, colors } from '../../../style.js';
 import { useState } from 'react';
 import { StoryNavButton } from './storyNavButton.js';
 import { Popup } from '../../smart/popup.js';
 import { navigate } from '../../../contexts/rootNavigation.js';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectReadOnly, resetRoom } from '../../../redux/roomSlice.js';
+import { selectReadOnly, resetRoom, selectScenarioCount } from '../../../redux/roomSlice.js';
+import { ProgressBar } from '../../smart/progressBar.js';
 
 export const StoryNav = (props) => {
 
   const [closePopupOpen, setClosePopupOpen] = useState(false);
+  const scenarioCount = useSelector(selectScenarioCount);
   const readOnly = useSelector(selectReadOnly);
   const dispatch = useDispatch();
 
@@ -28,6 +30,8 @@ export const StoryNav = (props) => {
     <View style={styles.storyNav}>
 
       <StoryNavButton type='close' onPress={() => setClosePopupOpen(true)} />
+
+      <ProgressBar width='60%' percent={scenarioCount/40 * 100} label={`🎲 ${scenarioCount}/40`}/> 
 
       {!readOnly && <StoryNavButton type='menu' onPress={props.openMenu} />}
 

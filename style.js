@@ -136,6 +136,7 @@ export const styles = StyleSheet.create({
   },
 
   storyNav: {
+    alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
     position: 'absolute',
