@@ -61,7 +61,7 @@ export const OpenRoom = () => {
   useEffect(() => setRoomCreateError(null), [titleInput, descriptionInput, startingScenario]);
 
   return (
-    <View style={{ ...styles.container, justifyContent: 'flex-start' }}>
+    <View style={{ ...styles.menuPageContainer, justifyContent: 'flex-start', paddingTop: 60 }}>
 
       <Text style={styles.h1}>Start a Camp</Text>
       <Text style={[styles.paragraph, { color: colors.white }]}>🪵  {storyKeys}</Text>
@@ -83,20 +83,19 @@ export const OpenRoom = () => {
             label='Title'
             oneLine
             setText={text => { setTitleInput(text) }}
-            height={40}
             placeholder={'Name your story'}
           />
           <FocusInputField
             label='Description'
             setText={text => { setDescriptionInput(text) }}
-            height={'20%'}
             placeholder={'Describe the story plot briefly'}
+            flex={1}
           />
           <FocusInputField
             label='Opening'
             setText={text => { setStartingScenario(text) }}
-            height={'20%'}
             placeholder={'Start off the story with an opening paragraph'}
+            flex={1}
           />
           {Space(15)}
           <MyButton

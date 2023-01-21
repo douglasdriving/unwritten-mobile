@@ -44,6 +44,13 @@ export const styles = StyleSheet.create({
     padding: 30
   },
 
+  menuPageContainer: {
+    flex: 1,
+    backgroundColor: colors.dark,
+    padding: 30,
+    paddingTop: 60
+  },
+
   title: {
     fontSize: 30,
     marginBottom: 15,

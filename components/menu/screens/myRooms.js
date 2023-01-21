@@ -47,7 +47,7 @@ export const MyRooms = (props) => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.menuPageContainer}>
       <Text style={styles.h1}>My Camps</Text>
       <ScrollView style={styles.scrollBox}>
         {!myRoomsList ?

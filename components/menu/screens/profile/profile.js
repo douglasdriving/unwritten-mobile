@@ -15,14 +15,8 @@ export const Profile = () => {
     navigate('Welcome');
   }
 
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     //load on enter
-  //   }, [])
-  // );
-
   return (
-    <View style={styles.container}>
+    <View style={styles.menuPageContainer}>
       <Text style={[styles.h3, textColors.white]}>Signed in as {userName}</Text>
       <MyButton title='Sign Out' onPress={signOut}/>
     </View>

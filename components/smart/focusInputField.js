@@ -52,7 +52,8 @@ export const FocusInputField = (props) => {
             width: '100%',
             backgroundColor: 'white',
             padding: 5,
-            height: props.height,
+            // height: props.height,
+            flex: props.flex
           }}
         >
           <Text style={[styles.body, (!textInput && styles.faded)]}>

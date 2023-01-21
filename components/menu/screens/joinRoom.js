@@ -61,7 +61,7 @@ export const JoinRoom = (props) => {
   );
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.menuPageContainer}>
       {welcomPopup &&
         <Popup
           title='Welcome to Unwritten!'

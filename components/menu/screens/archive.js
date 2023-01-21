@@ -34,7 +34,7 @@ export const Archive = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.menuPageContainer}>
       <Text style={styles.h1}>Archive</Text>
       <Text style={[styles.paragraph, { color: colors.white }]}>
         {storiesList.length > 0 ?
