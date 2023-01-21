@@ -4,9 +4,7 @@ import { styles, colors } from "../../style";
 
 export const MyButton = (props) => {
 
-  const { disabled, onPress, color, textColor, flex } = props;
-
-  // useEffect(() => { console.log('text colors: ', textColor) }, []);
+  const { disabled, onPress, color, textColor, flex, title, height } = props;
 
   const handlePress = () => {
     if (disabled) return;
@@ -16,16 +14,13 @@ export const MyButton = (props) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={{
-        // borderWidth: 2,
-        // borderColor: colors.white,
         backgroundColor: (color || colors.light),
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        // margin: 5,
         flex: (flex ? 1 : null),
         opacity: disabled ? 0.4 : 1,
-        height: props.height
+        height: height
       }}>
         <Text
           style={[styles.h3, {
@@ -33,7 +28,7 @@ export const MyButton = (props) => {
             color: (textColor || colors.white),
           }]}
         >
-          {props.title}
+          {title}
         </Text>
       </View>
     </TouchableWithoutFeedback >

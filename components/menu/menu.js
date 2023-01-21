@@ -7,7 +7,9 @@ import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { MyRooms } from "./screens/myRooms.js";
 import { Archive } from "./screens/archive.js";
 import { MenuScreenHeader } from "./modularComponents/menuScreenHeader.js";
+import { Profile } from "./screens/profile/profile.js";
 import { colors } from "../../style.js";
+import { Space } from "../smart/visuals.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -28,7 +30,6 @@ export const Menu = (menuProps) => {
 
   return (
     <>
-      <MenuScreenHeader {...menuProps} />
       <Tab.Navigator screenOptions={screenOptions}>
 
         <Tab.Screen
@@ -89,6 +90,21 @@ export const Menu = (menuProps) => {
           }}
         >
           {() => <Archive {...menuProps} />}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name='Profile'
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicon
+                name="person"
+                size={40}
+                color={focused ? colors.fire : colors.light}
+              />
+            )
+          }}
+        >
+          {() => <Profile />}
         </Tab.Screen>
 
       </Tab.Navigator>
