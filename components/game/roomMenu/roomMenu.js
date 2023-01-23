@@ -28,12 +28,13 @@ export const RoomMenu = (props) => {
       <View style={styles.roomMenu}>
         <CloseButton handlePress={closeMenu} />
         {Space(20)}
-        <View style={{ padding: 20 }}>
-          <Text style={styles.h1}>{title}</Text>
-          <Text style={[styles.paragraph, { color: colors.white }]}>{scenarioCount} / 40 turns taken</Text>
+        <View style={{ padding: 15 }}>
+        <Text style={{fontSize: 50, marginBottom: 10, textAlign: 'center'}}>🏕️</Text>
+          <Text style={[styles.h1, {textAlign: 'center'}]}>{title}</Text>
+          <Text style={[styles.paragraph, { color: colors.white, textAlign:'center' }]}>🎲  {scenarioCount} / 40 turns taken</Text>
           <PlayerList />
           {Space(10)}
-          <MyButton title='ℹ️ Camp Instructions' onPress={openTutorial} color={colors.fire} textColor={colors.dark}/>
+          <MyButton title='Instructions' onPress={openTutorial} color={colors.fire} textColor={colors.dark}/>
         </View>
       </View>
     </Modal >

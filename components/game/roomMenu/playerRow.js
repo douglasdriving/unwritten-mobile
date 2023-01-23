@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { selectUserName } from "../../../redux/userSlice";
-import { colors, styles } from "../../../style";
+import { colors, styles, textColors } from "../../../style";
 import { TurnTimer } from "../../smart/turnTimer";
 
 export const PlayerRow = (props) => {
@@ -20,21 +20,30 @@ export const PlayerRow = (props) => {
     <View style={{
       flexDirection: 'row',
       justifyContent: 'space-between',
-      padding: 10,
       marginTop: 5,
-      backgroundColor: colors.white,
+      alignItems: 'center',
     }}>
-      {props.player &&
-        <Text style={
-          [styles.paragraph,
-          {
-            fontWeight: (props.player.name == userName ? 'bold' : 'regular')
-          }]
-        }>
-          {props.player.name + ' ' + strikeEmojis()}
-        </Text>
-      }
-      {props.isNextPlayer && <TurnTimer color={colors.dark} />}
+      <Text style={{marginRight: 5, fontSize: 20, padding: 0, margin: 0}}>🧑</Text>
+      <View style={{
+        backgroundColor: colors.dark,
+        padding: 5,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
+        alignItems: 'center',
+      }}>
+        {props.player &&
+          <Text style={
+            [styles.paragraph,
+            {
+              fontWeight: (props.player.name == userName ? 'bold' : 'regular')
+            }, textColors.white]
+          }>
+            {' ' + props.player.name + ' ' + strikeEmojis()}
+          </Text>
+        }
+        {props.isNextPlayer && <TurnTimer color={colors.dark} />}
+      </View>
     </View>
   );
 }
