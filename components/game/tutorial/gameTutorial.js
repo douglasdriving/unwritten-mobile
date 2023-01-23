@@ -38,7 +38,7 @@ export const GameTutorial = (props) => {
         setModalVisible(!modalVisible);
       }}
     >
-      <View style={styles.cover}/>
+      <View style={styles.cover} />
       <View style={{
         flex: 1,
         justifyContent: "center",
@@ -52,6 +52,7 @@ export const GameTutorial = (props) => {
           backgroundColor: colors.white,
           width: '100%'
         }}>
+          <Text style={{ fontSize: 50, marginBottom: 10, textAlign: 'center' }}>🏕️</Text>
           <Text style={styles.h2}>Welcome to the Campfire!</Text>
           <Text style={styles.paragraph}>This is where the storytelling takes place. It works like this:</Text>
           <View style={{
