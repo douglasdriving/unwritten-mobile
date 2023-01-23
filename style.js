@@ -195,6 +195,15 @@ export const styles = StyleSheet.create({
     opacity: 0.5,
   },
 
+  overlay: {
+    alignSelf: 'center',
+    height: '90%',
+    width: '90%',
+    position: 'absolute',
+    backgroundColor: colors.white,
+    zIndex: 10,
+  },
+
   scrollBox: {
     backgroundColor: colors.light,
     padding: 10,

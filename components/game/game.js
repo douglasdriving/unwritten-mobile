@@ -10,8 +10,9 @@ import { useSelector } from 'react-redux';
 import { selectUser } from '../../redux/userSlice.js';
 import { selectAllPlayers, selectReadOnly, selectRoomId } from '../../redux/roomSlice.js';
 import { colors } from '../../style.js';
+import { GameTutorial } from './tutorial/gameTutorial.js';
 
-export const Game = (props) => {
+export const Game = () => {
 
   //global redux
   const user = useSelector(selectUser);
@@ -24,6 +25,7 @@ export const Game = (props) => {
 
   //change during play
   const [menuOpen, setMenuOpen] = useState(false);
+  const [tutorialOpen, setTutorialOpen] = useState(true);
 
   const CheckForNewStrike = async () => {
 
@@ -51,21 +53,31 @@ export const Game = (props) => {
     }
 
   }
+  const CheckIfTutorialShouldBeHidden = async () => {
+
+    const savedState = await AsyncStorage.getItem('hideCampTutorial');
+    if (savedState == 'hide') setTutorialOpen(false);
+    else if (savedState == 'show') setTutorialOpen(true);
+    else setTutorialOpen(true);
+
+  }
 
   useFocusEffect(
     useCallback(() => {
       CheckForNewStrike();
+      CheckIfTutorialShouldBeHidden();
     }, [])
   );
 
   return (
     <View style={{ backgroundColor: colors.fire, height: '100%' }}>
+
+      {tutorialOpen && <GameTutorial close={() => setTutorialOpen(false)} />}
       <GameArea />
-      <StoryNav
-        openMenu={() => setMenuOpen(true)}
-      />
+      <StoryNav openMenu={() => setMenuOpen(true)} />
       {menuOpen && <RoomMenu
         closeMenu={() => setMenuOpen(false)}
+        openTutorial={() => setTutorialOpen(true)}
       />}
       {turnMissed &&
         <Popup
@@ -74,6 +86,7 @@ export const Game = (props) => {
           onClose={() => { setTurnMissed(false); }}
         />
       }
+
     </View>
   );
 }

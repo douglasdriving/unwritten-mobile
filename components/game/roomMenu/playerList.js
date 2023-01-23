@@ -3,7 +3,7 @@ import { PlayerRow } from "./playerRow";
 import { useSelector } from "react-redux";
 import { selectActivePlayers, selectNextPlayer } from "../../../redux/roomSlice";
 
-export const PlayerList = (props) => {
+export const PlayerList = () => {
 
   const activePlayers = useSelector(selectActivePlayers);
   const nextPlayer = useSelector(selectNextPlayer);
