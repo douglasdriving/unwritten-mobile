@@ -19,25 +19,25 @@ export const StoryList = (props) => {
 
 }
 
-const DummyItem = (props) => {
-  return (
-    <ListItem
-      {...props}
-      key={GenerateRandomString()}
-      listItemInfo={
-        {
-          title: 'title',
-          alert: false,
-          description: 'this is a list item',
-          playersTurn: false,
-          creator: 'userman',
-          authors: ['modig', 'fläsk', 'snoppen'],
-          authorCount: 4,
-          turn: 23,
-          buttonText: 'enter',
-          roomId: 13
-        }
-      }
-    />
-  )
-}
+// const DummyItem = (props) => {
+//   return (
+//     <ListItem
+//       {...props}
+//       key={GenerateRandomString()}
+//       listItemInfo={
+//         {
+//           title: 'title',
+//           alert: false,
+//           description: 'this is a list item',
+//           playersTurn: false,
+//           creator: 'userman',
+//           authors: ['modig', 'fläsk', 'snoppen'],
+//           authorCount: 4,
+//           turn: 23,
+//           buttonText: 'enter',
+//           roomId: 13
+//         }
+//       }
+//     />
+//   )
+// }

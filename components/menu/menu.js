@@ -2,10 +2,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { JoinRoom } from "./screens/joinRoom.js";
+// import { JoinRoom } from "./screens/joinRoom.js";
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { MyRooms } from "./screens/myRooms.js";
 import { Archive } from "./screens/archive.js";
+import { Camps } from "./screens/camps/joinRoom.js";
 import { MenuScreenHeader } from "./modularComponents/menuScreenHeader.js";
 import { Profile } from "./screens/profile/profile.js";
 import { colors } from "../../style.js";
@@ -44,7 +45,7 @@ export const Menu = (menuProps) => {
             )
           }}
         >
-          {() => <JoinRoom {...menuProps} />}
+          {() => <Camps {...menuProps} />}
         </Tab.Screen>
 
         <Tab.Screen
