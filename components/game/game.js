@@ -37,7 +37,6 @@ export const Game = () => {
 
     let strikes = 0
     if (!player || (!player.strikes && player.strikes != 0)) {
-      console.error('could not identify the logged player to get strikes. setting it to 0');
       strikes = 0;
     }
     else {
