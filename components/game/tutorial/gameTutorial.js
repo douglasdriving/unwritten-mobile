@@ -38,11 +38,14 @@ export const GameTutorial = (props) => {
         setModalVisible(!modalVisible);
       }}
     >
+      <View style={styles.cover}/>
       <View style={{
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
+        // backgroundColor: colors.black,
+        // opacity: 0.6,
       }}>
         <ScrollView style={{
           padding: 20,
@@ -56,7 +59,6 @@ export const GameTutorial = (props) => {
             padding: 15,
             marginBottom: 10,
           }}>
-            <Text style={styles.paragraph}>🏕️ Each camp has 4 player spots</Text>
             <Text style={styles.paragraph}>🧑 When 4 players have joined the camp, they will take turns to add to the story</Text>
             <Text style={styles.paragraph}>⌛ When it’s your turn to write, you have 48 hours to make your contribution</Text>
             <Text style={styles.paragraph}>❌ If you miss your turn, you will get a strike</Text>
