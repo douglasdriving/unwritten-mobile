@@ -215,5 +215,15 @@ export const UploadEnding = async (text, roomId) => {
   const jsonResponse = await response.json();
   return jsonResponse;
 }
+export const GetFeed = async () => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/scenario/feed`,
+    GetFetch()
+  );
+  const jsonResponse = await response.json();
+  return jsonResponse;
+
+}
 
 

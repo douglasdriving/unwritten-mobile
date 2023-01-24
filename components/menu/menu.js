@@ -5,6 +5,7 @@ import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
 import { colors } from "../../style.js";
+import { FrontPage } from "./screens/frontPage/frontPage.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -26,6 +27,21 @@ export const Menu = (menuProps) => {
       <Tab.Navigator screenOptions={screenOptions}>
 
         <Tab.Screen
+          name='Front Page'
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Ionicon
+                name="bonfire"
+                size={45}
+                color={focused ? colors.fire : colors.light}
+              />
+            )
+          }}
+        >
+          {() => <FrontPage />}
+        </Tab.Screen>
+
+        <Tab.Screen
           name='Camps'
           options={{
             tabBarIcon: ({ focused }) => (
@@ -37,7 +53,7 @@ export const Menu = (menuProps) => {
             )
           }}
         >
-          {() => <Camps {...menuProps} />}
+          {() => <Camps />}
         </Tab.Screen>
 
         <Tab.Screen

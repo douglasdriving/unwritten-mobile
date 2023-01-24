@@ -10,7 +10,7 @@ import { CampList } from './campList/campList';
 
 export const Camps = () => {
 
-  const [welcomPopup, setWelcomePopup] = useState();
+  // const [welcomPopup, setWelcomePopup] = useState();
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export const Camps = () => {
 
   return (
     <ScrollView style={styles.menuPageContainer}>
-      {welcomPopup &&
+      {/* {welcomPopup &&
         <Popup
           title='Welcome to Unwritten!'
           text='As a free user, you can join 2 rooms to write stories,
@@ -34,7 +34,7 @@ export const Camps = () => {
             },
           ]}
         />
-      }
+      } */}
 
       <Text style={styles.h1}>Camps</Text>
 
