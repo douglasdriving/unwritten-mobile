@@ -43,7 +43,7 @@ export const Camps = () => {
         description='New camps looking for players to join. Sit down to join the storytelling!'
         confirmJoinRequired={false}
         roomQuery={GetAvailableRoomsAsSingleList}
-        joinButtonText='Join Camp ->'
+        joinButtonText='Participate ->'
         alternativeText='No Camps are currently available. You can create your own in the next tab.'
       />
 
@@ -52,7 +52,7 @@ export const Camps = () => {
         description='Full camps where players are currently telling a story. Sit down to listen!'
         confirmJoinRequired={false}
         roomQuery={GetOngoingCamps}
-        joinButtonText='Join and listen ->'
+        joinButtonText='Listen ->'
         alternativeText='There are no ongoing camps to listen in on right now.'
       />
 
@@ -61,7 +61,7 @@ export const Camps = () => {
         description='Finished camps with a full story. Sit down to read it'
         confirmJoinRequired={false}
         roomQuery={GetFinishedStories}
-        joinButtonText='Read Story ->'
+        joinButtonText='Read ->'
         alternativeText='No stories have yet been finished in Unwritten'
         hideIfEmpty
       />

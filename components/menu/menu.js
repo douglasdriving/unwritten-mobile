@@ -41,7 +41,7 @@ export const Menu = (menuProps) => {
         </Tab.Screen>
 
         <Tab.Screen
-          name='Open New Room'
+          name='Create'
           options={{
             tabBarIcon: ({ focused }) => (
               <MaterialCommunityIcons

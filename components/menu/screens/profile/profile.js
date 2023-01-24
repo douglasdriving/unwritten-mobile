@@ -1,4 +1,4 @@
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
 import { styles, textColors, colors } from '../../../../style';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUserName, logout } from '../../../../redux/userSlice';
@@ -18,9 +18,11 @@ export const Profile = () => {
   }
 
   return (
-    <View style={styles.menuPageContainer}>
+    <ScrollView style={styles.menuPageContainer}>
+
       <Text style={[styles.h3, textColors.white]}>Signed in as {userName}</Text>
       <MyButton title='Sign Out' onPress={signOut} />
+      
       <CampList
         title='Camps'
         description='Camps I am participating in'
@@ -29,7 +31,8 @@ export const Profile = () => {
         joinButtonText='Enter ->'
         alternativeText='You are not part of any camps yet. Find one in the camps tab!'
       />
-    </View>
+
+    </ScrollView>
 
   );
 }
