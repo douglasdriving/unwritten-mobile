@@ -23,7 +23,7 @@ export const PlayerRow = (props) => {
       marginTop: 5,
       alignItems: 'center',
     }}>
-      <Text style={{marginRight: 5, fontSize: 20, padding: 0, margin: 0}}>🧑</Text>
+      <Text style={{ marginRight: 5, fontSize: 20, padding: 0, margin: 0 }}>🧑</Text>
       <View style={{
         backgroundColor: colors.dark,
         padding: 5,
@@ -42,7 +42,7 @@ export const PlayerRow = (props) => {
             {' ' + props.player.name + ' ' + strikeEmojis()}
           </Text>
         }
-        {props.isNextPlayer && <TurnTimer color={colors.dark} />}
+        {props.isNextPlayer && <TurnTimer color={colors.white} />}
       </View>
     </View>
   );

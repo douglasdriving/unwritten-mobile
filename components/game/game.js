@@ -54,6 +54,17 @@ export const Game = () => {
   }
   const CheckIfTutorialShouldBeHidden = async () => {
 
+    //turn of is player is just spectating
+    let playerIsInRoom = false;
+    players.forEach(player => {
+      if (player.id == user.id) playerIsInRoom = true;
+    });
+    if (!playerIsInRoom) {
+      setTutorialOpen(false);
+      return;
+    }
+
+    //turn off is player has checked the box before
     const savedState = await AsyncStorage.getItem('hideCampTutorial');
     if (savedState == 'hide') setTutorialOpen(false);
     else if (savedState == 'show') setTutorialOpen(true);
