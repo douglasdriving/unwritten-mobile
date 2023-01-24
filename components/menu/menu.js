@@ -1,10 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicon from 'react-native-vector-icons/Ionicons';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
-import { MyRooms } from "./screens/myRooms.js";
-import { Archive } from "./screens/archive.js";
 import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
 import { colors } from "../../style.js";
@@ -29,7 +26,7 @@ export const Menu = (menuProps) => {
       <Tab.Navigator screenOptions={screenOptions}>
 
         <Tab.Screen
-          name='Join Room'
+          name='Camps'
           options={{
             tabBarIcon: ({ focused }) => (
               <Ionicon
@@ -56,36 +53,6 @@ export const Menu = (menuProps) => {
           }}
         >
           {(props) => <OpenRoom {...menuProps} />}
-        </Tab.Screen>
-
-        <Tab.Screen
-          name='My Rooms'
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Fontisto
-                name="tent"
-                size={40}
-                color={focused ? colors.fire : colors.light}
-              />
-            )
-          }}
-        >
-          {() => <MyRooms {...menuProps} />}
-        </Tab.Screen>
-
-        <Tab.Screen
-          name='Archive'
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Ionicon
-                name="library"
-                size={40}
-                color={focused ? colors.fire : colors.light}
-              />
-            )
-          }}
-        >
-          {() => <Archive {...menuProps} />}
         </Tab.Screen>
 
         <Tab.Screen
