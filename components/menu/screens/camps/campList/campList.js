@@ -7,7 +7,15 @@ import { styles, textColors } from "../../../../../style";
 export const CampList = (props) => {
 
   const [rooms, setRooms] = useState([]);
-  const { roomQuery, title, description, confirmJoinRequired, joinButtonText, alternativeText } = props;
+  const {
+    roomQuery,
+    title,
+    description,
+    confirmJoinRequired,
+    joinButtonText,
+    alternativeText,
+    hideIfEmpty
+  } = props;
 
   const LoadRooms = async () => {
 
@@ -23,6 +31,10 @@ export const CampList = (props) => {
   useEffect(() => {
     LoadRooms();
   }, [])
+
+  if (hideIfEmpty && !roomsExists()) {
+    return;
+  }
 
   return (
     <View style={{ marginTop: 15 }}>

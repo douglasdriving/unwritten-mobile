@@ -1,6 +1,6 @@
 import { Text, ScrollView } from 'react-native';
 import { styles } from '../../../../style';
-import { GetAvailableRoomsAsSingleList, GetOngoingCamps } from '../../../../backend/backendCalls';
+import { GetAvailableRoomsAsSingleList, GetOngoingCamps, GetFinishedStories } from '../../../../backend/backendCalls';
 import { useState, useEffect } from 'react';
 import { Popup } from '../../../smart/popup';
 import { navigate } from '../../../../contexts/rootNavigation';
@@ -39,8 +39,8 @@ export const Camps = () => {
       <Text style={styles.h1}>Camps</Text>
 
       <CampList
-        title='Looking for players'
-        description='Join to participate in the storytelling!'
+        title='Kindling'
+        description='New camps looking for players to join. Sit down to join the storytelling!'
         confirmJoinRequired={false}
         roomQuery={GetAvailableRoomsAsSingleList}
         joinButtonText='Join Camp ->'
@@ -48,12 +48,22 @@ export const Camps = () => {
       />
 
       <CampList
-        title='Full'
-        description='Join to listen in!'
+        title='Burning'
+        description='Full camps where players are currently telling a story. Sit down to listen!'
         confirmJoinRequired={false}
         roomQuery={GetOngoingCamps}
         joinButtonText='Join and listen ->'
         alternativeText='There are no ongoing camps to listen in on right now.'
+      />
+
+      <CampList
+        title='Finished'
+        description='Finished camps with a full story. Sit down to read it'
+        confirmJoinRequired={false}
+        roomQuery={GetFinishedStories}
+        joinButtonText='Read Story ->'
+        alternativeText='No stories have yet been finished in Unwritten'
+        hideIfEmpty
       />
 
     </ScrollView>

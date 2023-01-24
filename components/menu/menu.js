@@ -2,23 +2,18 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import { JoinRoom } from "./screens/joinRoom.js";
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { MyRooms } from "./screens/myRooms.js";
 import { Archive } from "./screens/archive.js";
-import { Camps } from "./screens/camps/joinRoom.js";
-import { MenuScreenHeader } from "./modularComponents/menuScreenHeader.js";
+import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
 import { colors } from "../../style.js";
-import { Space } from "../smart/visuals.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: false,
   tabBarActiveBackgroundColor: colors.dark,
   tabBarInactiveBackgroundColor: colors.fire,
-  // tabBarActiveTintColor: colors.fire,
-  // tabBarInactiveTintColor: colors.light,
   tabBarHideOnKeyboard: true,
   headerShown: false,
   tabBarStyle: {
