@@ -5,6 +5,14 @@ import { MyButton } from "./myButton";
 
 export const Popup = (props) => {
 
+  const {
+    onClose,
+    loading,
+    title,
+    text,
+    buttons,
+  } = props
+
   return (
 
     <Modal
@@ -19,19 +27,19 @@ export const Popup = (props) => {
       <View style={popupStyles.view}>
         <View style={popupStyles.background} />
         <View style={popupStyles.box}>
-          {!props.loading && <CloseButton handlePress={props.onClose} />}
+          {!loading && <CloseButton handlePress={onClose} />}
           <View style={popupStyles.content}>
-            <Text style={styles.h1}>{props.title}</Text>
-            {props.text && (
-              Array.isArray(props.text) ?
-                props.text.map((text, i) =>
-                  <Text key={i} style={[styles.paragraph, {color: colors.white}]}>{text}</Text>
+            <Text style={styles.h1}>{title}</Text>
+            {text && (
+              Array.isArray(text) ?
+                text.map((text, i) =>
+                  <Text key={i} style={[styles.paragraph, { color: colors.white }]}>{text}</Text>
                 ) :
-                <Text style={[styles.paragraph, {color: colors.white}]}>{props.text}</Text>
+                <Text style={[styles.paragraph, { color: colors.white }]}>{text}</Text>
             )}
-            {props.buttons &&
+            {buttons &&
               <View style={popupStyles.buttonRow}>
-                {props.buttons.map(button => (
+                {buttons.map(button => (
                   <MyButton
                     title={button.title}
                     onPress={button.handlePress}

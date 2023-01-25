@@ -90,6 +90,10 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
 
+  italic: {
+    fontStyle: 'italic'
+  },
+
   warning: {
     fontSize: 16,
     color: 'red',

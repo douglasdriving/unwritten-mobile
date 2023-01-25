@@ -1,5 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicon from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { Camps } from "./screens/camps/camps.js";
@@ -45,9 +46,9 @@ export const Menu = (menuProps) => {
           name='Camps'
           options={{
             tabBarIcon: ({ focused }) => (
-              <Ionicon
-                name="bonfire"
-                size={45}
+              <FontAwesome
+                name="campground"
+                size={40}
                 color={focused ? colors.fire : colors.light}
               />
             )
