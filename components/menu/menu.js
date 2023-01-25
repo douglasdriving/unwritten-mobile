@@ -7,6 +7,11 @@ import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
 import { colors } from "../../style.js";
 import { FrontPage } from "./screens/frontPage/frontPage.js";
+import { Text } from "react-native";
+import { WelcomePopup } from "./welcomePopup/welcomePopup.js";
+import { useState } from "react";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -23,8 +28,23 @@ const screenOptions = {
 
 export const Menu = (menuProps) => {
 
+  const [welcomeOpen, setWelcomeOpen] = useState(true);
+
+  const CheckIfWelcomeMessageShouldBeHidden = async () => {
+
+    const savedState = await AsyncStorage.getItem('hideWelcomePopup');
+    if (savedState == 'hide') setWelcomeOpen(false);
+    else if (savedState == 'show') setWelcomeOpen(true);
+    else setWelcomeOpen(true);
+
+  }
+
+  useEffect(() => { CheckIfWelcomeMessageShouldBeHidden(); }, []);
+
   return (
     <>
+      {welcomeOpen && <WelcomePopup close={() => setWelcomeOpen(false)} />}
+
       <Tab.Navigator screenOptions={screenOptions}>
 
         <Tab.Screen
@@ -88,10 +108,6 @@ export const Menu = (menuProps) => {
         </Tab.Screen>
 
       </Tab.Navigator>
-
     </>
-
-
-
   );
 }
