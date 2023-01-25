@@ -86,6 +86,10 @@ export const styles = StyleSheet.create({
     color: colors.light
   },
 
+  bold: {
+    fontWeight: 'bold'
+  },
+
   warning: {
     fontSize: 16,
     color: 'red',

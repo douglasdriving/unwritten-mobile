@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import { styles, colors } from "../../style";
-import { TimeToHms } from "../../helpers/helpers";
+import { TimeToHms } from "../../helpers/dateTimeFunctions";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GetRoomDeadline } from "../../backend/backendCalls";

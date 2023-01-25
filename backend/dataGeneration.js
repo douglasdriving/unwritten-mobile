@@ -1,5 +1,6 @@
-import { GenerateRandomString, PickRandomFromArray, GetRandomInt, TwoDaysFromNowInMs } from "../helpers/helpers"
+import { GenerateRandomString, PickRandomFromArray, GetRandomInt } from "../helpers/helpers"
 import { fakeWriters, fakeTitles, scenarioTextPlaceholder } from "./fakeData";
+import { TwoDaysFromNowInMs } from "../helpers/dateTimeFunctions";
 
 //BALANCING VARIABLES
 export const maxScenarioCount = 40;

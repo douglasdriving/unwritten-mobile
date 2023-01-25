@@ -3,6 +3,9 @@ import { ScrollView, Text, View } from "react-native";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { useState } from "react";
 import { GetFeed } from "../../../../backend/backendCalls";
+import { useEffect } from "react";
+import { Divider } from "../../../smart/visuals";
+import { extractTimestamp } from "../../../../helpers/dateTimeFunctions";
 
 export const FrontPage = () => {
 
@@ -11,9 +14,22 @@ export const FrontPage = () => {
   const loadFeed = async () => {
 
     const loadedFeed = await GetFeed();
-    //set it, and have it impact the actual window...
+    if (loadedFeed) setFeed(loadedFeed);
 
   }
+
+  const shortenText = (text) => {
+
+    if (text.length < 50) return text;
+    else {
+      let shortText = text.slice(0, 80);
+      shortText += '...';
+      return shortText;
+    }
+
+  }
+
+  useEffect(() => { loadFeed(); }, []);
 
   return (
     <ScrollView style={styles.menuPageContainer}>
@@ -41,15 +57,22 @@ export const FrontPage = () => {
         Latest posts:
       </Text>
 
-      {feed.length > 0 && (
-
-        feed.map(post =>
-          <>
-            <Text>this is a post</Text>
-          </>
-        )
-
-      )}
+      {feed.length > 0 && feed.map((post, i) => (
+        <View key={i}>
+          <Divider color={colors.white} />
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={[styles.body, styles.bold, textColors.white]}>{post.creator_name + ' '}</Text>
+            <Text style={[styles.paragraph, textColors.white]}>{'(' + extractTimestamp(post.created_at) + ')'}</Text>
+          </View>
+          <Text style={[styles.paragraph, textColors.white]}>
+            Added to "{post.story_title}"
+            :
+          </Text>
+          <Text style={[styles.paragraph, textColors.white]}>
+            {shortenText(post.scenario)}
+          </Text>
+        </View>
+      ))}
 
     </ScrollView>
   );
