@@ -12,7 +12,6 @@ import { WelcomePopup } from "./welcomePopup/welcomePopup.js";
 import { useState } from "react";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Popup } from "../smart/popup.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -22,7 +21,7 @@ const screenOptions = {
   tabBarHideOnKeyboard: true,
   headerShown: false,
   tabBarStyle: {
-    height: 100,
+    height: 50,
     borderTopWidth: 0,
   },
 };
@@ -54,7 +53,7 @@ export const Menu = (menuProps) => {
             tabBarIcon: ({ focused }) => (
               <Ionicon
                 name="bonfire"
-                size={45}
+                size={30}
                 color={focused ? colors.fire : colors.light}
               />
             )
@@ -69,7 +68,7 @@ export const Menu = (menuProps) => {
             tabBarIcon: ({ focused }) => (
               <FontAwesome
                 name="campground"
-                size={40}
+                size={25}
                 color={focused ? colors.fire : colors.light}
               />
             )
@@ -84,7 +83,7 @@ export const Menu = (menuProps) => {
             tabBarIcon: ({ focused }) => (
               <MaterialCommunityIcons
                 name="fire"
-                size={50}
+                size={35}
                 color={focused ? colors.fire : colors.light}
               />
             )
@@ -99,7 +98,7 @@ export const Menu = (menuProps) => {
             tabBarIcon: ({ focused }) => (
               <Ionicon
                 name="person"
-                size={40}
+                size={30}
                 color={focused ? colors.fire : colors.light}
               />
             )

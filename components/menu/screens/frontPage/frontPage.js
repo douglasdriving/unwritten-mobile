@@ -1,4 +1,4 @@
-import { styles, textColors, colors } from "../../../../style";
+import { styles, textColors, colors, menyStyles } from "../../../../style";
 import { ScrollView, Text, View, TouchableWithoutFeedback } from "react-native";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { useState } from "react";
@@ -47,7 +47,7 @@ export const FrontPage = () => {
   return (
     <ScrollView style={styles.menuPageContainer}>
 
-      {opening && <Popup loading={true} title='...'/>}
+      {opening && <Popup loading={true} title='...' />}
 
       <View style={{ alignItems: 'center' }}>
         <Ionicon
@@ -76,7 +76,7 @@ export const FrontPage = () => {
         <TouchableWithoutFeedback key={i} onPress={() => {
           OpenCamp(post.room_id);
         }}>
-          <View style={{ backgroundColor: colors.light, marginBottom: 5, padding: 10 }}>
+          <View style={menyStyles.feedItem}>
 
             <Text style={[styles.h3, textColors.white]}>
               {post.story_title}

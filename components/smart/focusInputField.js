@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Keyboard, TouchableWithoutFeedback, Modal } from "react-native";
-import { styles, colors, textColors } from "../../style";
+import { styles, colors, menyStyles, appDimensions} from "../../style";
 import { useState, useRef, useEffect } from "react";
 import { MyButton } from "./myButton";
 
@@ -52,8 +52,8 @@ export const FocusInputField = (props) => {
             width: '100%',
             backgroundColor: 'white',
             padding: 5,
-            // height: props.height,
-            flex: props.flex
+            flex: props.flex,
+            borderRadius: appDimensions.borderRadius,
           }}
         >
           <Text style={[styles.body, (!textInput && styles.faded)]}>
@@ -82,7 +82,8 @@ export const FocusInputField = (props) => {
             padding: 15,
             margin: 25,
             borderWidth: 2,
-            borderColor: colors.light
+            borderColor: colors.light,
+            borderRadius: appDimensions.borderRadius
           }}>
             {focused && <Text style={[styles.h3, { color: colors.dark }]}>{props.label}</Text>}
             <TextInput

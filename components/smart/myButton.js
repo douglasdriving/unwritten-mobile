@@ -20,7 +20,8 @@ export const MyButton = (props) => {
         padding: 10,
         flex: (flex ? 1 : null),
         opacity: disabled ? 0.4 : 1,
-        height: height
+        height: height,
+        borderRadius: 10,
       }}>
         <Text
           style={[styles.h3, {

@@ -97,6 +97,7 @@ const popupStyles = StyleSheet.create({
     backgroundColor: colors.light,
     margin: 30,
     width: '85%',
+    borderRadius: 10,
   },
   content: {
     margin: 40,

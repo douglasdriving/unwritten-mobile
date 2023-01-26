@@ -4,6 +4,10 @@ export const windowSize = Dimensions.get('window');
 export const windowWidth = windowSize.width;
 export const windowHeight = windowSize.height;
 
+export const appDimensions = {
+  borderRadius: 10,
+}
+
 export const colors = {
   black: '#000000',
   dark: '#372755',
@@ -223,3 +227,16 @@ export const styles = StyleSheet.create({
   }
 
 });
+
+export const menyStyles = StyleSheet.create({
+
+  feedItem: {
+    backgroundColor: colors.light,
+    marginBottom: 5,
+    padding: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: appDimensions.borderRadius,
+  },
+
+})

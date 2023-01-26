@@ -17,8 +17,8 @@ export const CloseButton = (props) => {
           alignItems: 'center',
           justifyContent: 'center',
           position: 'absolute',
-          zIndex: 5
-          // alignSelf: 'center'
+          zIndex: 5,
+          borderRadius: 10,
         }}>
           <Icon name="close-outline" size={30} />
         </View>

@@ -121,7 +121,10 @@ export const ListItem = (props) => {
           backgroundColor: colors.fire,
           width: '100%',
           marginTop: 5,
-          padding: 15
+          padding: 5,
+          paddingLeft: 10,
+          paddingRight: 10,
+          borderRadius: 10,
         }} >
           <View style={{
             flexDirection: 'row',
