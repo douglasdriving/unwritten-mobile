@@ -12,6 +12,7 @@ export const ListItem = (props) => {
   const [open, setOpen] = useState(false);
   const [roomLoading, setRoomLoading] = useState(false);
   const dispatch = useDispatch();
+  const {confirmJoin} = props;
 
   const {
     title,
@@ -64,7 +65,7 @@ export const ListItem = (props) => {
     if (authors && authors.length > 0) texts.push(GenerateAuthorText());
     if (authors && authors.length > 0) texts.push(`${authors.length + 1}/4 players`);
     if (turn) texts.push(`🎲 Turn ${turn}`);
-    if (props.confirmJoin) {
+    if (confirmJoin) {
       texts.push(`---`);
       texts.push(`Do you want to join this camp? You will be expected to continue the story`);
     }
@@ -75,7 +76,8 @@ export const ListItem = (props) => {
 
   const HandleJoinButtonPress = async () => {
 
-    if (props.confirmJoin) {
+    if (confirmJoin) {
+      console.log('joining room');
       setRoomLoading(true);
       const success = await JoinRoom(roomId);
       setRoomLoading(false);

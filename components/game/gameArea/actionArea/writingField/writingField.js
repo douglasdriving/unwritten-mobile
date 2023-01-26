@@ -11,7 +11,10 @@ import { selectRoomId, loadRoomData } from "../../../../../redux/roomSlice";
 
 export const WritingField = (props) => {
 
+  if (!props.isWriting) console.error('missing "isWriting" in props of writingField')
+
   const [scenarioPostLoading, setScenarioPostLoading] = useState(false);
+  const [scenarioPostSuccess, setScenarioPostSuccess] = useState(false);
   const [scenarioText, setScenarioText] = useState('');
   const [chars, setChars] = useState({ total: 0, remaining: 0 });
   const [warning, setWarning] = useState();
@@ -19,6 +22,9 @@ export const WritingField = (props) => {
   const isEnd = props.isWriting == 'ending';
   const roomId = useSelector(selectRoomId);
   const dispatch = useDispatch();
+
+  if (!user) console.error('missing a user in redux store of writingField');
+  ;
 
   const handleChangeText = text => {
     setScenarioText(text);
@@ -50,13 +56,22 @@ export const WritingField = (props) => {
     }
 
     if (scenarioUploadResponse.ok) {
-      await dispatch(loadRoomData({id: roomId}));
+      setScenarioPostSuccess(true);
     }
     else {
       setWarning(scenarioUploadResponse.message);
     }
 
     setScenarioPostLoading(false);
+
+
+  }
+
+  const handleSucessWindowClose = async () => {
+
+    await dispatch(loadRoomData({ id: roomId }));
+    setScenarioPostSuccess(false);
+
   }
 
   const loadChars = async () => {
@@ -73,13 +88,11 @@ export const WritingField = (props) => {
 
   }
 
-  if (!user) console.error('missing a user in redux store of writingField');
-  if (!props.isWriting) console.error('missing "isWriting" in props of writingField');
-
   useEffect(() => { loadChars(); }, []);
 
   return (
     <View style={styles.actionBox}>
+
       <TextInput
         style={{
           textAlignVertical: 'top',
@@ -91,6 +104,7 @@ export const WritingField = (props) => {
         multiline
         autoFocus
       />
+
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10 }}>
         <MyButton
           title={isEnd ? 'Add Ending' : 'Add'}
@@ -102,11 +116,23 @@ export const WritingField = (props) => {
         />
         <CharCounter chars={chars.remaining} />
       </View>
+
       {warning && <Text style={{ ...styles.warning }}>{warning}</Text>}
+
       {scenarioPostLoading && <Popup
         title={'Adding your text'}
         loading={true}
       />}
+
+      {scenarioPostSuccess &&
+        <Popup
+          title={'🎉🎉🎉'}
+          text={'Story Extended Successfully!!!'}
+          textCenter
+          textColor={colors.green}
+        />
+      }
+
     </View>
   );
 }

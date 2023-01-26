@@ -18,7 +18,7 @@ export const extractTimestamp = (dateTime) => {
   if (dateTimeObj.getFullYear() != now.getFullYear()) return dateAndTimeStringWithYear(dateTimeObj);
   else if (dateTimeObj.getDate() != now.getDate()) return dateAndTimeString(dateTimeObj);
   else if (dateTimeObj.getMonth() != now.getMonth()) return dateAndTimeString(dateTimeObj);
-  else return timeString(dateTime);
+  else return timeString(dateTimeObj);
 }
 
 export function dateAndTimeStringWithYear(dateTimeObj) {

@@ -11,7 +11,23 @@ export const Popup = (props) => {
     title,
     text,
     buttons,
+    textCenter,
+    backgroundColor,
+    textColor
   } = props
+
+  const activeTextColor = { color: textColor || colors.white };
+
+  const headingStyle = (
+    textCenter ?
+      [styles.h1, styles.textCenter, activeTextColor] :
+      [styles.h1, activeTextColor]
+  );
+  const bodyStyle = (
+    textCenter ?
+      [styles.paragraph, activeTextColor, styles.textCenter] :
+      [styles.paragraph, activeTextColor]
+  );
 
   return (
 
@@ -26,16 +42,16 @@ export const Popup = (props) => {
     >
       <View style={popupStyles.view}>
         <View style={popupStyles.background} />
-        <View style={popupStyles.box}>
+        <View style={[popupStyles.box, , { backgroundColor: backgroundColor || colors.light }]}>
           {!loading && <CloseButton handlePress={onClose} />}
           <View style={popupStyles.content}>
-            <Text style={styles.h1}>{title}</Text>
+            <Text style={headingStyle}>{title}</Text>
             {text && (
               Array.isArray(text) ?
                 text.map((text, i) =>
-                  <Text key={i} style={[styles.paragraph, { color: colors.white }]}>{text}</Text>
+                  <Text key={i} style={bodyStyle}>{text}</Text>
                 ) :
-                <Text style={[styles.paragraph, { color: colors.white }]}>{text}</Text>
+                <Text style={bodyStyle}>{text}</Text>
             )}
             {buttons &&
               <View style={popupStyles.buttonRow}>

@@ -5,7 +5,8 @@ export const colors = {
   dark: '#372755',
   light: '#4A3C65',
   fire: '#FFB68F',
-  white: '#FFFFFF'
+  white: '#FFFFFF',
+  green: '#72CA98'
 }
 
 export const textColors = StyleSheet.create({
