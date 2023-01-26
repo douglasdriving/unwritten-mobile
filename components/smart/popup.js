@@ -1,5 +1,5 @@
 import { StyleSheet, Modal, Button, View, Text } from "react-native";
-import { styles, colors } from "../../style";
+import { styles, colors, windowHeight, windowWidth } from "../../style";
 import { CloseButton } from "./closeButton";
 import { MyButton } from "./myButton";
 
@@ -20,8 +20,8 @@ export const Popup = (props) => {
 
   const headingStyle = (
     textCenter ?
-      [styles.h1, styles.textCenter, activeTextColor] :
-      [styles.h1, activeTextColor]
+      [styles.h2, styles.textCenter, activeTextColor] :
+      [styles.h2, activeTextColor]
   );
   const bodyStyle = (
     textCenter ?
@@ -45,7 +45,9 @@ export const Popup = (props) => {
         <View style={[popupStyles.box, , { backgroundColor: backgroundColor || colors.light }]}>
           {!loading && <CloseButton handlePress={onClose} />}
           <View style={popupStyles.content}>
-            <Text style={headingStyle}>{title}</Text>
+
+            {title && <Text style={headingStyle}>{title}</Text>}
+
             {text && (
               Array.isArray(text) ?
                 text.map((text, i) =>
@@ -53,9 +55,10 @@ export const Popup = (props) => {
                 ) :
                 <Text style={bodyStyle}>{text}</Text>
             )}
+
             {buttons &&
               <View style={popupStyles.buttonRow}>
-                {buttons.map(button => (
+                {buttons.map((button, i) => (
                   <MyButton
                     title={button.title}
                     onPress={button.handlePress}
@@ -67,6 +70,7 @@ export const Popup = (props) => {
                 ))}
               </View>
             }
+
           </View>
         </View>
       </View>
@@ -83,11 +87,11 @@ const popupStyles = StyleSheet.create({
     marginTop: 22,
   },
   background: {
-    height: '100%',
-    width: '100%',
+    height: windowHeight,
+    width: windowWidth,
     position: 'absolute',
     backgroundColor: 'black',
-    opacity: 0.5,
+    opacity: 0.7,
   },
   box: {
     backgroundColor: colors.light,
@@ -100,7 +104,7 @@ const popupStyles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
-    marginTop: 15
-    // justifyContent: 'space-between'
+    marginTop: 15,
+    justifyContent: 'space-between'
   }
 });

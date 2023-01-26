@@ -12,6 +12,7 @@ import { WelcomePopup } from "./welcomePopup/welcomePopup.js";
 import { useState } from "react";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Popup } from "../smart/popup.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {

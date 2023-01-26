@@ -1,4 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+export const windowSize = Dimensions.get('window');
+export const windowWidth = windowSize.width;
+export const windowHeight = windowSize.height;
 
 export const colors = {
   black: '#000000',
