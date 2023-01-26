@@ -1,6 +1,6 @@
 import { ScrollView } from 'react-native';
 import { useRef } from 'react';
-import { styles } from '../../../style.js';
+import { styles, gameStyle } from '../../../style.js';
 import { StoryContent } from './storyArea/storyContent.js';
 import { Space } from '../../smart/visuals.js';
 import { ActionArea } from './actionArea/actionArea.js';
@@ -14,7 +14,7 @@ export const GameArea = () => {
 
   return (
     <ScrollView
-      style={styles.gameWindow}
+      style={gameStyle.gameWindow}
       ref={scrollViewRef}
       onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
     >

@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import { styles, textColors, colors } from "../../../../../style";
+import { styles, textColors, colors, gameStyle } from "../../../../../style";
 import { Space } from "../../../../smart/visuals";
 import { Actions } from "./actions";
 import { TurnTimer } from "../../../../smart/turnTimer";
@@ -14,15 +14,15 @@ export const YourTurnField = (props) => {
 
   return (
     <>
-      <View style={styles.actionBox}>
+      <View style={gameStyle.actionBox}>
         {Space(5)}
-        <Text style={styles.h1}>
+        <Text style={[styles.h1, textColors.light]}>
           {playerJustJoined ?
             'Wanna join this story?' :
             'Your turn!'
           }
         </Text>
-        <Text style={[styles.paragraph, textColors.white]}>
+        <Text style={[styles.paragraph, textColors.light]}>
           {playerJustJoined ?
             'Write a continuation to this story within 30 minutes to participate' :
             'You got 500 new characters to write with'

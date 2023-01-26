@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
 import { GetChars, UploadScenario, UploadEnding } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
-import { colors, styles } from "../../../../../style";
+import { colors, gameStyle, styles } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
 import { selectRoomId, loadRoomData } from "../../../../../redux/roomSlice";
+import { Divider } from "../../../../smart/visuals";
 
 export const WritingField = (props) => {
 
@@ -91,30 +92,32 @@ export const WritingField = (props) => {
   useEffect(() => { loadChars(); }, []);
 
   return (
-    <View style={styles.actionBox}>
+    <View style={gameStyle.actionBox}>
 
       <TextInput
         style={{
           textAlignVertical: 'top',
           fontSize: 16,
           flex: 1,
-          color: colors.white
+          color: colors.light,
         }}
         onChangeText={handleChangeText}
         multiline
         autoFocus
       />
 
+      <Divider/>
+
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10 }}>
         <MyButton
           title={isEnd ? 'Add Ending' : 'Add'}
           disabled={chars.remaining < 0 || scenarioText.length < 1}
           onPress={handleAddButtonPress}
-          color={colors.fire}
-          textColor={colors.light}
+          color={colors.light}
+          textColor={colors.white}
           flex
         />
-        <CharCounter chars={chars.remaining} />
+        <CharCounter chars={chars.remaining} color={colors.light}/>
       </View>
 
       {warning && <Text style={{ ...styles.warning }}>{warning}</Text>}

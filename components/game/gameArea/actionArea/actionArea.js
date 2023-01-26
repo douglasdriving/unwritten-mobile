@@ -29,9 +29,11 @@ export const ActionArea = () => {
   return (
     <View>
 
-      {
+      <PlayerSearchField />
+
+      {/* {
         nextPlayer == null ?
-          <PlayerSearchField/>
+          <PlayerSearchField />
           :
           (
             IsPlayersTurn() ?
@@ -49,7 +51,7 @@ export const ActionArea = () => {
               :
               <WaitingField />
           )
-      }
+      } */}
 
     </View>
   );

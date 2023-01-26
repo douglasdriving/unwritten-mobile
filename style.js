@@ -135,11 +135,6 @@ export const styles = StyleSheet.create({
     backgroundColor: colors.fire,
   },
 
-  actionBox: {
-    backgroundColor: colors.light,
-    padding: 15
-  },
-
   fullScreenCentered: {
     flex: 1,
     backgroundColor: colors.dark,
@@ -185,12 +180,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
-  },
-
-  gameWindow: {
-    backgroundColor: colors.fire,
-    paddingTop: 120,
-    padding: 30,
   },
 
   roomMenu: {
@@ -246,6 +235,24 @@ export const menyStyles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     borderRadius: appDimensions.borderRadius,
+  },
+
+})
+
+export const gameStyle = StyleSheet.create({
+
+  gameWindow: {
+    backgroundColor: colors.fire,
+    paddingTop: 120,
+    padding: 30,
+  },
+
+  actionBox: {
+    borderWidth: 2,
+    borderColor: colors.light,
+    borderRadius: appDimensions.borderRadius,
+    // backgroundColor: colors.light,
+    padding: 15,
   },
 
 })

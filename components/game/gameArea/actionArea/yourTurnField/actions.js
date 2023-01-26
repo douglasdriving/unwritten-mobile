@@ -31,16 +31,17 @@ export const Actions = (props) => {
         title={`Write Continuation${(canEnd && !mustEnd) ? (' (' + turnsUntilMustEnd + ' turns left)') : ''}`}
         onPress={HandleContinue}
         disabled={mustEnd}
-        color={colors.fire}
-        textColor={colors.dark}
+        color={colors.light}
+        textColor={colors.white}
         flex
       />
+      <View style={{width: 10}}></View>
       <MyButton
         title={`Write Ending${(!canEnd) ? (' (Available in ' + turnsUntilCanEnd + ' turns)') : ''}`}
         onPress={HandleWriteEnding}
         disabled={!canEnd}
-        color={colors.fire}
-        textColor={colors.dark}
+        color={colors.light}
+        textColor={colors.white}
         flex
       />
     </View>
