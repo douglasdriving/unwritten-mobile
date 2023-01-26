@@ -17,6 +17,15 @@ export const colors = {
   green: '#72CA98'
 }
 
+export const transparentColors = {
+  black: '#00000050',
+  dark: '#37275550',
+  light: '#4A3C6550',
+  fire: '#FFB68F50',
+  white: '#FFFFFF50',
+  green: '#72CA9850'
+}
+
 export const textColors = StyleSheet.create({
 
   white: {

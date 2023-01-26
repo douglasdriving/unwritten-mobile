@@ -5,24 +5,25 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
-import { colors } from "../../style.js";
+import { appDimensions, colors, transparentColors } from "../../style.js";
 import { FrontPage } from "./screens/frontPage/frontPage.js";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { WelcomePopup } from "./welcomePopup/welcomePopup.js";
 import { useState } from "react";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { NavBarIcon } from "./navBarIcon/navBarIcon.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: false,
-  tabBarActiveBackgroundColor: colors.dark,
-  tabBarInactiveBackgroundColor: colors.fire,
   tabBarHideOnKeyboard: true,
   headerShown: false,
   tabBarStyle: {
-    height: 50,
+    height: 70,
     borderTopWidth: 0,
+    backgroundColor: colors.dark,
+    borderTopWidth: 1
   },
 };
 
@@ -51,61 +52,61 @@ export const Menu = (menuProps) => {
           name='Front Page'
           options={{
             tabBarIcon: ({ focused }) => (
-              <Ionicon
-                name="bonfire"
-                size={30}
-                color={focused ? colors.fire : colors.light}
+              <NavBarIcon
+                focused={focused}
+                IconComp={Ionicon}
+                iconSize={30}
+                iconName='bonfire'
               />
             )
           }}
-        >
-          {() => <FrontPage />}
-        </Tab.Screen>
+          component={FrontPage}
+        />
 
         <Tab.Screen
           name='Camps'
           options={{
             tabBarIcon: ({ focused }) => (
-              <FontAwesome
-                name="campground"
-                size={25}
-                color={focused ? colors.fire : colors.light}
+              <NavBarIcon
+                focused={focused}
+                IconComp={FontAwesome}
+                iconSize={23}
+                iconName='campground'
               />
             )
           }}
-        >
-          {() => <Camps />}
-        </Tab.Screen>
+          component={Camps}
+        />
 
         <Tab.Screen
           name='Create'
           options={{
             tabBarIcon: ({ focused }) => (
-              <MaterialCommunityIcons
-                name="fire"
-                size={35}
-                color={focused ? colors.fire : colors.light}
+              <NavBarIcon
+                focused={focused}
+                IconComp={MaterialCommunityIcons}
+                iconSize={35}
+                iconName='fire'
               />
             )
           }}
-        >
-          {(props) => <OpenRoom {...menuProps} />}
-        </Tab.Screen>
+          component={OpenRoom}
+        />
 
         <Tab.Screen
           name='Profile'
           options={{
             tabBarIcon: ({ focused }) => (
-              <Ionicon
-                name="person"
-                size={30}
-                color={focused ? colors.fire : colors.light}
+              <NavBarIcon
+                focused={focused}
+                IconComp={Ionicon}
+                iconSize={30}
+                iconName='person'
               />
             )
           }}
-        >
-          {() => <Profile />}
-        </Tab.Screen>
+          component={Profile}
+        />
 
       </Tab.Navigator>
     </>
