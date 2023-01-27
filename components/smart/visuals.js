@@ -3,7 +3,7 @@ import { colors } from "../../style";
 
 export const Divider = (props) => {
 
-  const {color} = props;
+  const { color } = props;
 
   return (
     <View

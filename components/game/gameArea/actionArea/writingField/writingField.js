@@ -5,10 +5,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
 import { GetChars, UploadScenario, UploadEnding } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
-import { colors, gameStyle, styles } from "../../../../../style";
+import { colors, gameStyle, styles, textColors } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
 import { selectRoomId, loadRoomData } from "../../../../../redux/roomSlice";
-import { Divider } from "../../../../smart/visuals";
+import { Divider, Space } from "../../../../smart/visuals";
+import { GetRandomInt } from "../../../../../helpers/helpers";
 
 export const WritingField = (props) => {
 
@@ -19,10 +20,10 @@ export const WritingField = (props) => {
   const [scenarioText, setScenarioText] = useState('');
   const [chars, setChars] = useState({ total: 0, remaining: 0 });
   const [warning, setWarning] = useState();
+  const [suggestion, setSuggestion] = useState();
   const user = useSelector(selectUser);
   const isEnd = props.isWriting == 'ending';
   const roomId = useSelector(selectRoomId);
-  const dispatch = useDispatch();
 
   if (!user) console.error('missing a user in redux store of writingField');
   ;
@@ -68,10 +69,29 @@ export const WritingField = (props) => {
 
   }
 
-  const handleSucessWindowClose = async () => {
+  const getSuggestions = async () => {
 
-    await dispatch(loadRoomData({ id: roomId }));
-    setScenarioPostSuccess(false);
+    const suggestions = [
+      'A new character is introduced',
+      'Something is sacrificed',
+      'The main character gets a great idea',
+      'The main character gets a terrible idea',
+      'Someone makes a bad mistake',
+      'An animal appears',
+      'Someone thinks hard',
+      'The surroundings are described',
+      'A loud noise suddenly breaks in',
+      'There is a moment of calm',
+      'Someone does something unexpected',
+      'A prior question is answered',
+      'The character remembers something',
+      'A wild pokemon appears',
+    ]
+
+    const random = GetRandomInt(0, suggestions.length - 1);
+    const pick = suggestions[random];
+
+    setSuggestion(pick);
 
   }
 
@@ -94,6 +114,8 @@ export const WritingField = (props) => {
   return (
     <View style={gameStyle.actionBox}>
 
+      {suggestion && <Text style={[styles.h3, textColors.light]}>{suggestion}:</Text>}
+
       <TextInput
         style={{
           textAlignVertical: 'top',
@@ -106,9 +128,17 @@ export const WritingField = (props) => {
         autoFocus
       />
 
-      <Divider/>
+      <Divider />
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10 }}>
+        <MyButton
+          title={'Suggestion'}
+          onPress={getSuggestions}
+          color={colors.light}
+          textColor={colors.white}
+          flex
+        />
+        <View style={{ width: 10 }} />
         <MyButton
           title={isEnd ? 'Add Ending' : 'Add'}
           disabled={chars.remaining < 0 || scenarioText.length < 1}
@@ -117,7 +147,7 @@ export const WritingField = (props) => {
           textColor={colors.white}
           flex
         />
-        <CharCounter chars={chars.remaining} color={colors.light}/>
+        <CharCounter chars={chars.remaining} color={colors.light} />
       </View>
 
       {warning && <Text style={{ ...styles.warning }}>{warning}</Text>}
