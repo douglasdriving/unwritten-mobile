@@ -222,7 +222,7 @@ export const GetFeed = async () => {
     GetFetch()
   );
   const jsonResponse = await response.json();
-  if (jsonResponse.ok) return jsonResponse.data.prompt;
+  if (jsonResponse.ok) return jsonResponse.data;
   else return null;
 
 }

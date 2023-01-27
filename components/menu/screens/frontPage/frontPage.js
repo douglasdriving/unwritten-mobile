@@ -19,6 +19,8 @@ export const FrontPage = () => {
 
   const loadFeed = async () => {
 
+    console.lo
+
     const loadedFeed = await GetFeed();
     if (loadedFeed) setFeed(loadedFeed);
 

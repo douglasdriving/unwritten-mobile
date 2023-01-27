@@ -29,12 +29,7 @@ export const ActionArea = () => {
   return (
     <View>
 
-      <WritingField
-        isWriting={'scenario'}
-        SetWritingField={SetWritingField}
-      />
-
-      {/* {
+      {
         nextPlayer == null ?
           <PlayerSearchField />
           :
@@ -54,7 +49,7 @@ export const ActionArea = () => {
               :
               <WaitingField />
           )
-      } */}
+      }
 
     </View>
   );
