@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Text, View } from "react-native"
 import { StoryList } from "../../../modularComponents/storyList/storylist";
-import { styles, textColors } from "../../../../../style";
+import { colors, styles, textColors } from "../../../../../style";
 
 export const CampList = (props) => {
 
@@ -14,7 +14,8 @@ export const CampList = (props) => {
     confirmJoinRequired,
     joinButtonText,
     alternativeText,
-    hideIfEmpty
+    hideIfEmpty,
+    emptyText
   } = props;
 
   const LoadRooms = async () => {
@@ -37,16 +38,20 @@ export const CampList = (props) => {
   }
 
   return (
-    <View style={{ marginTop: 15 }}>
+    <View style={{ marginTop: 15, flex: 1 }}>
 
       <Text style={[styles.h2, textColors.white]}>{title}</Text>
 
-      <Text style={[styles.paragraph, textColors.white]}>
-        {roomsExists() ? description : alternativeText}
-      </Text>
+      {
+        (description && roomsExists()) && (
+          <Text style={[styles.paragraph, textColors.white]}>
+            {description}
+          </Text>
+        )
+      }
 
       {
-        roomsExists() &&
+        true &&
         <StoryList
           listItemInfo={rooms.map(room => ({
             title: room.title,
@@ -56,6 +61,7 @@ export const CampList = (props) => {
             buttonText: joinButtonText
           }))}
           confirmJoin={confirmJoinRequired}
+          alternativeText={alternativeText}
         />
       }
 

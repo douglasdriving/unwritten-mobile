@@ -1,4 +1,4 @@
-import { Text, ScrollView } from 'react-native';
+import { Text, View } from 'react-native';
 import { styles } from '../../../../style';
 import { GetAvailableRoomsAsSingleList, GetOngoingCamps, GetFinishedStories } from '../../../../backend/backendCalls';
 import { useEffect } from 'react';
@@ -15,7 +15,7 @@ export const Camps = () => {
   })
 
   return (
-    <ScrollView style={styles.menuPageContainer}>
+    <View style={styles.menuPageContainer}>
 
       <Text style={styles.h1}>Camps</Text>
 
@@ -47,6 +47,6 @@ export const Camps = () => {
         hideIfEmpty
       />
 
-    </ScrollView>
+    </View>
   );
 }
