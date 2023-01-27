@@ -17,3 +17,14 @@ export const GetNextPlayerName = (room) => {
   if (room.nextPlayer > room.authors.length) return null;
   return room.authors[room.nextPlayer - 1].name;
 }
+
+export const ShortenText = (text, maxChars, suffix) => {
+
+  if (text.length < 50) return text;
+  else {
+    let shortText = text.slice(0, maxChars);
+    if (suffix) shortText += suffix;
+    return shortText;
+  }
+
+}
