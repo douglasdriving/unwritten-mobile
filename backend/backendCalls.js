@@ -222,8 +222,26 @@ export const GetFeed = async () => {
     GetFetch()
   );
   const jsonResponse = await response.json();
-  if (jsonResponse.ok) return jsonResponse.data;
+  if (jsonResponse.ok) return jsonResponse.data.prompt;
   else return null;
+
+}
+
+export const GetRandomPrompt = async () => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/scenario/prompt`,
+    GetFetch()
+  );
+
+  if (response.ok) {
+    const jsonResponse = await response.json();
+    if (jsonResponse.ok) return jsonResponse.data.prompt;
+    else return null;
+  }
+  else {
+    return null;
+  }
 
 }
 

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { CharCounter } from "./charCounter";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
-import { GetChars, UploadScenario, UploadEnding } from "../../../../../backend/backendCalls";
+import { GetChars, UploadScenario, UploadEnding, GetRandomPrompt } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
 import { colors, gameStyle, styles, textColors } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
@@ -71,27 +71,31 @@ export const WritingField = (props) => {
 
   const getSuggestions = async () => {
 
-    const suggestions = [
-      'A new character is introduced',
-      'Something is sacrificed',
-      'The main character gets a great idea',
-      'The main character gets a terrible idea',
-      'Someone makes a bad mistake',
-      'An animal appears',
-      'Someone thinks hard',
-      'The surroundings are described',
-      'A loud noise suddenly breaks in',
-      'There is a moment of calm',
-      'Someone does something unexpected',
-      'A prior question is answered',
-      'The character remembers something',
-      'A wild pokemon appears',
-    ]
+    setSuggestion('...');
 
-    const random = GetRandomInt(0, suggestions.length - 1);
-    const pick = suggestions[random];
+    // const suggestions = [
+    //   'A new character is introduced',
+    //   'Something is sacrificed',
+    //   'The main character gets a great idea',
+    //   'The main character gets a terrible idea',
+    //   'Someone makes a bad mistake',
+    //   'An animal appears',
+    //   'Someone thinks hard',
+    //   'The surroundings are described',
+    //   'A loud noise suddenly breaks in',
+    //   'There is a moment of calm',
+    //   'Someone does something unexpected',
+    //   'A prior question is answered',
+    //   'The character remembers something',
+    //   'A wild pokemon appears',
+    // ]
 
-    setSuggestion(pick);
+    // const random = GetRandomInt(0, suggestions.length - 1);
+    // const pick = suggestions[random];
+
+    const prompt = await GetRandomPrompt();
+
+    setSuggestion(prompt);
 
   }
 
@@ -114,8 +118,6 @@ export const WritingField = (props) => {
   return (
     <View style={gameStyle.actionBox}>
 
-      {suggestion && <Text style={[styles.h3, textColors.light]}>{suggestion}:</Text>}
-
       <TextInput
         style={{
           textAlignVertical: 'top',
@@ -137,6 +139,7 @@ export const WritingField = (props) => {
           color={colors.light}
           textColor={colors.white}
           flex
+          disabled={suggestion == '...'}
         />
         <View style={{ width: 10 }} />
         <MyButton
@@ -151,6 +154,8 @@ export const WritingField = (props) => {
       </View>
 
       {warning && <Text style={{ ...styles.warning }}>{warning}</Text>}
+
+      {suggestion && <Text style={[styles.h3, textColors.light]}>{suggestion}</Text>}
 
       {scenarioPostLoading && <Popup
         title={'Adding your text'}
