@@ -7,12 +7,12 @@ import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
 import { appDimensions, colors, transparentColors } from "../../style.js";
 import { FrontPage } from "./screens/frontPage/frontPage.js";
-import { Text, View } from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 import { WelcomePopup } from "./welcomePopup/welcomePopup.js";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavBarIcon } from "./navBarIcon/navBarIcon.js";
+import { MenuScreen } from "./screens/menuScreen.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -60,8 +60,9 @@ export const Menu = (menuProps) => {
               />
             )
           }}
-          component={FrontPage}
-        />
+        >
+          {() => (<MenuScreen ScreenComponent={FrontPage} />)}
+        </Tab.Screen>
 
         <Tab.Screen
           name='Camps'
@@ -75,8 +76,10 @@ export const Menu = (menuProps) => {
               />
             )
           }}
-          component={Camps}
-        />
+        // component={Camps}
+        >
+          {() => (<MenuScreen ScreenComponent={Camps} />)}
+        </Tab.Screen>
 
         <Tab.Screen
           name='Create'
@@ -90,8 +93,10 @@ export const Menu = (menuProps) => {
               />
             )
           }}
-          component={OpenRoom}
-        />
+        // component={OpenRoom}
+        >
+          {() => (<MenuScreen ScreenComponent={OpenRoom} />)}
+        </Tab.Screen>
 
         <Tab.Screen
           name='Profile'
@@ -105,8 +110,10 @@ export const Menu = (menuProps) => {
               />
             )
           }}
-          component={Profile}
-        />
+        // component={Profile}
+        >
+          {() => (<MenuScreen ScreenComponent={Profile} />)}
+        </Tab.Screen>
 
       </Tab.Navigator>
     </>

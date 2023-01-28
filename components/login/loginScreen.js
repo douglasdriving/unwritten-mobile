@@ -10,7 +10,7 @@ import { SignInForm } from './signInForm/signInForm';
 import { useDispatch } from 'react-redux';
 import { login, loadLocalToken } from '../../redux/userSlice.js';
 
-export const LoginScreen = ({startRoomId}) => {
+export const LoginScreen = ({ startRoomId }) => {
 
   //redux
   const dispatch = useDispatch();

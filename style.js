@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
 
   menuPageContainer: {
     flex: 1,
-    backgroundColor: colors.dark,
+    backgroundColor: transparentColors.black,
     padding: 30,
     paddingTop: 60
   },
