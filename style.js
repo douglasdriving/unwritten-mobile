@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
   },
 
   title: {
-    fontSize: 30,
+    fontSize: 35,
     marginBottom: 15,
     fontFamily: 'Title-Bold'
   },
@@ -132,7 +132,8 @@ export const styles = StyleSheet.create({
   formField: {
     width: '100%',
     padding: 15,
-    backgroundColor: colors.fire,
+    backgroundColor: transparentColors.black,
+    borderRadius: appDimensions.borderRadius
   },
 
   fullScreenCentered: {
@@ -200,6 +201,18 @@ export const styles = StyleSheet.create({
     minHeight: 30,
     fontFamily: 'Body',
     color: colors.light,
+  },
+
+  inputFieldLine: {
+    // backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
+    padding: 5,
+    marginBottom: 6,
+    fontSize: 16,
+    minHeight: 30,
+    fontFamily: 'Body',
+    color: colors.white,
   },
 
   cover: {

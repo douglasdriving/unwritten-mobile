@@ -3,6 +3,8 @@ import { styles } from "../../../style";
 
 export const BoolStateToggler = (props) => {
 
+  const {color} = props;
+
   const toggleState = () => {
     props.setState(!props.state)
   }
@@ -11,7 +13,7 @@ export const BoolStateToggler = (props) => {
     <TouchableWithoutFeedback>
       <Text
         onPress={toggleState}
-        style={{ ...styles.paragraph, textDecorationLine: 'underline', textAlign: 'center', padding: 10 }}
+        style={{ ...styles.paragraph, textDecorationLine: 'underline', textAlign: 'center', padding: 10, color: color }}
       >
         {props.state ? props.onText : props.offText}
       </Text>

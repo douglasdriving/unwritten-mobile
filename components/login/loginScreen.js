@@ -1,41 +1,22 @@
-import { Text, View, Button, ImageBackground, TouchableWithoutFeedback } from 'react-native';
-import Checkbox from 'expo-checkbox';
-import { styles } from '../../style.js';
+import { ImageBackground } from 'react-native';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { registerForPushNotificationsAsync } from '../../backend/notifications.js';
-import { LabeledInput } from '../menu/modularComponents/labeledInput.js';
-import { ErrorText } from '../menu/modularComponents/errorText.js';
-import { LoadPopup } from '../menu/modularComponents/loadPopup.js';
-import { BoolStateToggler } from '../menu/modularComponents/stateToggler.js';
-import { Space } from '../smart/visuals.js';
 import { navigate } from '../../contexts/rootNavigation.js';
-import { MyButton } from '../smart/myButton.js';
-import { colors } from '../../style.js';
-import background from '../../assets/background/starsBackground.png';
+import background from '../../assets/background/campfireBackground.png';
+import { WelcomeScreenField } from './welcomeScreenField/welcomeScreenField.js';
+import { SignInForm } from './signInForm/signInForm';
 
 //redux imports
-import { useSelector, useDispatch } from 'react-redux';
-import { login, selectUser, loadLocalToken, createUserAndFetchToken, fetchTokenWithCredentials } from '../../redux/userSlice.js';
-import { Popup } from '../smart/popup.js';
+import { useDispatch } from 'react-redux';
+import { login, loadLocalToken } from '../../redux/userSlice.js';
 
-export const LoginScreen = (props) => {
+export const LoginScreen = ({startRoomId}) => {
 
   //redux
   const dispatch = useDispatch();
 
-  //form fields
-  const [userName, setUserName] = useState();
-  const [password, setPassword] = useState();
-  const [repeatPassword, setRepeatPassword] = useState();
-  const [displayName, setDisplayName] = useState();
-  // const [consentChecked, setConsentChecked] = useState(false);
-
   //page display
-  const [loading, setLoading] = useState();
-  const [errorMessage, setErrorMessage] = useState(false);
-  const [signUp, setSignUp] = useState(false);
+  const [showForm, setShowForm] = useState(false);
 
   //login functions
   const tryLoginStart = async () => {
@@ -69,8 +50,8 @@ export const LoginScreen = (props) => {
       return false;
     }
 
-    if (props.startRoomId) {
-      navigate('Game', { roomId: props.startRoomId });
+    if (startRoomId) {
+      navigate('Game', { roomId: startRoomId });
     }
     else {
       navigate('Menu');
@@ -78,125 +59,29 @@ export const LoginScreen = (props) => {
     return true;
 
   }
-  const submitForm = async () => {
-
-    //show load screen
-    setLoading(signUp ? 'Creating new user...' : 'Signing in...');
-
-    //fetch token with signup or signin
-    if (signUp) {
-      //check repeated pw
-      if (password != repeatPassword) {
-        setErrorMessage('passwords does not match');
-        setLoading(false);
-        return;
-      }
-
-      //create push token
-      const pushToken = await registerForPushNotificationsAsync();
-      AsyncStorage.setItem('pushToken', pushToken);
-
-      //create user in backend
-      await dispatch(createUserAndFetchToken({ email: userName, password, displayName, pushToken }));
-      //should get a message here if we fail..
-    }
-    else {
-      const tokenFetchDisp = await dispatch(fetchTokenWithCredentials({ email: userName, password }));
-      //need error handling here! but backend does not return correctly. fix there first...
-      // console.log('token fetch disp: ', tokenFetchDisp);
-      // if(!tokenFetchDisp.payload.ok){
-      //   setErrorMessage(tokenFetchDisp.payload.message);
-      //   setLoading(false);
-      //   return;
-      // }
-    }
-
-    const loggedIn = await tryLogin();
-
-    //failed to login? Show error
-    if (!loggedIn) {
-      if (signUp) setErrorMessage('Failed to create user, please check your credentials'); //have to know why!!!!! backend will say...
-      else setErrorMessage('Failed to login. Please check your credentials'); //have to know why!!! backend will say...
-    }
-
-    //hide load screen
-    setLoading(false);
-
-  }
 
   //update page
   useEffect(() => { tryLoginStart() }, []);
-  useEffect(() => { setErrorMessage(null) }, [userName, password, displayName, signUp])
 
   return (
-
-    <View style={{
+    <ImageBackground source={background} resizeMode='cover' style={{
       flex: 1,
+      justifyContent: "center",
+      alignItems: 'center',
+      padding: 30,
+      textAlign: 'center',
     }}>
-      <ImageBackground source={background} resizeMode='cover' style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: 'center',
-        padding: 30,
-        textAlign: 'center',
-      }}>
-        <Text style={[styles.title, { color: colors.white }]}>Unwritten</Text>
-        {!signUp &&
-          <>
-            <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Welcome to the world of Unwritten!</Text>
-            <Text style={[styles.paragraph, styles.textCenter, { color: colors.white }]}>Here, you can read and take part in the creation of hundreds of stories. The destiny of this place lies in your hands!</Text>
-          </>
-        }
-        {Space(20)}
 
-        <View style={styles.formField}>
-          <Text style={styles.h2}>Sign {signUp ? 'Up' : 'In'}</Text>
+      {!showForm &&
+        <WelcomeScreenField
+          onButtonPress={() => { setShowForm(true); }}
+        />
+      }
 
-          <LabeledInput label={'Username'} onChangeText={text => { setUserName(text) }} />
-          <LabeledInput
-            label={'Password'}
-            onChangeText={text => { setPassword(text) }}
-            secureTextEntry
-            onSubmitEditing={() => {
-              if (!signUp) {
-                submitForm();
-              }
-            }}
-          />
-          {signUp &&
-            <>
-              <LabeledInput
-                label={'Repeat Password'}
-                onChangeText={text => { setRepeatPassword(text) }}
-                secureTextEntry
-              />
-              <LabeledInput
-                label={'Display Name'}
-                onChangeText={text => { setDisplayName(text) }}
-                onSubmitEditing={submitForm}
-              />
-              <Text style={[styles.paragraph]}>
-                *Note! No password reset system has be implemented yet, so please keep track of your credentials
-              </Text>
-            </>
-          }
-          {Space(10)}
-          <MyButton
-            title={'Sign ' + (signUp ? 'Up' : 'In')}
-            onPress={submitForm}
-            disabled={!userName || !password || (signUp && !displayName)}
-          />
+      {showForm &&
+        <SignInForm tryLogin={tryLogin} />
+      }
 
-          <ErrorText message={errorMessage} />
-          <LoadPopup isLoading={loading != null && loading != ''} loadText={loading} />
-          <BoolStateToggler
-            setState={setSignUp}
-            state={signUp}
-            onText='Already have an account? Press here to sign in instead'
-            offText='New to Unwritten? Sign up here'
-          />
-        </View>
-      </ImageBackground >
-    </View >
+    </ImageBackground >
   );
 }

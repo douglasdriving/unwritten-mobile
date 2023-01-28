@@ -4,7 +4,7 @@ import { styles, colors } from "../../style";
 
 export const MyButton = (props) => {
 
-  const { disabled, onPress, color, textColor, flex, title, height } = props;
+  const { disabled, onPress, color, textColor, flex, title, height, width } = props;
 
   const handlePress = () => {
     if (disabled) return;
@@ -22,6 +22,7 @@ export const MyButton = (props) => {
         opacity: disabled ? 0.4 : 1,
         height: height,
         borderRadius: 10,
+        width: width
       }}>
         <Text
           style={[styles.h3, {
