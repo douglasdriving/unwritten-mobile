@@ -1,5 +1,5 @@
 import { StyleSheet, Modal, Button, View, Text } from "react-native";
-import { styles, colors, windowHeight, windowWidth } from "../../style";
+import { styles, colors, windowHeight, windowWidth, colors2 } from "../../style";
 import { CloseButton } from "./closeButton";
 import { MyButton } from "./myButton";
 
@@ -16,7 +16,7 @@ export const Popup = (props) => {
     textColor
   } = props
 
-  const activeTextColor = { color: textColor || colors.white };
+  const activeTextColor = { color: textColor || colors2.night};
 
   const headingStyle = (
     textCenter ?
@@ -42,7 +42,7 @@ export const Popup = (props) => {
     >
       <View style={popupStyles.view}>
         <View style={popupStyles.background} />
-        <View style={[popupStyles.box, , { backgroundColor: backgroundColor || colors.light }]}>
+        <View style={[popupStyles.box, , { backgroundColor: backgroundColor || colors2.light }]}>
           {!loading && <CloseButton handlePress={onClose} />}
           <View style={popupStyles.content}>
 
@@ -64,8 +64,8 @@ export const Popup = (props) => {
                     onPress={button.handlePress}
                     key={button.title}
                     flex
-                    color={colors.fire}
-                    textColor={colors.light}
+                    color={colors2.night}
+                    textColor={colors2.light}
                   />
                 ))}
               </View>

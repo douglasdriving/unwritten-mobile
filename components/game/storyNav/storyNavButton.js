@@ -1,6 +1,6 @@
 import { View, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { colors, styles } from '../../../style';
+import { colors, colors2, styles } from '../../../style';
 
 export const StoryNavButton = (props) => {
 
@@ -22,7 +22,7 @@ export const StoryNavButton = (props) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={styles.storyNavButton} >
-        <Icon name={iconName} size={size} color={colors.dark}/>
+        <Icon name={iconName} size={size} color={colors2.white}/>
       </View>
     </TouchableWithoutFeedback >
   );

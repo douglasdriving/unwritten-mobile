@@ -1,5 +1,5 @@
 import { Text, View, ScrollView } from 'react-native';
-import { styles, textColors, colors } from '../../../../style';
+import { styles, textColors, colors, colors2 } from '../../../../style';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectUserName, logout } from '../../../../redux/userSlice';
 import { MyButton } from '../../../smart/myButton';
@@ -36,7 +36,7 @@ export const Profile = () => {
 
       {Space(20)}
 
-      <MyButton title='Sign Out' onPress={signOut} />
+      <MyButton title='Sign Out' onPress={signOut}/>
 
     </View>
 

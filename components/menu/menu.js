@@ -5,7 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
-import { appDimensions, colors, transparentColors } from "../../style.js";
+import { appDimensions, colors, colors2, transparentColors } from "../../style.js";
 import { FrontPage } from "./screens/frontPage/frontPage.js";
 import { Text, View, ImageBackground } from "react-native";
 import { WelcomePopup } from "./welcomePopup/welcomePopup.js";
@@ -22,12 +22,12 @@ const screenOptions = {
   tabBarStyle: {
     height: 70,
     borderTopWidth: 0,
-    backgroundColor: colors.dark,
+    backgroundColor: colors2.night,
     borderTopWidth: 1
   },
 };
 
-export const Menu = (menuProps) => {
+export const Menu = () => {
 
   const [welcomeOpen, setWelcomeOpen] = useState(true);
 

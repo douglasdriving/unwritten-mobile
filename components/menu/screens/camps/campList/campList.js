@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Text, View } from "react-native"
 import { StoryList } from "../../../modularComponents/storyList/storylist";
-import { colors, styles, textColors } from "../../../../../style";
+import { styles, textColors, textColors2 } from "../../../../../style";
 
 export const CampList = (props) => {
 
@@ -40,11 +40,11 @@ export const CampList = (props) => {
   return (
     <View style={{ marginTop: 15, flex: 1 }}>
 
-      <Text style={[styles.h2, textColors.white]}>{title}</Text>
+      <Text style={[styles.h2, textColors2.white]}>{title}</Text>
 
       {
         (description && roomsExists()) && (
-          <Text style={[styles.paragraph, textColors.white]}>
+          <Text style={[styles.paragraph, textColors2.white]}>
             {description}
           </Text>
         )

@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { Divider, Space } from '../../../smart/visuals.js';
-import { colors, styles } from '../../../../style.js';
+import { colors, colors2, styles } from '../../../../style.js';
 import { useSelector } from 'react-redux';
 import { selectReadOnly, selectTitle, selectDescription, selectPlayerCount, selectAllPlayers } from '../../../../redux/roomSlice.js';
 import { StoryBody } from './storyBody/storyBody.js';
@@ -31,11 +31,11 @@ export const StoryContent = () => {
       {allPlayers.length > 0 &&
         <>
           <Text style={{fontSize: 50, marginBottom: 20}}>🏕️</Text>
-          <Text style={[styles.h1, { color: colors.black}]}>{title}</Text>
-          <Text style={[styles.h3, { color: colors.black}]}>{description}</Text>
+          <Text style={[styles.h1, { color: colors2.white}]}>{title}</Text>
+          <Text style={[styles.h3, { color: colors2.white}]}>{description}</Text>
           {/* <Divider/> */}
           {readOnly &&
-            <Text style={[styles.h3, { color: colors.black }]}>{GenerateAuthorText()}</Text>
+            <Text style={[styles.h3, { color: colors2.white }]}>{GenerateAuthorText()}</Text>
           }
           {Space(10)}
           <StoryBody/>

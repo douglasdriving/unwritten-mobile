@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { colors, transparentColors, appDimensions } from "../../../style";
+import { colors, transparentColors, appDimensions, colors2, transparentColors2 } from "../../../style";
 
 export const NavBarIcon = (props) => {
 
@@ -10,7 +10,7 @@ export const NavBarIcon = (props) => {
       <IconComp
         name={iconName}
         size={iconSize}
-        color={colors.fire}
+        color={colors2.orange}
       />
     )
   }
@@ -19,10 +19,10 @@ export const NavBarIcon = (props) => {
 
     focused ?
       <View style={{
-        backgroundColor: transparentColors.white,
+        backgroundColor: transparentColors2.white,
         borderRadius: appDimensions.borderRadius,
-        width: 40,
-        height: 40,
+        width: 50,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
       }}>

@@ -1,5 +1,5 @@
-import { View } from 'react-native';
-import { styles, colors } from '../../../style.js';
+import { View, StatusBar } from 'react-native';
+import { styles, colors2 } from '../../../style.js';
 import { useState } from 'react';
 import { StoryNavButton } from './storyNavButton.js';
 import { Popup } from '../../smart/popup.js';
@@ -28,6 +28,8 @@ export const StoryNav = (props) => {
   return (
 
     <View style={styles.storyNav}>
+
+      <StatusBar barStyle={colors2.red} backgroundColor={colors2.night}/>
 
       <StoryNavButton type='close' onPress={() => setClosePopupOpen(true)} />
 

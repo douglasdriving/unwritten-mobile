@@ -1,5 +1,5 @@
 import { Text, View, TouchableWithoutFeedback } from 'react-native';
-import { colors, styles } from '../../../../style';
+import { colors2, styles } from '../../../../style';
 import { useState } from 'react';
 import { Popup } from '../../../smart/popup';
 import { JoinRoom } from '../../../../backend/backendCalls';
@@ -118,7 +118,7 @@ export const ListItem = (props) => {
 
       <TouchableWithoutFeedback onPress={Toggle}>
         <View style={{
-          backgroundColor: colors.fire,
+          backgroundColor: colors2.wood,
           width: '100%',
           marginTop: 5,
           padding: 5,
@@ -131,7 +131,7 @@ export const ListItem = (props) => {
             justifyContent: 'space-between',
             width: '100%',
           }}>
-            {title && <Text style={[styles.h3, { color: colors.light }]} numberOfLines={1}>
+            {title && <Text style={[styles.h3, { color: colors2.light }]} numberOfLines={1}>
               {title}
               {alert && '❗'}
             </Text>}

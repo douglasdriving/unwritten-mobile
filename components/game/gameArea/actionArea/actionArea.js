@@ -29,6 +29,7 @@ export const ActionArea = () => {
   return (
     <View>
 
+
       {
         nextPlayer == null ?
           <PlayerSearchField />

@@ -1,4 +1,4 @@
-import { styles, textColors, menyStyles } from "../../../../../style";
+import { styles, textColors, menyStyles, textColors2 } from "../../../../../style";
 import { Text, View, TouchableWithoutFeedback } from "react-native";
 import { GetFeed } from "../../../../../backend/backendCalls";
 import { useEffect, useState } from "react";
@@ -40,19 +40,19 @@ export const Feed = () => {
           }}>
             <View style={menyStyles.feedItem}>
 
-              <Text style={[styles.h3, textColors.white]}>
+              <Text style={[styles.h3, textColors2.night]}>
                 {post.story_title}
               </Text>
 
-              <Text style={[styles.paragraph, textColors.white]}>
+              <Text style={[styles.paragraph, textColors2.moss]}>
                 {post.creator_name}:
               </Text>
 
-              <Text style={[styles.paragraph, textColors.white, styles.italic]}>
+              <Text style={[styles.paragraph, textColors2.moss, styles.italic]}>
                 {ShortenText(post.scenario, 60, '...')}
               </Text>
 
-              <Text style={[styles.paragraph, textColors.white]}>{extractTimestamp(post.created_at)}</Text>
+              <Text style={[styles.paragraph, textColors2.moss]}>{extractTimestamp(post.created_at)}</Text>
 
             </View>
           </TouchableWithoutFeedback>

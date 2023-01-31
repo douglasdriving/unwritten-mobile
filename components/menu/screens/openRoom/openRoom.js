@@ -1,5 +1,5 @@
 import { Text, View, Button, TextInput } from 'react-native';
-import { colors, styles } from '../../../../style';
+import { colors, colors2, styles } from '../../../../style';
 import { useState, useEffect } from 'react';
 import { GetStoryKeys, CreateRoom } from '../../../../backend/backendCalls';
 import { Space } from '../../../smart/visuals';
@@ -64,9 +64,9 @@ export const OpenRoom = () => {
     <View style={{ ...styles.menuPageContainer, justifyContent: 'flex-start', paddingTop: 60 }}>
 
       <Text style={styles.h1}>Start a Camp</Text>
-      <Text style={[styles.paragraph, { color: colors.white }]}>🪵  {storyKeys}</Text>
+      <Text style={[styles.paragraph, { color: colors2.white }]}>🪵  {storyKeys}</Text>
 
-      <Text style={[styles.body, { color: colors.white }]}>
+      <Text style={[styles.body, { color: colors2.white }]}>
         {
           storyKeys > 0 ?
             'Light a fire and open a storytelling camp for others to join' :
@@ -102,8 +102,8 @@ export const OpenRoom = () => {
             title='🪵 Start Story Camp'
             disabled={!FieldsReady()}
             onPress={ToggleTryingToOpen}
-            color={colors.fire}
-            textColor={colors.dark}
+            color={colors2.light}
+            textColor={colors2.night}
           />
         </>
       }

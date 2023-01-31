@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 import { useSelector } from "react-redux";
 import { selectUserName } from "../../../redux/userSlice";
-import { colors, styles, textColors } from "../../../style";
+import { appDimensions, colors, colors2, styles, textColors, textColors2, transparentColors2 } from "../../../style";
 import { TurnTimer } from "../../smart/turnTimer";
 
 export const PlayerRow = (props) => {
@@ -25,24 +25,25 @@ export const PlayerRow = (props) => {
     }}>
       <Text style={{ marginRight: 5, fontSize: 20, padding: 0, margin: 0 }}>🧑</Text>
       <View style={{
-        backgroundColor: colors.dark,
+        backgroundColor: transparentColors2.red,
         padding: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1,
         alignItems: 'center',
+        borderRadius: appDimensions.borderRadius
       }}>
         {props.player &&
           <Text style={
             [styles.paragraph,
             {
               fontWeight: (props.player.name == userName ? 'bold' : 'regular')
-            }, textColors.white]
+            }, textColors2.night]
           }>
             {' ' + props.player.name + ' ' + strikeEmojis()}
           </Text>
         }
-        {props.isNextPlayer && <TurnTimer color={colors.white} />}
+        {props.isNextPlayer && <TurnTimer color={colors2.night} />}
       </View>
     </View>
   );

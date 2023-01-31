@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { TouchableWithoutFeedback, View, Text } from "react-native";
-import { styles, colors } from "../../style";
+import { styles, colors, colors2 } from "../../style";
 
 export const MyButton = (props) => {
 
@@ -14,7 +14,7 @@ export const MyButton = (props) => {
   return (
     <TouchableWithoutFeedback onPress={handlePress}>
       <View style={{
-        backgroundColor: (color || colors.light),
+        backgroundColor: (color || colors2.light),
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
@@ -27,7 +27,7 @@ export const MyButton = (props) => {
         <Text
           style={[styles.h3, {
             textAlign: 'center',
-            color: (textColor || colors.white),
+            color: (textColor || colors2.night),
           }]}
         >
           {title}

@@ -17,7 +17,7 @@ export const Camps = () => {
   return (
     <View style={styles.menuPageContainer}>
 
-      <Text style={styles.h1}>Camps</Text>
+      <Text style={[styles.h1]}>Camps</Text>
 
       <CampList
         title='Kindling'

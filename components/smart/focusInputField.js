@@ -1,5 +1,5 @@
 import { View, Text, TextInput, Keyboard, TouchableWithoutFeedback, Modal } from "react-native";
-import { styles, colors, menyStyles, appDimensions} from "../../style";
+import { styles, colors, menyStyles, appDimensions, textColors2, colors2} from "../../style";
 import { useState, useRef, useEffect } from "react";
 import { MyButton } from "./myButton";
 
@@ -56,7 +56,7 @@ export const FocusInputField = (props) => {
             borderRadius: appDimensions.borderRadius,
           }}
         >
-          <Text style={[styles.body, (!textInput && styles.faded)]}>
+          <Text style={[styles.body, (!textInput && styles.faded), textColors2.moss]}>
             {textInput || props.placeholder}
           </Text>
         </View>
@@ -85,14 +85,14 @@ export const FocusInputField = (props) => {
             borderColor: colors.light,
             borderRadius: appDimensions.borderRadius
           }}>
-            {focused && <Text style={[styles.h3, { color: colors.dark }]}>{props.label}</Text>}
+            {focused && <Text style={[styles.h3, textColors2.moss]}>{props.label}</Text>}
             <TextInput
               style={{
                 flex: 1,
                 textAlignVertical: 'top',
                 padding: 0,
                 fontFamily: 'Body',
-                color: colors.light,
+                color: colors2.moss,
                 placeholder: props.placeholder,
               }}
               // autoFocus
@@ -102,7 +102,7 @@ export const FocusInputField = (props) => {
               ref={innerRef}
               multiline
             />
-            {focused && <MyButton title='Done' onPress={handleDonePress} color={colors.light} />}
+            {focused && <MyButton title='Done' onPress={handleDonePress} color={colors2.wood} textColor={colors2.white}/>}
           </View>
         </Modal>
 

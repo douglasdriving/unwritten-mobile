@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { StoryNav } from './storyNav/storyNav.js';
@@ -11,6 +11,7 @@ import { selectUser } from '../../redux/userSlice.js';
 import { selectAllPlayers, selectReadOnly, selectRoomId } from '../../redux/roomSlice.js';
 import { colors } from '../../style.js';
 import { GameTutorial } from './tutorial/gameTutorial.js';
+import background from '../../assets/background/campfireBackgroundBlurred.png';
 
 export const Game = () => {
 
@@ -80,7 +81,7 @@ export const Game = () => {
   );
 
   return (
-    <View style={{ backgroundColor: colors.fire, height: '100%' }}>
+    <View style={{ height: '100%' }}>
 
       {tutorialOpen && <GameTutorial close={() => setTutorialOpen(false)} />}
       <GameArea />

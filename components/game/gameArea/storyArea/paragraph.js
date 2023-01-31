@@ -1,5 +1,5 @@
 import { Text } from 'react-native';
-import { colors, styles } from '../../../../style';
+import { colors, colors2, styles } from '../../../../style';
 
 export const Paragraph = (props) => {
 
@@ -13,7 +13,7 @@ export const Paragraph = (props) => {
           style={[
             styles.paragraph,
             {
-              color: colors.light,
+              color: colors2.white,
               fontWeight: (isUser ? 'bold' : 'regular'),
             },
           ]}
@@ -24,7 +24,7 @@ export const Paragraph = (props) => {
         <Text style={[
           styles.paragraph,
           {
-            color: colors.light,
+            color: colors2.white,
           },
         ]}
         >

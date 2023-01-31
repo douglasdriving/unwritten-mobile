@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
 import { GetChars, UploadScenario, UploadEnding, GetRandomPrompt } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
-import { colors, gameStyle, styles, textColors } from "../../../../../style";
+import { colors, colors2, gameStyle, styles, textColors, textColors2 } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
 import { selectRoomId, loadRoomData } from "../../../../../redux/roomSlice";
 import { Divider, Space } from "../../../../smart/visuals";
@@ -123,21 +123,21 @@ export const WritingField = (props) => {
           textAlignVertical: 'top',
           fontSize: 16,
           flex: 1,
-          color: colors.light,
+          color: colors2.white,
         }}
         onChangeText={handleChangeText}
         multiline
         autoFocus
       />
 
-      <Divider />
+      <Divider color={colors2.white}/>
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10 }}>
         <MyButton
           title={'Suggestion'}
           onPress={getSuggestions}
-          color={colors.light}
-          textColor={colors.white}
+          color={colors2.light}
+          textColor={colors2.night}
           flex
           disabled={suggestion == '...'}
         />
@@ -146,16 +146,16 @@ export const WritingField = (props) => {
           title={isEnd ? 'Add Ending' : 'Add'}
           disabled={chars.remaining < 0 || scenarioText.length < 1}
           onPress={handleAddButtonPress}
-          color={colors.light}
-          textColor={colors.white}
+          color={colors2.light}
+          textColor={colors2.night}
           flex
         />
-        <CharCounter chars={chars.remaining} color={colors.light} />
+        <CharCounter chars={chars.remaining} color={colors2.white} />
       </View>
 
       {warning && <Text style={{ ...styles.warning }}>{warning}</Text>}
 
-      {suggestion && <Text style={[styles.h3, textColors.light]}>{suggestion}</Text>}
+      {suggestion && <Text style={[styles.h3, textColors2.white]}>{suggestion}</Text>}
 
       {scenarioPostLoading && <Popup
         title={'Adding your text'}

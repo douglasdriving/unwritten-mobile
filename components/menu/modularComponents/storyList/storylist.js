@@ -1,7 +1,7 @@
 import { View, ScrollView, Text, } from 'react-native';
 import { GenerateRandomString } from '../../../../helpers/helpers';
 import { ListItem } from './listItem';
-import { colors, styles, appDimensions, textColors } from '../../../../style';
+import { colors, styles, appDimensions, textColors, colors2, textColors2 } from '../../../../style';
 import { Space } from '../../../smart/visuals';
 
 export const StoryList = (props) => {
@@ -13,19 +13,19 @@ export const StoryList = (props) => {
     <View
       style={[{
         flex: 1,
-        borderWidth: 2,
+        // borderWidth: 2,
         borderRadius: appDimensions.borderRadius,
-        borderColor: colors.white,
+        // borderColor: colors2.white,
         padding: 10,
         paddingTop: 5,
         paddingBottom: 5,
-        backgroundColor: colors.light
+        backgroundColor: colors2.light
       },
       (empty && { justifyContent: 'center' })
       ]}
 
     >
-      {empty && <Text style={[styles.paragraph, textColors.white, styles.textCenter]}>
+      {empty && <Text style={[styles.paragraph, textColors2.night, styles.textCenter]}>
         {alternativeText}
       </Text>}
 

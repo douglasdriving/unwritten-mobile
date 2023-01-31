@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { colors } from "../../../../../style";
+import { colors, colors2 } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
 import { useSelector } from "react-redux";
 import { selectScenarioCount } from "../../../../../redux/roomSlice";
@@ -31,8 +31,8 @@ export const Actions = (props) => {
         title={`Write Continuation${(canEnd && !mustEnd) ? (' (' + turnsUntilMustEnd + ' turns left)') : ''}`}
         onPress={HandleContinue}
         disabled={mustEnd}
-        color={colors.light}
-        textColor={colors.white}
+        // color={colors2.}
+        // textColor={colors.white}
         flex
       />
       <View style={{width: 10}}></View>
@@ -40,8 +40,8 @@ export const Actions = (props) => {
         title={`Write Ending${(!canEnd) ? (' (Available in ' + turnsUntilCanEnd + ' turns)') : ''}`}
         onPress={HandleWriteEnding}
         disabled={!canEnd}
-        color={colors.light}
-        textColor={colors.white}
+        // color={colors.light}
+        // textColor={colors.white}
         flex
       />
     </View>

@@ -1,4 +1,4 @@
-import { styles, textColors, colors, transparentColors } from "../../../../style";
+import { styles, textColors, colors, transparentColors, colors2, textColors2 } from "../../../../style";
 import { ScrollView, Text, View, ImageBackground } from "react-native";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import { Space } from "../../../smart/visuals";
@@ -17,22 +17,22 @@ export const FrontPage = () => {
           <Ionicon
             name="bonfire"
             size={50}
-            color={colors.fire}
+            color={colors2.orange}
           />
-          <Text style={[styles.title, textColors.fire, styles.textCenter]}>Unwritten</Text>
+          <Text style={[styles.title, textColors2.light, styles.textCenter]}>Unwritten</Text>
         </View>
 
-        <Text style={[styles.h3, textColors.white]}>
+        <Text style={[styles.h3, textColors2.white]}>
           Update (24 January 2023)
         </Text>
 
-        <Text style={[styles.paragraph, textColors.white]}>
+        <Text style={[styles.paragraph, textColors2.white]}>
           Unwritten has now been playtested in beta and is moving towards an official
           launch during spring 2023! If you have suggestions for things that should be changed or added,
           please send then to feedback@unwritten.site. Thanks for playing!
         </Text>
 
-        <Text style={[styles.h3, textColors.white]}>
+        <Text style={[styles.h3, textColors2.white]}>
           Recent story additions
         </Text>
 

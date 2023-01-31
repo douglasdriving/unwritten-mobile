@@ -17,6 +17,18 @@ export const colors = {
   green: '#72CA98'
 }
 
+export const colors2 = {
+  black: '#000000',
+  white: '#FFFFFF',
+  night: '#061432',
+  moss: '#06454E',
+  wood: '#B04A2E',
+  red: '#D84710',
+  orange: '#E97A17',
+  yellow: '#FAAD1E',
+  light: '#F5C686'
+}
+
 export const transparentColors = {
   black: '#00000050',
   dark: '#37275550',
@@ -49,6 +61,21 @@ export const textColors = StyleSheet.create({
   },
 
 })
+
+//create text color stylesheet out of colors 2
+const textColorObj = {};
+Object.keys(colors2).forEach(key => {
+  textColorObj[key] = { color: colors2[key] };
+})
+export const textColors2 = StyleSheet.create(textColorObj);
+
+//create transparent color sheet from colors 2
+const transparentColors2temp = {};
+Object.keys(colors2).forEach(key => {
+  transparentColors2temp[key] = colors2[key] + '50';
+})
+export const transparentColors2 = transparentColors2temp;
+
 
 export const styles = StyleSheet.create({
 
@@ -101,7 +128,7 @@ export const styles = StyleSheet.create({
   body: {
     fontSize: 16,
     fontFamily: 'Body',
-    color: colors.light
+    color: colors2.night
   },
 
   bold: {
@@ -164,12 +191,12 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 1,
     width: '100%',
-    paddingTop: 30,
+    // paddingTop: 30,
     paddingLeft: 15,
     paddingRight: 15,
-    backgroundColor: colors.fire,
+    backgroundColor: colors2.night,
     borderBottomWidth: 1,
-    borderBottomColor: colors.light,
+    borderBottomColor: colors2.white,
   },
 
   storyNavButton: {
@@ -184,7 +211,8 @@ export const styles = StyleSheet.create({
   },
 
   roomMenu: {
-    backgroundColor: colors.light,
+    backgroundColor: colors2.light,
+    borderRadius: appDimensions.borderRadius,
     position: 'absolute',
     margin: '5%',
     marginTop: 40,
@@ -242,7 +270,7 @@ export const styles = StyleSheet.create({
 export const menyStyles = StyleSheet.create({
 
   feedItem: {
-    backgroundColor: colors.light,
+    backgroundColor: colors2.light,
     marginBottom: 5,
     padding: 10,
     paddingLeft: 15,
@@ -255,16 +283,15 @@ export const menyStyles = StyleSheet.create({
 export const gameStyle = StyleSheet.create({
 
   gameWindow: {
-    backgroundColor: colors.fire,
+    backgroundColor: transparentColors2.night,
     paddingTop: 120,
     padding: 30,
   },
 
   actionBox: {
     borderWidth: 2,
-    borderColor: colors.light,
+    borderColor: colors2.white,
     borderRadius: appDimensions.borderRadius,
-    // backgroundColor: colors.light,
     padding: 15,
   },
 
