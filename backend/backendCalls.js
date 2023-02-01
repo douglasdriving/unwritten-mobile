@@ -81,6 +81,17 @@ export const signUp = async (email, password, name, pushToken) => {
   return jsonResponse;
 
 }
+export const GetPlayerStats = async (id) => {
+
+  const response = await fetch(`${API_ENDPOINT}/user/stats?userId=${id}`, GetFetch());
+  if (!response.ok) {
+    console.error('failed to fetch user stats from the backend');
+    return null;
+  }
+  const stats = await response.json();
+  return stats;
+
+}
 
 //ROOMS
 export const GetAvailableRooms = async () => {
@@ -226,7 +237,6 @@ export const GetFeed = async () => {
   else return null;
 
 }
-
 export const GetRandomPrompt = async () => {
 
   const response = await fetch(

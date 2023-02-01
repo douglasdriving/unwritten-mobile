@@ -7,6 +7,7 @@ import { navigate } from '../../../../contexts/rootNavigation';
 import { CampList } from '../camps/campList/campList';
 import { GetMyRoomsAsSingleList } from '../../../../backend/backendCalls';
 import { Divider, Space } from '../../../smart/visuals';
+import { PlayerStats } from './playerStats/playerStats';
 
 export const Profile = () => {
 
@@ -22,9 +23,8 @@ export const Profile = () => {
     <View style={styles.menuPageContainer}>
 
       <Text style={[styles.h1, textColors.white]}>{userName}</Text>
-      <Text style={[styles.paragraph, textColors.white]}>Contributions: 46</Text>
-      <Text style={[styles.paragraph, textColors.white]}>Camps: 3</Text>
-      <Text style={[styles.paragraph, textColors.white]}>Finished Stories: 1</Text>
+
+      <PlayerStats />
 
       <CampList
         title='My Camps'
@@ -36,7 +36,7 @@ export const Profile = () => {
 
       {Space(20)}
 
-      <MyButton title='Sign Out' onPress={signOut}/>
+      <MyButton title='Sign Out' onPress={signOut} />
 
     </View>
 
