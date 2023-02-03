@@ -7,7 +7,7 @@ import { GetChars, UploadScenario, UploadEnding, GetRandomPrompt } from "../../.
 import { Popup } from "../../../../smart/popup";
 import { colors, colors2, gameStyle, styles, textColors, textColors2 } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
-import { selectRoomId, loadRoomData } from "../../../../../redux/roomSlice";
+import { selectRoomId, loadRoomData, selectPrompt } from "../../../../../redux/roomSlice";
 import { Divider, Space } from "../../../../smart/visuals";
 import { GetRandomInt } from "../../../../../helpers/helpers";
 
@@ -24,6 +24,7 @@ export const WritingField = (props) => {
   const user = useSelector(selectUser);
   const isEnd = props.isWriting == 'ending';
   const roomId = useSelector(selectRoomId);
+  const prompt = useSelector(selectPrompt);
 
   if (!user) console.error('missing a user in redux store of writingField');
   ;
@@ -69,35 +70,35 @@ export const WritingField = (props) => {
 
   }
 
-  const getSuggestions = async () => {
+  // const getSuggestions = async () => {
 
-    setSuggestion('...');
+  //   setSuggestion('...');
 
-    // const suggestions = [
-    //   'A new character is introduced',
-    //   'Something is sacrificed',
-    //   'The main character gets a great idea',
-    //   'The main character gets a terrible idea',
-    //   'Someone makes a bad mistake',
-    //   'An animal appears',
-    //   'Someone thinks hard',
-    //   'The surroundings are described',
-    //   'A loud noise suddenly breaks in',
-    //   'There is a moment of calm',
-    //   'Someone does something unexpected',
-    //   'A prior question is answered',
-    //   'The character remembers something',
-    //   'A wild pokemon appears',
-    // ]
+  //   // const suggestions = [
+  //   //   'A new character is introduced',
+  //   //   'Something is sacrificed',
+  //   //   'The main character gets a great idea',
+  //   //   'The main character gets a terrible idea',
+  //   //   'Someone makes a bad mistake',
+  //   //   'An animal appears',
+  //   //   'Someone thinks hard',
+  //   //   'The surroundings are described',
+  //   //   'A loud noise suddenly breaks in',
+  //   //   'There is a moment of calm',
+  //   //   'Someone does something unexpected',
+  //   //   'A prior question is answered',
+  //   //   'The character remembers something',
+  //   //   'A wild pokemon appears',
+  //   // ]
 
-    // const random = GetRandomInt(0, suggestions.length - 1);
-    // const pick = suggestions[random];
+  //   // const random = GetRandomInt(0, suggestions.length - 1);
+  //   // const pick = suggestions[random];
 
-    const prompt = await GetRandomPrompt();
+  //   const prompt = await GetRandomPrompt();
 
-    setSuggestion(prompt);
+  //   setSuggestion(prompt);
 
-  }
+  // }
 
   const loadChars = async () => {
 
@@ -118,6 +119,8 @@ export const WritingField = (props) => {
   return (
     <View style={gameStyle.actionBox}>
 
+      <Text style={[styles.h3, textColors2.light]}>{prompt}</Text>
+
       <TextInput
         style={{
           textAlignVertical: 'top',
@@ -130,32 +133,33 @@ export const WritingField = (props) => {
         autoFocus
       />
 
-      <Divider color={colors2.white}/>
+      <Divider color={colors2.white} />
 
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 10 }}>
-        <MyButton
+        {/* <MyButton
           title={'Suggestion'}
           onPress={getSuggestions}
           color={colors2.light}
           textColor={colors2.night}
           flex
           disabled={suggestion == '...'}
-        />
-        <View style={{ width: 10 }} />
+        /> */}
+        {/* <View style={{ width: 10 }} /> */}
         <MyButton
           title={isEnd ? 'Add Ending' : 'Add'}
           disabled={chars.remaining < 0 || scenarioText.length < 1}
           onPress={handleAddButtonPress}
           color={colors2.light}
           textColor={colors2.night}
-          flex
+          width={100}
+        // flex
         />
         <CharCounter chars={chars.remaining} color={colors2.white} />
       </View>
 
       {warning && <Text style={{ ...styles.warning }}>{warning}</Text>}
 
-      {suggestion && <Text style={[styles.h3, textColors2.white]}>{suggestion}</Text>}
+      {/* {suggestion && <Text style={[styles.h3, textColors2.white]}>{suggestion}</Text>} */}
 
       {scenarioPostLoading && <Popup
         title={'Adding your text'}

@@ -15,6 +15,7 @@ const initialState = {
   scenarios: [],
   players: [],
   nextPlayerId: null,
+  prompt: null,
 };
 
 //async reducers
@@ -44,44 +45,44 @@ export const roomSlice = createSlice({
   name: 'room',
   initialState: initialState,
   reducers: {
-    setRoomId: (state, action) => {
-      return {
-        ...state,
-        id: action.payload
-      }
-    },
-    setReadOnlyOn: (state, action) => {
-      return ({
-        ...state,
-        readOnly: true
-      })
-    },
-    setReadOnlyOff: (state, action) => {
-      return ({
-        ...state,
-        readOnly: false
-      })
-    },
-    setStoryContent: (state, action) => {
-      return ({
-        ...state,
-        title: action.payload.title,
-        description: action.payload.description,
-        scenarios: action.payload.scenarios
-      })
-    },
-    setPlayers: (state, action) => {
-      return ({
-        ...state,
-        players: action.payload
-      })
-    },
-    setNextPlayerId: (state, action) => {
-      return ({
-        ...state,
-        nextPlayerId: action.payload
-      })
-    },
+    // setRoomId: (state, action) => {
+    //   return {
+    //     ...state,
+    //     id: action.payload
+    //   }
+    // },
+    // setReadOnlyOn: (state, action) => {
+    //   return ({
+    //     ...state,
+    //     readOnly: true
+    //   })
+    // },
+    // setReadOnlyOff: (state, action) => {
+    //   return ({
+    //     ...state,
+    //     readOnly: false
+    //   })
+    // },
+    // setStoryContent: (state, action) => {
+    //   return ({
+    //     ...state,
+    //     title: action.payload.title,
+    //     description: action.payload.description,
+    //     scenarios: action.payload.scenarios
+    //   })
+    // },
+    // setPlayers: (state, action) => {
+    //   return ({
+    //     ...state,
+    //     players: action.payload
+    //   })
+    // },
+    // setNextPlayerId: (state, action) => {
+    //   return ({
+    //     ...state,
+    //     nextPlayerId: action.payload
+    //   })
+    // },
     resetRoom: () => initialState
   },
   extraReducers: (builder) => {
@@ -97,6 +98,7 @@ export const roomSlice = createSlice({
           scenarios: room.scenarios,
           players: room.players,
           nextPlayerId: room.next_player_id,
+          prompt: room.prompt
         };
       })
   }
@@ -109,6 +111,7 @@ export const selectTitle = state => state.room.title;
 export const selectDescription = state => state.room.description;
 export const selectScenarios = state => state.room.scenarios;
 export const selectScenarioCount = state => state.room.scenarios.length;
+export const selectPrompt = state => state.room.prompt;
 
 //player selectors
 export const selectPlayerCount = state => state.room.players.length;
@@ -125,13 +128,13 @@ export const selectNextPlayer = state => {
 
 //actions
 export const {
-  setReadOnlyOff,
-  setReadOnlyOn,
-  setStoryContent,
-  setPlayers,
-  setNextPlayerId,
+  // setReadOnlyOff,
+  // setReadOnlyOn,
+  // setStoryContent,
+  // setPlayers,
+  // setNextPlayerId,
   resetRoom,
-  setRoomId
+  // setRoomId
 } = roomSlice.actions;
 
 //reducer
