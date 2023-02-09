@@ -103,10 +103,10 @@ export const GetAvailableRooms = async () => {
 }
 export const GetAvailableRoomsAsSingleList = async () => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/available`, GetFetch());
-  const rooms = await response.json();
-  const list = rooms.new.concat(rooms.old);
-  return list;
+  const response = await fetch(`${API_ENDPOINT}/camp/active`, GetFetch());
+  const jsonResponse = await response.json();
+  const camps = jsonResponse.data;
+  return camps;
 
 }
 export const GetMyRooms = async () => {
@@ -131,9 +131,10 @@ export const GetMyRoomsAsSingleList = async () => {
 }
 export const GetFinishedStories = async () => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/archive`, GetFetch());
-  const finishedStories = await response.json();
-  return finishedStories;
+  const response = await fetch(`${API_ENDPOINT}/camp/finished`, GetFetch());
+  const responseJson = await response.json();
+  const camps = responseJson.data;
+  return camps;
 
 }
 export const GetOngoingCamps = async () => {

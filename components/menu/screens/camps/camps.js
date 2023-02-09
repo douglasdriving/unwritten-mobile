@@ -20,6 +20,22 @@ export const Camps = () => {
       <Text style={[styles.h1]}>Camps</Text>
 
       <CampList
+        title='Open'
+        description='Open camps with ongoing stories. Sit down to participate!'
+        roomQuery={GetAvailableRoomsAsSingleList} //change to new route
+        joinButtonText='Enter ->'
+        alternativeText='No open camps are currently available. You can create your own in the next tab.'
+      />
+
+      <CampList
+        title='Closed'
+        description='Closed camps with finished stories. Enter one to read it!'
+        roomQuery={GetFinishedStories} //change to new route
+        joinButtonText='Enter ->'
+        hideIfEmpty
+      />
+
+      {/* <CampList
         title='Kindling'
         description='New camps looking for players to join. Sit down to join the storytelling!'
         confirmJoinRequired={true}
@@ -45,7 +61,7 @@ export const Camps = () => {
         joinButtonText='Read ->'
         alternativeText='No stories have yet been finished in Unwritten'
         hideIfEmpty
-      />
+      /> */}
 
     </View>
   );
