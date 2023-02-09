@@ -229,7 +229,7 @@ export const UploadEnding = async (text, roomId) => {
 export const GetFeed = async () => {
 
   const response = await fetch(
-    `${API_ENDPOINT}/scenario/feed`,
+    `${API_ENDPOINT}/node/feed`,
     GetFetch()
   );
   const jsonResponse = await response.json();
