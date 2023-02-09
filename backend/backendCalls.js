@@ -213,6 +213,16 @@ export const UploadScenario = async (text, campId, end) => {
   return jsonResponse;
 
 }
+export const AddNode = async (campId) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/node?campId=${campId}`,
+    PostFetch()
+  );
+  const jsonResponse = await response.json();
+  return jsonResponse;
+
+}
 export const UploadEnding = async (text, roomId) => {
   const response = await fetch(
     `${API_ENDPOINT}/scenario/?roomId=${roomId}&text=${text}&end=true`,

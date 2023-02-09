@@ -4,7 +4,16 @@ import { styles, colors, colors2 } from "../../style";
 
 export const MyButton = (props) => {
 
-  const { disabled, onPress, color, textColor, flex, title, height, width } = props;
+  const {
+    disabled,
+    onPress,
+    color,
+    textColor,
+    flex,
+    title,
+    height,
+    width
+  } = props;
 
   const handlePress = () => {
     if (disabled) return;

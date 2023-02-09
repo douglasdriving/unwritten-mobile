@@ -1,37 +1,69 @@
-import { View, Text } from "react-native";
-import { styles, textColors, colors, gameStyle, textColors2, colors2 } from "../../../../../style";
+import { Text } from "react-native";
+import { styles, textColors2 } from "../../../../../style";
 import { Space } from "../../../../smart/visuals";
-import { Actions } from "./actions";
-import { TurnTimer } from "../../../../smart/turnTimer";
-import { selectScenarioCount } from "../../../../../redux/roomSlice";
-import { useSelector } from "react-redux";
+import { MyButton } from "../../../../smart/myButton";
+import { useState } from "react";
+import { AddNode } from "../../../../../backend/backendCalls";
+import { loadRoomData, selectRoomId } from "../../../../../redux/roomSlice";
+import { useSelector, useDispatch } from "react-redux";
 
-export const YourTurnField = (props) => {
+export const YourTurnField = () => {
 
-  //wanna be able to select the scenario count
-  const scenarioCount = useSelector(selectScenarioCount);
-  const playerJustJoined = scenarioCount < 4;
+  const [loading, setLoading] = useState(false);
+  const [failedUpload, setFailedUpload] = useState(null);
+  const campId = useSelector(selectRoomId);
+  const dispatch = useDispatch();
+
+  const HandleButtonPress = async () => {
+
+    setLoading(true);
+    const addNodeResponse = await AddNode(campId);
+    if (addNodeResponse.ok) {
+      await dispatch(loadRoomData({ id: campId }));
+    }
+    else {
+      setFailedUpload(addNodeResponse.message);
+    }
+    setLoading(false);
+
+  }
+
+  const ReloadStory = async () => {
+
+    setFailedUpload(false);
+    setLoading(true);
+    await dispatch(loadRoomData({ id: campId }));
+    setLoading(false);
+
+  }
 
   return (
     <>
-      <View style={gameStyle.actionBox}>
-        {Space(5)}
-        <Text style={[styles.h1, textColors2.white]}>
-          {playerJustJoined ?
-            'Wanna join this story?' :
-            'Your turn!'
-          }
+
+      {
+        !loading &&
+        <>
+          <MyButton
+            flex
+            title={failedUpload ? 'Reload Story' : 'Continue Story'}
+            onPress={failedUpload ? ReloadStory : HandleButtonPress}
+          />
+          {Space(5)}
+        </>
+      }
+
+      {!failedUpload &&
+        <Text style={[styles.paragraph, textColors2.light, styles.textCenter]}>
+          {loading ? '...' : 'You will have 20 minutes to add a new paragraph'}
         </Text>
-        <Text style={[styles.paragraph, textColors2.white]}>
-          {playerJustJoined ?
-            'Write a continuation to this story within 30 minutes to participate' :
-            'You got 500 new characters to write with'
-          }
+      }
+
+      {(failedUpload && !loading) &&
+        <Text style={[styles.paragraph, textColors2.red, styles.textCenter]}>
+          {failedUpload}. Please try to reload it.
         </Text>
-        <Actions {...props}/>
-      </View>
-      {Space(20)}
-      <TurnTimer color={colors2.white}/>
+      }
+
     </>
   );
 }

@@ -31,5 +31,10 @@ export const ActionArea = () => {
 
   }
 
-  return <>{PickActionComponent()}</>;
+  return (
+    <>
+      <YourTurnField/>
+      {/* {PickActionComponent()} */}
+    </>
+  );
 }

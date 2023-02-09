@@ -15,6 +15,7 @@ export const TurnTimer = (props) => {
   const lastNode = useSelector(selectLastNode)
   const dispatch = useDispatch();
   const { color, reloadOnZero } = props;
+  const campId = useSelector(selectRoomId);
 
   const loadDeadline = () => {
 
@@ -29,7 +30,7 @@ export const TurnTimer = (props) => {
 
     if (time < 0) {
       time = 0;
-      if (reloadOnZero) dispatch(loadRoomData());
+      if (reloadOnZero) dispatch(loadRoomData({ id: campId }));
     };
 
     setTimeLeft(time);
