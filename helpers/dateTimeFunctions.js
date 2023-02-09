@@ -67,3 +67,11 @@ export function getTimeDifferenceInMinutes(date) {
   var differenceInMinutes = differenceInMilliseconds / 1000 / 60;
   return differenceInMinutes;
 }
+
+export function addMinutes(date, minutes) {
+  const dateObj = new Date(date);
+  var twentyMinutesInMilliseconds = minutes * 60 * 1000;
+  var newDate = new Date(dateObj.getTime() + twentyMinutesInMilliseconds);
+  return newDate;
+}
+

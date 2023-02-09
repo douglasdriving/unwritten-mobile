@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { YourTurnField } from "./yourTurnField/yourTurnField";
 import { WritingField } from "./writingField/writingField";
-import { WaitingActiveWriter } from "./waitingField/waitingField";
+import { WaitingActiveWriter } from "./waitingActiveWriter/waitingActiveWriter";
 import { PlayerSearchField } from "./playerSearchField/playerSearchField";
 import { useSelector } from "react-redux";
 import { selectLastNode } from "../../../../redux/roomSlice";

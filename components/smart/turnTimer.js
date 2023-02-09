@@ -1,34 +1,36 @@
 import { Text } from "react-native";
 import { styles, colors } from "../../style";
-import { TimeToHms } from "../../helpers/dateTimeFunctions";
+import { addMinutes, TimeToHms } from "../../helpers/dateTimeFunctions";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GetRoomDeadline } from "../../backend/backendCalls";
-import { useSelector } from "react-redux";
-import { selectRoomId } from "../../redux/roomSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectLastNode, selectRoomId, loadRoomData } from "../../redux/roomSlice";
 
 export const TurnTimer = (props) => {
 
   const [turnDeadline, setTurnDeadline] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
   const [counterInterval, setCounterInterval] = useState(null);
-  const roomId = useSelector(selectRoomId);
+  const lastNode = useSelector(selectLastNode)
+  const dispatch = useDispatch();
 
-  const loadDeadline = async () => {
+  const loadDeadline = () => {
 
-    if (!roomId) {
-      console.error('no roomId passed down into turn timer props');
-      return;
-    }
-    const deadline = await GetRoomDeadline(roomId);
-    await setTurnDeadline(deadline);
+    const deadline = addMinutes(lastNode.created_at, 20);
+    setTurnDeadline(deadline);
 
   }
 
   const setTime = () => {
 
     let time = new Date(turnDeadline).getTime() - new Date().getTime();
-    if (time < 0) time = 0;
+
+    if (time < 0) {
+      time = 0;
+      dispatch(loadRoomData());
+    };
+
     setTimeLeft(time);
 
   }
@@ -46,11 +48,13 @@ export const TurnTimer = (props) => {
 
   }
 
-  useEffect(() => { loadDeadline(); }, []);
+  useEffect(loadDeadline, [lastNode]);
   useEffect(setupTimer, [turnDeadline]);
 
   return (
-    <Text style={[styles.paragraph, { color: props.color || colors.white }]}>⏳ {TimeToHms(timeLeft)}</Text>
+    <Text style={[styles.paragraph, { color: props.color || colors.white }]}>
+      ⏳ {TimeToHms(timeLeft)}
+    </Text>
   );
 
 }
