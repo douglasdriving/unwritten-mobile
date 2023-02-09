@@ -14,6 +14,7 @@ export const TurnTimer = (props) => {
   const [counterInterval, setCounterInterval] = useState(null);
   const lastNode = useSelector(selectLastNode)
   const dispatch = useDispatch();
+  const { color, reloadOnZero } = props;
 
   const loadDeadline = () => {
 
@@ -28,7 +29,7 @@ export const TurnTimer = (props) => {
 
     if (time < 0) {
       time = 0;
-      dispatch(loadRoomData());
+      if (reloadOnZero) dispatch(loadRoomData());
     };
 
     setTimeLeft(time);
@@ -52,7 +53,7 @@ export const TurnTimer = (props) => {
   useEffect(setupTimer, [turnDeadline]);
 
   return (
-    <Text style={[styles.paragraph, { color: props.color || colors.white }]}>
+    <Text style={[styles.paragraph, { color: color || colors.white }]}>
       ⏳ {TimeToHms(timeLeft)}
     </Text>
   );

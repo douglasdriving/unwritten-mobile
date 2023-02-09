@@ -203,10 +203,15 @@ export const GetRoomDeadline = async (roomId) => {
 }
 
 //SCENARIOS
-export const UploadScenario = async (text, roomId) => {
-  const response = await fetch(`${API_ENDPOINT}/scenario/?roomId=${roomId}&text=${text}`, PostFetch());
+export const UploadScenario = async (text, campId, end) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/node/scenario?campId=${campId}&text=${text}&end=${end}`,
+    PostFetch()
+  );
   const jsonResponse = await response.json();
   return jsonResponse;
+
 }
 export const UploadEnding = async (text, roomId) => {
   const response = await fetch(

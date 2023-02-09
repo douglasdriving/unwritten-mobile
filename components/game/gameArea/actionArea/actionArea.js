@@ -15,7 +15,7 @@ export const ActionArea = () => {
 
   const PickActionComponent = () => {
 
-    const emptyNodeExist = (last.finished_at == null);
+    const emptyNodeExist = (lastNode.finished_at == null);
     const userAddedLastNode = (lastNode.creator_id == userId);
     const createdDate = new Date(lastNode.created_at);
     const diff = getTimeDifferenceInMinutes(createdDate);
@@ -31,7 +31,5 @@ export const ActionArea = () => {
 
   }
 
-  return (
-    <>{PickActionComponent()}</>
-  );
+  return <>{PickActionComponent()}</>;
 }
