@@ -152,26 +152,15 @@ export const CreateRoom = async (title, description, opening) => {
   return jsonResponse;
 
 }
-export const GetRoomData = async (roomId) => {
+export const GetCampData = async (campId) => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/data/${roomId}`, GetFetch());
+  const response = await fetch(`${API_ENDPOINT}/camp/data/${campId}`, GetFetch());
   if (response.ok == false) {
     return false;
   }
-  const room = await response.json();
+  const camp = await response.json();
 
-  // if (room.turn_end) {
-  //   console.log('room returned turn end that is: ', room.turn_end);
-  //   const now = new Date();
-  //   const diff = now.getTimezoneOffset();
-  //   console.log('the diff is: ', diff);
-  //   if (diff != 0) {
-  //     room.turn_end = new Date(new Date(room.turn_end).getTime() - (diff * 60 * 1000));
-  //     console.log('so setting the new turn_end to ', room.turn_end);
-  //   }
-  // }
-
-  return room;
+  return camp;
 
 }
 export const JoinRoom = async (roomId) => {

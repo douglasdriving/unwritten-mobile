@@ -1,56 +1,37 @@
-import { View } from "react-native";
 import { useState } from "react";
 import { YourTurnField } from "./yourTurnField/yourTurnField";
 import { WritingField } from "./writingField/writingField";
-import { WaitingField } from "./waitingField/waitingField";
+import { WaitingActiveWriter } from "./waitingField/waitingField";
 import { PlayerSearchField } from "./playerSearchField/playerSearchField";
 import { useSelector } from "react-redux";
-import { selectUserName } from "../../../../redux/userSlice";
-import { selectNextPlayer } from "../../../../redux/roomSlice";
+import { selectLastNode } from "../../../../redux/roomSlice";
+import { selectUserId } from "../../../../redux/userSlice";
+import { getTimeDifferenceInMinutes } from "../../../../helpers/dateTimeFunctions";
 
 export const ActionArea = () => {
 
-  const [isWriting, setIsWriting] = useState(null);
-  const userName = useSelector(selectUserName);
-  const nextPlayer = useSelector(selectNextPlayer);
+  const userId = useSelector(selectUserId);
+  const lastNode = useSelector(selectLastNode);
 
-  const SetWritingField = type => {
-    setIsWriting(type);
-  }
+  const PickActionComponent = () => {
 
-  const IsPlayersTurn = () => {
+    const emptyNodeExist = (last.finished_at == null);
+    const userAddedLastNode = (lastNode.creator_id == userId);
+    const createdDate = new Date(lastNode.created_at);
+    const diff = getTimeDifferenceInMinutes(createdDate);
+    const addedInLast20 = (diff < 20);
 
-    if (nextPlayer == null) return false;
-    if (!userName) return false;
-    return (nextPlayer.name == userName);
+    if (emptyNodeExist) {
+      if (userAddedLastNode) return <WritingField />;
+      if (addedInLast20) return <WaitingActiveWriter />;
+      return <YourTurnField />
+    }
+    if (userAddedLastNode) return <>{/* A component that shows that you are waiting for someone else to add */}</>
+    return <YourTurnField />
 
   }
 
   return (
-    <View>
-
-      {
-        nextPlayer == null ?
-          <PlayerSearchField />
-          :
-          (
-            IsPlayersTurn() ?
-              (
-                isWriting ?
-                  <WritingField
-                    isWriting={isWriting}
-                    SetWritingField={SetWritingField}
-                  />
-                  :
-                  <YourTurnField
-                    SetWritingField={SetWritingField}
-                  />
-              )
-              :
-              <WaitingField />
-          )
-      }
-
-    </View>
+    <>{PickActionComponent()}</>
   );
 }

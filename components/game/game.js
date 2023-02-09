@@ -17,42 +17,42 @@ export const Game = () => {
 
   //global redux
   const user = useSelector(selectUser);
-  const readOnly = useSelector(selectReadOnly);
+  // const readOnly = useSelector(selectReadOnly);
   const players = useSelector(selectAllPlayers);
-  const roomId = useSelector(selectRoomId);
+  // const roomId = useSelector(selectRoomId);
 
   //Load once
-  const [turnMissed, setTurnMissed] = useState(false);
+  // const [turnMissed, setTurnMissed] = useState(false);
 
   //change during play
   const [menuOpen, setMenuOpen] = useState(false);
   const [tutorialOpen, setTutorialOpen] = useState(true);
 
-  const CheckForNewStrike = async () => {
+  // const CheckForNewStrike = async () => {
 
-    //checks to see if the player has gotten a new strike, and shows a popup if they have
-    if (readOnly) return;
-    if (!players) return;
+  //   //checks to see if the player has gotten a new strike, and shows a popup if they have
+  //   if (readOnly) return;
+  //   if (!players) return;
 
-    const player = players.filter(player => player.id == user.id)[0];
+  //   const player = players.filter(player => player.id == user.id)[0];
 
-    let strikes = 0
-    if (!player || (!player.strikes && player.strikes != 0)) {
-      strikes = 0;
-    }
-    else {
-      strikes = player.strikes;
-    }
+  //   let strikes = 0
+  //   if (!player || (!player.strikes && player.strikes != 0)) {
+  //     strikes = 0;
+  //   }
+  //   else {
+  //     strikes = player.strikes;
+  //   }
 
-    const strikeTrackerKey = String(`strikes ${roomId} ${user.id}`);
-    const seenStrikes = await AsyncStorage.getItem(strikeTrackerKey);
+  //   const strikeTrackerKey = String(`strikes ${roomId} ${user.id}`);
+  //   const seenStrikes = await AsyncStorage.getItem(strikeTrackerKey);
 
-    if (strikes != 0 && parseInt(seenStrikes) < strikes) {
-      AsyncStorage.setItem(strikeTrackerKey, String(strikes));
-      setTurnMissed(true);
-    }
+  //   if (strikes != 0 && parseInt(seenStrikes) < strikes) {
+  //     AsyncStorage.setItem(strikeTrackerKey, String(strikes));
+  //     setTurnMissed(true);
+  //   }
 
-  }
+  // }
   const CheckIfTutorialShouldBeHidden = async () => {
 
     //turn of is player is just spectating
@@ -75,7 +75,7 @@ export const Game = () => {
 
   useFocusEffect(
     useCallback(() => {
-      CheckForNewStrike();
+      // CheckForNewStrike();
       CheckIfTutorialShouldBeHidden();
     }, [])
   );
@@ -90,13 +90,13 @@ export const Game = () => {
         closeMenu={() => setMenuOpen(false)}
         openTutorial={() => setTutorialOpen(true)}
       />}
-      {turnMissed &&
+      {/* {turnMissed &&
         <Popup
           title={'You missed your turn!'}
           text={`If you miss 3 turns you will be kicked from the room.`}
           onClose={() => { setTurnMissed(false); }}
         />
-      }
+      } */}
 
     </View>
   );

@@ -60,3 +60,10 @@ export function getMonthName(n) {
   }
 
 }
+
+export function getTimeDifferenceInMinutes(date) {
+  var currentDate = new Date();
+  var differenceInMilliseconds = currentDate - date;
+  var differenceInMinutes = differenceInMilliseconds / 1000 / 60;
+  return differenceInMinutes;
+}

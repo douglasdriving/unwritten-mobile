@@ -4,7 +4,7 @@ import { TurnTimer } from "../../../../smart/turnTimer";
 import { useSelector } from "react-redux";
 import { selectNextPlayer } from "../../../../../redux/roomSlice";
 
-export const WaitingField = () => {
+export const WaitingActiveWriter = () => {
 
   const nextPlayer = useSelector(selectNextPlayer);
 
