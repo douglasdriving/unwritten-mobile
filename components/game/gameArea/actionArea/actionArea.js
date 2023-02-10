@@ -23,7 +23,8 @@ export const ActionArea = () => {
     }
 
     const emptyNodeExist = (lastNode.finished_at == null);
-    const userAddedLastNode = (lastFinishedScenario.creator_id == userId);
+    const userAddedLastNode = (lastNode.creator_id == userId);
+    const userAddedLastScenario = (lastFinishedScenario.creator_id == userId);
     const addedInLast20 = addedInLastMinutes(lastNode.created_at, 20);
 
     if (emptyNodeExist) {
@@ -31,7 +32,7 @@ export const ActionArea = () => {
       if (addedInLast20) return <WaitingActiveWriter />;
       return <CanWriteField />
     }
-    if (userAddedLastNode) return <WaitingForOtherNodeField />;
+    if (userAddedLastScenario) return <WaitingForOtherNodeField />;
     return <CanWriteField />;
 
   }

@@ -57,7 +57,7 @@ export const roomSlice = createSlice({
 
         let prompt;
         if (room.lastNode.finished_at) prompt = null;
-        else prompt = room.scenarios[room.scenarios.length - 1].prompt;
+        else prompt = room.lastNode.prompt || null;
 
         return {
           id: room.id,
