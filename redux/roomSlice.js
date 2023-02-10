@@ -25,9 +25,7 @@ export const loadRoomData = createAsyncThunk(
   'room/loadRoomData',
   async (arg, thunkAPI) => {
 
-    console.log(arg);
-
-    if (!arg.id) {
+    if (!arg || !arg.id) {
       console.error('no room id passed into load room data thunk');
       return;
     }
