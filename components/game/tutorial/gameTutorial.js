@@ -1,6 +1,6 @@
 import { ScrollView, Text, View, Modal } from 'react-native';
 import { useState } from 'react';
-import { styles, colors } from '../../../style';
+import { styles, colors, appDimensions } from '../../../style';
 import { MyButton } from '../../smart/myButton';
 import { Space } from '../../smart/visuals';
 import CheckBox from 'expo-checkbox';
@@ -50,6 +50,7 @@ export const GameTutorial = (props) => {
         <ScrollView style={{
           padding: 20,
           backgroundColor: colors.white,
+          borderRadius: appDimensions.borderRadius,
           width: '100%'
         }}>
           <Text style={{ fontSize: 50, marginBottom: 10, textAlign: 'center' }}>🏕️</Text>
@@ -60,15 +61,13 @@ export const GameTutorial = (props) => {
             padding: 15,
             marginBottom: 10,
           }}>
-            <Text style={styles.paragraph}>🧑 When 4 players have joined the camp, they will take turns to add to the story</Text>
-            <Text style={styles.paragraph}>⌛ When it’s your turn to write, you have 48 hours to make your contribution</Text>
-            <Text style={styles.paragraph}>❌ If you miss your turn, you will get a strike</Text>
-            <Text style={styles.paragraph}>🚪 If you get 3 strikes, you will automatically leave the camp</Text>
-            <Text style={styles.paragraph}>🔔 You will receive a notification every time it’s your turn (make sure your notifications are turned on!)</Text>
-            <Text style={styles.paragraph}>✍️ After 30 turns, anyone can choose to end the story</Text>
-            <Text style={styles.paragraph}>🛑 At turn 40, the story must be ended!</Text>
+            <Text style={styles.paragraph}>🧑 Any player can add a piece to the story</Text>
+            <Text style={styles.paragraph}>⌛ When a player decides to add something, they get 20 minutes before the story is unlocked for everyone</Text>
+            <Text style={styles.paragraph}>📝 The same player can only add 1 piece at a time</Text>
+            <Text style={styles.paragraph}>✍️ After 30 contributions have been made, anyone can choose to end the story</Text>
+            <Text style={styles.paragraph}>🛑 Contribution number 40 will end the story automatically</Text>
           </View>
-          <Text style={styles.paragraph}>To participate in this camp, write something within the next 30 minutes (otherwise, you will leave the camp automatically).</Text>
+          <Text style={styles.paragraph}>Start by reading what people have written so far. If you want to join the storytelling, feel free to add your own piece to the story!</Text>
           <View style={{
             flexDirection: 'row',
             marginTop: 10,
