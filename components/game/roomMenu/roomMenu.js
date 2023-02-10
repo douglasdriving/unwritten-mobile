@@ -1,5 +1,5 @@
 import { View, Text, Modal, TouchableWithoutFeedback } from "react-native"
-import { colors, colors2, styles, textColors, textColors2 } from "../../../style";
+import { colors2, styles, textColors2 } from "../../../style";
 import { CloseButton } from "../../smart/closeButton";
 import { PlayerList } from "./playerList";
 import { Space } from "../../smart/visuals";
@@ -29,12 +29,12 @@ export const RoomMenu = (props) => {
         <CloseButton handlePress={closeMenu} />
         {Space(20)}
         <View style={{ padding: 15 }}>
-        <Text style={{fontSize: 50, marginBottom: 10, textAlign: 'center'}}>🏕️</Text>
+          <Text style={{ fontSize: 50, marginBottom: 10, textAlign: 'center' }}>🏕️</Text>
           <Text style={[styles.h1, styles.textCenter, textColors2.night]}>{title}</Text>
-          <Text style={[styles.paragraph, { color: colors2.night, textAlign:'center' }]}>🎲  {scenarioCount} / 40 turns taken</Text>
+          <Text style={[styles.paragraph, { color: colors2.night, textAlign: 'center' }]}>📝 Paragraphs: {scenarioCount} / 40</Text>
           <PlayerList />
           {Space(10)}
-          <MyButton title='Instructions' onPress={openTutorial} color={colors2.red} textColor={colors2.white}/>
+          <MyButton title='Instructions' onPress={openTutorial} color={colors2.red} textColor={colors2.white} />
         </View>
       </View>
     </Modal >
