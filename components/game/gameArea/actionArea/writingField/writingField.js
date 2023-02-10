@@ -1,7 +1,7 @@
 import { View, Text, TextInput } from "react-native";
 import { useState } from "react";
 import { CharCounter } from "./charCounter";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
 import { UploadScenario } from "../../../../../backend/backendCalls";
 import { Popup } from "../../../../smart/popup";
@@ -10,17 +10,19 @@ import { MyButton } from "../../../../smart/myButton";
 import { selectRoomId, selectPrompt, selectScenarioCount } from "../../../../../redux/roomSlice";
 import { Divider, Space } from "../../../../smart/visuals";
 import { TurnTimer } from "../../../../smart/turnTimer";
+import { loadRoomData } from "../../../../../redux/roomSlice";
 
 export const WritingField = () => {
 
-  const [scenarioPostLoading, setScenarioPostLoading] = useState(false);
+  const [loadText, setLoadText] = useState(null);
   const [scenarioPostSuccess, setScenarioPostSuccess] = useState(false);
   const [scenarioText, setScenarioText] = useState('');
   const [warning, setWarning] = useState();
   const user = useSelector(selectUser);
-  const roomId = useSelector(selectRoomId);
+  const campId = useSelector(selectRoomId);
   const prompt = useSelector(selectPrompt);
   const scenarioCount = useSelector(selectScenarioCount);
+  const dispatch = useDispatch();
 
   if (!user) console.error('missing a user in redux store of writingField');
 
@@ -35,11 +37,20 @@ export const WritingField = () => {
       return;
     }
 
-    setScenarioPostLoading(true);
-    let scenarioUploadResponse = await UploadScenario(scenarioText, roomId, end);
+    setLoadText(true);
+    let scenarioUploadResponse = await UploadScenario(scenarioText, campId, end);
     if (scenarioUploadResponse.ok) setScenarioPostSuccess(true);
     else setWarning(scenarioUploadResponse.message);
-    setScenarioPostLoading(false);
+    setLoadText(false);
+
+  }
+
+  const handleSuccessPopupClose = async () => {
+
+    setScenarioPostSuccess(false);
+    setLoadText('...');
+    await dispatch(loadRoomData({ id: campId }));
+    setLoadText(null);
 
   }
 
@@ -88,8 +99,8 @@ export const WritingField = () => {
 
       <TurnTimer />
 
-      {scenarioPostLoading && <Popup
-        title={'Adding your text'}
+      {loadText && <Popup
+        title={loadText}
         loading={true}
       />}
 
@@ -98,7 +109,9 @@ export const WritingField = () => {
           title={'🎉🎉🎉'}
           text={'Story Extended Successfully!!!'}
           textCenter
-          textColor={colors.green}
+          textColor={colors2.white}
+          backgroundColor={colors2.moss}
+          onClose={handleSuccessPopupClose}
         />
       }
 
