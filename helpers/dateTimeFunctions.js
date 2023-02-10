@@ -62,8 +62,9 @@ export function getMonthName(n) {
 }
 
 export function getTimeDifferenceInMinutes(date) {
+  const refDate = new Date(date);
   var currentDate = new Date();
-  var differenceInMilliseconds = currentDate - date;
+  var differenceInMilliseconds = currentDate - refDate;
   var differenceInMinutes = differenceInMilliseconds / 1000 / 60;
   return differenceInMinutes;
 }
@@ -73,5 +74,12 @@ export function addMinutes(date, minutes) {
   var twentyMinutesInMilliseconds = minutes * 60 * 1000;
   var newDate = new Date(dateObj.getTime() + twentyMinutesInMilliseconds);
   return newDate;
+}
+
+export function addedInLastMinutes(date, minutes) {
+
+  const diff = getTimeDifferenceInMinutes(date);
+  return (diff < minutes);
+
 }
 
