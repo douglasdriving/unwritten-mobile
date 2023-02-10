@@ -84,6 +84,7 @@ export const selectScenarios = state => state.room.scenarios;
 export const selectScenarioCount = state => state.room.scenarios.length;
 export const selectPrompt = state => state.room.prompt;
 export const selectLastNode = state => state.room.lastNode;
+export const selectLastFinishedScenario = state => state.room.scenarios[state.room.scenarios.length - 1];
 
 //player selectors
 export const selectPlayerCount = state => state.room.players.length;
