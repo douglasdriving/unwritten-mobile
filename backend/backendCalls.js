@@ -125,9 +125,12 @@ export const GetMyRooms = async () => {
 }
 export const GetMyRoomsAsSingleList = async () => {
 
-  const response = await fetch(`${API_ENDPOINT}/room/user`, GetFetch());
-  const rooms = await response.json();
-  return rooms;
+  const response = await fetch(`${API_ENDPOINT}/camp/player`, GetFetch());
+  const responseJson = await response.json();
+  if (responseJson.ok) {
+    return responseJson.data;
+  }
+  else return null;
 }
 export const GetFinishedStories = async () => {
 

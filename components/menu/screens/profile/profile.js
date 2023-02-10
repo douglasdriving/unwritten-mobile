@@ -28,7 +28,6 @@ export const Profile = () => {
 
       <CampList
         title='My Camps'
-        confirmJoinRequired={false}
         roomQuery={GetMyRoomsAsSingleList}
         joinButtonText='Enter ->'
         alternativeText='You are not part of any camps yet. Find one in the camps tab!'
