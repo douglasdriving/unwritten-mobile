@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { YourTurnField } from "./yourTurnField/yourTurnField";
+import { CanWriteField } from "./canWriteField/canWriteField";
 import { WritingField } from "./writingField/writingField";
 import { WaitingActiveWriter } from "./waitingActiveWriter/waitingActiveWriter";
 import { PlayerSearchField } from "./playerSearchField/playerSearchField";
@@ -23,10 +23,10 @@ export const ActionArea = () => {
     if (emptyNodeExist) {
       if (userAddedLastNode) return <WritingField />;
       if (addedInLast20) return <WaitingActiveWriter />;
-      return <YourTurnField />
+      return <CanWriteField />
     }
     if (userAddedLastNode) return <WaitingForOtherNodeField />;
-    return <YourTurnField />;
+    return <CanWriteField />;
 
   }
 

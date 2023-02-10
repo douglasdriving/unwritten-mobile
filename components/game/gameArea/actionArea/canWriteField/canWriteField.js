@@ -7,7 +7,7 @@ import { AddNode } from "../../../../../backend/backendCalls";
 import { loadRoomData, selectRoomId } from "../../../../../redux/roomSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-export const YourTurnField = () => {
+export const CanWriteField = () => {
 
   const [loading, setLoading] = useState(false);
   const [failedUpload, setFailedUpload] = useState(null);
