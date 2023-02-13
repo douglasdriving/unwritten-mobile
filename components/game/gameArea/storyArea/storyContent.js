@@ -30,15 +30,14 @@ export const StoryContent = () => {
     <View>
       {allPlayers.length > 0 &&
         <>
-          <Text style={{fontSize: 50, marginBottom: 20}}>🏕️</Text>
-          <Text style={[styles.h1, { color: colors2.white}]}>{title}</Text>
-          <Text style={[styles.h3, { color: colors2.white}]}>{description}</Text>
-          {/* <Divider/> */}
+          <Text style={{ fontSize: 50, marginBottom: 20 }}>🏕️</Text>
+          <Text style={[styles.h1, { color: colors2.white }]}>{title}</Text>
+          <Text style={[styles.h3, { color: colors2.white, fontSize: 18 }]}>{description}</Text>
           {readOnly &&
             <Text style={[styles.h3, { color: colors2.white }]}>{GenerateAuthorText()}</Text>
           }
           {Space(10)}
-          <StoryBody/>
+          <StoryBody />
         </>
       }
     </View>
