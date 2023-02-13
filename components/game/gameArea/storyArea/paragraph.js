@@ -1,44 +1,37 @@
-import { Text } from 'react-native';
-import { colors, colors2, styles, textColors2 } from '../../../../style';
+import { Text, View } from 'react-native';
+import { appDimensions, colors2, styles, textColors2, transparentColors2 } from '../../../../style';
 
 export const Paragraph = (props) => {
 
-  const { isUser, authorName, scenario } = props;
+  const { authorName, scenario } = props;
 
   return (
-    <>
-      <Text style={{ marginBottom: 3 }}>
+    <View style={{
+      backgroundColor: transparentColors2.light,
+      borderRadius: appDimensions.borderRadius,
+      marginBottom: 15,
+      padding: 10
+    }}>
 
-        <Text
-          style={[
-            styles.paragraph,
-            {
-              color: colors2.orange,
-              fontWeight: (isUser ? 'bold' : 'regular'),
-            },
-          ]}
-        >
-          {`(@${authorName}) `}
-        </Text>
-
-        <Text style={[
-          styles.paragraph,
-          {
-            color: colors2.white,
-          },
-        ]}
-        >
-          {scenario.scenario}
-        </Text>
-
+      <Text style={[styles.paragraph, textColors2.light, { marginBottom: 0, fontSize: 14 }]}>
+        {
+          `(@${authorName}`
+          + (scenario.prompt ? ` - ${scenario.prompt}` : '')
+          + ')'
+        }
       </Text>
 
-      {scenario.prompt &&
-        <Text style={[styles.paragraph, textColors2.light]}>
-          {`(${scenario.prompt})`}
-        </Text>
-      }
-    </>
+      <Text style={[
+        styles.paragraph,
+        {
+          color: colors2.white,
+          fontSize: 18,
+        },
+      ]}
+      >
+        {scenario.scenario}
+      </Text>
 
+    </View>
   );
 }
