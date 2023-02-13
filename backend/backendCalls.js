@@ -263,4 +263,22 @@ export const GetRandomPrompt = async () => {
 
 }
 
+//INFO
+export const GetNews = async () => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/info/news`,
+    GetFetch()
+  );
+
+  if (response.ok) {
+    const jsonResponse = await response.json();
+    if (jsonResponse.ok) return jsonResponse.data;
+    else return null;
+  }
+  else {
+    return null;
+  }
+
+}
 
