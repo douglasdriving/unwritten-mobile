@@ -5,7 +5,9 @@ import { GetUser } from './backendCalls';
 import { navigate, navigateToRoom } from '../contexts/rootNavigation';
 
 import { useDispatch } from 'react-redux';
+import { loadRoomData } from '../redux/roomSlice';
 import { logout } from '../redux/userSlice';
+import reduxStore from '../redux/reduxStore';
 
 export const registerForPushNotificationsAsync = async () => {
 
@@ -58,30 +60,31 @@ export const addNotificationHandler = () => {
 
   Notifications.addNotificationResponseReceivedListener(async res => {
 
+    //get the data
     const { roomId, userId, type } = res.notification.request.content.data;
 
-    if (type == 'kick') return;
-
+    //make sure there is a room id
     if (!roomId) {
-      console.error('no roomId found in the notification data');
-      return;
-    }
-    if (!userId) {
-      console.error('no userId found in the notification data');
+      console.error('no roomId found in the notification data, cant enter camp');
       return;
     }
 
+    //make sure player is logged in
     const authTokenInStorage = await AsyncStorage.getItem('authToken');
-    if (!authTokenInStorage) return;
+    if (!authTokenInStorage) {
+      console.error('no auth token in storage, cant enter a camp from the notification');
+      return
+    };
     const preloggedUser = await GetUser(authTokenInStorage);
-
-    if (preloggedUser.id != userId) {
-      const dispatch = useDispatch();
-      dispatch(logout());
+    if (!preloggedUser) {
+      console.error('no user logged in, cant enter a camp from the notification');
       return;
     }
 
-    navigateToRoom(roomId);
+    //set room and navigate to it
+    await reduxStore.dispatch(loadRoomData({ id: roomId }));
+    await navigateToRoom(roomId);
+
   });
 
 }
