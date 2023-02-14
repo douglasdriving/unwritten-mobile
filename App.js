@@ -1,5 +1,5 @@
 //IMPORTS
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { Menu } from './components/menu/menu';
@@ -16,8 +16,6 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
-  const [startRoomId, setStartRoomId] = useState();
-
   const [fontsLoaded] = useFonts({
     'Title': require('./assets/fonts/LibreBaskerville-Regular.ttf'),
     'Title-Bold': require('./assets/fonts/LibreBaskerville-Bold.ttf'),
@@ -26,9 +24,7 @@ export default function App() {
   });
 
   //app start
-  useEffect(() => {
-    addNotificationHandler();
-  }, []);
+  useEffect(addNotificationHandler, []);
 
   if (!fontsLoaded) {
     return null;
@@ -38,23 +34,10 @@ export default function App() {
     <Provider store={reduxStore}>
       <NavigationContainer ref={navigationRef}>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-
-          <Stack.Screen name="Welcome">
-            {(props) =>
-              <LoginScreen {...props} startRoomId={startRoomId} />
-            }
-          </Stack.Screen>
-
-          <Stack.Screen name="Menu">
-            {(props) => <Menu {...props} />}
-          </Stack.Screen>
-
+          <Stack.Screen name="Welcome" component={LoginScreen} />
+          <Stack.Screen name="Menu" component={Menu} />
           <Stack.Screen name="Join" component={Join} />
-
-          <Stack.Screen name="Game">
-            {(props) => <Game {...props} />}
-          </Stack.Screen>
-
+          <Stack.Screen name="Game" component={Game} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

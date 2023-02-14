@@ -58,6 +58,8 @@ export const registerForPushNotificationsAsync = async () => {
 
 export const addNotificationHandler = () => {
 
+  console.log('added notification handler :)');
+
   Notifications.addNotificationResponseReceivedListener(async res => {
 
     //get the data
