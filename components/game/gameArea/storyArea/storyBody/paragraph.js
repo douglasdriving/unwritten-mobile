@@ -1,9 +1,12 @@
 import { Text, View } from 'react-native';
-import { appDimensions, colors2, styles, textColors2, transparentColors2 } from '../../../../style';
+import { appDimensions, colors2, styles, textColors2, transparentColors2 } from '../../../../../style';
+import { LikeButton } from './likeButton/likeButton';
 
 export const Paragraph = (props) => {
 
   const { authorName, scenario } = props;
+
+  //add the like button here :)
 
   return (
     <View style={{
@@ -31,6 +34,11 @@ export const Paragraph = (props) => {
       >
         {scenario.scenario}
       </Text>
+
+      <LikeButton
+        likes={scenario.likes}
+        nodeId={scenario.node_id}
+      />
 
     </View>
   );

@@ -204,6 +204,27 @@ export const GetRoomDeadline = async (roomId) => {
   return jsonResponse.deadline;
 
 }
+export const Like = async (nodeId) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/node/like?nodeId=${nodeId}`,
+    PostFetch()
+  );
+  const jsonResponse = await response.json();
+  return jsonResponse;
+
+}
+
+export const Dislike = async (nodeId) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/node/dislike?nodeId=${nodeId}`,
+    PostFetch()
+  );
+  const jsonResponse = await response.json();
+  return jsonResponse;
+
+}
 
 //SCENARIOS
 export const UploadScenario = async (text, campId, end) => {

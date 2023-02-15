@@ -2,7 +2,7 @@
 import { useSelector } from 'react-redux';
 import { selectUserId } from '../../../../../redux/userSlice.js';
 import { selectScenarios, selectAllPlayers } from '../../../../../redux/roomSlice.js';
-import { Paragraph } from '../paragraph.js';
+import { Paragraph } from './paragraph.js';
 
 export const StoryBody = () => {
 
