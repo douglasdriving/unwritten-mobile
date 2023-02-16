@@ -58,7 +58,7 @@ export const registerForPushNotificationsAsync = async () => {
 
 export const addNotificationHandler = () => {
 
-  console.log('added notification handler :)');
+  // console.log('added notification handler :)');
 
   Notifications.addNotificationResponseReceivedListener(async res => {
 

@@ -44,6 +44,9 @@
     },
     "plugins": [
       "expo-community-flipper"
-    ]
+    ],
+    "scheme": "mycoolredirect",
+    "currentFullName": "@douglasdriving/unwritten-mobile",
+    "originalFullName": "@douglasdriving/unwritten-mobile"
   }
 }
