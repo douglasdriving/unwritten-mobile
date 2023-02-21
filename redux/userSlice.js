@@ -18,7 +18,7 @@ Selectors:
 */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GetUser, signUp, setAuthToken, signIn, hasToken } from '../backend/backendCalls';
+import { GetUser, signUp, setAuthToken, signIn, hasToken, Login } from '../backend/backendCalls';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loadLocalToken = createAsyncThunk(
@@ -58,7 +58,7 @@ export const login = createAsyncThunk(
       return null;
     };
 
-    const user = await GetUser();
+    const user = await Login();
 
     if (user.id) {
       return user;
@@ -88,6 +88,13 @@ export const userSlice = createSlice({
     token: null,
     loginError: null
   },
+  reducers: {
+    setToken: () => {
+      const token = action.payload;
+      setAuthToken(token);
+      state.token = token;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loadLocalToken.fulfilled, (state, action) => {
@@ -97,7 +104,7 @@ export const userSlice = createSlice({
       .addCase(fetchTokenWithCredentials.fulfilled, (state, action) => {
         setAuthToken(action.payload.token);
         state.token = action.payload.token;
-        if(!action.payload.ok) state.loginError = action.payload.message;
+        if (!action.payload.ok) state.loginError = action.payload.message;
       })
       .addCase(createUserAndFetchToken.fulfilled, (state, action) => {
         setAuthToken(action.payload);
@@ -105,9 +112,9 @@ export const userSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         if (action.payload) {
-          state.name = action.payload.name;
+          state.name = action.payload.displayName;
           state.id = action.payload.id;
-          state.premium = action.payload.premium;
+          // state.premium = action.payload.premium;
         }
       })
       .addCase(logout.fulfilled, (state, action) => {
@@ -117,7 +124,6 @@ export const userSlice = createSlice({
         state.premium = false;
         state.token = null;
       })
-
   }
 });
 
@@ -126,5 +132,10 @@ export const selectUserId = state => state.user.id;
 export const selectUserPremium = state => state.user.premium;
 export const selectUserToken = state => state.user.token;
 export const selectUser = state => state.user;
+
+//actions
+export const {
+  setToken,
+} = roomSlice.actions;
 
 export const userReducer = userSlice.reducer;

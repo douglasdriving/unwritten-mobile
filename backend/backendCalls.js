@@ -42,11 +42,23 @@ const PostFetch = () => {
 }
 
 //USER
+export const Login = async () => {
+
+  const response = await fetch(`${API_ENDPOINT}/user/login`, PostFetch());
+  const jsonResponse = await response.json();
+  if (!jsonResponse.ok) {
+    console.error(jsonResponse.message);
+    return null;
+  }
+  const user = jsonResponse.data.player;
+  return user;
+
+}
 export const GetUser = async () => {
 
   const response = await fetch(`${API_ENDPOINT}/user`, GetFetch());
   if (!response.ok) {
-    console.error('failed to fetch user from the backend');
+    console.error('failed to fetch user from the backend: ', response);
     return null;
   }
   const user = await response.json();
