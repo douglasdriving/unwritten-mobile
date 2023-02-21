@@ -19,7 +19,8 @@ export const AuthButton = () => {
   useEffect(() => {
     if (response?.type === "success") {
       setAccessToken(response.authentication.accessToken);
-      accessToken && fetchUserInfo();
+      // accessToken && setTimeout(fetchUserInfo, 20000);
+      console.log('got auth token: ', accessToken)
     }
   }, [response, accessToken])
 
