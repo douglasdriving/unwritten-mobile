@@ -5,13 +5,14 @@ import { navigate } from '../../contexts/rootNavigation.js';
 import background from '../../assets/background/campfireBackground.png';
 import { WelcomeScreenField } from './welcomeScreenField/welcomeScreenField.js';
 import { SignInForm } from './signInForm/signInForm';
-import { styles, colors, textColors } from '../../style.js';
+import { styles, colors, textColors, textColors2 } from '../../style.js';
 import { Space } from '../smart/visuals.js';
 
 //redux imports
 import { useDispatch } from 'react-redux';
 import { login, loadLocalToken } from '../../redux/userSlice.js';
 import { AuthButton } from './welcomeScreenField/authButton/authButton.js';
+import { UserNameField } from './userNameField/userNameField.js';
 
 export const LoginScreen = ({ startRoomId }) => {
 
@@ -85,13 +86,11 @@ export const LoginScreen = ({ startRoomId }) => {
 
       {loading ?
 
-        <Text>...</Text>
+        <Text style={[styles.paragraph, textColors2.white]}>...</Text>
         :
         <>
           {newPlayer ?
-            <>
-              <Text>Welcome to Unwritten! Start by creating a display name</Text>
-            </>
+            <UserNameField />
             :
             <>
               <Text style={[styles.title, { color: colors.white }]}>Unwritten</Text>

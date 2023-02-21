@@ -263,6 +263,15 @@ export const styles = StyleSheet.create({
   scrollBox: {
     backgroundColor: colors.light,
     padding: 10,
+  },
+
+  darkenedBox: {
+    borderRadius: appDimensions.borderRadius,
+    backgroundColor: transparentColors2.black,
+    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%'
   }
 
 });
