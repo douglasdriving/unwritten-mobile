@@ -54,7 +54,7 @@ export const login = createAsyncThunk(
   async (arg, thunkAPI) => {
 
     if (!hasToken()) {
-      console.error('cant login because there is no token in backend call script');
+      console.log('cant login because there is no token in backend call script');
       return null;
     };
 
@@ -89,7 +89,7 @@ export const userSlice = createSlice({
     loginError: null
   },
   reducers: {
-    setToken: () => {
+    setToken: (state, action) => {
       const token = action.payload;
       setAuthToken(token);
       state.token = token;
@@ -136,6 +136,6 @@ export const selectUser = state => state.user;
 //actions
 export const {
   setToken,
-} = roomSlice.actions;
+} = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

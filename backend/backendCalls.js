@@ -4,7 +4,7 @@ let API_ENDPOINT;
 const isRunningInExpoGo = Constants.appOwnership === 'expo'
 if (isRunningInExpoGo) {
   console.log('app is running in expo go! Setting route to localhost');
-  API_ENDPOINT = "http://localhost:5000";
+  API_ENDPOINT = "http://192.168.1.141:5000";
 }
 else {
   console.log('app is not is expo go, setting route to heroku');

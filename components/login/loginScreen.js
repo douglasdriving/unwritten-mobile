@@ -43,12 +43,13 @@ export const LoginScreen = ({ startRoomId }) => {
   const tryLogin = async () => {
 
     //try using the auth token to login
+    setLoading(true);
     const loginDisp = await dispatch(login());
     const returnedUser = loginDisp.payload;
 
     //check if a user was returned
     if (!returnedUser) {
-      console.error('no user returned in login dispatch. returned payload is: ', loginDisp.payload);
+      console.log('no user returned in login dispatch. returned payload is: ', loginDisp.payload);
       return false;
     }
     if (!returnedUser.id) {
@@ -59,7 +60,6 @@ export const LoginScreen = ({ startRoomId }) => {
     //navigate further depending on situation
     if (!returnedUser.displayName || returnedUser.displayName == "") {
       setNewPlayer(true);
-      setLoading(false);
     }
     else if (startRoomId) {
       navigate('Game', { roomId: startRoomId });
@@ -67,8 +67,8 @@ export const LoginScreen = ({ startRoomId }) => {
     else {
       navigate('Menu');
     }
+    setLoading(false);
     return true;
-
   }
 
   //update page
@@ -83,16 +83,10 @@ export const LoginScreen = ({ startRoomId }) => {
       textAlign: 'center',
     }}>
 
-      {!newPlayer &&
-        <>
-          <Text style={[styles.title, { color: colors.white }]}>Unwritten</Text>
-          <Text style={[styles.paragraph, styles.textCenter, styles.bold, textColors.white]}>Tell stories together</Text>
-        </>
+      {loading ?
 
-      }
-
-      {!loading &&
-
+        <Text>...</Text>
+        :
         <>
           {newPlayer ?
             <>
@@ -100,19 +94,15 @@ export const LoginScreen = ({ startRoomId }) => {
             </>
             :
             <>
+              <Text style={[styles.title, { color: colors.white }]}>Unwritten</Text>
+              <Text style={[styles.paragraph, styles.textCenter, styles.bold, textColors.white]}>Tell stories together</Text>
               {Space(15)}
               <AuthButton tryLogin={tryLogin} />
             </>
           }
-
-          {/* {showForm &&
-        <SignInForm tryLogin={tryLogin} />
-      } */}
-
         </>
+
       }
-
-
 
     </ImageBackground >
   );

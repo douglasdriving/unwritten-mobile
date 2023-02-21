@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import { Button, View, Text, Image } from 'react-native';
-import { colors2 } from '../../../../style';
+import { colors2, styles, textColors2 } from '../../../../style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../../../redux/userSlice';
@@ -13,19 +13,18 @@ WebBrowser.maybeCompleteAuthSession();
 export const AuthButton = ({ tryLogin }) => {
 
   const dispatch = useDispatch();
-  // const [accessToken, setAccessToken] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [error, setError] = useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: '245256210744-45nnlvjt21a0af0r6mr359jrehgqv2sg.apps.googleusercontent.com',
     androidClientId: '245256210744-45nnlvjt21a0af0r6mr359jrehgqv2sg.apps.googleusercontent.com',
   });
 
   const CheckSuccessfulToken = async () => {
-
-    if (response?.type != "success") return;
+    if (response?.type != "success") {
+      return
+    };
 
     const foundToken = response.authentication.accessToken
-    // setAccessToken(response.authentication.accessToken);
     console.log('got google auth token: ', foundToken);
 
     //save it in local storage
@@ -39,15 +38,23 @@ export const AuthButton = ({ tryLogin }) => {
 
   }
 
-  useEffect(() => { CheckSuccessfulToken }, [response])
+  useEffect(() => { CheckSuccessfulToken(); }, [response])
 
   return (
-    <Button
-      disabled={!request}
-      onPress={() => {
-        promptAsync();
-      }}
-      title='sign in with google'
-    />
+    <>
+      <Button
+        disabled={!request}
+        onPress={() => {
+          promptAsync();
+        }}
+        title='sign in with google'
+      />
+      {error &&
+        < Text style={[styles.paragraph, textColors2.red]}>
+          {error}
+        </Text >
+      }
+    </>
+
   );
 }

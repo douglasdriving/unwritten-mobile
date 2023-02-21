@@ -31,7 +31,7 @@ export const PlayerStats = () => {
         Camps: {stats ? stats.camps : '...'}
       </Text>
       <Text style={[styles.paragraph, textColors2.white]}>
-        Finished Stories: {stats ? stats.finished : '...'}
+        Finished Stories: {(stats) ? (stats.finished ? stats.finished : '0') : '...'}
       </Text>
     </>
   )
