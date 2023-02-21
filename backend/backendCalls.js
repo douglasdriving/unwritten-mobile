@@ -1,5 +1,15 @@
-const API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
-//const API_ENDPOINT = "http://localhost:5000";
+import Constants from 'expo-constants'
+
+let API_ENDPOINT;
+const isRunningInExpoGo = Constants.appOwnership === 'expo'
+if (isRunningInExpoGo) {
+  console.log('app is running in expo go! Setting route to localhost');
+  API_ENDPOINT = "http://localhost:5000";
+}
+else {
+  console.log('app is not is expo go, setting route to heroku');
+  API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
+}
 
 //Headers
 let authToken;
