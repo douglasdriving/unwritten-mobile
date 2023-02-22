@@ -4,6 +4,7 @@ import { SetDisplayName } from "../../../backend/backendCalls";
 import { styles, textColors2, transparentColors2 } from "../../../style";
 import { MyButton } from "../../smart/myButton";
 import { navigate } from "../../../contexts/rootNavigation";
+import { registerForPushNotificationsAsync } from "../../../backend/notifications";
 
 export const UserNameField = () => {
 
@@ -19,6 +20,7 @@ export const UserNameField = () => {
       setError(resp.message);
     }
     else {
+      await registerForPushNotificationsAsync();
       navigate('Menu');
     }
     setLoading(false);

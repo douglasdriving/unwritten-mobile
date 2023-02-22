@@ -1,7 +1,7 @@
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GetUser } from './backendCalls';
+import { GetUser, SetExpoToken } from './backendCalls';
 import { navigate, navigateToRoom } from '../contexts/rootNavigation';
 
 import { useDispatch } from 'react-redux';
@@ -26,22 +26,20 @@ export const registerForPushNotificationsAsync = async () => {
   if (existingStatus !== 'granted') {
     const { status } = await Notifications.requestPermissionsAsync();
     finalStatus = status;
+    console.log('notification status requested. status received was: ', status);
   }
 
   //if user still does not allow it, return
   if (finalStatus !== 'granted') {
-    alert(
-      `It is highly recommended to use Unwritten with push notification turned on, as this will allow you to know when it's your turn to write. If you want the intended experience, please turn notifications on in your settings. You can always turn them off later if they annoy you :)`
-    );
+    console.log('user did not grant notification permission');
     return;
   }
 
   // obtain the expo token
-  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  const expoToken = (await Notifications.getExpoPushTokenAsync()).data;
 
-  // log the expo token in order to play with it
-  console.log('Your expo token:');
-  console.log(token);
+  // ++ save token in the backend
+  await SetExpoToken(expoToken);
 
   // some android configuration
   if (Platform.OS === 'android') {
@@ -53,12 +51,13 @@ export const registerForPushNotificationsAsync = async () => {
     });
   }
 
-  return token;
+  return expoToken;
 }
 
 export const addNotificationHandler = () => {
 
-  // console.log('added notification handler :)');
+  // determines what will happen in a player presses a notification
+  // might be broken now?
 
   Notifications.addNotificationResponseReceivedListener(async res => {
 

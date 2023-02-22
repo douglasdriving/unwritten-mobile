@@ -131,6 +131,13 @@ export const SetDisplayName = async (name) => {
   // return jsonResponse;
 
 }
+export const SetExpoToken = async (expoToken) => {
+
+  const response = await PostCall(`user/expoToken?expoToken=${expoToken}`);
+  console.log('expo token call respo: ', response);
+  return response;
+
+}
 
 //idea - put all functionality here?
 const PostCall = async (route) => {
@@ -140,10 +147,7 @@ const PostCall = async (route) => {
     PostFetch()
   );
 
-  // console.log('respo was: ', response);
   const jsonResponse = await response.json();
-  // console.log('json respo was: ', jsonResponse)
-
   return jsonResponse;
 
 }
