@@ -272,6 +272,13 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%'
+  },
+
+  errorText: {
+    fontSize: 16,
+    paddingBottom: 6,
+    fontFamily: 'Body',
+    color: colors.red,
   }
 
 });

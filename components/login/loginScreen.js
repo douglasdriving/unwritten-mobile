@@ -51,10 +51,12 @@ export const LoginScreen = ({ startRoomId }) => {
     //check if a user was returned
     if (!returnedUser) {
       console.log('no user returned in login dispatch. returned payload is: ', loginDisp.payload);
+      setLoading(false);
       return false;
     }
     if (!returnedUser.id) {
       console.error('no id on user returned from login dispatch. returned payload is: ', loginDisp.payload);
+      setLoading(false);
       return false;
     }
 

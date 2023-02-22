@@ -1,20 +1,26 @@
 import { useState } from "react";
 import { TextInput, Text, View } from "react-native";
+import { SetDisplayName } from "../../../backend/backendCalls";
 import { styles, textColors2, transparentColors2 } from "../../../style";
 import { MyButton } from "../../smart/myButton";
+import { navigate } from "../../../contexts/rootNavigation";
 
 export const UserNameField = () => {
 
   const [name, setName] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleButtonPress = async () => {
 
     setLoading(true);
-    //++call backend to set the display name
-    //++wait for return
-    //++if an error is returned - show it
-    //++if not - navigate into the game
+    const resp = await SetDisplayName(name)
+    if (!resp.ok) {
+      setError(resp.message);
+    }
+    else {
+      navigate('Menu');
+    }
     setLoading(false);
 
   }
@@ -25,7 +31,7 @@ export const UserNameField = () => {
 
         {loading ?
 
-          <Text>...</Text>
+          <Text style={[styles.h3, textColors2.white, styles.textCenter]}>...</Text>
 
           :
 
@@ -46,10 +52,17 @@ export const UserNameField = () => {
               placeholderTextColor={transparentColors2.white}
             />
 
+            {(error && error != '') &&
+              <Text style={styles.errorText}>
+                {error}
+              </Text>
+            }
+
             <MyButton
               title='Set display name'
               disabled={!name || name.length < 1}
               width='100%'
+              onPress={handleButtonPress}
             />
           </>
         }

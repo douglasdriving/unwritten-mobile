@@ -3,8 +3,9 @@ import Constants from 'expo-constants'
 let API_ENDPOINT;
 const isRunningInExpoGo = Constants.appOwnership === 'expo'
 if (isRunningInExpoGo) {
-  console.log('app is running in expo go! Setting route to localhost');
-  API_ENDPOINT = "http://192.168.1.141:5000";
+  console.log('app is running in expo go! Setting route to andys');
+  // API_ENDPOINT = "http://192.168.1.141:5000"; // manawa
+  API_ENDPOINT = "http://192.168.0.58:5000"; // andys
 }
 else {
   console.log('app is not is expo go, setting route to heroku');
@@ -47,7 +48,7 @@ export const Login = async () => {
   const response = await fetch(`${API_ENDPOINT}/user/login`, PostFetch());
   const jsonResponse = await response.json();
   if (!jsonResponse.ok) {
-    console.error(jsonResponse.message);
+    console.log(jsonResponse.message);
     return null;
   }
   const user = jsonResponse.data.player;
@@ -112,6 +113,38 @@ export const GetPlayerStats = async (id) => {
   }
   const stats = await response.json();
   return stats;
+
+}
+export const SetDisplayName = async (name) => {
+
+  const response = await PostCall(`user/name?name=${name}`);
+  return response;
+
+  // const response = await fetch(
+  //   `${API_ENDPOINT}/user/name?name=${name}`,
+  //   PostFetch()
+  // );
+
+  // const jsonResponse = await response.json();
+  // jsonResponse.ok = response.ok;
+
+  // return jsonResponse;
+
+}
+
+//idea - put all functionality here?
+const PostCall = async (route) => {
+
+  const response = await fetch(
+    `${API_ENDPOINT}/${route}`,
+    PostFetch()
+  );
+
+  // console.log('respo was: ', response);
+  const jsonResponse = await response.json();
+  // console.log('json respo was: ', jsonResponse)
+
+  return jsonResponse;
 
 }
 
