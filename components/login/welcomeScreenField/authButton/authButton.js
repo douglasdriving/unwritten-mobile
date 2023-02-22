@@ -7,6 +7,7 @@ import { colors2, styles, textColors2 } from '../../../../style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../../../redux/userSlice';
+import { MyButton } from '../../../smart/myButton';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -25,7 +26,6 @@ export const AuthButton = ({ tryLogin }) => {
     };
 
     const foundToken = response.authentication.accessToken
-    console.log('got google auth token: ', foundToken);
 
     //save it in local storage
     await AsyncStorage.setItem('authToken', foundToken);
@@ -42,12 +42,12 @@ export const AuthButton = ({ tryLogin }) => {
 
   return (
     <>
-      <Button
+      <MyButton
         disabled={!request}
         onPress={() => {
           promptAsync();
         }}
-        title='sign in with google'
+        title='Sign in with Google'
       />
       {error &&
         < Text style={[styles.paragraph, textColors2.red]}>
