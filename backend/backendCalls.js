@@ -1,4 +1,6 @@
-import Constants from 'expo-constants'
+import Constants from 'expo-constants';
+// import reduxStore from '../redux/reduxStore';
+// import { navigate } from '../contexts/rootNavigation';
 
 let API_ENDPOINT;
 const isRunningInExpoGo = Constants.appOwnership === 'expo'
@@ -146,6 +148,15 @@ const PostCall = async (route) => {
     `${API_ENDPOINT}/${route}`,
     PostFetch()
   );
+
+  //in case we later want to auto-logout on failed requests
+  // console.log(response);
+  // if (response.status == 403) {
+  //   await reduxStore.dispatch(user('logout'));
+  //   navigate('Welcome');
+  //   console.log('unauthorized! logging out');
+  // }
+
 
   const jsonResponse = await response.json();
   return jsonResponse;

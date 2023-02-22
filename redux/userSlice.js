@@ -118,6 +118,7 @@ export const userSlice = createSlice({
         }
       })
       .addCase(logout.fulfilled, (state, action) => {
+        console.log('user logged out in user slice');
         setAuthToken(null);
         state.name = null;
         state.id = null;
