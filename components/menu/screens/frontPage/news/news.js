@@ -2,7 +2,7 @@ import { styles, textColors2 } from "../../../../../style";
 import { Text } from "react-native";
 import { GetNews } from "../../../../../backend/backendCalls";
 import { useEffect, useState } from "react";
-import { extractTimestamp } from "../../../../../helpers/dateTimeFunctions";
+import { convertGMTToLocalTime, extractTimestamp } from "../../../../../helpers/dateTimeFunctions";
 
 export const News = () => {
 
@@ -34,7 +34,7 @@ export const News = () => {
           </Text>
 
           <Text style={[styles.paragraph, textColors2.light]}>
-            {extractTimestamp(news.created_at)}
+            {extractTimestamp(convertGMTToLocalTime(news.created_at))}
           </Text>
         </>
       }
