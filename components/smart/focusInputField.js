@@ -12,9 +12,9 @@ and when you finish, it streches back down again
 so basically, it changes its own style "onfocus"
 */
 
-export const FocusInputField = (props) => {
+export const FocusInputField = ({text, setText, label, flex, placeholder}) => {
 
-  const [textInput, setTextInput] = useState('');
+  // const [textInput, setTextInput] = useState('');
   const [focused, setFocused] = useState(false);
 
   const innerRef = useRef();
@@ -27,24 +27,27 @@ export const FocusInputField = (props) => {
   })
 
   const handleDonePress = () => {
-    // Keyboard.dismiss();
-    setFocused(false);
-    props.setText(textInput);
+    setFocused(false);    
   }
 
   const handleAreaPress = () => {
+    console.log('pressed on area');
     setFocused(true);
   }
 
-  const handleTextChange = (text) => {
-    setTextInput(text);
+  const handleTextChange = (newText) => {
+    setText(newText);
   }
+  
+  // useEffect(() => {
+  //   console.log(label + ' focus input field has focused set to: ' + focused);
+  // }, [])
 
   return (
     <>
 
       {/* View in form */}
-      {!focused && <Text style={styles.h3}>{props.label}</Text>}
+      {!focused && <Text style={styles.h3}>{label}</Text>}
       <TouchableWithoutFeedback onPress={handleAreaPress}>
         <View
           style={{
@@ -52,12 +55,12 @@ export const FocusInputField = (props) => {
             width: '100%',
             backgroundColor: 'white',
             padding: 5,
-            flex: props.flex,
+            flex: flex,
             borderRadius: appDimensions.borderRadius,
           }}
         >
-          <Text style={[styles.body, (!textInput && styles.faded), textColors2.moss]}>
-            {textInput || props.placeholder}
+          <Text style={[styles.body, (!text && styles.faded), textColors2.moss]}>
+            {text || placeholder}
           </Text>
         </View>
       </TouchableWithoutFeedback>
@@ -85,7 +88,7 @@ export const FocusInputField = (props) => {
             borderColor: colors.light,
             borderRadius: appDimensions.borderRadius
           }}>
-            {focused && <Text style={[styles.h3, textColors2.moss]}>{props.label}</Text>}
+            {focused && <Text style={[styles.h3, textColors2.moss]}>{label}</Text>}
             <TextInput
               style={{
                 flex: 1,
@@ -93,11 +96,11 @@ export const FocusInputField = (props) => {
                 padding: 0,
                 fontFamily: 'Body',
                 color: colors2.moss,
-                placeholder: props.placeholder,
+                placeholder: placeholder,
               }}
               // autoFocus
               onChangeText={handleTextChange}
-              defaultValue={textInput}
+              defaultValue={text}
               onEndEditing={handleDonePress}
               ref={innerRef}
               multiline

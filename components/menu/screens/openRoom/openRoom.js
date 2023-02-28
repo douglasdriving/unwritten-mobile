@@ -1,6 +1,6 @@
 import { Text, View, Button, TextInput } from 'react-native';
 import { colors, colors2, styles } from '../../../../style';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { GetStoryKeys, CreateRoom } from '../../../../backend/backendCalls';
 import { Space } from '../../../smart/visuals';
 import { Popup } from '../../../smart/popup';
@@ -34,20 +34,22 @@ export const OpenRoom = () => {
 
     setOpening(true);
     const response = await CreateRoom(titleInput, descriptionInput, startingScenario);
+
     if (response.ok) {
-      ClearFields();
       await dispatch(loadRoomData({ id: response.campId }));
       navigateToRoom(response.campId);
       ClearFields();
     }
     else {
       setRoomCreateError(response.message);
-      setOpening(false);
     }
+
+    setOpening(false);
 
   }
 
   const LoadStoryKeys = async () => {
+    console.log('loading logs');
     const keys = await GetStoryKeys();
     setStoryKeys(keys);
     return;
@@ -63,7 +65,12 @@ export const OpenRoom = () => {
     setTitleInput('');
   }
 
-  useFocusEffect(() => { LoadStoryKeys() });
+  // useFocusEffect(() => { LoadStoryKeys() }, []);
+  useFocusEffect(
+    useCallback(() => {
+      LoadStoryKeys();
+    }, [])
+  );
   useEffect(() => setRoomCreateError(null), [titleInput, descriptionInput, startingScenario]);
 
   return (
@@ -90,18 +97,21 @@ export const OpenRoom = () => {
             oneLine
             setText={text => { setTitleInput(text) }}
             placeholder={'Name your story'}
+            text={titleInput}
           />
           <FocusInputField
             label='Description'
             setText={text => { setDescriptionInput(text) }}
             placeholder={'Describe the story plot briefly'}
             flex={1}
+            text={descriptionInput}
           />
           <FocusInputField
             label='Opening'
             setText={text => { setStartingScenario(text) }}
             placeholder={'Start off the story with an opening paragraph'}
             flex={1}
+            text={startingScenario}
           />
           {Space(15)}
           <MyButton
