@@ -17,7 +17,7 @@ export const AuthButton = ({ tryLogin }) => {
   const [error, setError] = useState(null);
   const [request, response, promptAsync] = Google.useAuthRequest({
     clientId: '245256210744-45nnlvjt21a0af0r6mr359jrehgqv2sg.apps.googleusercontent.com',
-    androidClientId: '245256210744-45nnlvjt21a0af0r6mr359jrehgqv2sg.apps.googleusercontent.com',
+    androidClientId: '245256210744-8919b5l27h0temhqlko7ls6omfn9euq1.apps.googleusercontent.com',
   });
 
   const CheckSuccessfulToken = async () => {

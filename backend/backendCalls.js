@@ -4,8 +4,9 @@ import Constants from 'expo-constants';
 
 let API_ENDPOINT;
 const isRunningInExpoGo = Constants.appOwnership === 'expo'
-if (isRunningInExpoGo) {
-  console.log('app is running in expo go! Setting route to local IP');
+console.log('is this dev? : ' , __DEV__);
+if (isRunningInExpoGo || __DEV__) {
+  console.log('app is running in expo go or dev! Setting route to local IP');
   API_ENDPOINT = "http://192.168.1.141:5000"; // manawa
   // API_ENDPOINT = "http://192.168.0.58:5000"; // andys
 }

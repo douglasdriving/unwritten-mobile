@@ -1,6 +1,6 @@
 import { ScrollView, Text, View, Modal } from 'react-native';
 import { useState } from 'react';
-import { styles, colors, textColors } from '../../../style';
+import { styles, colors, textColors, colors2, appDimensions, textColors2 } from '../../../style';
 import { MyButton } from '../../smart/myButton';
 import { Space } from '../../smart/visuals';
 import CheckBox from 'expo-checkbox';
@@ -43,26 +43,28 @@ export const WelcomePopup = (props) => {
     >
       <View style={styles.cover} />
       <View style={{
-        flex: 1,
+        // flex: 1,
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
       }}>
         <ScrollView style={{
           padding: 20,
-          backgroundColor: colors.light,
-          width: '100%'
+          backgroundColor: colors2.light,
+          width: '100%',
+          borderRadius: appDimensions.borderRadius,
+          alignSelf: 'center',
         }}>
           <Ionicon
             name="bonfire"
             size={70}
-            color={colors.fire}
+            color={colors2.red}
             style={{ margin: 20, textAlign: 'center' }}
           />
-          <Text style={[styles.paragraph, textColors.white]}>
+          <Text style={[styles.paragraph, textColors2.dark]}>
             Hello and a warm welcome to Unwritten!
           </Text>
-          <Text style={[styles.paragraph, textColors.white]}>
+          <Text style={[styles.paragraph, textColors2.dark]}>
             This is a storytelling place where you sit down at different camps to tell stories with others.
           </Text>
 
@@ -70,10 +72,10 @@ export const WelcomePopup = (props) => {
             <FontAwesome
               name="campground"
               size={25}
-              color={colors.fire}
+              color={colors2.red}
               style={{ width: '15%', textAlign: 'center', textAlignVertical: 'center', marginRight: 5 }}
             />
-            <Text style={[styles.paragraph, textColors.white, { width: '80%' }]}>
+            <Text style={[styles.paragraph, textColors2.dark, { width: '80%' }]}>
               Visit the camp tab to join a camp or listen in on others.
             </Text>
           </View>
@@ -82,19 +84,19 @@ export const WelcomePopup = (props) => {
             <MaterialCommunityIcons
               name="fire"
               size={42}
-              color={colors.fire}
+              color={colors2.red}
               style={{ width: '15%', textAlign: 'center', textAlignVertical: 'center', marginRight: 5 }}
             />
-            <Text style={[styles.paragraph, textColors.white, { width: '80%' }]}>
+            <Text style={[styles.paragraph, textColors2.dark, { width: '80%' }]}>
               To create your own camp and start a new story, visit the kindle tab.
             </Text>
           </View>
 
-          <Text style={[styles.paragraph, textColors.white]}>
+          <Text style={[styles.paragraph, textColors2.dark]}>
             I hope you will enjoy your time here. Good luck!
           </Text>
 
-          <Text style={[styles.paragraph, textColors.white]}>
+          <Text style={[styles.paragraph, textColors2.dark]}>
             /Douglas, creator of Unwritten
           </Text>
 
@@ -110,10 +112,9 @@ export const WelcomePopup = (props) => {
               value={toggleCheckBox}
               onValueChange={v => setToggleCheckBox(v)}
             />
-            <Text style={[styles.paragraph, textColors.white, { width: '80%' }]}>Hide instructions on camp open (You can always find them again in the camp menu)</Text>
+            <Text style={[styles.paragraph, textColors2.dark, { width: '80%' }]}>Hide instructions on camp open (You can always find them again in the camp menu)</Text>
           </View>
-          <MyButton title='Close Intro' onPress={closeTutorial} color={colors.dark}/>
-          {Space(50)}
+          <MyButton title='Close Intro' onPress={closeTutorial} color={colors2.moss} textColor={colors2.light}/>
         </ScrollView>
       </View>
 
