@@ -5,7 +5,7 @@ import Constants from 'expo-constants';
 let API_ENDPOINT;
 const isRunningInExpoGo = Constants.appOwnership === 'expo'
 if (isRunningInExpoGo) {
-  console.log('app is running in expo go! Setting route to andys');
+  console.log('app is running in expo go! Setting route to local IP');
   API_ENDPOINT = "http://192.168.1.141:5000"; // manawa
   // API_ENDPOINT = "http://192.168.0.58:5000"; // andys
 }
@@ -176,6 +176,7 @@ export const GetAvailableRoomsAsSingleList = async () => {
   const response = await fetch(`${API_ENDPOINT}/camp/active`, GetFetch());
   const jsonResponse = await response.json();
   const camps = jsonResponse.data;
+  // console.log('camps count got from available rkooms route: ', camps.length);
   return camps;
 
 }
@@ -198,6 +199,7 @@ export const GetMyRoomsAsSingleList = async () => {
   const response = await fetch(`${API_ENDPOINT}/camp/player`, GetFetch());
   const responseJson = await response.json();
   if (responseJson.ok) {
+    // console.log('got my rooms respo: ', responseJson);
     return responseJson.data;
   }
   else return null;
@@ -220,7 +222,7 @@ export const GetOngoingCamps = async () => {
 export const CreateRoom = async (title, description, opening) => {
 
   const querystring = `title=${title}&description=${description}&scenario=${opening}`
-  const response = await fetch(`${API_ENDPOINT}/room/?${querystring}`, PostFetch());
+  const response = await fetch(`${API_ENDPOINT}/camp/?${querystring}`, PostFetch());
   const jsonResponse = await response.json();
   return jsonResponse;
 

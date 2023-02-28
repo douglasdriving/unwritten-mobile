@@ -9,8 +9,12 @@ import { ErrorText } from '../../modularComponents/errorText';
 import { FocusInputField } from '../../../smart/focusInputField';
 import { navigate, navigateToRoom } from '../../../../contexts/rootNavigation';
 import { MyButton } from '../../../smart/myButton';
+import { useDispatch } from 'react-redux';
+import { loadRoomData } from '../../../../redux/roomSlice';
 
 export const OpenRoom = () => {
+
+  const dispatch = useDispatch();
 
   const [storyKeys, setStoryKeys] = useState();
 
@@ -30,9 +34,11 @@ export const OpenRoom = () => {
 
     setOpening(true);
     const response = await CreateRoom(titleInput, descriptionInput, startingScenario);
-    if (response.success) {
+    if (response.ok) {
       ClearFields();
-      navigateToRoom(response.roomId)
+      await dispatch(loadRoomData({ id: response.campId }));
+      navigateToRoom(response.campId);
+      ClearFields();
     }
     else {
       setRoomCreateError(response.message);

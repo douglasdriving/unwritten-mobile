@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { styles } from '../../../../style';
-import { GetAvailableRoomsAsSingleList, GetOngoingCamps, GetFinishedStories } from '../../../../backend/backendCalls';
+import { GetAvailableRoomsAsSingleList, GetFinishedStories } from '../../../../backend/backendCalls';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../redux/userSlice';
@@ -22,7 +22,7 @@ export const Camps = () => {
       <CampList
         title='Open'
         description='Open camps with ongoing stories. Sit down to participate!'
-        roomQuery={GetAvailableRoomsAsSingleList} //change to new route
+        roomQuery={GetAvailableRoomsAsSingleList}
         joinButtonText='Enter ->'
         alternativeText='No open camps are currently available. You can create your own in the next tab.'
       />
@@ -30,38 +30,10 @@ export const Camps = () => {
       <CampList
         title='Closed'
         description='Closed camps with finished stories. Enter one to read it!'
-        roomQuery={GetFinishedStories} //change to new route
+        roomQuery={GetFinishedStories}
         joinButtonText='Enter ->'
         hideIfEmpty
       />
-
-      {/* <CampList
-        title='Kindling'
-        description='New camps looking for players to join. Sit down to join the storytelling!'
-        confirmJoinRequired={true}
-        roomQuery={GetAvailableRoomsAsSingleList}
-        joinButtonText='Participate ->'
-        alternativeText='No Camps are currently available. You can create your own in the next tab.'
-      />
-
-      <CampList
-        title='Burning'
-        description='Full camps where players are currently telling a story. Sit down to listen!'
-        confirmJoinRequired={false}
-        roomQuery={GetOngoingCamps}
-        joinButtonText='Listen ->'
-        alternativeText='There are no ongoing camps to listen in on right now.'
-      />
-
-      <CampList
-        title='Finished'
-        description='Finished camps with a full story. Sit down to read it'
-        confirmJoinRequired={false}
-        roomQuery={GetFinishedStories}
-        joinButtonText='Read ->'
-        alternativeText='No stories have yet been finished in Unwritten'
-        hideIfEmpty
-      /> */}
 
     </View>
   );
