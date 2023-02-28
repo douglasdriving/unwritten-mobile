@@ -2,7 +2,7 @@ import { styles, textColors, menyStyles, textColors2 } from "../../../../../styl
 import { Text, View, TouchableWithoutFeedback } from "react-native";
 import { GetFeed } from "../../../../../backend/backendCalls";
 import { useEffect, useState } from "react";
-import { extractTimestamp } from "../../../../../helpers/dateTimeFunctions";
+import { convertGMTToLocalTime, extractTimestamp } from "../../../../../helpers/dateTimeFunctions";
 import { navigateToRoom } from "../../../../../contexts/rootNavigation";
 import { useDispatch } from "react-redux";
 import { loadRoomData } from "../../../../../redux/roomSlice";
@@ -52,7 +52,7 @@ export const Feed = () => {
                 {ShortenText(post.scenario, 60, '...')}
               </Text>
 
-              <Text style={[styles.paragraph, textColors2.moss]}>{extractTimestamp(post.finished_at)}</Text>
+              <Text style={[styles.paragraph, textColors2.moss]}>{extractTimestamp(convertGMTToLocalTime(post.finished_at))}</Text>
 
             </View>
           </TouchableWithoutFeedback>
