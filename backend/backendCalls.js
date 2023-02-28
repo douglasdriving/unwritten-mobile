@@ -6,8 +6,8 @@ let API_ENDPOINT;
 const isRunningInExpoGo = Constants.appOwnership === 'expo'
 if (isRunningInExpoGo) {
   console.log('app is running in expo go! Setting route to andys');
-  // API_ENDPOINT = "http://192.168.1.141:5000"; // manawa
-  API_ENDPOINT = "http://192.168.0.58:5000"; // andys
+  API_ENDPOINT = "http://192.168.1.141:5000"; // manawa
+  // API_ENDPOINT = "http://192.168.0.58:5000"; // andys
 }
 else {
   console.log('app is not is expo go, setting route to heroku');

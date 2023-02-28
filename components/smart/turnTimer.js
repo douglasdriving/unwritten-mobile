@@ -1,6 +1,6 @@
 import { Text } from "react-native";
 import { styles, colors } from "../../style";
-import { addMinutes, TimeToHms } from "../../helpers/dateTimeFunctions";
+import { addMinutes, convertGMTToLocalTime, TimeToHms } from "../../helpers/dateTimeFunctions";
 import { useState } from "react";
 import { useEffect } from "react";
 import { GetRoomDeadline } from "../../backend/backendCalls";
@@ -19,13 +19,14 @@ export const TurnTimer = (props) => {
 
   const loadDeadline = () => {
 
-    const deadline = addMinutes(lastNode.created_at, 20);
+    const deadline = convertGMTToLocalTime(addMinutes(lastNode.created_at, 20));
     setTurnDeadline(deadline);
 
   }
 
   const setTime = () => {
 
+    //displays it incorrectly because of timezones
     let time = new Date(turnDeadline).getTime() - new Date().getTime();
 
     if (time < 0) {

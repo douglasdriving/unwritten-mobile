@@ -22,6 +22,8 @@ export const ActionArea = () => {
       return <></>;
     }
 
+    console.log('last node is: ', lastNode);
+
     const emptyNodeExist = (lastNode.finished_at == null);
     const userAddedLastNode = (lastNode.creator_id == userId);
     const userAddedLastScenario = (lastFinishedScenario.creator_id == userId);

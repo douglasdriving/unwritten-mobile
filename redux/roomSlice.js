@@ -6,6 +6,7 @@ used to store info about the current room
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { GetCampData } from '../backend/backendCalls';
+import { convertGMTToLocalTime } from '../helpers/dateTimeFunctions';
 
 const initialState = {
   id: null,
@@ -59,17 +60,21 @@ export const roomSlice = createSlice({
         if (room.lastNode.finished_at) prompt = null;
         else prompt = room.lastNode.prompt || null;
 
+        //adjust to correct timezone
+        // created_at_adjusted = convertGMTToLocalTime(room.created_at);
+        // lastNode_created_at_adjusted = convertGMTToLocalTime(room.lastNode.created_at);
+
         return {
           id: room.id,
           title: room.title,
           description: room.description,
           creator_id: room.creator_id,
           readOnly: room.finished,
-          created_at: room.created_at,
+          created_at: room.created_at, //created_at_adjusted,
           players: room.players,
           scenarios: room.scenarios,
           prompt: prompt,
-          lastNode: room.lastNode,
+          lastNode: room.lastNode, //lastNode_created_at_adjusted
         };
       })
   }

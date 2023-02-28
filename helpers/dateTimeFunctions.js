@@ -39,7 +39,9 @@ export function dateAndTimeString(dateTimeObj) {
 }
 
 export function timeString(dateTimeObj) {
-  return (dateTimeObj.getHours() + ':' + dateTimeObj.getMinutes());
+  const h = dateTimeObj.getHours();
+  const m = dateTimeObj.getMinutes();
+  return (h + ':' + (m < 10 ? '0' : '') + m);
 }
 
 export function getMonthName(n) {
@@ -83,3 +85,9 @@ export function addedInLastMinutes(date, minutes) {
 
 }
 
+export function convertGMTToLocalTime(gmtDate) {
+  const gmtDateObj = new Date(gmtDate);
+  const timezoneOffset = new Date().getTimezoneOffset();
+  const localDate = new Date(gmtDateObj.getTime() - (timezoneOffset * 60000));
+  return localDate;
+}
