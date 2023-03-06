@@ -7,7 +7,7 @@ import { AddNode } from "../../../../../backend/backendCalls";
 import { loadRoomData, selectRoomId } from "../../../../../redux/roomSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-export const CanWriteField = () => {
+export const CanWriteField = ({scrollDown}) => {
 
   const [loading, setLoading] = useState(false);
   const [failedUpload, setFailedUpload] = useState(null);
@@ -25,6 +25,7 @@ export const CanWriteField = () => {
       setFailedUpload(addNodeResponse.message);
     }
     setLoading(false);
+    scrollDown();
 
   }
 
@@ -34,6 +35,7 @@ export const CanWriteField = () => {
     setLoading(true);
     await dispatch(loadRoomData({ id: campId }));
     setLoading(false);
+    scrollDown();
 
   }
 

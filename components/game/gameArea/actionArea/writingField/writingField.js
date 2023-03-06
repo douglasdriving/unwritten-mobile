@@ -12,7 +12,7 @@ import { Divider, Space } from "../../../../smart/visuals";
 import { TurnTimer } from "../../../../smart/turnTimer";
 import { loadRoomData } from "../../../../../redux/roomSlice";
 
-export const WritingField = () => {
+export const WritingField = ({ scrollDown }) => {
 
   const [loadText, setLoadText] = useState(null);
   const [scenarioPostSuccess, setScenarioPostSuccess] = useState(false);
@@ -51,6 +51,7 @@ export const WritingField = () => {
     setLoadText('...');
     await dispatch(loadRoomData({ id: campId }));
     setLoadText(null);
+    scrollDown();
 
   }
 
@@ -66,7 +67,10 @@ export const WritingField = () => {
           flex: 1,
           color: colors2.white,
         }}
-        onChangeText={(text) => { setScenarioText(text); }}
+        onChangeText={(text) => {
+          setScenarioText(text);
+          scrollDown();
+        }}
         multiline
         autoFocus
       />

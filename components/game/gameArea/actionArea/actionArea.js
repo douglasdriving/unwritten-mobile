@@ -9,7 +9,7 @@ import { selectLastFinishedScenario, selectLastNode } from "../../../../redux/ro
 import { selectUserId } from "../../../../redux/userSlice";
 import { addedInLastMinutes } from "../../../../helpers/dateTimeFunctions";
 
-export const ActionArea = () => {
+export const ActionArea = ({ scrollDown }) => {
 
   const userId = useSelector(selectUserId);
   const lastNode = useSelector(selectLastNode);
@@ -22,18 +22,16 @@ export const ActionArea = () => {
       return <></>;
     }
 
-    // console.log('last node is: ', lastNode);
-
     const emptyNodeExist = (lastNode.finished_at == null);
     const userAddedLastNode = (lastNode.creator_id == userId);
     const userAddedLastScenario = (lastFinishedScenario.creator_id == userId);
     const addedInLast20 = addedInLastMinutes(lastNode.created_at, 20);
 
     if (userAddedLastScenario) return <WaitingForOtherNodeField />;
-    if (!emptyNodeExist) return <CanWriteField />;
-    if (userAddedLastNode) return <WritingField />;
+    if (!emptyNodeExist) return <CanWriteField scrollDown={scrollDown} />;
+    if (userAddedLastNode) return <WritingField scrollDown={scrollDown} />;
     if (addedInLast20) return <WaitingActiveWriter />;
-    return <CanWriteField />;
+    return <CanWriteField scrollDown={scrollDown} />;
 
   }
 

@@ -13,17 +13,21 @@ export const GameArea = () => {
   const scrollViewRef = useRef();
   const readOnly = useSelector(selectReadOnly);
 
+  const ScrollDown = () => {
+    scrollViewRef.current.scrollToEnd({ animated: true });
+  }
+
   return (
     <ImageBackground source={background} resizeMode='cover'>
       <ScrollView
         style={gameStyle.gameWindow}
         ref={scrollViewRef}
-        onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+      // onContentSizeChange={ScrollDown}
       >
-        
+
         <StoryContent />
         {Space(15)}
-        {!readOnly && <ActionArea />}
+        {!readOnly && <ActionArea scrollDown={ScrollDown} />}
         {Space(200)}
 
       </ScrollView>

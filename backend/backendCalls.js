@@ -3,17 +3,18 @@ import Constants from 'expo-constants';
 // import { navigate } from '../contexts/rootNavigation';
 
 let API_ENDPOINT;
-const isRunningInExpoGo = Constants.appOwnership === 'expo'
-console.log('is this dev? : ' , __DEV__);
-if (isRunningInExpoGo || __DEV__) {
-  console.log('app is running in expo go or dev! Setting route to local IP');
-  API_ENDPOINT = "http://192.168.1.141:5000"; // manawa
-  // API_ENDPOINT = "http://192.168.0.58:5000"; // andys
-}
-else {
-  console.log('app is not is expo go, setting route to heroku');
-  API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
-}
+API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
+// const isRunningInExpoGo = Constants.appOwnership === 'expo'
+// console.log('is this dev? : ' , __DEV__);
+// if (isRunningInExpoGo || __DEV__) {
+//   console.log('app is running in expo go or dev! Setting route to local IP');
+//   API_ENDPOINT = "http://192.168.1.141:5000"; // manawa
+//   // API_ENDPOINT = "http://192.168.0.58:5000"; // andys
+// }
+// else {
+//   console.log('app is not is expo go, setting route to heroku');
+//   API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
+// }
 
 //Headers
 let authToken;
