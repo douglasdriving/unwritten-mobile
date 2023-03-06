@@ -59,7 +59,7 @@ export const Feed = () => {
                 {ShortenText(post.scenario, 60, '...')}
               </Text>
 
-              <Text style={[styles.paragraph, textColors2.moss]}>{extractTimestamp(convertGMTToLocalTime(post.finished_at))}</Text>
+              <Text style={[styles.paragraph, textColors2.moss]}>{extractTimestamp(post.finished_at)}</Text>
 
             </View>
           </TouchableWithoutFeedback>
