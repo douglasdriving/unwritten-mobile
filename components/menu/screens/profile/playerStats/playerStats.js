@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useState } from "react"
+import { useEffect, useState, useCallback } from "react";
 import { Text } from "react-native"
 import { styles, textColors2 } from "../../../../../style";
 import { GetPlayerStats } from "../../../../../backend/backendCalls";
 import { useSelector } from "react-redux";
 import { selectUserId } from "../../../../../redux/userSlice";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const PlayerStats = () => {
 
@@ -21,6 +21,12 @@ export const PlayerStats = () => {
   }
 
   useEffect(() => { LoadStats(); }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      LoadStats();
+    }, [])
+  );
 
   return (
     <>

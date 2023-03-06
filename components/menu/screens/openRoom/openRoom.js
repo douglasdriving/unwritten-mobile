@@ -65,13 +65,16 @@ export const OpenRoom = () => {
     setTitleInput('');
   }
 
-  // useFocusEffect(() => { LoadStoryKeys() }, []);
   useFocusEffect(
     useCallback(() => {
       LoadStoryKeys();
     }, [])
   );
-  useEffect(() => setRoomCreateError(null), [titleInput, descriptionInput, startingScenario]);
+  useFocusEffect(
+    useCallback(() => {
+      setRoomCreateError(null);
+    }, [titleInput, descriptionInput, startingScenario])
+  );
 
   return (
     <View style={{ ...styles.menuPageContainer, justifyContent: 'flex-start', paddingTop: 60 }}>

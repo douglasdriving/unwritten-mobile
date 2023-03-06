@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useCallback } from "react";
 import { useState } from "react";
 import { Text, View } from "react-native"
 import { StoryList } from "../../../modularComponents/storyList/storylist";
 import { styles, textColors, textColors2 } from "../../../../../style";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const CampList = (props) => {
 
@@ -29,9 +30,11 @@ export const CampList = (props) => {
     return (rooms && rooms.length > 0);
   }
 
-  useEffect(() => {
-    LoadRooms();
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      LoadRooms();
+    }, [])
+  );
 
   if (hideIfEmpty && !roomsExists()) {
     return;

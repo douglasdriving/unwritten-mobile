@@ -1,13 +1,14 @@
 import { styles, textColors, menyStyles, textColors2 } from "../../../../../style";
 import { Text, View, TouchableWithoutFeedback } from "react-native";
 import { GetFeed } from "../../../../../backend/backendCalls";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { convertGMTToLocalTime, extractTimestamp } from "../../../../../helpers/dateTimeFunctions";
 import { navigateToRoom } from "../../../../../contexts/rootNavigation";
 import { useDispatch } from "react-redux";
 import { loadRoomData } from "../../../../../redux/roomSlice";
 import { Popup } from "../../../../smart/popup";
 import { ShortenText } from "../../../../../helpers/helpers";
+import { useFocusEffect } from "@react-navigation/native";
 
 export const Feed = () => {
 
@@ -29,7 +30,13 @@ export const Feed = () => {
     navigateToRoom(roomId);
   }
 
-  useEffect(() => { loadFeed(); }, []);
+  // useEffect(() => { loadFeed(); }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadFeed();
+    }, [])
+  );
 
   return (
     <>
