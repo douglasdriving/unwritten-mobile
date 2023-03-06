@@ -3,8 +3,6 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { navigate } from '../../contexts/rootNavigation.js';
 import background from '../../assets/background/campfireBackground.png';
-import { WelcomeScreenField } from './welcomeScreenField/welcomeScreenField.js';
-import { SignInForm } from './signInForm/signInForm';
 import { styles, colors, textColors, textColors2 } from '../../style.js';
 import { Space } from '../smart/visuals.js';
 
@@ -22,7 +20,6 @@ export const LoginScreen = ({ startRoomId }) => {
   //page display
   const [loading, setLoading] = useState(true);
   const [newPlayer, setNewPlayer] = useState(false);
-  // const [showForm, setShowForm] = useState(false);
 
   //login functions
   const tryLoginStart = async () => {

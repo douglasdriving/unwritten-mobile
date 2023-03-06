@@ -4,12 +4,12 @@
     "slug": "unwritten-mobile",
     "version": "0.1.1",
     "orientation": "portrait",
-    "icon": "./assets/UnwrittenIcon.png",
+    "icon": "./assets/icons/uwIcon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/background/campfireBackground.png",
       "resizeMode": "cover",
-      "backgroundColor": "#4A3C65"
+      "backgroundColor": "#061432"
     },
     "updates": {
       "fallbackToCacheTimeout": 0,
@@ -24,15 +24,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/unwrittenAdaptiveIconColored.png",
-        "monochromeImage": "./assets/unwrittenAdaptiveIcon.png",
-        "backgroundColor": "#4A3C65"
+        "foregroundImage": "./assets/icons/uwIconTransBG.png",
+        "monochromeImage": "./assets/icons/uwIconWhiteTransBG.png",
+        "backgroundColor": "#061432"
       },
       "package": "com.douglasdriving.unwrittenmobile",
       "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/unwrittenFavicon.png"
+      "favicon": "./assets/icons/uwFavicon.png"
     },
     "extra": {
       "eas": {
