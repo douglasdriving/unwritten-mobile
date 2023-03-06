@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { TextInput, Text, View } from "react-native";
 import { SetDisplayName } from "../../../backend/backendCalls";
-import { styles, textColors2, transparentColors2 } from "../../../style";
+import { colors2, styles, textColors2, transparentColors2 } from "../../../style";
 import { MyButton } from "../../smart/myButton";
 import { navigate } from "../../../contexts/rootNavigation";
 import { registerForPushNotificationsAsync } from "../../../backend/notifications";
@@ -55,7 +55,7 @@ export const UserNameField = () => {
             />
 
             {(error && error != '') &&
-              <Text style={styles.errorText}>
+              <Text style={[styles.errorText, styles.textCenter, {backgroundColor: transparentColors2.black, fontWeight: 'bold'}]}>
                 {error}
               </Text>
             }

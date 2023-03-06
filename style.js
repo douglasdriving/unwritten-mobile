@@ -278,7 +278,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     paddingBottom: 6,
     fontFamily: 'Body',
-    color: colors.red,
+    color: colors2.red,
   }
 
 });
