@@ -12,7 +12,7 @@ export const ListItem = (props) => {
   const [open, setOpen] = useState(false);
   const [roomLoading, setRoomLoading] = useState(false);
   const dispatch = useDispatch();
-  const {confirmJoin} = props;
+  const { confirmJoin } = props;
 
   const {
     title,
@@ -34,7 +34,7 @@ export const ListItem = (props) => {
 
   const EnterRoom = async () => {
     setOpen(false);
-    await dispatch(loadRoomData({id: roomId}));
+    await dispatch(loadRoomData({ id: roomId }));
     navigateToRoom(roomId);
   }
 

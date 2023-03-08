@@ -2,6 +2,8 @@ import { StyleSheet, Modal, Button, View, Text } from "react-native";
 import { styles, colors, windowHeight, windowWidth, colors2 } from "../../style";
 import { CloseButton } from "./closeButton";
 import { MyButton } from "./myButton";
+import { Alert } from 'react-native';
+import { useState } from "react";
 
 export const Popup = (props) => {
 
@@ -16,7 +18,9 @@ export const Popup = (props) => {
     textColor
   } = props
 
-  const activeTextColor = { color: textColor || colors2.night};
+  const [modalVisible, setModalVisible] = useState(true);
+
+  const activeTextColor = { color: textColor || colors2.night };
 
   const headingStyle = (
     textCenter ?
@@ -34,10 +38,10 @@ export const Popup = (props) => {
     <Modal
       animationType="none"
       transparent={true}
-      visible={true}
+      visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
-        setModalVisible(!modalVisible);
+        // Alert.alert("Modal has been closed.");
+        setModalVisible(false);
       }}
     >
       <View style={popupStyles.view}>
