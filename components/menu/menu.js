@@ -2,9 +2,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { OpenRoom } from "./screens/openRoom/openRoom.js";
 import { Camps } from "./screens/camps/camps.js";
 import { Profile } from "./screens/profile/profile.js";
+import { Archive } from "./screens/archive/archive.js";
 import { appDimensions, colors, colors2, transparentColors } from "../../style.js";
 import { FrontPage } from "./screens/frontPage/frontPage.js";
 import { Text, View, ImageBackground } from "react-native";
@@ -48,7 +50,7 @@ export const Menu = () => {
 
       <Tab.Navigator screenOptions={screenOptions}>
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name='Front Page'
           options={{
             tabBarIcon: ({ focused }) => (
@@ -62,7 +64,7 @@ export const Menu = () => {
           }}
         >
           {() => (<MenuScreen ScreenComponent={FrontPage} />)}
-        </Tab.Screen>
+        </Tab.Screen> */}
 
         <Tab.Screen
           name='Camps'
@@ -76,7 +78,6 @@ export const Menu = () => {
               />
             )
           }}
-        // component={Camps}
         >
           {() => (<MenuScreen ScreenComponent={Camps} />)}
         </Tab.Screen>
@@ -96,6 +97,22 @@ export const Menu = () => {
         // component={OpenRoom}
         >
           {() => (<MenuScreen ScreenComponent={OpenRoom} />)}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name='Archive'
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <NavBarIcon
+                focused={focused}
+                IconComp={Entypo}
+                iconSize={23}
+                iconName='archive'
+              />
+            )
+          }}
+        >
+          {() => (<MenuScreen ScreenComponent={Archive} />)}
         </Tab.Screen>
 
         <Tab.Screen

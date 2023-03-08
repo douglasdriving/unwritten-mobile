@@ -26,12 +26,12 @@ export const Profile = () => {
 
       <PlayerStats />
 
-      <CampList
+      {/* <CampList
         title='My Camps'
         roomQuery={GetMyRoomsAsSingleList}
         joinButtonText='Enter ->'
         alternativeText='You are not part of any camps yet. Find one in the camps tab!'
-      />
+      /> */}
 
       {Space(20)}
 

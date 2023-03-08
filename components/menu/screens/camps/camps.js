@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
-import { styles } from '../../../../style';
-import { GetAvailableRoomsAsSingleList, GetFinishedStories } from '../../../../backend/backendCalls';
+import { styles, textColors2 } from '../../../../style';
+import { GetAvailableRoomsAsSingleList, GetFinishedStories, GetMyRoomsAsSingleList } from '../../../../backend/backendCalls';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../redux/userSlice';
@@ -19,21 +19,30 @@ export const Camps = () => {
 
       <Text style={[styles.h1]}>Camps</Text>
 
+      <Text style={[styles.paragraph, textColors2.white]}>Enter a camp to participate in the storytelling</Text>
+
       <CampList
-        title='Open'
-        description='Open camps with ongoing stories. Sit down to participate!'
+        title='My Camps'
+        roomQuery={GetMyRoomsAsSingleList}
+        joinButtonText='Enter ->'
+        alternativeText='You are not part of any camps yet. Find one in the camps tab!'
+      />
+
+      <CampList
+        title='Active'
+        // description='Open camps with ongoing stories. Sit down to participate!'
         roomQuery={GetAvailableRoomsAsSingleList}
         joinButtonText='Enter ->'
         alternativeText='No open camps are currently available. You can create your own in the next tab.'
       />
 
-      <CampList
+      {/* <CampList
         title='Closed'
         description='Closed camps with finished stories. Enter one to read it!'
         roomQuery={GetFinishedStories}
         joinButtonText='Enter ->'
         hideIfEmpty
-      />
+      /> */}
 
     </View>
   );

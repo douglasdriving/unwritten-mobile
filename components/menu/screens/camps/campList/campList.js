@@ -43,7 +43,7 @@ export const CampList = (props) => {
   return (
     <View style={{ marginTop: 15, flex: 1 }}>
 
-      <Text style={[styles.h2, textColors2.white]}>{title}</Text>
+      {title && <Text style={[styles.h2, textColors2.white]}>{title}</Text>}
 
       {
         (description && roomsExists()) && (
