@@ -10,7 +10,7 @@ import { loadRoomData } from '../../../../redux/roomSlice';
 export const ListItem = (props) => {
 
   const [open, setOpen] = useState(false);
-  const [roomLoading, setRoomLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { confirmJoin } = props;
 
@@ -27,14 +27,16 @@ export const ListItem = (props) => {
     roomId
   } = props.listItemInfo;
 
-  const Toggle = () => {
+  const HandlePress = () => {
     setOpen(!open);
     return;
   }
 
-  const EnterRoom = async () => {
+  const Enter = async () => {
     setOpen(false);
+    setLoading(true);
     await dispatch(loadRoomData({ id: roomId }));
+    setLoading(false);
     navigateToRoom(roomId);
   }
 
@@ -74,31 +76,12 @@ export const ListItem = (props) => {
 
   }
 
-  const HandleJoinButtonPress = async () => {
-
-    if (confirmJoin) {
-      console.log('joining room');
-      setRoomLoading(true);
-      const success = await JoinRoom(roomId);
-      setRoomLoading(false);
-      if (success) {
-        EnterRoom();
-      }
-      else {
-        console.error('FAILED TO JOIN ROOM. backend returned false');
-      }
-    }
-    else {
-      EnterRoom();
-    }
-  }
-
   return (
     <View>
 
-      {roomLoading &&
+      {loading &&
         <Popup
-          title='Joining Camp...'
+          title={'...'}
           loading={true}
         />
       }
@@ -116,7 +99,7 @@ export const ListItem = (props) => {
         />
       }
 
-      <TouchableWithoutFeedback onPress={Toggle}>
+      <TouchableWithoutFeedback onPress={Enter}>
         <View style={{
           backgroundColor: colors2.wood,
           width: '100%',

@@ -9,7 +9,7 @@ export const StoryContent = () => {
 
   const readOnly = useSelector(selectReadOnly);
   const title = useSelector(selectTitle);
-  const description = useSelector(selectDescription);
+  // const description = useSelector(selectDescription);
   const allPlayers = useSelector(selectAllPlayers);
 
   const GenerateAuthorText = () => {
@@ -32,7 +32,7 @@ export const StoryContent = () => {
         <>
           <Text style={{ fontSize: 50, marginBottom: 20 }}>🏕️</Text>
           <Text style={[styles.h1, { color: colors2.white }]}>{title}</Text>
-          <Text style={[styles.h3, { color: colors2.white, fontSize: 18 }]}>{description}</Text>
+          {/* <Text style={[styles.h3, { color: colors2.white, fontSize: 18 }]}>{description}</Text> */}
           {readOnly &&
             <Text style={[styles.h3, { color: colors2.white }]}>{GenerateAuthorText()}</Text>
           }

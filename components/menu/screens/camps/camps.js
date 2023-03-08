@@ -26,6 +26,7 @@ export const Camps = () => {
         roomQuery={GetMyRoomsAsSingleList}
         joinButtonText='Enter ->'
         alternativeText='You are not part of any camps yet. Find one in the camps tab!'
+        confirmJoinRequired={false}
       />
 
       <CampList
@@ -34,6 +35,7 @@ export const Camps = () => {
         roomQuery={GetAvailableRoomsAsSingleList}
         joinButtonText='Enter ->'
         alternativeText='No open camps are currently available. You can create your own in the next tab.'
+        confirmJoinRequired={false}
       />
 
       {/* <CampList
