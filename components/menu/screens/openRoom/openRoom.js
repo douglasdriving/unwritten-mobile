@@ -19,7 +19,7 @@ export const OpenRoom = () => {
   const [storyKeys, setStoryKeys] = useState();
 
   const [titleInput, setTitleInput] = useState();
-  const [descriptionInput, setDescriptionInput] = useState();
+  // const [descriptionInput, setDescriptionInput] = useState();
   const [startingScenario, setStartingScenario] = useState();
 
   const [tryingToOpen, setTryingToOpen] = useState(false);
@@ -33,7 +33,8 @@ export const OpenRoom = () => {
   const StartOpening = async () => {
 
     setOpening(true);
-    const response = await CreateRoom(titleInput, descriptionInput, startingScenario);
+    // const response = await CreateRoom(titleInput, descriptionInput, startingScenario);
+    const response = await CreateRoom(titleInput, startingScenario);
 
     if (response.ok) {
       await dispatch(loadRoomData({ id: response.campId }));
@@ -56,11 +57,12 @@ export const OpenRoom = () => {
   }
 
   const FieldsReady = () => {
-    return (titleInput && descriptionInput && startingScenario);
+    // return (titleInput && descriptionInput && startingScenario);
+    return (titleInput && startingScenario);
   }
 
   const ClearFields = () => {
-    setDescriptionInput('');
+    // setDescriptionInput('');
     setStartingScenario('');
     setTitleInput('');
   }
@@ -73,7 +75,7 @@ export const OpenRoom = () => {
   useFocusEffect(
     useCallback(() => {
       setRoomCreateError(null);
-    }, [titleInput, descriptionInput, startingScenario])
+    }, [titleInput, startingScenario])
   );
 
   return (
@@ -102,13 +104,13 @@ export const OpenRoom = () => {
             placeholder={'Name your story'}
             text={titleInput}
           />
-          <FocusInputField
+          {/* <FocusInputField
             label='Description'
             setText={text => { setDescriptionInput(text) }}
             placeholder={'Describe the story plot briefly'}
             flex={1}
             text={descriptionInput}
-          />
+          /> */}
           <FocusInputField
             label='Opening'
             setText={text => { setStartingScenario(text) }}

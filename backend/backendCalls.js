@@ -221,9 +221,10 @@ export const GetOngoingCamps = async () => {
   return camps;
 
 }
-export const CreateRoom = async (title, description, opening) => {
+export const CreateRoom = async (title, /*description,*/ opening) => {
 
-  const querystring = `title=${title}&description=${description}&scenario=${opening}`
+  // const querystring = `title=${title}&description=${description}&scenario=${opening}`
+  const querystring = `title=${title}&scenario=${opening}`
   const response = await fetch(`${API_ENDPOINT}/camp/?${querystring}`, PostFetch());
   const jsonResponse = await response.json();
   return jsonResponse;

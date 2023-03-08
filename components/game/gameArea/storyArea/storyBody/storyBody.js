@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { selectUserId } from '../../../../../redux/userSlice.js';
 import { selectScenarios, selectAllPlayers } from '../../../../../redux/roomSlice.js';
 import { Paragraph } from './paragraph.js';
+import { useEffect } from 'react';
 
 export const StoryBody = () => {
 
@@ -22,6 +23,8 @@ export const StoryBody = () => {
     return name;
 
   }
+
+  useEffect(() => {console.log(scenarios)}, []);
 
   return (
     <>
