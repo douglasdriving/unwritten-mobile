@@ -15,7 +15,7 @@ export const Archive = () => {
   })
 
   return (
-    <View style={styles.menuPageContainer}>
+    <>
 
       <Text style={[styles.h1]}>Archive</Text>
 
@@ -29,6 +29,6 @@ export const Archive = () => {
         alternativeText='Seems like there are still no finished stories in Unwritten. Help make the first one!'
       />
 
-    </View>
+    </>
   );
 }

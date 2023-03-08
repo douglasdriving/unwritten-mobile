@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavBarIcon } from "./navBarIcon/navBarIcon.js";
 import { MenuScreen } from "./screens/menuScreen.js";
+import { InfoPage } from "./screens/info/info.js";
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -130,6 +131,23 @@ export const Menu = () => {
         // component={Profile}
         >
           {() => (<MenuScreen ScreenComponent={Profile} />)}
+        </Tab.Screen>
+
+        <Tab.Screen
+          name='Info'
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <NavBarIcon
+                focused={focused}
+                IconComp={Ionicon}
+                iconSize={30}
+                iconName='information-circle'
+              />
+            )
+          }}
+        // component={Profile}
+        >
+          {() => (<MenuScreen ScreenComponent={InfoPage} />)}
         </Tab.Screen>
 
       </Tab.Navigator>

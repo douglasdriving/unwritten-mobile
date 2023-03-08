@@ -77,7 +77,7 @@ export const OpenRoom = () => {
   );
 
   return (
-    <View style={{ ...styles.menuPageContainer, justifyContent: 'flex-start', paddingTop: 60 }}>
+    <>
 
       <Text style={styles.h1}>Start a Camp</Text>
       <Text style={[styles.paragraph, { color: colors2.white }]}>🪵  {storyKeys}</Text>
@@ -146,7 +146,7 @@ export const OpenRoom = () => {
         loading={true}
       />}
 
-    </View>
+    </>
 
   );
 

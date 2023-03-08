@@ -1,5 +1,6 @@
-import { ImageBackground } from "react-native";
+import { ImageBackground, View } from "react-native";
 import background from '../../../assets/background/campfireBackgroundBlurred.png';
+import { styles } from "../../../style";
 
 export const MenuScreen = ({ ScreenComponent }) => {
 
@@ -7,7 +8,9 @@ export const MenuScreen = ({ ScreenComponent }) => {
     <ImageBackground source={background} resizeMode='cover' style={{
       flex: 1
     }}>
-      <ScreenComponent />
+      <View style={styles.menuPageContainer}>
+        <ScreenComponent />
+      </View>
     </ImageBackground>
   );
 

@@ -20,7 +20,7 @@ export const Profile = () => {
   }
 
   return (
-    <View style={styles.menuPageContainer}>
+    <>
 
       <Text style={[styles.h1, textColors.white]}>{userName}</Text>
 
@@ -37,7 +37,7 @@ export const Profile = () => {
 
       <MyButton title='Sign Out' onPress={signOut} />
 
-    </View>
+    </>
 
   );
 }

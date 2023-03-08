@@ -19,10 +19,6 @@ export const News = () => {
 
   return (
     <>
-      <Text style={[styles.h2, textColors2.white]}>
-        Update
-      </Text>
-
       {news &&
         <>
           <Text style={[styles.paragraph, textColors2.white]}>
@@ -38,7 +34,6 @@ export const News = () => {
           </Text>
         </>
       }
-
     </>
   );
 

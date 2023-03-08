@@ -15,7 +15,7 @@ export const Camps = () => {
   })
 
   return (
-    <View style={styles.menuPageContainer}>
+    <>
 
       <Text style={[styles.h1]}>Camps</Text>
 
@@ -44,6 +44,6 @@ export const Camps = () => {
         hideIfEmpty
       /> */}
 
-    </View>
+    </>
   );
 }
