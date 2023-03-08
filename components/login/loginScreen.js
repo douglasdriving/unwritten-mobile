@@ -5,12 +5,13 @@ import { navigate } from '../../contexts/rootNavigation.js';
 import background from '../../assets/background/campfireBackground.png';
 import { styles, colors, textColors, textColors2 } from '../../style.js';
 import { Space } from '../smart/visuals.js';
+import { AuthButton } from './welcomeScreenField/authButton/authButton.js';
+import { UserNameField } from './userNameField/userNameField.js';
 
 //redux imports
 import { useDispatch } from 'react-redux';
 import { login, loadLocalToken } from '../../redux/userSlice.js';
-import { AuthButton } from './welcomeScreenField/authButton/authButton.js';
-import { UserNameField } from './userNameField/userNameField.js';
+
 
 export const LoginScreen = ({ startRoomId }) => {
 
