@@ -29,11 +29,11 @@ export const StoryNav = (props) => {
 
     <View style={styles.storyNav}>
 
-      <StatusBar barStyle={colors2.red} backgroundColor={colors2.night}/>
+      <StatusBar barStyle={colors2.red} backgroundColor={colors2.night} />
 
-      <StoryNavButton type='close' onPress={() => setClosePopupOpen(true)} />
+      <StoryNavButton type='close' onPress={() => LeaveRoom()} />
 
-      <ProgressBar width='60%' percent={scenarioCount/40 * 100} label={`🎲 ${scenarioCount}/40`}/> 
+      <ProgressBar width='60%' percent={scenarioCount / 40 * 100} label={`🎲 ${scenarioCount}/40`} />
 
       {!readOnly && <StoryNavButton type='menu' onPress={props.openMenu} />}
 
