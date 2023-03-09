@@ -24,7 +24,7 @@ export const StoryBody = () => {
 
   }
 
-  useEffect(() => {console.log(scenarios)}, []);
+  // useEffect(() => {console.log(scenarios)}, []);
 
   return (
     <>
