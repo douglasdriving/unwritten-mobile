@@ -9,37 +9,18 @@ import { loadRoomData } from '../redux/roomSlice';
 import { logout } from '../redux/userSlice';
 import reduxStore from '../redux/reduxStore';
 
-export const registerForPushNotificationsAsync = async () => {
+const notLog = msg => {
+  console.log('notifications: ', msg);
+}
 
-  console.log('starting notification registration');
+export const requestNotificationPermission = async () => {
+
+  notLog('requesting permission')
 
   if (!Device.isDevice) {
-    alert('Must use physical device for Push Notifications');
+    notLog('Must use physical device for Push Notifications')
     return;
   }
-
-  // we check if we have access to the notification permission
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
-  let finalStatus = existingStatus;
-
-  // if we don't have access to it, we ask for it
-  if (existingStatus !== 'granted') {
-    const { status } = await Notifications.requestPermissionsAsync();
-    finalStatus = status;
-    console.log('notification status requested. status received was: ', status);
-  }
-
-  //if user still does not allow it, return
-  if (finalStatus !== 'granted') {
-    console.log('user did not grant notification permission');
-    return;
-  }
-
-  // obtain the expo token
-  const expoToken = (await Notifications.getExpoPushTokenAsync()).data;
-
-  // ++ save token in the backend
-  await SetExpoToken(expoToken);
 
   // some android configuration
   if (Platform.OS === 'android') {
@@ -51,6 +32,42 @@ export const registerForPushNotificationsAsync = async () => {
     });
   }
 
+  // we check if we have access to the notification permission
+  const { status } = await Notifications.getPermissionsAsync();
+  notLog('checked existing permission, got: ', status);
+
+  // if we don't have access to it, we ask for it
+  if (status !== 'granted') {
+    await Notifications.requestPermissionsAsync();
+    notLog('asked user to grant permission');
+  }
+
+}
+
+export const registerForPushNotificationsAsync = async () => {
+
+  notLog('starting registration');
+
+  //check device
+  if (!Device.isDevice) {
+    notLog('cant register, must use a physical device')
+    return;
+  }
+
+  // check access
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  notLog('checked existing permission, got: ', existingStatus);
+  if (existingStatus !== 'granted') {
+    notLog('cannot register, no permission from user');
+  }
+
+  // obtain the expo token
+  const expoToken = (await Notifications.getExpoPushTokenAsync()).data;
+  notLog('optained expo token ', expoToken);
+
+  // save token in the backend
+  await SetExpoToken(expoToken);
+  notLog('set token in backend');
   return expoToken;
 }
 

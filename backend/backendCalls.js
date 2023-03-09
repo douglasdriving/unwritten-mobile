@@ -138,7 +138,6 @@ export const SetDisplayName = async (name) => {
 export const SetExpoToken = async (expoToken) => {
 
   const response = await PostCall(`user/expoToken?expoToken=${expoToken}`);
-  console.log('expo token call respo: ', response);
   return response;
 
 }

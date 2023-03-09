@@ -11,6 +11,7 @@ import { UserNameField } from './userNameField/userNameField.js';
 //redux imports
 import { useDispatch } from 'react-redux';
 import { login, loadLocalToken } from '../../redux/userSlice.js';
+import { registerForPushNotificationsAsync, requestNotificationPermission } from '../../backend/notifications.js';
 
 
 export const LoginScreen = ({ startRoomId }) => {
@@ -22,7 +23,7 @@ export const LoginScreen = ({ startRoomId }) => {
   const [loading, setLoading] = useState(true);
   const [newPlayer, setNewPlayer] = useState(false);
 
-  //login functions
+  //functions
   const tryLoginStart = async () => {
 
     //check if there is already a token stored
@@ -38,7 +39,6 @@ export const LoginScreen = ({ startRoomId }) => {
     await tryLogin();
 
   }
-
   const tryLogin = async () => {
 
     //try using the auth token to login
@@ -58,6 +58,9 @@ export const LoginScreen = ({ startRoomId }) => {
       return false;
     }
 
+    //register for notifications
+    await registerForPushNotificationsAsync();
+
     //navigate further depending on situation
     if (!returnedUser.displayName || returnedUser.displayName == "") {
       setNewPlayer(true);
@@ -72,8 +75,14 @@ export const LoginScreen = ({ startRoomId }) => {
     return true;
   }
 
-  //update page
-  useEffect(() => { tryLoginStart() }, []);
+  //start effect
+  const startEffect = async () => {
+
+    await requestNotificationPermission();
+    await tryLoginStart();
+
+  }
+  useEffect(() => { startEffect() }, []);
 
   return (
     <ImageBackground source={background} resizeMode='cover' style={{
