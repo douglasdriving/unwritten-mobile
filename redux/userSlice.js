@@ -18,7 +18,7 @@ Selectors:
 */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GetUser, signUp, setAuthToken, signIn, hasToken, Login } from '../backend/backendCalls';
+import { GetUser, signUp, setAuthToken, signIn, hasToken, Login } from '../backend/backendFake';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loadLocalToken = createAsyncThunk(
@@ -33,7 +33,6 @@ export const fetchTokenWithCredentials = createAsyncThunk(
   'user/fetchTokenWithCredentials',
   async ({ email, password }, thunkAPI) => {
     const tokenFetch = await signIn(email, password);
-    // console.log('fetched token and got: ', tokenFetch.token);
     if (tokenFetch.token) await AsyncStorage.setItem('authToken', tokenFetch.token);
     return tokenFetch;
   }

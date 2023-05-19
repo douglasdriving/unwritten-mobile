@@ -6,8 +6,6 @@ export const Paragraph = (props) => {
 
   const { authorName, scenario } = props;
 
-  //add the like button here :)
-
   return (
     <View style={{
       backgroundColor: transparentColors2.light,

@@ -3,11 +3,11 @@ import { styles, textColors2 } from "../../../../../style";
 import { Space } from "../../../../smart/visuals";
 import { MyButton } from "../../../../smart/myButton";
 import { useState } from "react";
-import { AddNode } from "../../../../../backend/backendCalls";
+import { AddNode } from "../../../../../backend/backendFake";
 import { loadRoomData, selectRoomId } from "../../../../../redux/roomSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-export const CanWriteField = ({scrollDown}) => {
+export const CanWriteField = ({scrollDown, setCustomOpen}) => {
 
   const [loading, setLoading] = useState(false);
   const [failedUpload, setFailedUpload] = useState(null);
@@ -16,16 +16,19 @@ export const CanWriteField = ({scrollDown}) => {
 
   const HandleButtonPress = async () => {
 
-    setLoading(true);
-    const addNodeResponse = await AddNode(campId);
-    if (addNodeResponse.ok) {
-      await dispatch(loadRoomData({ id: campId }));
-    }
-    else {
-      setFailedUpload(addNodeResponse.message);
-    }
-    setLoading(false);
-    scrollDown();
+    // setLoading(true);
+    // const addNodeResponse = await AddNode(campId);
+    // if (addNodeResponse.ok) {
+    //   await dispatch(loadRoomData({ id: campId }));
+    // }
+    // else {
+    //   setFailedUpload(addNodeResponse.message);
+    // }
+    // setLoading(false);
+    // scrollDown();
+
+    //system for fake frontend
+    setCustomOpen('WritingField');
 
   }
 

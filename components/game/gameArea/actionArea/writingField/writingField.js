@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CharCounter } from "./charCounter";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
-import { UploadScenario } from "../../../../../backend/backendCalls";
+import { UploadScenario } from "../../../../../backend/backendFake";
 import { Popup } from "../../../../smart/popup";
 import { colors, colors2, gameStyle, styles, textColors2 } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";
@@ -12,7 +12,7 @@ import { Divider, Space } from "../../../../smart/visuals";
 import { TurnTimer } from "../../../../smart/turnTimer";
 import { loadRoomData } from "../../../../../redux/roomSlice";
 
-export const WritingField = ({ scrollDown }) => {
+export const WritingField = ({ scrollDown, setCustomOpen, AddFakeNode }) => {
 
   const [loadText, setLoadText] = useState(null);
   const [scenarioPostSuccess, setScenarioPostSuccess] = useState(false);
@@ -49,7 +49,9 @@ export const WritingField = ({ scrollDown }) => {
 
     setScenarioPostSuccess(false);
     setLoadText('...');
-    await dispatch(loadRoomData({ id: campId }));
+    // await dispatch(loadRoomData({ id: campId }));
+    AddFakeNode(user.name, 'Add a crazy continuation!', scenarioText);
+    setCustomOpen('WaitingForOtherNodeField');
     setLoadText(null);
     scrollDown();
 
@@ -58,7 +60,7 @@ export const WritingField = ({ scrollDown }) => {
   return (
     <View style={gameStyle.actionBox}>
 
-      <Text style={[styles.h3, textColors2.light]}>{prompt || 'Write something.'}</Text>
+      <Text style={[styles.h3, textColors2.light]}>{prompt || 'Add a crazy continuation!'}</Text>
 
       <TextInput
         style={{

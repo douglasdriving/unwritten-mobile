@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { selectReadOnly, selectTitle, selectDescription, selectPlayerCount, selectAllPlayers } from '../../../../redux/roomSlice.js';
 import { StoryBody } from './storyBody/storyBody.js';
 
-export const StoryContent = () => {
+export const StoryContent = ({fakeNode}) => {
 
   const readOnly = useSelector(selectReadOnly);
   const title = useSelector(selectTitle);
@@ -37,7 +37,7 @@ export const StoryContent = () => {
             <Text style={[styles.h3, { color: colors2.white }]}>{GenerateAuthorText()}</Text>
           }
           {Space(10)}
-          <StoryBody />
+          <StoryBody fakeNode={fakeNode}/>
         </>
       }
     </View>

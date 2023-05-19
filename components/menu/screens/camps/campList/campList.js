@@ -54,7 +54,7 @@ export const CampList = (props) => {
       }
 
       {
-        true &&
+        rooms &&
         <StoryList
           listItemInfo={rooms.map(room => ({
             title: room.title,

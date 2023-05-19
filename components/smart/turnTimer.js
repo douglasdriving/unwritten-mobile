@@ -3,7 +3,6 @@ import { styles, colors } from "../../style";
 import { addMinutes, convertGMTToLocalTime, TimeToHms } from "../../helpers/dateTimeFunctions";
 import { useState } from "react";
 import { useEffect } from "react";
-import { GetRoomDeadline } from "../../backend/backendCalls";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLastNode, selectRoomId, loadRoomData } from "../../redux/roomSlice";
 
@@ -19,8 +18,8 @@ export const TurnTimer = (props) => {
 
   const loadDeadline = () => {
 
-    // const deadline = convertGMTToLocalTime(addMinutes(lastNode.created_at, 20));
-    const deadline = addMinutes(lastNode.created_at, 20);
+    // const deadline = addMinutes(lastNode.created_at, 20);
+    const deadline = addMinutes(new Date(), 20);
     setTurnDeadline(deadline);
 
   }

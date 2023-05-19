@@ -1,6 +1,6 @@
 import { styles, textColors, menyStyles, textColors2 } from "../../../../../style";
 import { Text, View, TouchableWithoutFeedback } from "react-native";
-import { GetFeed } from "../../../../../backend/backendCalls";
+import { GetFeed } from "../../../../../backend/backendFake";
 import { useEffect, useState, useCallback } from "react";
 import { convertGMTToLocalTime, extractTimestamp } from "../../../../../helpers/dateTimeFunctions";
 import { navigateToRoom } from "../../../../../contexts/rootNavigation";

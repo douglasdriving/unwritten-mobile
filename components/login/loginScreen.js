@@ -1,9 +1,9 @@
-import { ImageBackground, Text } from 'react-native';
+import { ImageBackground, Text, View } from 'react-native';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { navigate } from '../../contexts/rootNavigation.js';
 import background from '../../assets/background/campfireBackground.png';
-import { styles, colors, textColors, textColors2 } from '../../style.js';
+import { styles, colors, textColors, textColors2, colors2, transparentColors2 } from '../../style.js';
 import { Space } from '../smart/visuals.js';
 import { AuthButton } from './welcomeScreenField/authButton/authButton.js';
 import { UserNameField } from './userNameField/userNameField.js';
@@ -12,7 +12,8 @@ import { UserNameField } from './userNameField/userNameField.js';
 import { useDispatch } from 'react-redux';
 import { login, loadLocalToken } from '../../redux/userSlice.js';
 import { registerForPushNotificationsAsync, requestNotificationPermission } from '../../backend/notifications.js';
-
+import { AuthButton } from './welcomeScreenField/authButton/authButton.js';
+import { UserNameField } from './userNameField/userNameField.js';
 
 export const LoginScreen = ({ startRoomId }) => {
 
@@ -102,10 +103,28 @@ export const LoginScreen = ({ startRoomId }) => {
             <UserNameField />
             :
             <>
-              <Text style={[styles.title, { color: colors.white }]}>Unwritten</Text>
-              <Text style={[styles.paragraph, styles.textCenter, styles.bold, textColors.white]}>Tell stories together</Text>
+              <Text style={[styles.title, { color: colors.white }]}>
+                Unwritten
+              </Text>
+              <Text style={[styles.paragraph, styles.textCenter, styles.bold, textColors.white]}>
+                Tell stories together
+              </Text>
               {Space(15)}
               <AuthButton tryLogin={tryLogin} />
+              {Space(15)}
+              <View style={{
+                backgroundColor: transparentColors2.black,
+                padding: 15,
+                borderRadius: 10,
+                width: '100%',
+              }}>
+                <Text style={[styles.paragraph, styles.textCenter, textColors2.white]}>
+                  Note: The Unwritten servers has been shut down for now.
+                  You can still enter the game to test out the interface,
+                  but the things you do will not be saved,
+                  and some things might now work as intended.
+                </Text>
+              </View>
             </>
           }
         </>

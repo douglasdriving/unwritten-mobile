@@ -1,6 +1,8 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { styles, textColors2 } from '../../../../style';
-import { GetAvailableRoomsAsSingleList, GetFinishedStories, GetMyRoomsAsSingleList } from '../../../../backend/backendCalls';
+import { GetAvailableRoomsAsSingleList, GetMyRoomsAsSingleList } from '../../../../backend/backendCalls';
+import { styles } from '../../../../style';
+import { GetAvailableRoomsAsSingleList } from '../../../../backend/backendFake';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../redux/userSlice';
@@ -31,20 +33,11 @@ export const Camps = () => {
 
       <CampList
         title='Active'
-        // description='Open camps with ongoing stories. Sit down to participate!'
         roomQuery={GetAvailableRoomsAsSingleList}
         joinButtonText='Enter ->'
         alternativeText='No open camps are currently available. You can create your own in the next tab.'
         confirmJoinRequired={false}
       />
-
-      {/* <CampList
-        title='Closed'
-        description='Closed camps with finished stories. Enter one to read it!'
-        roomQuery={GetFinishedStories}
-        joinButtonText='Enter ->'
-        hideIfEmpty
-      /> */}
 
     </>
   );

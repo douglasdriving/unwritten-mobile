@@ -5,7 +5,7 @@ used to store info about the current room
 */
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { GetCampData } from '../backend/backendCalls';
+import { GetCampData } from '../backend/backendFake';
 import { convertGMTToLocalTime } from '../helpers/dateTimeFunctions';
 
 const initialState = {

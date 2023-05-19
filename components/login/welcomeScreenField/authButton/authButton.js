@@ -38,6 +38,17 @@ export const AuthButton = ({ tryLogin }) => {
 
   }
 
+  const FakeSignIn = async () => {
+    //save it in local storage
+    await AsyncStorage.setItem('authToken', "fakeToken");
+
+    //save it in user slice & for backend calls
+    dispatch(setToken("fakeToken"));
+
+    //use the "login" function in the user slice
+    tryLogin();
+  }
+
   useEffect(() => { CheckSuccessfulToken(); }, [response])
 
   return (
@@ -45,9 +56,11 @@ export const AuthButton = ({ tryLogin }) => {
       <MyButton
         disabled={!request}
         onPress={() => {
-          promptAsync();
+          // promptAsync();
+          FakeSignIn();
         }}
-        title='Sign in with Google'
+        title='Enter'
+        width={'100%'}
       />
       {error &&
         < Text style={[styles.paragraph, textColors2.red]}>

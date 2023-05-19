@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { TextInput, Text, View } from "react-native";
-import { SetDisplayName } from "../../../backend/backendCalls";
+import { SetDisplayName } from "../../../backend/backendFake";
 import { colors2, styles, textColors2, transparentColors2 } from "../../../style";
 import { MyButton } from "../../smart/myButton";
 import { navigate } from "../../../contexts/rootNavigation";

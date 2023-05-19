@@ -5,7 +5,7 @@ import { selectUserName, logout } from '../../../../redux/userSlice';
 import { MyButton } from '../../../smart/myButton';
 import { navigate } from '../../../../contexts/rootNavigation';
 import { CampList } from '../camps/campList/campList';
-import { GetMyRoomsAsSingleList } from '../../../../backend/backendCalls';
+import { GetMyRoomsAsSingleList } from '../../../../backend/backendFake';
 import { Space } from '../../../smart/visuals';
 import { PlayerStats } from './playerStats/playerStats';
 

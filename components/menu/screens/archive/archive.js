@@ -1,6 +1,9 @@
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
 import { styles, textColors2 } from '../../../../style';
-import { GetAvailableRoomsAsSingleList, GetFinishedStories, GetMyRoomsAsSingleList } from '../../../../backend/backendCalls';
+import { GetFinishedStories } from '../../../../backend/backendCalls';
+import { Text } from 'react-native';
+import { styles, textColors2 } from '../../../../style';
+import { GetFinishedStories } from '../../../../backend/backendFake';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../redux/userSlice';
