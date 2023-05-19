@@ -26,7 +26,6 @@ export const Profile = () => {
 
       <PlayerStats />
 
-<<<<<<< Updated upstream
       <CampList
         title='My Camps'
         roomQuery={GetMyRoomsAsSingleList}
@@ -34,8 +33,6 @@ export const Profile = () => {
         alternativeText='You are not part of any camps yet. Find one in the camps tab!'
       />
 
-=======
->>>>>>> Stashed changes
       {Space(20)}
 
       <MyButton title='Sign Out' onPress={signOut} />

@@ -18,8 +18,8 @@ export const TurnTimer = (props) => {
 
   const loadDeadline = () => {
 
-    // const deadline = convertGMTToLocalTime(addMinutes(lastNode.created_at, 20));
-    const deadline = addMinutes(lastNode.created_at, 20);
+    // const deadline = addMinutes(lastNode.created_at, 20);
+    const deadline = addMinutes(new Date(), 20);
     setTurnDeadline(deadline);
 
   }

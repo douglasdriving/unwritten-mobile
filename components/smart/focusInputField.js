@@ -31,17 +31,13 @@ export const FocusInputField = ({text, setText, label, flex, placeholder}) => {
   }
 
   const handleAreaPress = () => {
-    console.log('pressed on area');
     setFocused(true);
   }
 
   const handleTextChange = (newText) => {
     setText(newText);
   }
-  
-  // useEffect(() => {
-  //   console.log(label + ' focus input field has focused set to: ' + focused);
-  // }, [])
+
 
   return (
     <>
@@ -69,9 +65,6 @@ export const FocusInputField = ({text, setText, label, flex, placeholder}) => {
       {focused &&
         <Modal
           transparent
-        // onShow={() => {
-        //   console.log('modal open :)');
-        // }}
         >
           <View style={styles.cover} />
           <View style={{

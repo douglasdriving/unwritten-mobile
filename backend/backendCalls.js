@@ -33,7 +33,7 @@ const AuthHeader = () => {
 }
 const GetFetch = () => {
   if (!authToken) {
-    console.error('no auth token to fetch with');
+    console.error('attempting a get fetch, but no auth token to fetch with');
   }
   return { headers: AuthHeader(authToken) };
 }

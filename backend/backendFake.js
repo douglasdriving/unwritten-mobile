@@ -481,12 +481,11 @@ the world started spinning, lifting him away from the world he knew.`,
   }
 ];
 const news = {
-  message: `The Unwritten experiment is now over. Thanks to everyone who participated!
-  The servers are down and what you see here is just a static version of the app.
-  You can interact with the app as if it was live, but nothing will be saved.`,
+  message: `The Unwritten experiment is now over. Thanks to everyone who participated! The servers are down and what you see here is just a static version of the app. You can interact with the app as if it was live, but nothing will be saved.`,
   author: 'Douglas (Unwritten Creator)',
   created_at: '2023-05-19T19:55:51.026Z'
 }
+let nextNodeId = 383;
 
 //Headers
 let authToken;
@@ -548,7 +547,7 @@ export const signUp = async (email, password, name, pushToken) => {
 
 }
 export const GetPlayerStats = async (id) => {
-  return userStats;
+  return { ok: true, data: userStats };
 }
 export const SetDisplayName = async (newName) => {
 
@@ -624,6 +623,15 @@ export const UploadScenario = async (text, campId, end) => {
 
 }
 export const AddNode = async (campId) => {
+
+  // exampleCampData.scenarios.push({
+  //   node_id: nextNodeId,
+  //   creator_id: 95,
+  //   prompt: 'Write something crazy!',
+  //   likes: []
+  // });
+
+  // nextNodeId++;
 
   return {
     ok: true,

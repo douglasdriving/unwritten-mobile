@@ -15,7 +15,7 @@ export const PlayerStats = () => {
 
     const results = await GetPlayerStats(userId);
     if (results.ok) {
-      setStats(results.data)
+      setStats(results.data);
     }
 
   }

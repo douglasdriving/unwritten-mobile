@@ -1,5 +1,5 @@
 import { ScrollView, ImageBackground } from 'react-native';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { styles, gameStyle } from '../../../style.js';
 import { StoryContent } from './storyArea/storyContent.js';
 import { Space } from '../../smart/visuals.js';
@@ -12,9 +12,14 @@ export const GameArea = () => {
 
   const scrollViewRef = useRef();
   const readOnly = useSelector(selectReadOnly);
+  const [fakeNode, setFakeNode] = useState(false);
 
   const ScrollDown = () => {
     scrollViewRef.current.scrollToEnd({ animated: true });
+  }
+
+  const AddFakeNode = (name, prompt, text) => {
+    setFakeNode({ name, prompt, text });
   }
 
   return (
@@ -25,9 +30,9 @@ export const GameArea = () => {
       // onContentSizeChange={ScrollDown}
       >
 
-        <StoryContent />
+        <StoryContent fakeNode={fakeNode}/>
         {Space(15)}
-        {!readOnly && <ActionArea scrollDown={ScrollDown} />}
+        {!readOnly && <ActionArea scrollDown={ScrollDown} AddFakeNode={AddFakeNode}/>}
         {Space(200)}
 
       </ScrollView>

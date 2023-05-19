@@ -49,7 +49,6 @@ export const OpenRoom = () => {
   }
 
   const LoadStoryKeys = async () => {
-    console.log('loading logs');
     const keys = await GetStoryKeys();
     setStoryKeys(keys);
     return;
