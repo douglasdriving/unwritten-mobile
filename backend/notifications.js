@@ -38,8 +38,13 @@ export const requestNotificationPermission = async () => {
 
   // if we don't have access to it, we ask for it
   if (status !== 'granted') {
-    await Notifications.requestPermissionsAsync();
-    notLog('asked user to grant permission');
+
+    try {
+      await Notifications.requestPermissionsAsync();
+      notLog('asked user to grant permission');
+    } catch (error) {
+      console.log('could not request permission for notifications: ', error);
+    }
   }
 
 }

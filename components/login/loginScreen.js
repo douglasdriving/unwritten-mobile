@@ -12,8 +12,6 @@ import { UserNameField } from './userNameField/userNameField.js';
 import { useDispatch } from 'react-redux';
 import { login, loadLocalToken } from '../../redux/userSlice.js';
 import { registerForPushNotificationsAsync, requestNotificationPermission } from '../../backend/notifications.js';
-import { AuthButton } from './welcomeScreenField/authButton/authButton.js';
-import { UserNameField } from './userNameField/userNameField.js';
 
 export const LoginScreen = ({ startRoomId }) => {
 

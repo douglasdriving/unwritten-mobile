@@ -1,8 +1,6 @@
 import { Text } from 'react-native';
 import { styles, textColors2 } from '../../../../style';
-import { GetAvailableRoomsAsSingleList, GetMyRoomsAsSingleList } from '../../../../backend/backendCalls';
-import { styles } from '../../../../style';
-import { GetAvailableRoomsAsSingleList } from '../../../../backend/backendFake';
+import { GetAvailableRoomsAsSingleList, GetMyRoomsAsSingleList } from '../../../../backend/backendFake';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../redux/userSlice';
