@@ -60,6 +60,7 @@ export const AuthButton = ({ tryLogin }) => {
           FakeSignIn();
         }}
         title='Enter'
+        width={'100%'}
       />
       {error &&
         < Text style={[styles.paragraph, textColors2.red]}>
