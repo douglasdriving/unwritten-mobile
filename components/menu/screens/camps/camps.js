@@ -1,6 +1,12 @@
+<<<<<<< Updated upstream
 import { Text, View } from 'react-native';
 import { styles } from '../../../../style';
 import { GetAvailableRoomsAsSingleList, GetFinishedStories } from '../../../../backend/backendCalls';
+=======
+import { Text } from 'react-native';
+import { styles, textColors2 } from '../../../../style';
+import { GetAvailableRoomsAsSingleList, GetMyRoomsAsSingleList } from '../../../../backend/backendFake';
+>>>>>>> Stashed changes
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../../redux/userSlice';

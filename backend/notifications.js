@@ -1,7 +1,7 @@
 import * as Notifications from 'expo-notifications';
 import * as Device from 'expo-device';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GetUser, SetExpoToken } from './backendCalls';
+import { GetUser, SetExpoToken } from './backendFake';
 import { navigate, navigateToRoom } from '../contexts/rootNavigation';
 
 import { useDispatch } from 'react-redux';

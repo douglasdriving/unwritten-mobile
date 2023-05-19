@@ -2,7 +2,6 @@ import { Text, View, TouchableWithoutFeedback } from 'react-native';
 import { colors2, styles } from '../../../../style';
 import { useState } from 'react';
 import { Popup } from '../../../smart/popup';
-import { JoinRoom } from '../../../../backend/backendCalls';
 import { navigateToRoom } from '../../../../contexts/rootNavigation';
 import { useDispatch } from 'react-redux';
 import { loadRoomData } from '../../../../redux/roomSlice';

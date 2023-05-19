@@ -3,7 +3,6 @@ import { styles, colors } from "../../style";
 import { addMinutes, convertGMTToLocalTime, TimeToHms } from "../../helpers/dateTimeFunctions";
 import { useState } from "react";
 import { useEffect } from "react";
-import { GetRoomDeadline } from "../../backend/backendCalls";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLastNode, selectRoomId, loadRoomData } from "../../redux/roomSlice";
 

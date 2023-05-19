@@ -1,6 +1,6 @@
 import { styles, textColors2 } from "../../../../../style";
 import { Text } from "react-native";
-import { GetNews } from "../../../../../backend/backendCalls";
+import { GetNews } from "../../../../../backend/backendFake";
 import { useEffect, useState } from "react";
 import { convertGMTToLocalTime, extractTimestamp } from "../../../../../helpers/dateTimeFunctions";
 

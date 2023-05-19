@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CharCounter } from "./charCounter";
 import { useSelector, useDispatch } from "react-redux";
 import { selectUser } from "../../../../../redux/userSlice";
-import { UploadScenario } from "../../../../../backend/backendCalls";
+import { UploadScenario } from "../../../../../backend/backendFake";
 import { Popup } from "../../../../smart/popup";
 import { colors, colors2, gameStyle, styles, textColors2 } from "../../../../../style";
 import { MyButton } from "../../../../smart/myButton";

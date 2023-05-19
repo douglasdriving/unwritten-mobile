@@ -1,9 +1,7 @@
-import Constants from 'expo-constants';
-// import reduxStore from '../redux/reduxStore';
-// import { navigate } from '../contexts/rootNavigation';
+//THE REAL BACKEND, REPLACED WITH FAKE ONE FOR NOW WHILE SERVER IS DOWN, SEE backendFake.js
 
-let API_ENDPOINT;
-API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
+let API_ENDPOINT = "https://unwritten-backend.herokuapp.com";
+
 // const isRunningInExpoGo = Constants.appOwnership === 'expo'
 // console.log('is this dev? : ' , __DEV__);
 // if (isRunningInExpoGo || __DEV__) {
@@ -45,6 +43,7 @@ const PostFetch = () => {
     headers: AuthHeader(authToken)
   };
 }
+
 
 //USER
 export const Login = async () => {
@@ -288,7 +287,6 @@ export const Like = async (nodeId) => {
   return jsonResponse;
 
 }
-
 export const Dislike = async (nodeId) => {
 
   const response = await fetch(

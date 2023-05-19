@@ -5,7 +5,7 @@ import { colors2, styles, textColors2 } from '../../../../../../style';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectUserId } from '../../../../../../redux/userSlice';
-import { Like, Dislike } from '../../../../../../backend/backendCalls';
+import { Like, Dislike } from '../../../../../../backend/backendFake';
 
 export const LikeButton = ({ likes, nodeId }) => {
 
